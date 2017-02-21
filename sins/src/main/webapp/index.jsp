@@ -169,6 +169,7 @@ $( document ).ready(function() {
       <div id="content">
         <h2>Content</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
+        <a href="alink.do?path=message/messagemain">메시지 페이지</a>
       </div>
       <div id="right">
         <h2>RIGHT</h2>
