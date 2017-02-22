@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="/sins/WEB-INF/common/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.1.1.min.js'/>"></script>
 <script>
-$(function() {
+/* $(function() {
 	var loginUser= ${loginUser};
 
 	if(loginUser==null){
@@ -15,7 +15,7 @@ $(function() {
 		location.href="로그인페이지";
 	}
 	
-});
+}); */
 
 </script>
 
