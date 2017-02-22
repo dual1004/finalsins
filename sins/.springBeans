@@ -8,6 +8,7 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/main/resources/sins-rootconfig.xml</config>
+		<config>src/main/resources/mapper/messagemapper.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/config/sins-servlet.xml</config>
