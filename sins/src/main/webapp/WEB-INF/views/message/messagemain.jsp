@@ -161,15 +161,15 @@ $( document ).ready(function() {
       <div id="left">
         <h2>메시지함</h2>
         <ul>
+        	<li><h4>받은 메세지</h4></li>
         	<li><a href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
-          	<li>받은 메시지</li>
           	<li>보낸 메시지</li>
           
           
         </ul>
       </div>
       <div id="content">
-        <h2>쪽지 페이지</h2>
+        <h2>받은 메세지</h2>
         쪽지지지지
       </div>
       <div id="right">

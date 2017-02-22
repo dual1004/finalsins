@@ -172,8 +172,9 @@ $( document ).ready(function() {
         <h2>메시지 쓰기</h2>
         <form action="msgsead.j">
         <input type="submit" value="쪽지보내기"/>
+        <input type="hidden" name="sendid" value="user01">
         	<table>
-        		<tr><th>받는사람 : </th><th><input type="text" required="required" id="userid" name="userid"/></th><th>주소록 버튼위치</th></tr>
+        		<tr><th>받는사람 : </th><th><input type="text" required="required" id="userid" name="resiveid"/></th><th>주소록 버튼위치</th></tr>
         		<tr><td colspan="3"><textarea rows="18" cols="80" id="message" name="message"></textarea></td></tr>
         		<tr><td>파일 선택 : </td><td colspan="2"></td></tr>
         	</table>
