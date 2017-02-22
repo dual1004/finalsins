@@ -32,6 +32,13 @@
 	<servlet-mapping>
 		<servlet-name>sins</servlet-name>
 		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.j</url-pattern>
+		<url-pattern>*.y</url-pattern>
+		<url-pattern>*.b</url-pattern>
+		<url-pattern>*.p</url-pattern>
+		<url-pattern>*.k</url-pattern>
+		<url-pattern>*.n</url-pattern>
+		<url-pattern>*.l</url-pattern>
 	</servlet-mapping>
 
 </web-app>

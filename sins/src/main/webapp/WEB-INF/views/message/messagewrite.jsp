@@ -161,7 +161,7 @@ $( document ).ready(function() {
       <div id="left">
         <h2>메시지함</h2>
         <ul>
-        	<li><a href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
+        	<li><h4>메시지 쓰기</h4></li>
           	<li>받은 메시지</li>
           	<li>보낸 메시지</li>
           
@@ -169,8 +169,15 @@ $( document ).ready(function() {
         </ul>
       </div>
       <div id="content">
-        <h2>쪽지 페이지</h2>
-        쪽지지지지
+        <h2>메시지 쓰기</h2>
+        <form action="msgsead.j">
+        <input type="submit" value="쪽지보내기"/>
+        	<table>
+        		<tr><th>받는사람 : </th><th><input type="text" required="required" id="userid" name="userid"/></th><th>주소록 버튼위치</th></tr>
+        		<tr><td colspan="3"><textarea rows="18" cols="80" id="message" name="message"></textarea></td></tr>
+        		<tr><td>파일 선택 : </td><td colspan="2"></td></tr>
+        	</table>
+        </form>
       </div>
       <div id="right">
         <h2>RIGHT</h2>
