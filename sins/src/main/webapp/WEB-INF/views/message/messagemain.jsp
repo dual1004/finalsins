@@ -159,17 +159,18 @@ $( document ).ready(function() {
        	<div id="t-r"><a id="t-r-b" href="#">=</a></div>
       </div>
       <div id="left">
-        <h2>LEFT</h2>
+        <h2>메시지함</h2>
         <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
+        	<li><a href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
+          	<li>받은 메시지</li>
+          	<li>보낸 메시지</li>
+          
+          
         </ul>
       </div>
       <div id="content">
-        <h2>Content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
-        <a href="alink.do?path=message/messagemain">메시지 페이지</a>
+        <h2>쪽지 페이지</h2>
+        쪽지지지지
       </div>
       <div id="right">
         <h2>RIGHT</h2>
