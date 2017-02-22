@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Qna">
+
+	<resultMap id="resultQnaContent" type="QnaContent">
+		<id property="qnaNo" column="QNA_NO" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="writeDate" column="WRITE_DATE" />
+		<result property="readCount" column="READ_COUNT" />
+		<result property="userId" column="USER_ID" />
+		
+	</resultMap>
+	
+	
+	<resultMap id="resultQnaComment" type="QnaComment">
+		<id property="commentNo" column="COMMENT_NO" />
+		<result property="userId" column="USER_ID" />
+		<result property="content" column="CONTENT" />
+		<result property="writeDate" column="WRITE_DATE" />
+		<result property="lev" column="LEV" />
+		<result property="ref" column="REF" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="backupId" column="BACKUP_ID" />
+		<result property="qnaNo" column="QNA_NO" />
+		<result property="classify" column="CLASSIFY" />
+		
+	</resultMap>
+	
+	<select id = "selectAll" resultType="QnaContent" resultMap="resultQnaContent">
+	SELECT * FROM QNA
+	
+	</select>
+	
+	<select id = "selectQna" parameterType = "int" resultType="QnaContent" resultMap="resultQnaContent">
+	SELECT * FROM QNA WHERE QNA_NO = #{qNo}
+	
+	</select>
+	
+	
+</mapper>

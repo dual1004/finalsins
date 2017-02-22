@@ -12,17 +12,32 @@
 		<property name="password" value="sins"></property>
 	</bean>
 	
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath*:/mapper/**/*-mappper.xml" />
+		<property name="configLocation" value="classpath:mapper/config/sins-config.xml" />
+		<property name="mapperLocations" value="classpath:mapper/*-mapper.xml" />
 	</bean>
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSession" />
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+	
+
+	
 	
 	<context:component-scan base-package="com.seven.sins.**.service"></context:component-scan>
 	<context:component-scan base-package="com.seven.sins.**.dao"></context:component-scan>
 	
 	
 	
+	
 </beans>
+	
+	

@@ -2,6 +2,7 @@ package com.seven.sins.qna.vo;
 
 import java.sql.Date;
 
+@SuppressWarnings("serial")
 public class QnaContent implements java.io.Serializable{
 
 	
