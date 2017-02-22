@@ -177,7 +177,7 @@ $( document ).ready(function() {
           <li>Lorem</li>
           <li>Ipsum</li>
           <li>Dolor</li>
-          <li><a href="QnaAll.n">qna테스트</a></li>
+          <li><a href="selectQna.n">qna테스트</a></li>
         </ul>
       </div>
       <div id="footer">

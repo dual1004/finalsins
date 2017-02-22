@@ -4,6 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.atag{
+text-decoration:none;
+}
+
+</style>
 <meta charset="UTF-8">
 <script type="text/javascript" src="<c:url value='/js/jquery-3.1.1.min.js'/>"></script>
 <script>
@@ -24,7 +30,7 @@
 <body>
 
 <div id = "qnaDiv">
-<table id = "qnaTable">
+<table id = "qnaTable" style='text-align:center; ' align="center">
 
 <tr><th>No</th><th>Subject</th><th>name</th><th>Read</th><th>Date</th></tr>
 <c:forEach var="qna" items="${qnaList }">
@@ -33,14 +39,15 @@
 			<td>
 				
 				
-				<c:if test="${not empty loginUser }">
-					<a href="alink.do?path=#">${qna.title }</a>
-				</c:if>
+				
+					<a class= "atag" href="detailQna.n?no=${qna.qnaNo }">${qna.title }</a>
+				
 				
 			</td>
-			<td><a style='text-decoration:none; ' href='alink.do?path=#'>${qna.userId }</a></td>
-			<td>${qna.writeDate }</td>
+			<td><a class= "atag" style='text-decoration:none; ' href='#'>${qna.userId }</a></td>
 			<td>${qna.readCount }</td>
+			<td>${qna.writeDate }</td>
+			
 		</tr>
 	</c:forEach>
 
@@ -50,31 +57,33 @@
 </table>
 
 </div>
+
+<br><br>
 <div id="pageSection" align="center">
-<a href="page=1페이지로">[처음] </a> 
+<a class = "atag"  href="selectQna.n?page=1">[처음] </a> 
 
 <c:if test="${startPage gt 1 }">
-	<a href="page=${startPage - 1 }">[이전] </a> 
+	<a class = "atag"  href="selectQna.n?page=${startPage - 1 }">[이전] </a> 
 </c:if>
 <c:if test="${startPage eq 1 }">[이전] </c:if>
 
 <c:forEach var="num" begin="${startPage }" end="${endPage }" step="1">
 	<c:if test="${num eq currentPage }">
-		<strong><b><a href="page=${num }">${num }</a></b></strong>&nbsp;
+		<strong><b>${num }</b></strong>&nbsp;
 	</c:if>
 	<c:if test="${num ne currentPage }">
-		<a href="page=${num }">${num }</a> &nbsp;
+		<a class = "atag"  href="selectQna.n?page=${num }">${num }</a> &nbsp;
 	</c:if>
 </c:forEach>
 
 <c:if test="${endPage lt maxPage }">
-	<a href="page=${endPage + 1 }"> [다음] </a>
+	<a class = "atag"  href="selectQna.n?page=${endPage + 1 }"> [다음] </a>
 </c:if>
 <c:if test="${endPage eq maxPage }">
 	[다음]
 </c:if>
 
-<a href="page=${maxPage }"> [마지막]</a>
+<a class = "atag"  href="selectQna.n?page=${maxPage }"> [마지막]</a>
 </div>
 
 </body>

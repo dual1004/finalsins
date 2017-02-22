@@ -14,12 +14,24 @@ public class QnaServiceImpl implements QnaService {
 	@Autowired
 	private QnaDAO qnaDao;
 	
+	
+
 	@Override
-	public List<QnaContent> QnaAllList() {
-		
-		return qnaDao.QnaAllList();
-		
-		
+	public List<QnaContent> selectList(int currentPage, int listLimit) {
+		// TODO Auto-generated method stub
+		return qnaDao.selectList(currentPage, listLimit);
+	}
+
+	@Override
+	public int getListCount() {
+		// TODO Auto-generated method stub
+		return qnaDao.selectCount();
+	}
+
+	@Override
+	public QnaContent getContent(int no) {
+		// TODO Auto-generated method stub
+		return qnaDao.getContent(no);
 	}
 
 	

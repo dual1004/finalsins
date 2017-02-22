@@ -36,15 +36,15 @@ float:left;
 
 
  <div id= "detailDiv">
-<h2><strong>제목</strong> <button style="left:550px;" class="buttons">질문하기</button></h2>
+<h2><strong>${qna.title }</strong> <button style="left:480px;" class="buttons">질문하기</button></h2>
 <hr/>
-<label style="left:450px; " class="labels">날짜</label>
-<label style="left:550px; " class="labels">조회수</label>
+<label style="left:400px; " class="labels">작성일 : ${qna.writeDate }</label>
+<label style="left:420px; " class="labels">조회수 : ${qna.readCount }</label>
 <br>
 <hr/>
 <table>
-<tr><td>사진</td><td>내용</td></tr>
-<tr><td></td><td><br>아이디 </td></tr>
+<tr><td>[사진]</td><td> ${qna.content }</td></tr>
+<tr><td></td><td><br>이름 or 아이디 : ${qna.userId } </td></tr>
 </table>
 <br>
 <hr/>
