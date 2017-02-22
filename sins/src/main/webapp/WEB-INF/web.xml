@@ -10,7 +10,7 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:sins-rootconfig.xml</param-value>
+		<param-value>classpath:sins-*.xml</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -34,9 +34,4 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
-
-<context-param>
-<param-name>contextConfigLocation</param-name>
-<param-value>classpath*:config/spring/context-*.xml</param-value>
-</context-param>
 </web-app>
