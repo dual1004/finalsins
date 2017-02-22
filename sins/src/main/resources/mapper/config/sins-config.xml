@@ -8,7 +8,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.seven.sins.qna.vo.QnaContent" alias="QnaContent"/>
-	
+		<typeAlias type="com.seven.sins.message.vo.MessageVO" alias="MessageVO"/>
 		<typeAlias type="com.seven.sins.qna.vo.QnaComment" alias="QnaComment"/>
 	</typeAliases>
 	

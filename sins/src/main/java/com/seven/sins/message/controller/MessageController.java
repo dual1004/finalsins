@@ -1,5 +1,7 @@
 package com.seven.sins.message.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.message.service.MessageService;
-import com.sun.javafx.collections.MappingChange.Map;
+import com.seven.sins.message.vo.MessageVO;
 
 @Controller
 public class MessageController {
@@ -19,7 +21,8 @@ public class MessageController {
 	@RequestMapping("msglist.j")
 	public ModelAndView messageReadList(String userid, ModelAndView mv){
 		mv.setViewName("message/messagemain");
-		Map<String, Object> map = messageservice.messageReadlist(userid); 
+		List<MessageVO> list = messageservice.messageReadlist(userid);
+		System.out.println(list);
 		return mv;
 	}
 	
