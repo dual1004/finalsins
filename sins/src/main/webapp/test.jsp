@@ -17,8 +17,14 @@
 
 .labels{
 font-size:11px;
-position:relative; float:left; 
+position:relative; 
+float:left; 
 
+}
+
+.buttons{
+position:relative;
+float:left;
 }
 
 </style>
@@ -28,7 +34,7 @@ position:relative; float:left;
 
 
  <div id= "detailDiv">
-<h2><strong>제목</strong> <button style="position:relative; float:left; left:600px;">질문하기</button></h2>
+<h2><strong>제목</strong> <button style="left:600px;" class="buttons">질문하기</button></h2>
 <hr/>
 <label style="left:500px; " class="labels">날짜</label>
 <label style="left:600px; " class="labels">조회수</label>
@@ -44,10 +50,10 @@ position:relative; float:left;
 <br><br>
 <div id="commentDiv" style='border:1px solid; height:100px;' >
 
-<textarea name="" rows="4" cols="55" style="overflow:hidden; position:relative; float:left; left:100px;"></textarea>
+<!-- <textarea name="" rows="4" cols="55" style="overflow:hidden; position:relative; float:left; left:100px;"></textarea>
+ -->
 
-
-<button id="submitBtn" style="position:relative; float:left; left:0px;">등록하기</button>
+<button id="submitBtn"  class="buttons">등록하기</button>
 
 </div>
 
