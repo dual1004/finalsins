@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="/sins/WEB-INF/common/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.1.1.min.js'/>"></script>
+
+
 <script>
 </script>
 <style>
@@ -34,10 +36,10 @@ float:left;
 
 
  <div id= "detailDiv">
-<h2><strong>제목</strong> <button style="left:600px;" class="buttons">질문하기</button></h2>
+<h2><strong>제목</strong> <button style="left:550px;" class="buttons">질문하기</button></h2>
 <hr/>
-<label style="left:500px; " class="labels">날짜</label>
-<label style="left:600px; " class="labels">조회수</label>
+<label style="left:450px; " class="labels">날짜</label>
+<label style="left:550px; " class="labels">조회수</label>
 <br>
 <hr/>
 <table>
@@ -48,15 +50,16 @@ float:left;
 <hr/>
 <label class="labels">전체 댓글 수</label>
 <br><br>
-<div id="commentDiv" style='border:1px solid; height:100px;' >
+<div id="commentDiv" style='position:relative; height:80px;' >
 
-<!-- <textarea name="" rows="4" cols="55" style="overflow:hidden; position:relative; float:left; left:100px;"></textarea>
- -->
 
-<button id="submitBtn"  class="buttons">등록하기</button>
+<textarea name="" rows="4" cols="50" style="overflow:hidden; position:relative; float:left; left:60px;"></textarea>
+
+<button id="submitBtn"  style='left:120px;' class="buttons">등록하기</button>
+
 
 </div>
-
+<hr/>
 
 
 </div>

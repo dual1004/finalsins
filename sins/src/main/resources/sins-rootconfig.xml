@@ -14,7 +14,7 @@
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath*:/mapper/**/*_SQL.xml" />
+		<property name="mapperLocations" value="classpath*:/mapper/**/*-mappper.xml" />
 	</bean>
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSession" />
@@ -22,4 +22,7 @@
 	
 	<context:component-scan base-package="com.seven.sins.**.service"></context:component-scan>
 	<context:component-scan base-package="com.seven.sins.**.dao"></context:component-scan>
+	
+	
+	
 </beans>
