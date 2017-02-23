@@ -10,6 +10,7 @@
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="readCount" column="READ_COUNT" />
 		<result property="userId" column="USER_ID" />
+		
 	</resultMap>
 	
 	
@@ -42,5 +43,19 @@
 	
 	</select> 
 	
+	<insert id = "commentInsert" parameterType = "QnaComment">
+	INSERT INTO QNA_COMMENT VALUES(NOH_SEQ_QNA_COMMENT.NEXTVAL,#{USER_ID}, #{CONTENT}, SYSDATE, #{LEV}, #{REF},
+	#{FILEPATH}, #{USER_ID}, #{QNA_NO}, #{CLASSIFY} )
+	<!-- <id property="commentNo" column="COMMENT_NO" />
+		<result property="userId" column="USER_ID" />
+		<result property="content" column="CONTENT" />
+		<result property="writeDate" column="WRITE_DATE" />
+		<result property="lev" column="LEV" />
+		<result property="ref" column="REF" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="backupId" column="BACKUP_ID" />
+		<result property="qnaNo" column="QNA_NO" />
+		<result property="classify" column="CLASSIFY" /> -->
+	</insert>
 	
 </mapper>
