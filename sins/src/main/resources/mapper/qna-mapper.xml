@@ -28,8 +28,8 @@
 		
 	</resultMap>
 	
-	<select id = "selectAll" resultType="QnaContent" resultMap="resultQnaContent">
-	SELECT * FROM QNA
+	<select id = "selectList" resultType="QnaContent" resultMap="resultQnaContent">
+	SELECT * FROM QNA ORDER BY 1 DESC
 	
 	</select>
 	
@@ -37,6 +37,11 @@
 	SELECT * FROM QNA WHERE QNA_NO = #{qNo}
 	
 	</select>
+	
+	<select id = "selectCount" resultType="int">
+	SELECT COUNT(*) FROM QNA
+	
+	</select> 
 	
 	
 </mapper>
