@@ -7,9 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="<c:url value='/js/jquery-3.1.1.min.js'/>"></script>
-
-
 <script>
+
+
+
+$(document).on("click","#submitBtn", function(){
+	
+	
+	alert($("#comment").val());
+	
+	
+});
+
 </script>
 <style>
 #detailDiv{
@@ -52,8 +61,12 @@ float:left;
 <br><br>
 <div id="commentDiv" style='position:relative; height:80px;' >
 
+<div id="comLocation">
 
-<textarea name="" rows="4" cols="50" style="overflow:hidden; position:relative; float:left; left:60px;"></textarea>
+
+</div>
+<textarea id="comment" rows="4" cols="50" style="overflow:hidden; position:relative; float:left; left:60px;"></textarea>
+
 
 <button id="submitBtn"  style='left:120px;' class="buttons">등록하기</button>
 
