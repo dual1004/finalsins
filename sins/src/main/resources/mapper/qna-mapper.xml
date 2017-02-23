@@ -10,7 +10,6 @@
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="readCount" column="READ_COUNT" />
 		<result property="userId" column="USER_ID" />
-		
 	</resultMap>
 	
 	
