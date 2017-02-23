@@ -25,6 +25,13 @@
             <enabled>true</enabled>
          </snapshots>
       </repository>
+      
+      <repository>
+      	<id>json</id>
+      	<url> https://mvnrepository.com/artifact/org.json/json</url>
+      	
+      	
+      </repository>
       <repository>
          <id>egovframe</id>
          <url>http://www.egovframe.go.kr/maven/</url>
@@ -186,18 +193,15 @@
       </dependency>    
       
 	 <!-- json -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-core</artifactId>
-	    <version>2.6.4</version>
-	</dependency>
+	 
 	 
 	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	    <version>2.6.4</version>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20160212</version>
 	</dependency>
 
+	
 
 
 	</dependencies>
