@@ -70,7 +70,7 @@ float:left;
 
 <button id="submitBtn"  style='left:120px;' class="buttons">등록하기</button>
 
-
+등록하기
 </div>
 <hr/>
 
