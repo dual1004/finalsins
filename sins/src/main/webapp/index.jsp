@@ -12,6 +12,7 @@
 		$("#m-fdiv2").hide();
 		$("#m-sdiv2").hide();
 		
+		
 		$("#enroll").click(function() {
 			/* $("#m-fdiv").slideUp("slow", function() {
 				$("#m-fdiv2").slideDown("show");

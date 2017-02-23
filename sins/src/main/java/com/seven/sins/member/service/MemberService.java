@@ -6,4 +6,5 @@ public interface MemberService {
 
 	MemberVO loginCheck(MemberVO m);
 
+	
 }

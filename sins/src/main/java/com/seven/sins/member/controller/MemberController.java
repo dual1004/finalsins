@@ -16,6 +16,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
 	@RequestMapping("loginCheck.k")
 	public String loginCheck(HttpServletRequest request, HttpSession session){
 		String userid = request.getParameter("userid");

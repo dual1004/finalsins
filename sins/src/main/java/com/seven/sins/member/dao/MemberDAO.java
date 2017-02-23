@@ -11,6 +11,7 @@ public class MemberDAO {
 
 	private static final String NAMESPACE = "Member.";
 	
+	
 	@Autowired
 	private SqlSession sqlSession;
 	

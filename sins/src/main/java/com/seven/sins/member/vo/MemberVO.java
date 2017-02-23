@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class MemberVO implements java.io.Serializable{
 
+	
 	private String userId;
 	private String userPwd;
 	private String userName;
