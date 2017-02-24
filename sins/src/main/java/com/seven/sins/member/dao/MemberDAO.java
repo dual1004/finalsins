@@ -15,7 +15,7 @@ public class MemberDAO {
 	private SqlSession sqlSession;
 	
 	public MemberVO loginCheck(MemberVO m) {
-		return (MemberVO) sqlSession.selectOne(NAMESPACE+"loginCheck", m);
+		return (MemberVO)sqlSession.selectOne(NAMESPACE+"loginCheck", m);
 	}
 
 }

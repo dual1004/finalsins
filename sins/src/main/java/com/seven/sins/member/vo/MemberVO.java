@@ -1,7 +1,7 @@
 package com.seven.sins.member.vo;
 
 import java.sql.Date;
-
+@SuppressWarnings("serial")
 public class MemberVO implements java.io.Serializable{
 
 	private String userId;

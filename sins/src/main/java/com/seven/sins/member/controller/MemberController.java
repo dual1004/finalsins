@@ -17,11 +17,8 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@RequestMapping("loginCheck.k")
-	public String loginCheck(HttpServletRequest request, HttpSession session){
-		String userid = request.getParameter("userid");
-		String userpwd = request.getParameter("userpwd");
+	public String loginCheck(String userid, String userpwd, HttpSession session, MemberVO m){
 		
-		MemberVO m = new MemberVO();
 		m.setUserId(userid);
 		m.setUserPwd(userpwd);
 		
@@ -30,7 +27,7 @@ public class MemberController {
 		if(loginUser != null){
 			session.setAttribute("loginUser", loginUser);
 			
-			return "/";
+			return "message/messagemain";
 		}
 		
 		return null;

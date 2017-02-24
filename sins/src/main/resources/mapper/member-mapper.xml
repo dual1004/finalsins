@@ -16,7 +16,7 @@
 		<result property="banTime" column="BAN_TIME" />
 	</resultMap>
 	
-	<select id="loginCheck" parameterType="MemberVO" resultType="MemberVO" resultMap="MemberVO">
+	<select id="loginCheck" parameterType="MemberVO" resultType="MemberVO" resultMap="ResultMember">
 		SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
 	</select>
 </mapper>
