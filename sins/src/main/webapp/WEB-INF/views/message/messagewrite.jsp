@@ -161,9 +161,9 @@ $( document ).ready(function() {
       <div id="left">
         <h2>메시지함</h2>
         <ul>
+        	<li><a class = "atag" href="msgreadlist.j">받은 메시지</a></li>
         	<li><h4>메시지 쓰기</h4></li>
-          	<li>받은 메시지</li>
-          	<li>보낸 메시지</li>
+          	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
           
           
         </ul>

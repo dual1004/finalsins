@@ -19,17 +19,18 @@
 		select * from message where RECEIVE_ID = #{userid} and MES_RES_DEL = 'N' order by message_no desc
 	</select>
 	
+	<select id="listcount" resultType="int" parameterType="string">
+		select count(*) from message where RECEIVE_ID = #{userid} and MES_RES_DEL = 'N'
+	</select>
+	
 	<select id="sendlist" resultMap="messagemap" parameterType="string">
-		select * from message where SEND_ID = #{userid} order by and MES_REQ_DEL = 'N' message_no desc
+		select * from message where SEND_ID = #{userid} and MES_REQ_DEL = 'N' order by message_no desc
 	</select>
 	
 	<select id="sendlistcount" resultType="int" parameterType="string">
 		select count(*) from message where SEND_ID = #{userid} and MES_REQ_DEL = 'N'
 	</select>
 	
-	<select id="listcount" resultType="int" parameterType="string">
-		select count(*) from message where RECEIVE_ID = #{userid} and MES_REQ_DEL = 'N'
-	</select>
 	
 <!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
 		select * from message where RECEIVE_ID = #{userid}	

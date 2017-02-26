@@ -174,13 +174,15 @@ $( document ).ready(function() {
       <div id="content">
         <h2>받은 메세지 </h2>
         <div id="listdiv">
+        ${currentPage } / ${maxPage } 
 	        <table id="listtable">
 	        	<tr><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
+	        		<tr><td><input type="checkbox" class="cmsgchkbox"></td>
 		        	<td>${msg.send_id }</td>
-		        	<td><a class="atag" hrfe="aaaa.j?message_no=${msg.message_no }">${msg.content }</a></td>
+		        	<td><a class="atag" href="msgreaddetail.j?message_no=${msg.message_no }">${msg.content }</a></td>
 		        	<td>${msg.message_date }</td>
-		        	<td> 11
+		        	<td> 11${msg.filepath }
 <%-- 		        	<c:if test="${msg.filepath } eq null"> 파일없음 </c:if>
 		        	<c:if test="${msg.filepath } ne null">${msg.filepath }  </c:if> --%>
 		        	</td>

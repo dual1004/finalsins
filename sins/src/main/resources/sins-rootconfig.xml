@@ -27,7 +27,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	 <!-- MultipartResolver 설정 -->
+	 <!-- MultipartResolver 설정10메가 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="100000000" />
         <property name="maxInMemorySize" value="100000000" />

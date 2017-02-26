@@ -84,13 +84,13 @@ public class MessageController {
 	}
 	
 	// 메세지 1개 읽기 컨트롤러
-	@RequestMapping("msgread.j")
+	@RequestMapping("msgreaddetail.j")
 	public ModelAndView messageReadOne(String userid, ModelAndView mv){
 		return mv;
 	}
 	//메세지 보내기 컨트롤러 
 	@RequestMapping("msgsead.j")
-	public ModelAndView messageSead(String sendid, String resiveid,String message,ModelAndView mv){
+	public ModelAndView messageSead(@SessionAttribute MemberVO loginUser, String resiveid,String message,ModelAndView mv){
 		return mv;
 	}
 	

@@ -173,20 +173,19 @@ $( document ).ready(function() {
       <div id="content">
         <h2>보낸 메세지</h2>
         <div id="listdiv">
+        	${currentPage } / ${maxPage } 
 	        <table>
-	        	<tr><th>NO.</th><th>받는사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>읽은 여부</th></tr>
+	        	<tr><th>선택</th><th>받는사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>읽은 여부</th></tr>
 	        	<c:forEach var="msg" items="${msgsendlist }">
-	        	<%-- <c:if test="${msg.mes_req_del } eq N"> --%>
-		        	<tr><td>${msg.message_no }</td>
+		        	<tr><td><input type="checkbox" class="cmsgchkbox"></td>
 		        	<td>${msg.receivie_id }</td>
-		        	<td>${msg.content }</td>
+		        	<td><a class="atag" href="msgsenddetail.j?message_no=${msg.message_no }">${msg.content }</a></td>
 		        	<td>${msg.message_date }</td>
 		        	<td>
 		        	<c:if test="${msg.filepath } eq null"> 파일없음 </c:if>
 		        	<c:if test="${msg.filepath } ne null">${msg.filepath }  </c:if>
 		        	</td>
 		        	<td>${msg.read_check }</td>
-		        <%-- </c:if> --%>
 		        </tr>
 	        	</c:forEach>
 	        </table>
