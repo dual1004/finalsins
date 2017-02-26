@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,14 +164,58 @@ $( document ).ready(function() {
         <h2>메시지함</h2>
         <ul>
         	<li><h4>받은 메세지</h4></li>
-        	<li><a href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
-          	<li>보낸 메시지</li>
+        	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
+          	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
+          	
           
           
         </ul>
       </div>
       <div id="content">
-        <h2>받은 메세지</h2>
+        <h2>받은 메세지 </h2>
+        <div id="listdiv">
+	        <table id="listtable">
+	        	<tr><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
+	        	<c:forEach var="msg" items="${msglist }">
+		        	<td>${msg.send_id }</td>
+		        	<td><a class="atag" hrfe="aaaa.j?message_no=${msg.message_no }">${msg.content }</a></td>
+		        	<td>${msg.message_date }</td>
+		        	<td> 11
+<%-- 		        	<c:if test="${msg.filepath } eq null"> 파일없음 </c:if>
+		        	<c:if test="${msg.filepath } ne null">${msg.filepath }  </c:if> --%>
+		        	</td>
+		        	<td>${msg.read_check }
+		        </tr>
+	        	</c:forEach>
+	        </table>
+	        <br>
+	        <hr>
+	        <a class = "atag"  href="msgreadlist.j?page=1">[처음] </a> 
+
+			<c:if test="${startPage gt 1 }">
+				<a class = "atag"  href="msgreadlist.j?page=${startPage - 1 }">[이전] </a> 
+			</c:if>
+			<c:if test="${startPage eq 1 }">[이전] </c:if>
+			
+			<c:forEach var="num" begin="${startPage }" end="${endPage }" step="1">
+				<c:if test="${num eq currentPage }">
+					<strong><b>${num }</b></strong>&nbsp;
+				</c:if>
+				<c:if test="${num ne currentPage }">
+					<a class = "atag"  href="msgreadlist.j?page=${num }">${num }</a> &nbsp;
+				</c:if>
+			</c:forEach>
+			
+			<c:if test="${endPage lt maxPage }">
+				<a class = "atag"  href="msgreadlist.j?page=${endPage + 1 }"> [다음] </a>
+			</c:if>
+			<c:if test="${endPage eq maxPage }">
+				[다음]
+			</c:if>
+			
+			<a class = "atag"  href="msgreadlist.j?userid=page=${maxPage }"> [마지막]</a>
+        </div>
+        
         쪽지지지지
       </div>
       <div id="right">

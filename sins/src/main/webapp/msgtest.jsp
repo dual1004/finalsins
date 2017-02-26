@@ -11,5 +11,6 @@
 <input type="text" name="userid"/> 
 <input type="submit" value="받은쪽지">
 </form>
+<a href="selectQna.n">qna</a>
 </body>
 </html>

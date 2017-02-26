@@ -1,12 +1,20 @@
 package com.seven.sins.message.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.seven.sins.message.vo.MessageVO;
-import com.sun.javafx.collections.MappingChange.Map;
 
 public interface MessageService {
 
-	List<MessageVO> messageReadlist(String userid);
+	int getListCount(String userid);
+
+	List<MessageVO> getMsgList(String userid, int currentPage, int limit);
+
+	int getSendListCount(String userId);
+
+	List<MessageVO> getSendMsgList(String userId, int currentPage, int limit);
+
+	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
 }

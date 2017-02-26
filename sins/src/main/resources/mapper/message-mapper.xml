@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Message">
-	<select id="selectlist" resultType="MessageVO">
-		select * from message
+	
+	<resultMap id="messagemap" type="MessageVO">
+		<id property="message_no" column="MESSAGE_NO" />
+		<result property="send_id" column="SEND_ID" />
+		<result property="receivie_id" column="RECEIVE_ID" />
+		<result property="content" column="CONTENT" />
+		<result property="message_date" column="MESSAGE_DATE" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="mes_req_del" column="MES_REQ_DEL" />
+		<result property="mes_res_del" column="MES_RES_DEL" />
+		<result property="classify" column="CLASSIFY" />
+		<result property="read_check" column="READ_CHECK" />
+	</resultMap>
+
+	<select id="readlist" resultMap="messagemap" parameterType="string">
+		select * from message where RECEIVE_ID = #{userid} and MES_RES_DEL = 'N' order by message_no desc
 	</select>
+	
+	<select id="sendlist" resultMap="messagemap" parameterType="string">
+		select * from message where SEND_ID = #{userid} order by and MES_REQ_DEL = 'N' message_no desc
+	</select>
+	
+	<select id="sendlistcount" resultType="int" parameterType="string">
+		select count(*) from message where SEND_ID = #{userid} and MES_REQ_DEL = 'N'
+	</select>
+	
+	<select id="listcount" resultType="int" parameterType="string">
+		select count(*) from message where RECEIVE_ID = #{userid} and MES_REQ_DEL = 'N'
+	</select>
+	
+<!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
+		select * from message where RECEIVE_ID = #{userid}	
+	</select> -->
 </mapper>

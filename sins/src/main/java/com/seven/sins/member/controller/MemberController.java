@@ -27,7 +27,7 @@ public class MemberController {
 		if(loginUser != null){
 			session.setAttribute("loginUser", loginUser);
 			
-			return "message/messagemain";
+			return "message/messageread";
 		}
 		
 		return null;

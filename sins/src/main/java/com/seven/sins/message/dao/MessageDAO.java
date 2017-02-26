@@ -1,13 +1,15 @@
 package com.seven.sins.message.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.seven.sins.message.vo.MessageVO;
-import com.sun.javafx.collections.MappingChange.Map;
+
 
 @Repository("messageDAO")
 public class MessageDAO {
@@ -16,12 +18,45 @@ public class MessageDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+
+	public int getListCount(String userid) {
+		return (int)sqlSession.selectOne(NAMESPACE + "listcount", userid);
+	}
+
 	
 	@SuppressWarnings("unchecked")
-	public List<MessageVO> messageReadList(String userid) {
-		return (List<MessageVO>) sqlSession.selectList(NAMESPACE + "selectlist", userid);
-				
+	public List<MessageVO> getMsgList(String userid, int currentPage, int limit) {
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	 
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		return (List<MessageVO>)sqlSession.selectList(NAMESPACE + "readlist", userid, rowbound);
 	}
+
+
+	public int getSendListCount(String userid) {
+		return (int)sqlSession.selectOne(NAMESPACE + "sendlistcount", userid);
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<MessageVO> getMsgSendList(String userId, int currentPage, int limit) {
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	    
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		return (List<MessageVO>)sqlSession.selectList(NAMESPACE + "sendlist", userId, rowbound);
+	}
+
+
+/*	@SuppressWarnings("unchecked")
+	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	    
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		return (Map<String, MessageVO>)sqlSession.selectMap(NAMESPACE + "selectmap", userid, "message_no", rowbound);
+	}*/
 	
 	
 }
