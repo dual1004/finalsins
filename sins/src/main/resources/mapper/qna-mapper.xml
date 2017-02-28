@@ -47,6 +47,10 @@
 	SELECT * FROM QNA_COMMENT WHERE QNA_NO = #{qNo}
 	</select>
 	
+	<select id = "commentCount" parameterType="int" resultType="int">
+	SELECT COUNT(*) FROM QNA_COMMENT WHERE QNA_NO = #{qNo}
+	</select>
+	
 	<insert id = "commentInsert" parameterType = "QnaComment" >
 	INSERT INTO QNA_COMMENT VALUES(NOH_SEQ_QNA_COMMENT.nextval, #{userId, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, SYSDATE, #{lev, jdbcType=NUMERIC}, 
 	#{ref, jdbcType=NUMERIC}, #{filepath, jdbcType=VARCHAR}, #{backupId, jdbcType=VARCHAR}, #{qnaNo, jdbcType=NUMERIC}, #{classify, jdbcType=VARCHAR} )

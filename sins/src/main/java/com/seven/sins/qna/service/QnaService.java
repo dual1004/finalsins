@@ -12,10 +12,12 @@ public interface QnaService {
 
 	int getListCount();
 
-	QnaContent getContent(int no);
+	QnaContent getContent(int qNo);
 
 	int insertCom(QnaComment qc);
 
-	ArrayList<QnaComment> getComment(int no);
+	ArrayList<QnaComment> getComment(int qNo);
+
+	int getCommentCount(int qNo);
 
 }

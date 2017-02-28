@@ -57,7 +57,7 @@ $(document).on("click","#submitBtn", function(){
 <style>
 #detailDiv{
 	width:600px;
-	height:500px;
+	
 }
 
 .labels{
@@ -91,24 +91,25 @@ float:left;
 </table>
 <br>
 <hr/>
-<label class="labels">전체 댓글 수</label>
+<label class="labels">전체 댓글 수 : <strong>${commentCount }</strong></label>
 <br><br>
 <div id="commentDiv" style='position:relative; height:80px;' >
-
+<br/>
 <div id="comLocation">
 
-
-</div>
-
-<br/>
 <table>
 <c:forEach var="comment" items="${commentList}" varStatus="status">
-<tr><td>${commentList.userId }</td><td>${commentList.content }</td></tr>
+<tr><td>${comment.userId }</td><td>${comment.content }</td>
+<td><c:if test="${loginUser.userId eq comment.userId }"><a href="comDelete.n?qNo=${qna.qNo }&comNo=${comment.commentNo}">삭제하기</a></c:if></td></tr>
 
 
 </c:forEach>
 
 </table>
+
+</div>
+
+
 <br/>
 <textarea id="comment" rows="4" cols="50" style="overflow:hidden; position:relative; float:left; left:60px;"></textarea>
 

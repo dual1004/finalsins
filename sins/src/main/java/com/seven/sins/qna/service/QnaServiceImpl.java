@@ -29,8 +29,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public QnaContent getContent(int no) {
-		return qnaDao.getContent(no);
+	public QnaContent getContent(int qNo) {
+		return qnaDao.getContent(qNo);
 	}
 
 	@Override
@@ -39,9 +39,14 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public ArrayList<QnaComment> getComment(int no) {
+	public ArrayList<QnaComment> getComment(int qNo) {
 		
-		return qnaDao.getComment(no);
+		return qnaDao.getComment(qNo);
+	}
+
+	@Override
+	public int getCommentCount(int qNo) {
+		return qnaDao.getCommentCount(qNo);
 	}
 
 	

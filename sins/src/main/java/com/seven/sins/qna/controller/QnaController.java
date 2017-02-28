@@ -61,13 +61,15 @@ public class QnaController {
 	public ModelAndView detailView(ModelAndView mv, @RequestParam(value="no", required=false) String no){
 		
 		if(no != null){
-			QnaContent qc = qnaService.getContent(Integer.parseInt(no));
+			int qNo = Integer.parseInt(no);
+			QnaContent qc = qnaService.getContent(qNo);
 			ArrayList<QnaComment> commentList = qnaService.getComment(Integer.parseInt(no));
 			
+			int commentCount = qnaService.getCommentCount(qNo);
 			
 			mv.addObject("qna", qc);
 			mv.addObject("commentList", commentList);
-			
+			mv.addObject("commentCount", commentCount);
 			mv.setViewName("qna/QnaDetail");
 			}else{
 				//에러

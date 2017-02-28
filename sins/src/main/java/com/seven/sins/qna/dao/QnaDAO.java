@@ -46,9 +46,9 @@ public class QnaDAO {
 	}
 
 
-	public QnaContent getContent(int no) {
+	public QnaContent getContent(int qNo) {
 		
-		return (QnaContent)sqlSession.selectOne("selectQna", no);
+		return (QnaContent)sqlSession.selectOne("selectQna", qNo);
 	}
 
 
@@ -60,8 +60,13 @@ public class QnaDAO {
 
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<QnaComment> getComment(int no) {
-		return (ArrayList<QnaComment>) sqlSession.selectList("selectComment", no);
+	public ArrayList<QnaComment> getComment(int qNo) {
+		return (ArrayList<QnaComment>) sqlSession.selectList("selectComment", qNo);
+	}
+
+
+	public int getCommentCount(int qNo) {
+		return (int) sqlSession.selectOne("commentCount", qNo);
 	}
 	
 
