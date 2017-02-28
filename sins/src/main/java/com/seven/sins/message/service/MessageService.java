@@ -15,6 +15,8 @@ public interface MessageService {
 
 	List<MessageVO> getSendMsgList(String userId, int currentPage, int limit);
 
+	int messageSpamInsert(String[] check_no);
+
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
 }

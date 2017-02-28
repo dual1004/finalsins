@@ -36,6 +36,10 @@
 		select count(*) from message where SEND_ID = #{userid} and MES_REQ_DEL = 'N'
 	</select>
 	
+	<insert id="spaminsert">
+	
+	</insert>
+	
 	
 <!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
 		select * from message where RECEIVE_ID = #{userid}	
