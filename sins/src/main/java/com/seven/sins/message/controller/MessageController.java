@@ -51,7 +51,7 @@ public class MessageController {
 		mv.setViewName("message/messageread");
 		return mv;
 	}
-	
+	//보낸 메시지 읽기
 	@RequestMapping("msgsendlist.j")
 	public ModelAndView messageSendList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv){
 		int currentPage = 1;
@@ -80,6 +80,20 @@ public class MessageController {
 		mv.addObject("endPage", endPage);
 
 		mv.setViewName("message/messagesendlist");
+		return mv;
+	}
+	//스팸등록 컨트롤러 
+	@RequestMapping("msgspaminsert.j")
+	public ModelAndView messageSpamInsert(String[] check_no, ModelAndView mv){
+		int result = messageservice.messageSpamInsert(check_no);
+		
+		if(result > 0){
+			// 스팸 목록으로 이동 (스팸 컨트롤러로 바꿔야함)
+			mv.setViewName("forward:msgreadlist.j");
+		}else{
+			//에러페이지 세팅
+			mv.setViewName("");
+		}
 		return mv;
 	}
 	
