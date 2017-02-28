@@ -16,8 +16,9 @@ public interface QnaService {
 
 	int insertCom(QnaComment qc);
 
-	ArrayList<QnaComment> getComment(int qNo);
+	ArrayList<QnaComment> getCommentList(int qNo);
 
 	int getCommentCount(int qNo);
+
 
 }

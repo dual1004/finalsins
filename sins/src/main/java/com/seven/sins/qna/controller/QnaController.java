@@ -63,7 +63,7 @@ public class QnaController {
 		if(no != null){
 			int qNo = Integer.parseInt(no);
 			QnaContent qc = qnaService.getContent(qNo);
-			ArrayList<QnaComment> commentList = qnaService.getComment(Integer.parseInt(no));
+			ArrayList<QnaComment> commentList = qnaService.getCommentList(Integer.parseInt(no));
 			
 			int commentCount = qnaService.getCommentCount(qNo);
 			
@@ -81,15 +81,16 @@ public class QnaController {
 	
 	
 	@RequestMapping("insertCom.n")
-	public @ResponseBody Map<String, QnaComment> insertCom(@RequestParam(value="content") String content,
+	public @ResponseBody Map<String, ArrayList<QnaComment>> insertCom(@RequestParam(value="content") String content,
 			@RequestParam(value="qnaNo") int qnaNo,
 			@RequestParam(value="userId", required=false) String userId,
 			@RequestParam(value="lev") int lev, QnaComment qc){
 		
 		System.out.println(content);
 		
-		Map<String, QnaComment> map = new HashMap<String, QnaComment>(); 
+		Map<String, ArrayList<QnaComment>> map = new HashMap<String, ArrayList<QnaComment>>(); 
 
+		
 		
 		qc.setBackupId("user01");
 		qc.setClassify("QNA_COMMENT");
@@ -105,9 +106,11 @@ public class QnaController {
 		
 		int result = qnaService.insertCom(qc);
 		
+		ArrayList<QnaComment> comList = qnaService.getCommentList(qnaNo);
+		
 		
 		if(result>0){
-			map.put("data", qc);
+			map.put("comList", comList);
 		}else{
 			//실패
 		}

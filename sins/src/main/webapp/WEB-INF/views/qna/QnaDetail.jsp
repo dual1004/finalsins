@@ -30,12 +30,41 @@ $(document).on("click","#submitBtn", function(){
 			   success : function(result){
 			
 				   
-			     
+			    var tag=""; 
 			
-			       alert(result.data.content);
-			  	 $("#comment").html("");
+				tag+="<br/><table>";
+				   
+				for(var i =0; i<result.comList.length;i++){
+				
+			
+				tag+="<tr><td>"+result.comList[i].userId+"</td><td>"+result.comList[i].content+"</td>";
+				
+				tag+="<td>";
+				
+					if(${loginUser} == result.comList[i].userId){
+					tag+="<a href='comDelete.n?qNo="+result.comList[i].qnaNo+"&comNo="+result.comList[i].commentNo+">삭제하기</a>";
+							
+					tag+="</td></tr>";
+				
+					
+					}
 
-			   }
+				}
+				
+				tag+="</table>";
+				   
+				   
+				$("#comLocation").html(tag);
+				
+				
+			       alert(result.comList[0].content);
+			  	 $("#comment").html("");
+			  	 
+			  	 
+			  	 
+			  	 
+
+			   } 
 			
 			   
 			
@@ -55,21 +84,38 @@ $(document).on("click","#submitBtn", function(){
 
 </script>
 <style>
+
 #detailDiv{
 	width:600px;
-	
+	min-height:300px;
+	height:auto;
+	border:1px solid;
+}
+#comLocation{
+	width:600px;
+	min-height:200px;
+	height:auto;
+	border:1px solid;
+	border-color:blue;
+}
+#comForm{
+	width:600px;
+	min-height:100px;
+	height:auto;
+	border:1px solid;
+	border-color:red;
+	margin:auto;
 }
 
 .labels{
 font-size:11px;
-position:relative; 
 float:left; 
 
 }
 
 .buttons{
-position:relative;
-float:left;
+/* position:relative;*/
+float:left; 
 }
 
 </style>
@@ -93,12 +139,12 @@ float:left;
 <hr/>
 <label class="labels">전체 댓글 수 : <strong>${commentCount }</strong></label>
 <br><br>
-<div id="commentDiv" style='position:relative; height:80px;' >
+<div id="comLocation" >
 <br/>
-<div id="comLocation">
+
 
 <table>
-<c:forEach var="comment" items="${commentList}" varStatus="status">
+<c:forEach var="comment" items="${commentList}">
 <tr><td>${comment.userId }</td><td>${comment.content }</td>
 <td><c:if test="${loginUser.userId eq comment.userId }"><a href="comDelete.n?qNo=${qna.qNo }&comNo=${comment.commentNo}">삭제하기</a></c:if></td></tr>
 
@@ -108,10 +154,10 @@ float:left;
 </table>
 
 </div>
+<hr/>
 
-
-<br/>
-<textarea id="comment" rows="4" cols="50" style="overflow:hidden; position:relative; float:left; left:60px;"></textarea>
+<div id="comForm">
+<textarea id="comment" rows="4" cols="50" style="overflow:hidden; float:left;"></textarea>
 
 
 <button id="submitBtn"  style='left:120px;' class="buttons">등록하기</button>

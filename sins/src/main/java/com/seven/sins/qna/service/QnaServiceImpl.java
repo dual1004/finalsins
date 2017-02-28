@@ -39,15 +39,17 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public ArrayList<QnaComment> getComment(int qNo) {
+	public ArrayList<QnaComment> getCommentList(int qNo) {
 		
-		return qnaDao.getComment(qNo);
+		return qnaDao.getCommentList(qNo);
 	}
 
 	@Override
 	public int getCommentCount(int qNo) {
 		return qnaDao.getCommentCount(qNo);
 	}
+
+	
 
 	
 	

@@ -60,7 +60,7 @@ public class QnaDAO {
 
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<QnaComment> getComment(int qNo) {
+	public ArrayList<QnaComment> getCommentList(int qNo) {
 		return (ArrayList<QnaComment>) sqlSession.selectList("selectComment", qNo);
 	}
 
