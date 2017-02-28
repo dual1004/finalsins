@@ -8,8 +8,9 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="username" />
-		<property name="password" value="password" />
+		<property name="defaultEncoding" value="utf-8"/>
+		<property name="username" value="royalg083@gmail.com" />
+		<property name="password" value="zndndn0414!" />
 	 
 		<property name="javaMailProperties">
 		   <props>
@@ -19,8 +20,9 @@
 		</property>
 	</bean>
 	 
-	<bean id="mailMail" class="com.seven.sins.common.mail.Mailsend">
-		<property name="mailSender" ref="mailSender" />
+	<bean id="email" class="com.seven.sins.common.mail.Email">
+	</bean>
+	<bean id="emailSender" class="com.seven.sins.common.mail.EmailSender">
 	</bean>
 	
 </beans>

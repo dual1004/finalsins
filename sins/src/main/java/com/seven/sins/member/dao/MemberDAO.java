@@ -18,4 +18,8 @@ public class MemberDAO {
 		return (MemberVO)sqlSession.selectOne(NAMESPACE+"loginCheck", m);
 	}
 
+	public int findPw(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"findPw", m);
+	}
+
 }
