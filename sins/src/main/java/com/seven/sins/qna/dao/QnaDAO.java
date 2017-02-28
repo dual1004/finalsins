@@ -1,6 +1,9 @@
 package com.seven.sins.qna.dao;
 
 
+
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,6 +17,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.seven.sins.qna.vo.QnaComment;
 import com.seven.sins.qna.vo.QnaContent;
 
 @Repository("qnaDao")
@@ -45,6 +49,19 @@ public class QnaDAO {
 	public QnaContent getContent(int no) {
 		
 		return (QnaContent)sqlSession.selectOne("selectQna", no);
+	}
+
+
+	public int insertCom(QnaComment qc) {
+
+		return sqlSession.insert("commentInsert", qc);
+	}
+
+
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<QnaComment> getComment(int no) {
+		return (ArrayList<QnaComment>) sqlSession.selectList("selectComment", no);
 	}
 	
 

@@ -43,19 +43,15 @@
 	
 	</select> 
 	
-	<insert id = "commentInsert" parameterType = "QnaComment">
-	INSERT INTO QNA_COMMENT VALUES(NOH_SEQ_QNA_COMMENT.NEXTVAL,#{USER_ID}, #{CONTENT}, SYSDATE, #{LEV}, #{REF},
-	#{FILEPATH}, #{USER_ID}, #{QNA_NO}, #{CLASSIFY} )
-	<!-- <id property="commentNo" column="COMMENT_NO" />
-		<result property="userId" column="USER_ID" />
-		<result property="content" column="CONTENT" />
-		<result property="writeDate" column="WRITE_DATE" />
-		<result property="lev" column="LEV" />
-		<result property="ref" column="REF" />
-		<result property="filepath" column="FILEPATH" />
-		<result property="backupId" column="BACKUP_ID" />
-		<result property="qnaNo" column="QNA_NO" />
-		<result property="classify" column="CLASSIFY" /> -->
+	<select id = "selectComment" parameterType="int" resultType="QnaComment" resultMap="resultQnaComment">
+	SELECT * FROM QNA_COMMENT WHERE QNA_NO = #{qNo}
+	</select>
+	
+	<insert id = "commentInsert" parameterType = "QnaComment" >
+	INSERT INTO QNA_COMMENT VALUES(NOH_SEQ_QNA_COMMENT.nextval, #{userId, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, SYSDATE, #{lev, jdbcType=NUMERIC}, 
+	#{ref, jdbcType=NUMERIC}, #{filepath, jdbcType=VARCHAR}, #{backupId, jdbcType=VARCHAR}, #{qnaNo, jdbcType=NUMERIC}, #{classify, jdbcType=VARCHAR} )
+	
+	
 	</insert>
 	
 </mapper>

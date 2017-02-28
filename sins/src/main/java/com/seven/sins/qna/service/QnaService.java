@@ -1,7 +1,9 @@
 package com.seven.sins.qna.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.seven.sins.qna.vo.QnaComment;
 import com.seven.sins.qna.vo.QnaContent;
 
 public interface QnaService {
@@ -10,6 +12,10 @@ public interface QnaService {
 
 	int getListCount();
 
-	QnaContent getContent(int parseInt);
+	QnaContent getContent(int no);
+
+	int insertCom(QnaComment qc);
+
+	ArrayList<QnaComment> getComment(int no);
 
 }

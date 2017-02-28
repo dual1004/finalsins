@@ -1,14 +1,22 @@
 package com.seven.sins.qna.controller;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.qna.service.QnaService;
+import com.seven.sins.qna.vo.QnaComment;
 import com.seven.sins.qna.vo.QnaContent;
 
 @Controller
@@ -52,16 +60,55 @@ public class QnaController {
 	@RequestMapping("detailQna.n")
 	public ModelAndView detailView(ModelAndView mv, @RequestParam(value="no", required=false) String no){
 		
-		if(no == null){
-			//에러페이지
+		if(no != null){
+			QnaContent qc = qnaService.getContent(Integer.parseInt(no));
+			ArrayList<QnaComment> commentList = qnaService.getComment(Integer.parseInt(no));
+			
+			
+			mv.addObject("qna", qc);
+			mv.addObject("commentList", commentList);
+			
+			mv.setViewName("qna/QnaDetail");
+			}else{
+				//에러
+			}
+			
+			
+			return mv;
+	}
+	
+	
+	@RequestMapping("insertCom.n")
+	public @ResponseBody Map<String, QnaComment> insertCom(@RequestParam(value="content") String content,
+			@RequestParam(value="qnaNo") int qnaNo,
+			@RequestParam(value="userId", required=false) String userId,
+			@RequestParam(value="lev") int lev, QnaComment qc){
+		
+		System.out.println(content);
+		
+		Map<String, QnaComment> map = new HashMap<String, QnaComment>(); 
+
+		
+		qc.setBackupId("user01");
+		qc.setClassify("QNA_COMMENT");
+		qc.setContent(content);
+		qc.setFilepath(null);
+		qc.setLev(lev);
+		qc.setQnaNo(qnaNo);
+		qc.setRef(0);
+		qc.setUserId("user01");
+		
+		
+		
+		
+		int result = qnaService.insertCom(qc);
+		
+		
+		if(result>0){
+			map.put("data", qc);
 		}else{
-		QnaContent qc = qnaService.getContent(Integer.parseInt(no));
-		
-		mv.addObject("qna", qc);
-		mv.setViewName("qna/QnaDetail");
+			//실패
 		}
-		
-		
-		return mv;
+		return map;
 	}
 }

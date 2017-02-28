@@ -237,7 +237,7 @@
 
 		</div>
 
-		<div id="footer">FOOTER</div>
+		<div id="footer"><a href="selectQna.n">test</a>FOOTER</div>
 	</div>
 	<div id="spot1"></div>
 	<div id="spot2"></div>

@@ -13,11 +13,45 @@
 
 $(document).on("click","#submitBtn", function(){
 	
+	var comment = $("#comment").val();
 	
-	alert($("#comment").val());
+	
+	 if(comment.length!=0){
+		
+		 
+		 $.ajax({
+			
+			   url : 'insertCom.n?qnaNo=${qna.qnaNo}&lev=0&content='+comment ,
+					   
+			   dataType: "json",
+			
+			   contentType: "application/json; charset=utf-8",
+			
+			   success : function(result){
+			
+				   
+			     
+			
+			       alert(result.data.content);
+			  	 $("#comment").html("");
+
+			   }
+			
+			   
+			
+			 });
+
+		 
+		
+	}else{
+		alert("댓글을 입력해주세요.");
+	} 
 	
 	
 });
+
+
+
 
 </script>
 <style>
@@ -65,6 +99,17 @@ float:left;
 
 
 </div>
+
+<br/>
+<table>
+<c:forEach var="comment" items="${commentList}" varStatus="status">
+<tr><td>${commentList.userId }</td><td>${commentList.content }</td></tr>
+
+
+</c:forEach>
+
+</table>
+<br/>
 <textarea id="comment" rows="4" cols="50" style="overflow:hidden; position:relative; float:left; left:60px;"></textarea>
 
 
