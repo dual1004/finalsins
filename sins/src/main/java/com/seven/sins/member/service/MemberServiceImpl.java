@@ -16,4 +16,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.loginCheck(m);
 	}
 
+	@Override
+	public int findPw(MemberVO m) {
+		return memberDAO.findPw(m);
+	}
+
 }

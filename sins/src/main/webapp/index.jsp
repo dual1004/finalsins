@@ -11,6 +11,8 @@
 	$(document).ready(function() {
 		$("#m-fdiv2").hide();
 		$("#m-sdiv2").hide();
+		$("#m-fdiv3").hide();
+		$("#m-sdiv3").hide();
 		
 		$("#enroll").click(function() {
 			/* $("#m-fdiv").slideUp("slow", function() {
@@ -37,132 +39,26 @@
 			$("#m-fdiv").slideUp("slow");
 			$("#m-sdiv").slideUp("slow");
 		});
+		
+		$("#findPwd").click(function() {
+			$("#m-fdiv3").css({
+				"display" : "none",
+				"position" : "relative"
+			});
+			$("#m-sdiv3").css({
+				"display" : "none",
+				"position" : "relative"
+			});
+			
+			$("#m-fdiv3").show();
+			$("#m-sdiv3").show();
+			
+			$("#m-fdiv").slideUp("slow");
+			$("#m-sdiv").slideUp("slow");
+		});
 	});
 </script>
-<style>
-	* {
-		margin: 0px;
-		padding: 0px;
-	}
-	
-	#container {
-		width: 100%;
-		height: 770px;
-		margin: 0px auto;
-		background-color: #E7E4F9;
-	}
-	
-	#header {
-		height: 40px;
-		/* margin-bottom: 10px; */
-		background-color: #9581BF;
-	}
-	
-	#mdiv {
-		width: 1100px;
-		height: 500px;
-		margin: auto;
-		margin-top: 100px;
-		margin-bottom: 98px;
-		background-color: #E7E4F9;
-	}
-	
-	#m-fdiv, #m-sdiv, #m-fdiv2, #m-sdiv2 {
-		display: inline-block;
-		float: left;
-		width: 500px;
-		height: 500px;
-		background-color: white;
-		-moz-box-shadow: 1px 1px #888888;
-		-webkit-box-shadow: 1px 1px #888888;
-		box-shadow: 1px 1px #888888;
-	}
-	
-	
-	#m-fdiv, #m-fdiv2 {
-		margin-left: 40px;
-		margin-right: 20px;
-	}
-	
-	#m-sdiv {
-		background-image: url("resources/images/파이널로고.jpg");
-		background-size: 450px 450px;
-		background-position: center center;
-	}
-	
-	#m-f-ltable {
-		width: 400px;
-		height: 300px;
-		margin-top: 100px;
-		margin-left: 50px;
-	}
-	
-	#loginbtn {
-		height: 84px;
-		width: 90px;
-		font-size: 20px;
-		margin-left: 6px;
-	}
-	
-	#tdd1 {
-		padding-top: 3px;
-		padding-bottom: 3px;
-	}
-	
-	#tdd2 {
-		padding-bottom: 3px;
-	}
-	
-	#m-f-ctable {
-		width: 400px;
-		height: 500px;
-		margin-left: 50px;
-	}
-	
-	#tr1 {
-		height: 100px;
-		width : 400px;
-	}
-	
-	#tr2 {
-		height: 340px;
-		width : 400px;
-	}
-	
-	#tr3 {
-		height: 50px;
-		width : 400px;
-	}
-	
-	.box {
-		height: 30px;
-		width: 280px;
-		font-size: 20px;
-	}
-	
-	#footer {
-		height: 30px;
-		clear: both;
-		border: 1px solid #9581BF;
-		background-color: white;
-	}
-	
-	@media screen and (max-width:500px) {
-		#container {
-			width: auto;
-		}
-		#m-fdiv, #m-sdiv {
-			display: block;
-			float: none;
-			width: auto;
-			margin: auto;
-		}
-		#m-fdiv {
-			margin-top: 50px;
-			margin-bottom: 40px;
-		}
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/index.css" />
 </head>
 <body>
 	<div id="container">
@@ -174,23 +70,17 @@
 					<table id="m-f-ltable" style="cellpadding: 0; cellspacing: 0">
 						<tr style="height: 100px;">
 							<td><h2>로그인</h2></td>
-							<td></td>
-							<td></td>
 						</tr>
 
 						<tr style="height: 100px;">
 							<td colspan="2">
-								<table style="cellpadding: 0; cellspacing: 0; height: 100px">
+								<table id="LT" style="cellpadding: 0; cellspacing: 0; height: 100px">
 									<tr style="height: 50px;">
-										<td id="tdd1"><input type="text" size="25" class="box"
-											name="userid" /></td>
-										<td rowspan="2">&nbsp;<input type="submit" value="로그인"
-											id="loginbtn" /></td>
+										<td><input id="tdd1" type="text" class="box" name="userid" /></td>
 									</tr>
-									<!-- <tr><td style="width : 30px;"><div style="width : 13.3px"></div></td></tr> -->
 									<tr style="height: 50px;">
-										<td id="tdd2"><input type="password" size="25"
-											class="box" name="userpwd" /></td>
+										<td><input id="tdd2" type="password" class="box" name="userpwd" /></td>
+										<td rowspan="2">&nbsp;<input type="submit" value="로그인" id="loginbtn" /></td>
 										<td></td>
 									</tr>
 								</table>
@@ -198,10 +88,11 @@
 						</tr>
 
 						<tr style="height: 100px;">
-							<td></td>
+							
 							<td><label id="enroll" style="border-right: 1px solid gray;">회원가입
-									&nbsp; &nbsp;</label><label> &nbsp; &nbsp;아이디/비밀번호 찾기</label></td>
-							<td></td>
+									&nbsp; &nbsp;</label> &nbsp; &nbsp;
+									<label id="findPwd">아이디/비밀번호 찾기</label></td>
+							
 						</tr>
 					</table>
 				</form>
@@ -210,34 +101,59 @@
 
 			<div id="m-fdiv2">
 				<table id="m-f-ctable" style="cellpadding: 0; cellspacing: 0">
-					<tr id="tr1">
+					<tr>
 						<td><h2>이용약관</h2></td>
 					</tr>
-					<tr id="tr2">
-						<td><textarea style="width : 400px; height : 340px;resize: none;" readonly>글자가 무수히 많이 들어갈 것 입니다.</textarea></td>
+					<tr>
+						<td><textarea id="yakwan" readonly>글자가 무수히 많이 들어갈 것 입니다.</textarea></td>
 					</tr>
-					<tr id="tr3">
-						<td style="text-align : right">동의합니다 <input type="radio" /> </td>
+					<tr>
+						<td style="float:right">동의합니다 <input type="radio" /> </td>
 					</tr>
 				</table>
 			</div>
 
 			<div id="m-sdiv2">
-				<table id="m-s-enrolltable">
-					<tr><td><label>아이디</label></td><td></td><td></td></tr>
-					<tr><td><label>비밀번호</label></td><td></td><td></td></tr>
-					<tr><td><label>비밀번호 확인</label></td><td></td><td></td></tr>
-					<tr><td><label>이름</label></td><td></td><td></td></tr>
-					<tr><td><label>전화번호</label></td><td></td><td></td></tr>
-					<tr><td><label>성별</label></td><td></td><td></td></tr>
-					<tr><td><input type="button" value="지우기" /></td><td><input type="button" value="취소" /></td><td><input type="button" value="가입하기" /></td></tr>
-				</table>
+			<form action="" method="post">
+               <table id="m-s-enrolltable">
+                  <tr class="tr1"><td class="std" style="text-align : center"><h2>회원가입</h2></td></tr>
+                  <tr class="tr1"><td class="std"><input type="email" size="25" maxlength="25" placeholder="아이디@이메일"/></td><td class="ttd"><input type="button" value="중복확인" /></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" placeholder="비밀번호"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" placeholder="비밀번호 확인"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="15" placeholder="이름"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="phone" size="25" maxlength="13" placeholder="핸드폰번호"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std">
+                        <input type="radio" name="gender" value="M">남
+                        &nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="F">여</td>
+                     <td class="ttd"></td></tr>
+                  <tr id="rtr"><td><input type="reset" value="지우기" style="margin-left : 16.5px; margin-right : 16.5px;" /><input type="button" value="가입하기" style="margin-right : 16.5px" /><input type="button" value="취소" /></td></tr>
+              </table>
+            </form>
+            </div>
+			
+			<div id="m-fdiv3">
+			<form action="" method="post">
+			<table id="idt">
+			<tr><td><h2>아이디 찾기</h2></td></tr>
+			<tr><td><input class="box" name="userName" placeholder="이  름" /></td></tr>
+			<tr><td><input class="box" name="phone" placeholder="전화번호" /></td></tr>
+			<tr><td><input type="submit" value="아이디 찾기"/></td></tr>
+			</table>
+			</form>
 			</div>
-
-
+			
+			<div id="m-sdiv3">
+			<form action="findPwd.p" method="post">
+			<table id="pwdt">
+			<tr><td><h2>비밀번호 찾기</h2></td></tr>
+			<tr><td><input type="email" class="box" name="userid" placeholder="이메일형식 아이디" /></td></tr>
+			<tr><td><input type="submit" value="비밀번호 찾기"/></td></tr>
+			</table>
+			</form>
+			</div>
 		</div>
 
-		<div id="footer">FOOTER</div>
+		<div id="footer"><p id="c">copyright ⓒ SINS77 Allright reserved.</p></div>
 	</div>
 	<div id="spot1"></div>
 	<div id="spot2"></div>
