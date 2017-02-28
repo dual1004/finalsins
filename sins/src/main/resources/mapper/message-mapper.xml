@@ -13,10 +13,15 @@
 		<result property="mes_res_del" column="MES_RES_DEL" />
 		<result property="classify" column="CLASSIFY" />
 		<result property="read_check" column="READ_CHECK" />
+		<result property="user_name" column="USER_NAME" />
 	</resultMap>
 
 	<select id="readlist" resultMap="messagemap" parameterType="string">
-		select * from message where RECEIVE_ID = #{userid} and MES_RES_DEL = 'N' order by message_no desc
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+			join member on(send_id = user_id)
+			where RECEIVE_ID = #{userid} and MES_RES_DEL = 'N' 
+			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{userid})
+			order by message_no desc
 	</select>
 	
 	<select id="listcount" resultType="int" parameterType="string">

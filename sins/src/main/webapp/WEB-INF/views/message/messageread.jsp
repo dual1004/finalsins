@@ -132,7 +132,10 @@
       z-index: 100;
       border: 1px solid #9581BF;
       }
-
+	
+	td{
+		text-align : center;
+	}
     </style>
 <script type="text/javascript">
 $( document ).ready(function() { 
@@ -166,6 +169,8 @@ $( document ).ready(function() {
         	<li><h4>받은 메세지</h4></li>
         	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
+          	<li>스팸 보관함</li>
+          	<li>스팸 유저</li>
           	
           
           
@@ -174,12 +179,21 @@ $( document ).ready(function() {
       <div id="content">
         <h2>받은 메세지 </h2>
         <div id="listdiv">
-        ${currentPage } / ${maxPage } 
-	        <table id="listtable">
-	        	<tr><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
+        	<div id="tablemenu" align="center">
+        	<input type="button" value="스팸신고" onclick="spam()"/>
+        	<input type="button" value="삭제" onclick=""/> 
+        	<select id="select" name="select">
+        		<option value="userid">아이디 </option>
+        		<option value="content">내용</option>
+        	</select>
+        	<input type="search" id="seach" name="seach">
+        	<input type="button" value="찾기">
+        	${currentPage } / ${maxPage } page</div> 
+	        <table id="listtable" align="center">
+	        	<tr><th><input type="checkbox" id="msgallchk"></th><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
 	        		<tr><td><input type="checkbox" class="cmsgchkbox"></td>
-		        	<td>${msg.send_id }</td>
+		        	<td>${msg.user_name }<input type="hidden" id="sendid" value="${msg.send_id }"></td>
 		        	<td><a class="atag" href="msgreaddetail.j?message_no=${msg.message_no }">${msg.content }</a></td>
 		        	<td>${msg.message_date }</td>
 		        	<td> 11${msg.filepath }
@@ -192,30 +206,32 @@ $( document ).ready(function() {
 	        </table>
 	        <br>
 	        <hr>
-	        <a class = "atag"  href="msgreadlist.j?page=1">[처음] </a> 
-
-			<c:if test="${startPage gt 1 }">
-				<a class = "atag"  href="msgreadlist.j?page=${startPage - 1 }">[이전] </a> 
-			</c:if>
-			<c:if test="${startPage eq 1 }">[이전] </c:if>
-			
-			<c:forEach var="num" begin="${startPage }" end="${endPage }" step="1">
-				<c:if test="${num eq currentPage }">
-					<strong><b>${num }</b></strong>&nbsp;
+	        <div align="center">
+		        <a class = "atag"  href="msgreadlist.j?page=1">[처음] </a> 
+	
+				<c:if test="${startPage gt 1 }">
+					<a class = "atag"  href="msgreadlist.j?page=${startPage - 1 }">[이전] </a> 
 				</c:if>
-				<c:if test="${num ne currentPage }">
-					<a class = "atag"  href="msgreadlist.j?page=${num }">${num }</a> &nbsp;
+				<c:if test="${startPage eq 1 }">[이전] </c:if>
+				
+				<c:forEach var="num" begin="${startPage }" end="${endPage }" step="1">
+					<c:if test="${num eq currentPage }">
+						<strong><b>${num }</b></strong>&nbsp;
+					</c:if>
+					<c:if test="${num ne currentPage }">
+						<a class = "atag"  href="msgreadlist.j?page=${num }">${num }</a> &nbsp;
+					</c:if>
+				</c:forEach>
+				
+				<c:if test="${endPage lt maxPage }">
+					<a class = "atag"  href="msgreadlist.j?page=${endPage + 1 }"> [다음] </a>
 				</c:if>
-			</c:forEach>
-			
-			<c:if test="${endPage lt maxPage }">
-				<a class = "atag"  href="msgreadlist.j?page=${endPage + 1 }"> [다음] </a>
-			</c:if>
-			<c:if test="${endPage eq maxPage }">
-				[다음]
-			</c:if>
-			
-			<a class = "atag"  href="msgreadlist.j?userid=page=${maxPage }"> [마지막]</a>
+				<c:if test="${endPage eq maxPage }">
+					[다음]
+				</c:if>
+				
+				<a class = "atag"  href="msgreadlist.j?userid=page=${maxPage }"> [마지막]</a>
+			</div>
         </div>
         
         쪽지지지지

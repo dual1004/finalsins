@@ -13,4 +13,5 @@
 		<typeAlias type="com.seven.sins.member.vo.MemberVO" alias="MemberVO"/>
 	</typeAliases>
 	
+
 </configuration>
