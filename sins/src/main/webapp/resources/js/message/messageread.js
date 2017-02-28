@@ -3,15 +3,10 @@
  */
 
 function spam() {
-	var checkid = $()
-	document.location.href='msgspaminsert.j'; 
-}
-	$('input[name=check_no]').val(chk_values());
-	var check_no = $('input[name=check_no]').val();
 	 var form = document.chkform;
 	 form. action =  'msgspaminsert.j';
 	 form.method = "post";
-	  form.submit();
+	 form.submit();
 };
 
 function chk_values() {

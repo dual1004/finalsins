@@ -9,7 +9,7 @@
 <title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="<c:url value="/js/message/messageread.js"/>"></script>
+	<script src="<c:url value="/resources/js/message/messageread.js"/>"></script>
     <style>
       #container {
         width: 1000px;
@@ -196,15 +196,9 @@ $( document ).ready(function() {
 	        <table id="listtable" align="center">
 	        	<tr><th><input type="checkbox" id="msgallchk"></th><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
-<<<<<<< HEAD
-	        		<tr><td><input type="checkbox" class="cmsgchkbox"></td>
-		        	<td>${msg.user_name }<input type="hidden" id="sendid" value="${msg.send_id }"></td>
-		        	<td><a class="atag" href="msgreaddetail.j?message_no=${msg.message_no }">${msg.content }</a></td>
-=======
 	        		<tr><td><input type="checkbox" class="cmsgchkbox" name="msg_no" value="${msg.message_no }"></td>
 		        	<td>${msg.user_name }</td>
 		        	<td>${msg.content }</a></td>
->>>>>>> branch 'master' of https://github.com/dual1004/finalsins.git
 		        	<td>${msg.message_date }</td>
 		        	<td> 11${msg.filepath }
 <%-- 		        	<c:if test="${msg.filepath } eq null"> 파일없음 </c:if>

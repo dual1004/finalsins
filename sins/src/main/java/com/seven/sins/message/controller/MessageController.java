@@ -94,6 +94,7 @@ public class MessageController {
 			//에러페이지 세팅
 			mv.setViewName("");
 		}
+		mv.setViewName("forward:msgreadlist.j");
 		return mv;
 	}
 	
