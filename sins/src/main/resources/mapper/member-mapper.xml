@@ -22,7 +22,7 @@
 	
 	<update id="findPw" parameterType="MemberVO">
 		UPDATE member 
-		SET userPwd = #{userPwd}
-		WHERE userId = #{userId}
+		SET USER_PWD = #{userPwd}
+		WHERE USER_ID = #{userId}
 	</update>
 </mapper>

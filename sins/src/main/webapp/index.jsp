@@ -114,33 +114,40 @@
 			</div>
 
 			<div id="m-sdiv2">
-				<table id="m-s-enrolltable">
-					<tr><td><label>아이디</label></td><td></td><td></td></tr>
-					<tr><td><label>비밀번호</label></td><td></td><td></td></tr>
-					<tr><td><label>비밀번호 확인</label></td><td></td><td></td></tr>
-					<tr><td><label>이름</label></td><td></td><td></td></tr>
-					<tr><td><label>전화번호</label></td><td></td><td></td></tr>
-					<tr><td><label>성별</label></td><td></td><td></td></tr>
-					<tr><td><input type="button" value="지우기" /></td><td><input type="button" value="취소" /></td><td><input type="button" value="가입하기" /></td></tr>
-				</table>
-			</div>
+			<form action="" method="post">
+               <table id="m-s-enrolltable">
+                  <tr class="tr1"><td class="std" style="text-align : center"><h2>회원가입</h2></td></tr>
+                  <tr class="tr1"><td class="std"><input type="email" size="25" maxlength="25" placeholder="아이디@이메일"/></td><td class="ttd"><input type="button" value="중복확인" /></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" placeholder="비밀번호"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" placeholder="비밀번호 확인"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="15" placeholder="이름"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="phone" size="25" maxlength="13" placeholder="핸드폰번호"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std">
+                        <input type="radio" name="gender" value="M">남
+                        &nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="F">여</td>
+                     <td class="ttd"></td></tr>
+                  <tr id="rtr"><td><input type="reset" value="지우기" style="margin-left : 16.5px; margin-right : 16.5px;" /><input type="button" value="가입하기" style="margin-right : 16.5px" /><input type="button" value="취소" /></td></tr>
+              </table>
+            </form>
+            </div>
 			
 			<div id="m-fdiv3">
-			<form action="#" method="post">
-			<table>
-			<tr><td>아이디 찾기</td></tr>
-			<tr><td><input size="25" placeholder="이  름" /></td></tr>
-			<tr><td><input size="25" placeholder="전화번호" /></td></tr>
-			<tr><td><input type="submit" value="찾기"/></td></tr>
+			<form action="" method="post">
+			<table id="idt">
+			<tr><td><h2>아이디 찾기</h2></td></tr>
+			<tr><td><input class="box" name="userName" placeholder="이  름" /></td></tr>
+			<tr><td><input class="box" name="phone" placeholder="전화번호" /></td></tr>
+			<tr><td><input type="submit" value="아이디 찾기"/></td></tr>
 			</table>
 			</form>
 			</div>
 			
 			<div id="m-sdiv3">
-			<form action="#" method="post">
-			<table>
-			<tr><td>비밀번호 찾기</td></tr>
-			<tr><td><input size="25" placeholder="이메일" /></td></tr>
+			<form action="findPwd.p" method="post">
+			<table id="pwdt">
+			<tr><td><h2>비밀번호 찾기</h2></td></tr>
+			<tr><td><input type="email" class="box" name="userid" placeholder="이메일형식 아이디" /></td></tr>
+			<tr><td><input type="submit" value="비밀번호 찾기"/></td></tr>
 			</table>
 			</form>
 			</div>

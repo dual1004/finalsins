@@ -5,16 +5,15 @@
 <head>
 <meta charset=UTF-8>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>이메일 발송 완료</title>
+<title>이메일 발송 실패</title>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/email.css" />
 </head>
 <body>
 <div id="main">
 	<hr/>
 	<br/>
-	<h2>${ param.userid }<br/>
-	(으)로 새로운 비밀번호를 발송하였습니다!</h2>
-	<a href="index.jsp">로그인 하러 가기</a>
+	<h2>아이디를 찾을 수가 없습니다. 다시 확인 바랍니다.</h2>
+	<a href="index.jsp">홈으로 가기</a>
 	<br/>
 	<br/>
 	<br/>
