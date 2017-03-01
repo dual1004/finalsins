@@ -23,7 +23,7 @@
 <div id="mylayout">
 	<div id="message" onclick="message()"></div>
 	<div id="allet"></div>
-	<div id="my">${ param.userid } <br/>님 정보보기</div>
+	<div id="my">${ loginUser.userId } <br/>님 정보보기</div>
 </div>
 </body>
 </html>

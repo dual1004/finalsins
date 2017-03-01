@@ -84,17 +84,17 @@ public class MessageController {
 	}
 	//스팸등록 컨트롤러 
 	@RequestMapping("msgspaminsert.j")
-	public ModelAndView messageSpamInsert(String[] check_no, ModelAndView mv){
+	public ModelAndView messageSpamInsert(int[] check_no, ModelAndView mv){
 		int result = messageservice.messageSpamInsert(check_no);
 		
 		if(result > 0){
-			// 스팸 목록으로 이동 (스팸 컨트롤러로 바꿔야함)
+			//1개이상 스팸이 등록됨
 			mv.setViewName("forward:msgreadlist.j");
 		}else{
-			//에러페이지 세팅
-			mv.setViewName("");
+			//스팸등록 같은것만됨
+			mv.setViewName("forward:msgreadlist.j");
 		}
-		mv.setViewName("forward:msgreadlist.j");
+		
 		return mv;
 	}
 	

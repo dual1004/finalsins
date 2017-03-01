@@ -36,7 +36,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public int messageSpamInsert(String[] check_no) {
+	public int messageSpamInsert(int[] check_no) {
 		return messageDAO.messageSpamInsert(check_no);
 	}
 

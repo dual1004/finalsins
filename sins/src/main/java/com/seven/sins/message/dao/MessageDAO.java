@@ -49,10 +49,11 @@ public class MessageDAO {
 	}
 
 	// 스팸 등록
-	public int messageSpamInsert(String[] check_no) {
+	public int messageSpamInsert(int[] check_no) {
 		int result = 0;
 		for(int i = 0 ; i < check_no.length;i++){
-			result += (int)sqlSession.update(NAMESPACE + "spaminsert", check_no[i]);
+			int no = check_no[i];
+			result += (int)sqlSession.update(NAMESPACE + "spaminsert",no);
 		}
 		return result;
 	}
