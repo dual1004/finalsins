@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seven.sins.message.dao.MessageDAO;
+import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.message.vo.MessageVO;
 
 @Service("messageservice")
@@ -38,6 +39,16 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public int messageSpamInsert(int[] check_no) {
 		return messageDAO.messageSpamInsert(check_no);
+	}
+
+	@Override
+	public int messageResiveDelet(int[] check_no) {
+		return messageDAO.messageResiveDelet(check_no);
+	}
+
+	@Override
+	public int getSeachListCount(MessageListVO listvo) {
+		return messageDAO.getSeachListCount(listvo);
 	}
 
 	/*@Override

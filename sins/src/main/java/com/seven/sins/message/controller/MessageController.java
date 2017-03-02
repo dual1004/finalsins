@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.message.service.MessageService;
+import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.message.vo.MessageVO;
 
 @Controller
@@ -22,15 +23,27 @@ public class MessageController {
 	
 	//메세지 리시트 읽기 컨트롤러
 	@RequestMapping("msgreadlist.j")
-	public ModelAndView messageReadList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv){
+	public ModelAndView messageReadList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv,
+			MessageListVO listvo){
+		
 		int currentPage = 1;
 		int limit = 10;
-
+		
 		if (page != null)
 			currentPage = Integer.parseInt(page);
-
-		int totalListCount = messageservice.getListCount(loginUser.getUserId());
-		List<MessageVO> msglist = messageservice.getMsgList(loginUser.getUserId(), currentPage, limit);
+		// 검색창에 아무것도없을대
+		int totalListCount = 0;
+		List<MessageVO> msglist = null;
+		if(listvo.getSeach() == null || listvo.getSeach().equals("")){
+			totalListCount = messageservice.getListCount(loginUser.getUserId());
+			msglist = messageservice.getMsgList(loginUser.getUserId(), currentPage, limit);
+		}else{
+			totalListCount = messageservice.getSeachListCount(listvo);
+			System.out.println(totalListCount);
+			//msglist = messageservice.getMsgSeachList(listvo, currentPage, limit);
+		}
+			
+		
 		//Map<String, MessageVO> msgmap = messageservice.getMsgMap(loginUser.getUserId(), currentPage, limit);
 		int maxPage = (int) ((double) totalListCount / limit + 0.9);
 
@@ -96,6 +109,51 @@ public class MessageController {
 		}
 		
 		return mv;
+	}
+	// 메시지 삭제(받은 메시지)
+	@RequestMapping("msgrecivedel.j")
+	public ModelAndView messageResiveDelete(int[] check_no, ModelAndView mv){
+		int result = messageservice.messageResiveDelet(check_no);
+		
+		if(result > 0){
+			mv.setViewName("forward:msgreadlist.j");
+		}else{
+			//삭제 실페페이지
+			mv.setViewName("");
+		}
+		return mv;
+	}
+	//검색 컨트롤러
+	@RequestMapping("msgreciveseach.j")
+	public ModelAndView messageReciveSeach(ModelAndView mv){
+		int currentPage = 1;
+		int limit = 10;
+
+		if (page != null)
+			currentPage = Integer.parseInt(page);
+
+		int sendListCount = messageservice.getSendListCount(loginUser.getUserId());
+		List<MessageVO> msgsendlist = messageservice.getSendMsgList(loginUser.getUserId(), currentPage, limit);
+
+		int maxPage = (int) ((double) sendListCount / limit + 0.9);
+
+		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+
+		int endPage = startPage + limit - 1;
+
+		if (maxPage < endPage)
+			endPage = maxPage;
+
+		mv.addObject("sendlistCount", sendListCount);
+		mv.addObject("msgsendlist", msgsendlist);		
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("maxPage", maxPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+
+		mv.setViewName("message/messagesendlist");
+		return mv;
+		
 	}
 	
 	// 메세지 1개 읽기 컨트롤러

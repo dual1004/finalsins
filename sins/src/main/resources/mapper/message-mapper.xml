@@ -38,10 +38,19 @@
 	
 	<select id="spaminsert" parameterType="int">
 		{call
-			PRO_SPAMINSERT(#{no})
+			jun_PRO_SPAMINSERT(#{no})
 		}
 	</select>
 	
+	<update id="resivedel" parameterType="int">
+		update message set MES_RES_DEL = 'Y' where MESSAGE_NO = #{no}
+	</update>
+	
+	<select id="seachlistcount" parameterType="MsglistVO">
+		{call
+			JUN_PRO_MSGSEACHLISTCOUNT(#{loginid},#{select},#{seach})
+		}
+	</select>
 	
 <!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
 		select * from message where RECEIVE_ID = #{userid}	

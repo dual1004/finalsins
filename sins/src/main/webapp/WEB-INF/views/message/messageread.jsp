@@ -32,24 +32,29 @@
       </div>
       <div id="content" class="box">
         <div id="listdiv">
+        	<h2>받은 메세지함</h2><br>
         	<div id="tablemenu">
         	<form name = "chkform">
 			<input type="hidden" name="check_no"/>
         	</form>        	
         	<input type="button" value="스팸신고" onclick="spamin()"/>
-        	<input type="button" value="삭제" onclick=""/> 
+        	<input type="button" value="삭제" onclick="recive_del()"/>
+        	<form id="seachform" action="msgreadlist.j">
+        	<input type="hidden" name="loginid" value="${loginUser.userId }"/>
         	<select id="select" name="select">
-        		<option value="userid">아이디 </option>
-        		<option value="content">내용</option>
+        		<option value="id">아이디 </option>
+        		<option value="name">이름</option>
+        		<option value="cont">내용</option>
         	</select>
-        	<input type="search" id="seach" name="seach">
-        	<input type="button" value="찾기">
+        	<input type="search" id="seach" name="seach"/>
+        	<input type="submit" value="찾기"/>
         	${currentPage } / ${maxPage } page
+        	</form>
         	</div> 
 	        <table id="listtable" align="center">
 	        	<tr><th><input type="checkbox" id="msgallchk"></th><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
-	        		<tr><td><input type="checkbox" class="cmsgchkbox" name="msg_no" value="${msg.message_no}"></td>
+	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
 		        	<td>${msg.user_name }</td>
 		        	<td>${msg.content }</a></td>
 		        	<td>${msg.message_date }</td>

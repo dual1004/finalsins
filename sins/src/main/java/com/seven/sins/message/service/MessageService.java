@@ -3,6 +3,7 @@ package com.seven.sins.message.service;
 import java.util.List;
 import java.util.Map;
 
+import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.message.vo.MessageVO;
 
 public interface MessageService {
@@ -16,6 +17,10 @@ public interface MessageService {
 	List<MessageVO> getSendMsgList(String userId, int currentPage, int limit);
 
 	int messageSpamInsert(int[] check_no);
+
+	int messageResiveDelet(int[] check_no);
+
+	int getSeachListCount(MessageListVO listvo);
 
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
