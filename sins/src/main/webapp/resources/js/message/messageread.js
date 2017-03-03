@@ -10,6 +10,14 @@ $(function() {
 			$('.msgchkbox').attr('checked', false);
 		}
 	});
+	if($('selectid') == 'cont'){
+		$('#select').val("cont").prop("selected", true);
+	}else if($('selectid') == 'name'){
+		$('#select').val("name").prop("selected", true);
+	}else{
+		$('#select').val("id").prop("selected", true);
+	}
+	
 });
 function spamin() {
 	$('input[name=check_no]').val(chk_values());
@@ -40,3 +48,17 @@ function chk_values() {
 	  return chk;
 };
 
+function pagefn(no) {
+	$('page').val(no);
+	var form = document.seachform;
+	 form. action =  'msgreadlist.j';
+	 form.method = "post";
+	 form.submit();
+}
+function userpage(userid) {
+	
+}
+
+function msgdettail(tring) {
+	alert(tring);
+}

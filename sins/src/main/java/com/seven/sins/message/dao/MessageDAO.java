@@ -68,12 +68,25 @@ public class MessageDAO {
 	}
 
 	public int getSeachListCount(MessageListVO listvo) {
-		System.out.println(listvo.getLoginid());
-		System.out.println(listvo.getSeach());
-		listvo.setSeach("%"+listvo.getSeach()+"%");
-		System.out.println(listvo.getSelect());
-		
-		return (int)sqlSession.selectOne(NAMESPACE + "seachlistcount", listvo);
+		listvo.setSeach("%"+ listvo.getSeach()+"%");
+		return (int)sqlSession.selectOne(NAMESPACE+"seachlistcount", listvo);
+	}
+
+	public List<MessageVO> getMsgSeachList(MessageListVO listvo, int currentPage, int limit) {
+		List<MessageVO> msglist = null;
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	    
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		listvo.setSeach("%" + listvo.getSeach() + "%");
+		if(listvo.getSelect().equals("id")){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "idseachlist", listvo, rowbound);
+		}else if(listvo.getSelect().equals("name")){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "nameseachlist", listvo, rowbound);
+		}else{
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "contentseachlist", listvo, rowbound);
+		}
+		return msglist;
 	}
 
 

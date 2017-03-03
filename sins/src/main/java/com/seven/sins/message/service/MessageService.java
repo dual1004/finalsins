@@ -22,6 +22,8 @@ public interface MessageService {
 
 	int getSeachListCount(MessageListVO listvo);
 
+	List<MessageVO> getMsgSeachList(MessageListVO listvo, int currentPage, int limit);
+
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
 }

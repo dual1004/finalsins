@@ -39,7 +39,7 @@
           </snapshots> 
        </repository> 
         
-       <!-- oracle --> 
+        <!-- oracle --> 
        <repository> 
           <id>oracle</id> 
           <name>ORACLE JDBC Repository</name> 
@@ -199,12 +199,14 @@
           <version>1.0.2</version> 
        </dependency> 
         
-       	<!-- oracle --> 
+       	 <!-- oracle --> 
        <dependency> 
           <groupId>com.oracle</groupId> 
           <artifactId>ojdbc6</artifactId> 
           <version>11.2.0.3</version> 
-       </dependency> 
+       </dependency>
+       
+       
         
         <!-- dbcp --> 
  		   <dependency> 
