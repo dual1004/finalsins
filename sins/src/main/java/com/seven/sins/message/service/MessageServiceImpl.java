@@ -51,6 +51,11 @@ public class MessageServiceImpl implements MessageService{
 		return messageDAO.getSeachListCount(listvo);
 	}
 
+	@Override
+	public List<MessageVO> getMsgSeachList(MessageListVO listvo, int currentPage, int limit) {
+		return messageDAO.getMsgSeachList(listvo, currentPage, limit);
+	}
+
 	/*@Override
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {
 		return messageDAO.getMsgMap(userid, currentPage, limit);

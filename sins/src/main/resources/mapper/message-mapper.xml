@@ -46,12 +46,37 @@
 		update message set MES_RES_DEL = 'Y' where MESSAGE_NO = #{no}
 	</update>
 	
-	<select id="seachlistcount" parameterType="MsglistVO">
-		{call
-			JUN_PRO_MSGSEACHLISTCOUNT(#{loginid},#{select},#{seach})
-		}
+	<select id="seachlistcount" parameterType="MsglistVO" resultType="int">
+		select JUN_MSGSEACHLISTCOUNT(#{loginid},#{select},#{seach}) from dual
+		
+	</select> 
+	
+	<select id="idseachlist" parameterType="MsglistVO" resultMap="messagemap">
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+			join member on(send_id = user_id)
+			where RECEIVE_ID = #{loginid} and MES_RES_DEL = 'N' 
+			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{loginid})
+			and send_id like #{seach}
+			order by message_no desc
 	</select>
 	
+	<select id="nameseachlist" parameterType="MsglistVO" resultMap="messagemap">
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+			join member on(send_id = user_id)
+			where RECEIVE_ID = #{loginid} and MES_RES_DEL = 'N' 
+			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{loginid})
+			and user_name like #{seach}
+			order by message_no desc
+	</select>
+	
+	<select id="contentseachlist" parameterType="MsglistVO" resultMap="messagemap">
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+			join member on(send_id = user_id)
+			where RECEIVE_ID = #{loginid} and MES_RES_DEL = 'N' 
+			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{loginid})
+			and content like #{seach}
+			order by message_no desc
+	</select>
 <!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
 		select * from message where RECEIVE_ID = #{userid}	
 	</select> -->

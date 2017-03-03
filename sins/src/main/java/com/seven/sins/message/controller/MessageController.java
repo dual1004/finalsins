@@ -25,7 +25,7 @@ public class MessageController {
 	@RequestMapping("msgreadlist.j")
 	public ModelAndView messageReadList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv,
 			MessageListVO listvo){
-		
+		String seach = listvo.getSeach();
 		int currentPage = 1;
 		int limit = 10;
 		
@@ -39,8 +39,7 @@ public class MessageController {
 			msglist = messageservice.getMsgList(loginUser.getUserId(), currentPage, limit);
 		}else{
 			totalListCount = messageservice.getSeachListCount(listvo);
-			System.out.println(totalListCount);
-			//msglist = messageservice.getMsgSeachList(listvo, currentPage, limit);
+			msglist = messageservice.getMsgSeachList(listvo, currentPage, limit);
 		}
 			
 		
@@ -54,12 +53,15 @@ public class MessageController {
 		if (maxPage < endPage)
 			endPage = maxPage;
 
+		listvo.setSeach(seach);
 		mv.addObject("totalCount", totalListCount);
 		mv.addObject("msglist", msglist);		
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("maxPage", maxPage);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
+		mv.addObject("seach",listvo.getSeach());
+		mv.addObject("select",listvo.getSelect());
 		
 		mv.setViewName("message/messageread");
 		return mv;
@@ -122,38 +124,6 @@ public class MessageController {
 			mv.setViewName("");
 		}
 		return mv;
-	}
-	//검색 컨트롤러
-	@RequestMapping("msgreciveseach.j")
-	public ModelAndView messageReciveSeach(ModelAndView mv){
-		int currentPage = 1;
-		int limit = 10;
-
-		if (page != null)
-			currentPage = Integer.parseInt(page);
-
-		int sendListCount = messageservice.getSendListCount(loginUser.getUserId());
-		List<MessageVO> msgsendlist = messageservice.getSendMsgList(loginUser.getUserId(), currentPage, limit);
-
-		int maxPage = (int) ((double) sendListCount / limit + 0.9);
-
-		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
-
-		int endPage = startPage + limit - 1;
-
-		if (maxPage < endPage)
-			endPage = maxPage;
-
-		mv.addObject("sendlistCount", sendListCount);
-		mv.addObject("msgsendlist", msgsendlist);		
-		mv.addObject("currentPage", currentPage);
-		mv.addObject("maxPage", maxPage);
-		mv.addObject("startPage", startPage);
-		mv.addObject("endPage", endPage);
-
-		mv.setViewName("message/messagesendlist");
-		return mv;
-		
 	}
 	
 	// 메세지 1개 읽기 컨트롤러
