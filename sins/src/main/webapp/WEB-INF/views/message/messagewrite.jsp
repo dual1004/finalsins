@@ -1,186 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset=UTF-8>
-<title>SINS</title>
+<title>MESSAGE DETAIL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <style>
-      #container {
-        width: 1000px;
-        margin: 0px auto;
-        background-color: #E7E4F9;
-      }
-      #header {
-    	height: 40px;
-        margin-bottom: 10px;
-        background-color: #9581BF;
-      }
-      #t-l {
-      	float:left;
-      	margin-left: 10px;
-      	display:none;
-      }
-      #t-r {
-      	position: absolute;
-      	float:right;
-      	margin-right: 10px;
-      	right: 10px;
-      	display:none;
-      }
-      #left {
-        width: 130px;
-        height : 500px;
-        margin-left: 30px;
-        float: left;
-        background-color: white;
-      }
-      #content {
-        width: 600px;
-        height: 500px;
-        padding: 20px;
-        margin-left: 20px;
-        float: left;
-        background-color: white;
-      }
-      #right {
-        width: 130px;
-        height : 500px;
-        margin-right: 30px;
-        float: right;
-        background-color: white;
-      }
-      #footer {
-      	height:30px;
-        clear: both;
-        margin-top: 10px;
-        border: 1px solid #9581BF;
-        background-color: white;
-      }
-      @media screen and (max-width:500px) {
-      	#t-l {
-      	display:block;
-      	}
-      	#t-r {
-      	display:block;
-      	}
-        #container {
-          width: auto;
-        }
-        #left {
-          display : none;
-          float: none;
-          width: auto;
-        }
-        #content {
-          float: none;
-          width: auto;
-          margin: auto;
-        }
-        #right {
-          display : none;
-          float: none;
-          width: auto;
-        }
-      }
-      
-      @media screen and (max-width:900px) {
-      	#t-r {
-      	display:block;
-     	}
-        #right {
-          display: none;
-          float: none;
-          width: auto;
-        }
-      }
-      #overlay_t { 
-      background-color: #000; 
-      bottom: 0; 
-      left: 0; 
-      opacity: 0.0; 
-      filter: alpha(opacity = 50); /* IE7 & 8 */ 
-      position: fixed; 
-      right: 0; 
-      top: 0; 
-      z-index: 99; 
-      display:none;
-      }
-      #spot1 {
-      width: 200px;
-      height : 300px;
-      background-color: white;
-      position:absolute; 
-      left:10px; 
-      top:30px; 
-      display:none;
-      z-index: 100;
-      border: 1px solid #9581BF;
-      }
-      #spot2 {
-      width: 200px;
-      height : 300px;
-      background-color: white;
-      position:absolute; 
-      right:10px; 
-      top:30px; 
-      display:none;
-      z-index: 100;
-      border: 1px solid #9581BF;
-      }
-
-    </style>
-<script type="text/javascript">
-$( document ).ready(function() { 
-    $('#t-l-b').click(function(){ 
-     	$('#spot1, #overlay_t').show(); 
- 	}); 
- 	$('#overlay_t').click(function(e){ 
-     	e.preventDefault(); 
-     	$('#spot1, #overlay_t').hide(); 
-	});
- 	$('#t-r-b').click(function(){ 
-     	$('#spot2, #overlay_t').show(); 
- 	}); 
- 	$('#overlay_t').click(function(e){ 
-     	e.preventDefault(); 
-     	$('#spot2, #overlay_t').hide(); 
-	});
-});
-</script>
-  </head>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/sins/resources/js/message/messagewrite.js"></script>
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/newsfeed-common.css" />
+</head>
   <body>
-    <div id="container">
-      <div id="header">
+  		<div id="header">
       	<div id="overlay_t"></div> 
-      	<div id="t-l"><a id="t-l-b" href="#">=</a></div>
-       	<div id="t-r"><a id="t-r-b" href="#">=</a></div>
+      	<div id="t-l"></div>
+      	<div id="top"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
+       	<div id="t-r"></div>
       </div>
-      <div id="left">
-        <h2>메시지함</h2>
+    <div id="container">
+      <div id="left" class="box">
+         <h2>메시지함</h2><br>
         <ul>
-        	<li><a class = "atag" href="msgreadlist.j">받은 메시지</a></li>
+        	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
         	<li><h4>메시지 쓰기</h4></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
-          
-          
+          	<li>스팸 보관함</li>
+          	<li>스팸 유저</li>
+          	
         </ul>
       </div>
-      <div id="content">
-        <h2>메시지 쓰기</h2>
-        <form action="msgsead.j">
-        <input type="submit" value="쪽지보내기"/>
-        <input type="hidden" name="sendid" value="user01">
-        	<table>
-        		<tr><th>받는사람 : </th><th><input type="text" required="required" id="userid" name="resiveid"/></th><th>주소록 버튼위치</th></tr>
-        		<tr><td colspan="3"><textarea rows="18" cols="80" id="message" name="message"></textarea></td></tr>
-        		<tr><td>파일 선택 : </td><td colspan="2"></td></tr>
-        	</table>
-        </form>
+      <div id="content" class="box">
+        <div id="msgsenddiv">
+        	<h2>메시지 쓰기</h2><br>
+        	<form action="msgsead.j" enctype="multipart/fora-data">
+        		<input type="hidden" name="send_id" value="${loginUser.userId}">
+        		<input type="submit" id="msgsendbtn" value="쪽지보내기"/><br/>
+        		<input type="hidden" name="sendid" value="user01">
+				<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="resiveid"/><br/>
+        		<textarea rows="10" cols="70" name="content"></textarea><br/>
+				<input type="file" name="filepath">
+
+        	</form>
+        </div>
       </div>
-      <div id="right">
+      <div id="right" class="box">
         <h2>RIGHT</h2>
         <ul>
           <li>Lorem</li>
@@ -188,10 +54,10 @@ $( document ).ready(function() {
           <li>Dolor</li>
         </ul>
       </div>
-      <div id="footer">
-        FOOTER
-      </div>
     </div>
+     <div id="footer">
+        <c:import url="../common/footer.jsp" charEncoding="UTF-8" />
+      </div>
     <div id="spot1"></div>
     <div id="spot2"></div>
   </body>

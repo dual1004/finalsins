@@ -89,6 +89,11 @@ public class MessageDAO {
 		return msglist;
 	}
 
+	//메세지 1개 선택(받은거 보낸거둘다)
+	public MessageVO getMessageOne(int msgno) {
+		return (MessageVO)sqlSession.selectOne(NAMESPACE+"selectone", msgno);
+	}
+
 
 /*	@SuppressWarnings("unchecked")
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {

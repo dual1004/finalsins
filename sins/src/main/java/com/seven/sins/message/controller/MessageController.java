@@ -5,8 +5,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -125,16 +128,32 @@ public class MessageController {
 		}
 		return mv;
 	}
-	
-	// 메세지 1개 읽기 컨트롤러
-	@RequestMapping("msgreaddetail.j")
-	public ModelAndView messageReadOne(String userid, ModelAndView mv){
+	//받은 메세지 디테일 컨트롤러
+	@RequestMapping("msgdetail.j")
+	public ModelAndView messageDetatil(int msgno, ModelAndView mv){
+		MessageVO msgvo = messageservice.getMessageOne(msgno);
+		mv.addObject("msgone", msgvo);
+		mv.setViewName("message/msgdetail");
 		return mv;
 	}
+
 	//메세지 보내기 컨트롤러 
 	@RequestMapping("msgsead.j")
-	public ModelAndView messageSead(@SessionAttribute MemberVO loginUser, String resiveid,String message,ModelAndView mv){
-		return mv;
+	public ModelAndView messageSead(MessageVO sendmsg,String[] resiveid,ModelAndView mv){
+		
+		System.out.println(sendmsg.getSend_id());
+		System.out.println(sendmsg.getContent());
+		for(int i = 0 ; i < resiveid.length ; i++){
+			System.out.println(resiveid[i]);
+		}
+		return null;
+	}
+	// 메세지 보낼때 친구목록 자동완성
+	@RequestMapping("autocomresiveid.j")
+	@ResponseBody
+	public String autocomresiveid(@RequestBody String id){
+			System.out.println("rkskek");
+		return "가나다";
 	}
 	
 }

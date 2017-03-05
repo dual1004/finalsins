@@ -49,7 +49,7 @@ function chk_values() {
 };
 
 function pagefn(no) {
-	$('page').val(no);
+	$('#page').val(no);
 	var form = document.seachform;
 	 form. action =  'msgreadlist.j';
 	 form.method = "post";
@@ -59,6 +59,10 @@ function userpage(userid) {
 	
 }
 
-function msgdettail(tring) {
-	alert(tring);
+function msgdetail(msgno) {
+	$('#msgno').val(msgno);
+	var form = document.detailform;
+	 form. action =  'msgrecivedetail.j';
+	 form.method = "post";
+	 form.submit();
 }

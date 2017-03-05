@@ -33,29 +33,27 @@
       <div id="content" class="box">
         <div id="listdiv">
         	<h2>받은 메세지함</h2><br>
+        	<form name = "detailform">
+        		<input type="hidden" id="msgno" name="msgno"/>
+        	</form>
         	<input type="hidden" id="selectid" value="${select}"/>
         	<div id="tablemenu">
         	<form name = "chkform">
-			<input type="hidden" name="check_no"/>
+				<input type="hidden" name="check_no"/>
         	</form>        	
         	<form id="seachform" action="msgreadlist.j">
-        	<input type="button" value="스팸신고" onclick="spamin()"/>
-        	<input type="button" value="삭제" onclick="recive_del()"/>
-        	<input type="hidden" name="loginid" value="${loginUser.userId }"/>
-        	<input type="hidden" id="page" name="page" value="1"/>
-        	<select id="select" name="select">
-		    	<option value="id">아이디 </option>
-		       	<option value="name">이름</option>
-		       	<option value="cont">내용</option>
-		    </select>
-		    <input type="search" id="seach" name="seach" value="${seach}"/>
-		       
-        	
-        	
-        	<input type="submit" value="찾기"/>
-        	
-       
-        	${currentPage } / ${maxPage } page
+        		<input type="button" value="스팸신고" onclick="spamin()"/>
+        		<input type="button" value="삭제" onclick="recive_del()"/>
+        		<input type="hidden" name="loginid" value="${loginUser.userId }"/>
+        		<input type="hidden" id="page" name="page" value="1"/>
+        		<select id="select" name="select">
+			    	<option value="id">아이디 </option>
+		       		<option value="name">이름</option>
+		       		<option value="cont">내용</option>
+		    	</select>
+		    	<input type="search" id="seach" name="seach" value="${seach}"/>
+        		<input type="submit" value="찾기"/>
+	        	${currentPage } / ${maxPage } page
         	</form>
         	</div> 
 	        <table id="listtable" align="center">
@@ -66,7 +64,7 @@
 		        	<%-- <a href="userpage.b(${msglist.receivie_id}">${msg.user_name }</a> --%>
 		        	</td>
 		        	<td>
-		        	<a href="#" onclick="msgdetail(${msg.user_name })">${msg.content}</a>
+		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
 		        
 		        	</td>
 		        	<td>${msg.message_date }</td>

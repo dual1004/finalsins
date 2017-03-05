@@ -6,7 +6,9 @@
 <head>
 <meta charset=UTF-8>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/top-common.css" />
 <title>Insert title here</title>
 <script type="text/javascript">
