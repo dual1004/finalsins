@@ -12,6 +12,12 @@
 		<typeAlias type="com.seven.sins.message.vo.MessageListVO" alias="MsglistVO"/>
 		<typeAlias type="com.seven.sins.qna.vo.QnaComment" alias="QnaComment"/>
 		<typeAlias type="com.seven.sins.member.vo.MemberVO" alias="MemberVO"/>
+		
+		<typeAlias type="com.seven.sins.group.vo.GroupVO" alias="GroupVO"/>
+      <typeAlias type="com.seven.sins.group.vo.GroupLikeVO" alias="GroupLikeVO"/>
+      <typeAlias type="com.seven.sins.group.vo.GroupWriteVO" alias="GroupWriteVO"/>
+      <typeAlias type="com.seven.sins.group.vo.GroupMemberVO" alias="GroupMemberVO"/>
+      <typeAlias type="com.seven.sins.group.vo.GroupCommentVO" alias="GroupCommentVO"/>
 	</typeAliases>
 	
 

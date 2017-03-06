@@ -29,7 +29,10 @@
 	</select>
 	
 	<select id="sendlist" resultMap="messagemap" parameterType="string">
-		select * from message where SEND_ID = #{userid} and MES_REQ_DEL = 'N' order by message_no desc
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+			join member on(RECEIVE_ID = user_id)
+			where SEND_ID = #{userid} and MES_REQ_DEL = 'N' 
+			order by message_no desc
 	</select>
 	
 	<select id="sendlistcount" resultType="int" parameterType="string">
@@ -83,6 +86,20 @@
 			join member on(send_id = user_id)
 			where message_no = #{msg_no}
 	</select>
+	
+	<select id="autocomresiveid" parameterType="string" resultType="string">
+		select * from (select * from 
+			(select response_id user_id from FRIEND where request_id = #{send_id} and ACCEPT_YN = 'Y')
+			union all
+			(select request_id user_id from FRIEND where response_id = #{send_id} and ACCEPT_YN = 'Y'))
+			where user_id like #{receivie_id}
+	</select>
+	
+	<insert id="sendmsg" parameterType="MessageVO">
+		insert into message values(
+			#{send_id},#{receivie_id},#{content},sysdate,#{filepath}
+			,default, default, 'MESSAGE', default, JUN_MESSAGE_SEQ.nextval)
+	</insert>
 <!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
 		select * from message where RECEIVE_ID = #{userid}	
 	</select> -->

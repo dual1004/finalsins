@@ -61,6 +61,16 @@ public class MessageServiceImpl implements MessageService{
 		return messageDAO.getMessageOne(msgno);
 	}
 
+	@Override
+	public List<String> autocomresiveid(MessageVO msgvo) {
+		return messageDAO.autocomresiveid(msgvo);
+	}
+
+	@Override
+	public int messageSend(MessageVO sendmsg) {
+		return messageDAO.messageSend(sendmsg);
+	}
+
 	/*@Override
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {
 		return messageDAO.getMsgMap(userid, currentPage, limit);

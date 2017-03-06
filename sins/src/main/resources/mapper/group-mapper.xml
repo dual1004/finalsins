@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group">
+	<resultMap type="GroupVO" id="resultGroup">
+		<id property="groupNo" column="GROUP_NO"/>
+		<result property="groupName" column="GROUP_NAME"/>
+		<result property="keyword" column="KEYWORD"/>
+		<result property="groupLike" column="GROUP_LIKE"/>
+		<result property="filepath" column="FILEPATH"/>
+		<result property="category1" column="CATEGORY1"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="classfy" column="CLASSIFY"/>
+		<result property="userId" column="USER_ID"/>
+	</resultMap>
+	
+	<!-- Group -->
+	<select id="selectGroupList" parameterType="GroupVO" resultType="GroupVO" resultMap="resultGroup">
+		SELECT * FROM GROUP_LIST
+	</select>
+	
+	<select id="selectGroup" parameterType="int" resultType="GroupVO" resultMap="resultGroup">
+		SELECT * FROM GROUP_LIST WHERE GROUP_NO = ${groupNo}
+	</select>
+	
+	<insert id="insertGroup" parameterType="GroupVO">
+		INSERT INTO GROUP_LIST VALUES 
+		(YOON_SEQ_GROUP.NEXTVAL, ${groupName}, ${keyword}, 0, null, 
+		${category1}, default, GROUP_LIST, ${userId})
+	</insert>	
+
+	<update id="updateGroup" parameterType="GroupVO">
+		UPDATE GROUP_LIST
+		SET GROUP_NAME = ${groupName}, KEYWORD=${keyword}, FILEPATH=${filepath} 
+		WHERE GROUP_NO = ${groupNo}
+	</update>	
+
+	<delete id="deleteGroup" parameterType="GroupVO">
+		DELETE FROM GROUP_LIST WHERE GROUP_NO = ${groupNo}
+	</delete>	
+	
+	<!-- GroupLike -->
+	<insert id="groupLike" parameterType="GroupLikeVO">
+		INSERT INTO GROUP_LIKE VALUES (${writeNo}, ${userId}, ${classfy})
+	</insert>
+
+	<delete id="groupUnlike" parameterType="GroupLikeVO">
+		DELETE FROM GROUP_LIKE 
+		WHERE WRITE_NO = ${writeNo} AND USER_ID = ${userId} AND CLASSIFY = ${classfy}
+	</delete>
+	<!-- GroupWrite -->
+	<resultMap type="GroupWriteVO" id="resultGroupWrite">
+		<id property="writeNo" column="WRITE_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="content" column="CONTENT"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="filepath" column="FILEPATH"/>
+		<result property="writeLike" column="WRITE_LIKE"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="groupNoBak" column="GROUP_NO_BAK"/>
+		<result property="groupNameBak" column="GROUP_NAME_BAK"/>
+		<result property="userIdBak" column="USER_ID_BAK"/>
+		<result property="classify" column="CLASSIFY"/>
+		<result property="report" column="REPORT"/>
+	</resultMap>
+	
+	<select id="selectGroupWriteList" parameterType="GroupWriteVO" resultType="GroupWriteVO" resultMap="resultGroupWrite">
+		SELECT * FROM GROUP_MAIN WHERE GROUP_NO = ${groupNo} ORDER BY WRITE_NO DESC
+	</select>
+	
+	<insert id="insertGroupWrite" parameterType="GroupWriteVO">
+		
+	</insert>
+	<update id="updateGroupWrite" parameterType="GroupWriteVO">
+	
+	</update>
+	<update id="deleteGroupWrite" parameterType="GroupWriteVO">
+	
+	</update>
+	
+	<!-- GroupMember -->
+	<!-- GroupComment -->
+	
+</mapper>

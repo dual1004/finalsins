@@ -3,34 +3,27 @@
  */
 
 $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#reciveid" ).autocomplete({
-      source: availableTags
-    });
-  } );
+  $('#reciveid').keyup(function() {
+	$.ajax({
+		url : "autocomresiveid.j",
+		type : "post",
+		data : {"receivie_id" : $(this).val(),
+				"send_id" : $('#send_id').val()},
+		success : function(data) {
+			$('#reciveid').autocomplete({
+				source : data
+			})
+		}
+	})
+});
+});
+function submit() {
+	// ajax로 존재하는 유저인지 검색 후 서브밋
+	var form = document.sendform;
+	 form. action =  'msgsead.j';
+	 form.method = "post";
+	 form.submit();
+}
 /*$('#reciveid').autocomplete({
 source: function(request, response) {
 	$.ajax({

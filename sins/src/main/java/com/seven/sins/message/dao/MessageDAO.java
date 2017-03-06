@@ -94,6 +94,17 @@ public class MessageDAO {
 		return (MessageVO)sqlSession.selectOne(NAMESPACE+"selectone", msgno);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<String> autocomresiveid(MessageVO msgvo) {
+		msgvo.setReceivie_id("%"+ msgvo.getReceivie_id() + "%");
+		RowBounds rowBound = new RowBounds(0,9);
+		return (List<String>)sqlSession.selectList(NAMESPACE + "autocomresiveid", msgvo,rowBound);
+	}
+
+	public int messageSend(MessageVO sendmsg) {
+		return (int)sqlSession.insert(NAMESPACE + "sendmsg", sendmsg);
+	}
+
 
 /*	@SuppressWarnings("unchecked")
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {

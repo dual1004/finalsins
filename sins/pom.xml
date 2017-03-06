@@ -227,6 +227,7 @@
  		    <artifactId>json</artifactId> 
  		    <version>20160810</version> 
  		</dependency> 
+ 		<!-- 메세지 컨버터 오류 해결 -->
  		<dependency> 
  		    <groupId>org.codehaus.jackson</groupId> 
  		    <artifactId>jackson-mapper-asl</artifactId> 

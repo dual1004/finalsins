@@ -1,7 +1,11 @@
 package com.seven.sins.message.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.member.vo.MemberVO;
@@ -139,21 +144,21 @@ public class MessageController {
 
 	//메세지 보내기 컨트롤러 
 	@RequestMapping("msgsead.j")
-	public ModelAndView messageSead(MessageVO sendmsg,String[] resiveid,ModelAndView mv){
+	public ModelAndView messageSead(MessageVO sendmsg,String[] resiveid,HttpServletRequest request, ModelAndView mv){		
+		// 파일 업로드 영역
 		
-		System.out.println(sendmsg.getSend_id());
-		System.out.println(sendmsg.getContent());
-		for(int i = 0 ; i < resiveid.length ; i++){
-			System.out.println(resiveid[i]);
-		}
-		return null;
+		
+
+		int result = messageservice.messageSend(sendmsg);
+		mv.setViewName("forward:보낸 메시지함");
+		return mv;
 	}
 	// 메세지 보낼때 친구목록 자동완성
 	@RequestMapping("autocomresiveid.j")
 	@ResponseBody
-	public String autocomresiveid(@RequestBody String id){
-			System.out.println("rkskek");
-		return "가나다";
+	public List<String> autocomresiveid(MessageVO msgvo){
+		List<String> list = messageservice.autocomresiveid(msgvo);
+		return list;
 	}
 	
 }

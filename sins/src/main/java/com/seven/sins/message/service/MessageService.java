@@ -26,6 +26,10 @@ public interface MessageService {
 
 	MessageVO getMessageOne(int msgno);
 
+	List<String> autocomresiveid(MessageVO msgvo);
+
+	int messageSend(MessageVO sendmsg);
+
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
 }
