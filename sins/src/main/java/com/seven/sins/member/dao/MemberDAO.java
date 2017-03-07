@@ -22,4 +22,8 @@ public class MemberDAO {
 		return sqlSession.update(NAMESPACE+"findPw", m);
 	}
 
+	public int idCheck(String userid) {
+		return (int)sqlSession.selectOne(NAMESPACE+"idCheck", userid);
+	}
+
 }

@@ -72,6 +72,7 @@ public class MessageDAO {
 		return (int)sqlSession.selectOne(NAMESPACE+"seachlistcount", listvo);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<MessageVO> getMsgSeachList(MessageListVO listvo, int currentPage, int limit) {
 		List<MessageVO> msglist = null;
 		int startRow = (currentPage - 1) * limit; 
@@ -113,6 +114,7 @@ public class MessageDAO {
 		return (int)sqlSession.selectOne(NAMESPACE + "sendseachlistcount", listvo);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit) {
 		List<MessageVO> msglist = null;
 		int startRow = (currentPage - 1) * limit; 

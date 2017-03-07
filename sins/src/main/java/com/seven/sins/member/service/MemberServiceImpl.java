@@ -21,4 +21,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.findPw(m);
 	}
 
+	@Override
+	public int idCheck(String userid) {
+		return memberDAO.idCheck(userid);
+	}
+
 }

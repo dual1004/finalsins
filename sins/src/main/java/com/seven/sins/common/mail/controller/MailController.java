@@ -1,9 +1,18 @@
 package com.seven.sins.common.mail.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.common.mail.Email;
@@ -56,6 +65,23 @@ public class MailController {
 	        	result="email/emailFail";
 	        }
 			return result;
+	    }
+	    /*@Resource MappingJacksonJsonView ajaxMainView;*/
+	    @RequestMapping(value="idCheck.p")
+	    @ResponseBody
+	    public ModelAndView idCheck(MemberVO newid, ModelAndView mv){
+	    	List<String> list = new Vector<>();
+	    	mv.setViewName("jsonView");
+	    	mv.addObject("id", newid);
+	    	//int idCheck = memberService.idCheck(userid);
+	    	
+	    	//String idc = String.valueOf(idCheck);
+	    	
+	    	list.add(newid.getUserId());
+	    	list.add("afsf2sf");
+	    	
+	    	
+	    	return mv;
 	    }
 	
 }

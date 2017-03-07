@@ -60,7 +60,7 @@ public class MessageController {
 
 		if (maxPage < endPage)
 			endPage = maxPage;
-
+		
 		listvo.setSeach(seach);
 		mv.addObject("totalCount", totalListCount);
 		mv.addObject("msglist", msglist);		
@@ -168,7 +168,7 @@ public class MessageController {
 		// 파일 업로드 영역
 		
 		
-System.out.println("dd");
+
 		int result = messageservice.messageSend(sendmsg);
 		if(result > 0){
 			mv.setViewName("forward:msgsendlist.j");

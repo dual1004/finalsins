@@ -56,21 +56,22 @@
 	        	${currentPage } / ${maxPage } page
         	</form>
         	</div> 
+        	<div id="lay" style="position:absolute; display:none;">
+내용이 어쩌고 저쩌고
+</div>
+        	
 	        <table id="listtable" align="center">
 	        	<tr><th><input type="checkbox" id="msgallchk"></th><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td>${msg.user_name }
-		        	<%-- <a href="userpage.b(${msglist.receivie_id}">${msg.user_name }</a> --%>
-		        	</td>
-		        	<td>
+		        	<td><a href="#" class="atagname" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
+		        	<td class="content">
 		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
 		        
 		        	</td>
 		        	<td>${msg.message_date }</td>
-		        	<td> 11${msg.filepath }
-<%-- 		        	<c:if test="${msg.filepath } eq null"> 파일없음 </c:if>
-		        	<c:if test="${msg.filepath } ne null">${msg.filepath }  </c:if> --%>
+		        	<td><c:if test="${empty msg.filepath }"> 파일없음 </c:if>
+		        	<c:if test="${not empty msg.filepath }">${msg.filepath }  </c:if>
 		        	</td>
 		        	<td>${msg.read_check }
 		        </tr>

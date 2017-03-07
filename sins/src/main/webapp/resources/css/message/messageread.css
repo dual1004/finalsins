@@ -1,6 +1,34 @@
 @CHARSET "UTF-8";
 
+#chkth{
+	width : 20px;
+}
+#userth{
+	width : 50px;
+}
+#contentth{
+	width : 200px;
+}
+#dateth{
+	width : 80px;
+}
+#fileth{
+	width : 50px;
+}
+#readth{
+	width : 50px;
+}
 td{
 	text-align: center;
+	
+}
+#listtable{
+	width : 600px;
+	table-layout: fixed;
+	
+}
+.content{
+	
+	text-overflow: ellipsis; overflow: hidden;white-space: nowrap;
 	
 }

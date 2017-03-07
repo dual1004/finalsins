@@ -16,8 +16,23 @@ $(function() {
 	}else{
 		$('#select').val("id").prop("selected", true);
 	}
+	$('.atagname').mouseenter(function(id) {
+		 var ex_obj = $('#lay');
+		    if(!e) e = window.Event;
+		    pos = abspos(e);
+		    ex_obj.style.left = pos.x+"px";
+		    ex_obj.style.top = (pos.y+10)+"px";
+		    ex_obj.style.display = ex_obj.style.display=='none'?'block':'none';
+	});
+	
+	$('.atagname').mouseleave();
 	
 });
+function abspos(e){
+    this.x = e.clientX + (document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft);
+    this.y = e.clientY + (document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop);
+    return this;
+}
 function spamin() {
 	$('input[name=check_no]').val(chk_values());
 	var form = document.chkform;
@@ -54,8 +69,9 @@ function pagefn(no) {
 	 form.method = "post";
 	 form.submit();
 }
+
 function userpage(userid) {
-	
+	alert(userid);
 }
 
 function msgdetail(msgno) {

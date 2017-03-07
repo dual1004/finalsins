@@ -53,21 +53,18 @@
         	<form name = "chkform">
 				<input type="hidden" name="check_no"/>
         	</form>        	
-	        <table id="listtable" align="center">
-	        	<tr><th><input type="checkbox" id="msgallchk"></th><th>받는사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
+	        <table id="listtable">
+	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">받는사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msgsendlist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td>${msg.user_name }
-		        	<%-- <a href="userpage.b(${msglist.receivie_id}">${msg.user_name }</a> --%>
-		        	</td>
-		        	<td>
+		        	<td><a href="#" onclick="userpage(${msg.receivie_id})">${msg.user_name }</a></td>
+		        	<td class="content">
 		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
 		        
 		        	</td>
 		        	<td>${msg.message_date }</td>
-		        	<td> 11${msg.filepath }
-<%-- 		        	<c:if test="${msg.filepath } eq null"> 파일없음 </c:if>
-		        	<c:if test="${msg.filepath } ne null">${msg.filepath }  </c:if> --%>
+		        	<td><c:if test="${empty msg.filepath }"> 파일없음 </c:if>
+		        	<c:if test="${not empty msg.filepath }">${msg.filepath }  </c:if>
 		        	</td>
 		        	<td>${msg.read_check }
 		        </tr>

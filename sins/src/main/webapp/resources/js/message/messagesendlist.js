@@ -49,7 +49,7 @@ function pagefn(no) {
 	 form.submit();
 }
 function userpage(userid) {
-	
+	alert(userid);
 }
 
 function msgdetail(msgno) {
