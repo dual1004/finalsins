@@ -105,6 +105,31 @@ public class MessageDAO {
 		return (int)sqlSession.insert(NAMESPACE + "sendmsg", sendmsg);
 	}
 
+	public int gessageSendDel(int[] check_no) {
+		return (int)sqlSession.update(NAMESPACE + "senddel", check_no);
+	}
+
+	public int getSendSeachListCount(MessageListVO listvo) {
+		return (int)sqlSession.selectOne(NAMESPACE + "sendseachlistcount", listvo);
+	}
+
+	public List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit) {
+		List<MessageVO> msglist = null;
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	    
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		listvo.setSeach("%" + listvo.getSeach() + "%");
+		if(listvo.getSelect().equals("id")){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "idsendseachlist", listvo, rowbound);
+		}else if(listvo.getSelect().equals("name")){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "namesendseachlist", listvo, rowbound);
+		}else{
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "contentsendseachlist", listvo, rowbound);
+		}
+		return msglist;
+	}
+
 
 /*	@SuppressWarnings("unchecked")
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {

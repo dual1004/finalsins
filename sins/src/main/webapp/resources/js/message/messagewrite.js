@@ -19,10 +19,8 @@ $( function() {
 });
 function submit() {
 	// ajax로 존재하는 유저인지 검색 후 서브밋
-	var form = document.sendform;
-	 form. action =  'msgsead.j';
-	 form.method = "post";
-	 form.submit();
+
+	 return true;
 }
 /*$('#reciveid').autocomplete({
 source: function(request, response) {

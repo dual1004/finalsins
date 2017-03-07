@@ -30,6 +30,12 @@ public interface MessageService {
 
 	int messageSend(MessageVO sendmsg);
 
+	int messageSendDel(int[] check_no);
+
+	int getSendSeachListCount(MessageListVO listvo);
+
+	List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit);
+
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
 }

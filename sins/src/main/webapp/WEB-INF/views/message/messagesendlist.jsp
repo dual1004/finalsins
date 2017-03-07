@@ -8,7 +8,7 @@
 <title>MESSAGE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="/sins/resources/js/message/messageread.js"></script>   
+<script type="text/javascript" src="/sins/resources/js/message/messagesendlist.js"></script>   
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" /> 
 </head>
@@ -36,7 +36,20 @@
         	<form name = "detailform">
         		<input type="hidden" id="msgno" name="msgno"/>
         	</form>
-        	<input type="button" value="삭제" onclick="recive_del()"/>
+        	<input type="hidden" id="selectid" value="${select}"/>
+        	<form id="seachform" action="msgsendlist.j">
+        		<input type="button" value="삭제" onclick="send_del()"/>
+        		<input type="hidden" name="loginid" value="${loginUser.userId }"/>
+        		<input type="hidden" id="page" name="page" value="1"/>
+        		<select id="select" name="select">
+			    	<option value="id">아이디 </option>
+		       		<option value="name">이름</option>
+		       		<option value="cont">내용</option>
+		    	</select>
+		    	<input type="search" id="seach" name="seach" value="${seach}"/>
+        		<input type="submit" value="찾기"/>
+	        	${currentPage } / ${maxPage } page
+        	</form>
         	<form name = "chkform">
 				<input type="hidden" name="check_no"/>
         	</form>        	

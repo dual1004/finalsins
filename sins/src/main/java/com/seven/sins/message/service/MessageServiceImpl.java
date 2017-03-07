@@ -71,6 +71,21 @@ public class MessageServiceImpl implements MessageService{
 		return messageDAO.messageSend(sendmsg);
 	}
 
+	@Override
+	public int messageSendDel(int[] check_no) {
+		return messageDAO.gessageSendDel(check_no);
+	}
+
+	@Override
+	public int getSendSeachListCount(MessageListVO listvo) {
+		return messageDAO.getSendSeachListCount(listvo);
+	}
+
+	@Override
+	public List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit) {
+		return messageDAO.getSendSeachMsgList(listvo, currentPage, limit);
+	}
+
 	/*@Override
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {
 		return messageDAO.getMsgMap(userid, currentPage, limit);

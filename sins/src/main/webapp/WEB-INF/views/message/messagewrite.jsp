@@ -35,9 +35,9 @@
       <div id="content" class="box">
         <div id="msgsenddiv">
         	<h2>메시지 쓰기</h2><br>
-        	<form enctype="multipart/fora-data" name="sendform">
+        	<form action="msgsead.j" enctype="multipart/fora-data" name="sendform" onsubmit="return submit()">
         		<input type="hidden" id="send_id" name="send_id" value="${loginUser.userId}">
-        		<input type="button" id="msgsendbtn" value="쪽지보내기" onclick="retrun submit()"/><br/>
+        		<input type="submit" id="msgsendbtn" value="쪽지보내기"/><br/>
         		<input type="hidden" name="sendid" value="user01">
 				<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id"/><br/>
         		<textarea rows="10" cols="70" name="content"></textarea><br/>

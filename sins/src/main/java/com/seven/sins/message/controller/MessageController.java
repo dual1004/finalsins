@@ -76,15 +76,24 @@ public class MessageController {
 	}
 	//보낸 메시지 읽기
 	@RequestMapping("msgsendlist.j")
-	public ModelAndView messageSendList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv){
+	public ModelAndView messageSendList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv,
+			MessageListVO listvo){
+		String seach = listvo.getSeach();
 		int currentPage = 1;
 		int limit = 10;
 
+
 		if (page != null)
 			currentPage = Integer.parseInt(page);
-
-		int sendListCount = messageservice.getSendListCount(loginUser.getUserId());
-		List<MessageVO> msgsendlist = messageservice.getSendMsgList(loginUser.getUserId(), currentPage, limit);
+		int sendListCount = 0;
+		List<MessageVO> msgsendlist;
+		if(listvo.getSeach() == null || listvo.getSeach().equals("")){
+			sendListCount = messageservice.getSendListCount(loginUser.getUserId());
+			msgsendlist = messageservice.getSendMsgList(loginUser.getUserId(), currentPage, limit);
+		}else{
+			sendListCount = messageservice.getSendSeachListCount(listvo);
+			msgsendlist = messageservice.getSendSeachMsgList(listvo, currentPage, limit);
+		}
 
 		int maxPage = (int) ((double) sendListCount / limit + 0.9);
 
@@ -95,16 +104,27 @@ public class MessageController {
 		if (maxPage < endPage)
 			endPage = maxPage;
 
+		listvo.setSeach(seach);
 		mv.addObject("sendlistCount", sendListCount);
 		mv.addObject("msgsendlist", msgsendlist);		
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("maxPage", maxPage);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
+		mv.addObject("seach",listvo.getSeach());
+		mv.addObject("select",listvo.getSelect());
 
 		mv.setViewName("message/messagesendlist");
 		return mv;
 	}
+	//메시지 삭제(보낸 메시지)
+	@RequestMapping("msgsenddel.j")
+	public ModelAndView messageSendDel(int[] check_no, ModelAndView mv){
+		int result = messageservice.messageSendDel(check_no);
+		mv.setViewName("forward:msgsendlist.j");
+		return mv;
+	}
+	
 	//스팸등록 컨트롤러 
 	@RequestMapping("msgspaminsert.j")
 	public ModelAndView messageSpamInsert(int[] check_no, ModelAndView mv){
@@ -133,7 +153,7 @@ public class MessageController {
 		}
 		return mv;
 	}
-	//받은 메세지 디테일 컨트롤러
+	//디테일 컨트롤러
 	@RequestMapping("msgdetail.j")
 	public ModelAndView messageDetatil(int msgno, ModelAndView mv){
 		MessageVO msgvo = messageservice.getMessageOne(msgno);
@@ -148,9 +168,14 @@ public class MessageController {
 		// 파일 업로드 영역
 		
 		
-
+System.out.println("dd");
 		int result = messageservice.messageSend(sendmsg);
-		mv.setViewName("forward:보낸 메시지함");
+		if(result > 0){
+			mv.setViewName("forward:msgsendlist.j");
+		}else{
+			mv.setViewName("에러페이지");
+		}
+		
 		return mv;
 	}
 	// 메세지 보낼때 친구목록 자동완성

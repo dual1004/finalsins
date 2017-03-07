@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 $(function() {
 	$('#msgallchk').click(function() {
 		if($(this).is(':checked') == true){
@@ -16,19 +17,12 @@ $(function() {
 	}else{
 		$('#select').val("id").prop("selected", true);
 	}
-	
 });
-function spamin() {
+
+function send_del() {
 	$('input[name=check_no]').val(chk_values());
 	var form = document.chkform;
-	 form. action =  'msgspaminsert.j';
-	 form.method = "post";
-	 form.submit();
-};
-function recive_del() {
-	$('input[name=check_no]').val(chk_values());
-	var form = document.chkform;
-	 form. action =  'msgrecivedel.j';
+	 form. action =  'msgsenddel.j';
 	 form.method = "post";
 	 form.submit();
 };
@@ -50,7 +44,7 @@ function chk_values() {
 function pagefn(no) {
 	$('#page').val(no);
 	var form = document.seachform;
-	 form. action =  'msgreadlist.j';
+	 form. action =  'msgsendlist.j';
 	 form.method = "post";
 	 form.submit();
 }
