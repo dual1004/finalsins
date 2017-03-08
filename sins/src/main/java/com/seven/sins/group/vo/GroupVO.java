@@ -7,30 +7,36 @@ public class GroupVO implements java.io.Serializable {
 	
 	private int groupNo;
 	private String groupName;
+	private String groupInfo;
 	private String keyword;
 	private int groupLike;
 	private String filepath;
-	private int category1;
+	private String category1;
 	private Date createDate;
-	private String classfy;
+	private String classify;
 	private String userId;
-	
+	private int memberCount;
+	private String deleteYN;
+
 	public GroupVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupVO(int groupNo, String groupName, String keyword, int groupLike, String filepath, int category1,
-			Date createDate, String classfy, String userId) {
+	public GroupVO(int groupNo, String groupName, String groupInfo, String keyword, int groupLike, String filepath,
+			String category1, Date createDate, String classify, String userId, int memberCount, String deleteYN) {
 		super();
 		this.groupNo = groupNo;
 		this.groupName = groupName;
+		this.groupInfo = groupInfo;
 		this.keyword = keyword;
 		this.groupLike = groupLike;
 		this.filepath = filepath;
 		this.category1 = category1;
 		this.createDate = createDate;
-		this.classfy = classfy;
+		this.classify = classify;
 		this.userId = userId;
+		this.memberCount = memberCount;
+		this.deleteYN = deleteYN;
 	}
 
 	public int getGroupNo() {
@@ -47,6 +53,14 @@ public class GroupVO implements java.io.Serializable {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public String getGroupInfo() {
+		return groupInfo;
+	}
+
+	public void setGroupInfo(String groupInfo) {
+		this.groupInfo = groupInfo;
 	}
 
 	public String getKeyword() {
@@ -73,11 +87,11 @@ public class GroupVO implements java.io.Serializable {
 		this.filepath = filepath;
 	}
 
-	public int getCategory1() {
+	public String getCategory1() {
 		return category1;
 	}
 
-	public void setCategory1(int category1) {
+	public void setCategory1(String category1) {
 		this.category1 = category1;
 	}
 
@@ -89,12 +103,12 @@ public class GroupVO implements java.io.Serializable {
 		this.createDate = createDate;
 	}
 
-	public String getClassfy() {
-		return classfy;
+	public String getClassify() {
+		return classify;
 	}
 
-	public void setClassfy(String classfy) {
-		this.classfy = classfy;
+	public void setClassify(String classify) {
+		this.classify = classify;
 	}
 
 	public String getUserId() {
@@ -105,10 +119,19 @@ public class GroupVO implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	@Override
-	public String toString() {
-		return "GroupVO [groupNo=" + groupNo + ", groupName=" + groupName + ", keyword=" + keyword + ", groupLike="
-				+ groupLike + ", filepath=" + filepath + ", category1=" + category1 + ", createDate=" + createDate
-				+ ", classfy=" + classfy + ", userId=" + userId + "]";
+	public int getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
+
+	public String getDeleteYN() {
+		return deleteYN;
+	}
+
+	public void setDeleteYN(String deleteYN) {
+		this.deleteYN = deleteYN;
 	}
 }

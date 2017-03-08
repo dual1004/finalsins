@@ -6,7 +6,7 @@ import com.seven.sins.group.vo.*;
 
 public interface GroupMemberService {
 	
-public ArrayList<GroupMemberVO> selectGroupMemberList(int groupNo);
+	public ArrayList<GroupMemberVO> selectGroupMemberList(int groupNo);
 	
 	// 그룹가입 요청 - int groupNo, String userId
 	public int requestGroupMember(GroupMemberVO vo);
@@ -19,5 +19,7 @@ public ArrayList<GroupMemberVO> selectGroupMemberList(int groupNo);
 	
 	// 그룹회원 삭제, 탈퇴 - int groupNo, String userId
 	public int deleteGroupMember(GroupMemberVO vo);
-
+	
+	// 그룹별 회원 수 조회
+	public int countGroupMember(int groupNo);
 }

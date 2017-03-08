@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Qna">
+
+	<resultMap id="resultFriend" type="FriendVO">
+		
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userProfile" column="USER_PROFILE" />
+		
+		
+	</resultMap>
+	
+	
+	<select id="selectFriend" parameterType="string" resultMap="resultFriend" resultType="FriendVO">
+	   SELECT USER_ID, USER_NAME, USER_PROFILE FROM MEMBER
+		JOIN
+		(SELECT * FROM 
+		(SELECT RESPONSE_ID USER_ID FROM FRIEND WHERE REQUEST_ID = #{userId} AND ACCEPT_YN = 'Y')
+		UNION ALL
+		(SELECT REQUEST_ID USER_ID FROM FRIEND WHERE RESPONSE_ID = #{userId} AND ACCEPT_YN = 'Y'))
+		USING(USER_ID)
+		ORDER BY 2
+		
+	</select>
+	
+	<select id="getRequest" parameterType="string" resultMap="resultFriend" resultType="FriendVO">
+	SELECT USER_ID, USER_NAME, USER_PROFILE FROM MEMBER
+	JOIN
+	(SELECT * FROM FRIEND
+	WHERE RESPONSE_ID = #{userId} AND ACCEPT_YN = 'N')
+	USING ON (USER_ID = REQUEST_ID)
+	
+	</select>
+	
+	
+	<select id="getReqCount" parameterType="string" resultType="int">
+	
+	SELECT COUNT(*) FROM FRIEND
+	WHERE RESPONSE_ID = #{userId} AND ACCEPT_YN = 'N'
+	
+	</select>
+	
+	
+	<select id="getResponse" parameterType="string" resultMap="resultFriend" resultType="FriendVO">
+	SELECT USER_ID, USER_NAME, USER_PROFILE FROM MEMBER
+	JOIN
+	(SELECT * FROM FRIEND
+	WHERE REQUEST_ID = #{userId} AND ACCEPT_YN = 'N')
+	USING ON (USER_ID = RESPONSE_ID)
+	</select>
+	
+	<select id="recommendFriend" parameterType="string" resultMap="resultFriend" resultType="FriendVO">
+	
+	
+	</select>
+	
+	
+	<insert id="requestFriend" parameterType="map">
+	
+	INSERT INTO FRIEND VALUES (#{requestId}, #{responseId}, 'N', 'FRIEND')
+	
+	</insert>
+	
+	<update id="acceptFriend" parameterType="map">
+	
+	UPDATE FRIEND SET ACCEPT_YN = 'Y' WHERE REQUEST_ID = #{requestId} AND RESPONSE_ID = #{responseId}
+	
+	</update>
+	
+	<delete id="deleteFriend" parameterType="map">
+	<!-- DELETE FROM FRIEND WHERE REQUEST_ID = #{requestId} AND RESPONSE_ID = #{responseId} -->
+	<!-- 두경우 -->
+	</delete>
+	
+	
+</mapper>

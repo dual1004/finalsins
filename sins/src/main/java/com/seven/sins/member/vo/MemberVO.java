@@ -13,13 +13,13 @@ public class MemberVO implements java.io.Serializable{
 	private Date enrollDate;
 	private String userProfile;
 	private String parsonalId;
-	private char gender;
+	private String gender;
 	private int loginFailCheck;
 	private Date banTime;
 	
 	public MemberVO() {}
 
-	public MemberVO(String userId, String userPwd, String userName, String phone, char gender) {
+	public MemberVO(String userId, String userPwd, String userName, String phone, String gender) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -29,7 +29,7 @@ public class MemberVO implements java.io.Serializable{
 	}
 
 	public MemberVO(String userId, String userPwd, String userName, String phone, String address, int manager,
-			Date enrollDate, String userProfile, String parsonalId, char gender, int loginFailCheck, Date banTime) {
+			Date enrollDate, String userProfile, String parsonalId, String gender, int loginFailCheck, Date banTime) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -117,11 +117,11 @@ public class MemberVO implements java.io.Serializable{
 		this.parsonalId = parsonalId;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

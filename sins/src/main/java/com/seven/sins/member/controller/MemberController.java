@@ -32,4 +32,11 @@ public class MemberController {
 		
 		return null;
 	}
+	
+	@RequestMapping("enroll.k")
+	public String enrollMember(MemberVO member, HttpServletRequest request){
+		int result = memberService.enrollMember(member);
+		
+		return "../../index";
+	}
 }

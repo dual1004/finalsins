@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +7,7 @@
 <title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#m-fdiv2").hide();
@@ -59,7 +57,8 @@
 		var pwdcCheck=0;
 		var nameCheck=0;
 		var phoneCheck=0;
-	
+		var checkNumCheck=0;
+		var checkNum;
 		/* $('#email').blur(function(){ */
 		$("#idCheck").click(function(){
 			
@@ -71,22 +70,51 @@
 				$("#email").css("border", "2px solid green");
 				idCheck = 1;
 				$.ajax({
-					url : "idCheck.p",
+					url : 'idCheck.p',
 					type : "post",
-					data : {"userId" : id},
-					success : function(data) {
-						alert(data.id);
-					}
-				})
+					data : {"userid" : id},
+		            success : function(data){
+		            	console.log(data);
+		            
+						if(data.length == 1){
+							idCopyCheck = 0;
+							alert("아이디가 중복되었습니다.");
+							idCheck = 0;
+							$("#email").css("border", "2px solid red");
+							$("email").focus();
+						}
+						else {
+							checkNum = data;
+							console.log(checkNum);
+							idCheck = 1;
+							idCopyCheck = 1;
+							$("#email").css("border", "2px solid green");
+							$("#check").focus();
+						}
+		            }
+				});
 				
-				
-				idCopyCheck = 1;
 			}
 			else {
 				idCheck = 0;
 				idCopyCheck = 0;
 				$("#email").css("border", "2px solid red");
 				$("#email").focus();
+			}
+		});
+		
+		$("#checkbtn").click(function(){
+			var check = $("#check").val();
+			console.log(check);
+			if(check == checkNum){
+				$("#check").css("border", "2px solid green");
+				$("#email").prop("readonly", "readonly");
+				checkNumCheck=1;
+				$("#pwd").focus();
+			}
+			else{
+				$("#check").css("border", "2px solid red");
+				$("#check").focus();
 			}
 		});
 		
@@ -150,6 +178,36 @@
 				$("#phone").focus();
 			}
 		});
+		
+		function enroll(){
+			
+			if(idCheck == 1 && idCopyCheck == 1 && pwdCheck == 1 && pwdcCheck == 1 && phoneCheck == 1 && checkNumCheck == 1 ){
+				return true;
+			}
+			else if(idCheck == 0){
+				$("#email").focus();				
+				return false;
+			}
+			else if(idCopyCheck == 0){
+				return false;
+			}
+			else if(pwdCheck == 0){
+				$("#pwd").focus();				
+				return false;
+			}
+			else if(pwdcCheck == 0){
+				$("#pwdc").focus();				
+				return false;
+			}
+			else if(phoneCheck == 0){
+				$("#phone").focus();				
+				return false;
+			}
+			else if(checkNumCheck == 0){
+				$("#check").focus();				
+				return false;
+			}
+		}
 	});
 </script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/index.css" />
@@ -208,20 +266,20 @@
 			</div>
 
 			<div id="m-sdiv2">
-			<form action="" method="post">
+			<form action="enroll.k" method="post">
                <table id="m-s-enrolltable">
                   <tr class="tr1"><td class="std" style="text-align : center"><h2>회원가입</h2></td></tr>
-                  <tr class="tr1"><td class="std"><input type="email" size="25" maxlength="25" name="email" id="email" tabindex="1" placeholder="아이디@이메일"/></td><td class="ttd"><input type="button" id="idCheck" value="중복확인" tabindex="2" /></td></tr>
-                  <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="25" name="check" id="check" tabindex="3" placeholder="인증번호"/><td class="ttd"><input type="button" value="인증확인" /></td></tr>
-                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="pwd" id="pwd" tabindex="3" placeholder="비밀번호" /></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="email" size="25" maxlength="25" name="userId" id="email" tabindex="1" placeholder="아이디@이메일"/></td><td class="ttd"><input type="button" id="idCheck" value="중복확인" tabindex="2" /></td></tr>
+                  <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="25" name="check" id="check" tabindex="3" placeholder="인증번호"/><td class="ttd"><input type="button" id="checkbtn" value="인증확인" /></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="userPwd" id="pwd" tabindex="3" placeholder="비밀번호" /></td><td class="ttd"></td></tr>
                   <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="pwdc" id="pwdc" tabindex="4" placeholder="비밀번호 확인"/></td><td class="ttd"></td></tr>
-                  <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="15" name="name" id="name" tabindex="5" placeholder="이름"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="15" name="userName" id="name" tabindex="5" placeholder="이름"/></td><td class="ttd"></td></tr>
                   <tr class="tr1"><td class="std"><input type="phone" size="25" maxlength="13" name="phone" id="phone" tabindex="6" placeholder="핸드폰번호"/></td><td class="ttd"></td></tr>
                   <tr class="tr1"><td class="std">
                         <input type="radio" name="gender" value="M" tabindex="7" checked>남
                         &nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="F" tabindex="8">여</td>
                      <td class="ttd"></td></tr>
-                  <tr id="rtr"><td><input type="reset" value="지우기" style="margin-left : 16.5px; margin-right : 16.5px;" tabindex="9" /><input type="button" value="가입하기" style="margin-right : 16.5px" tabindex="10" /><input type="button"  id="returnLogin" value="취소" tabindex="11" /></td></tr>
+                  <tr id="rtr"><td><input type="reset" value="지우기" style="margin-left : 16.5px; margin-right : 16.5px;" tabindex="9" /><input type="submit" value="가입하기" style="margin-right : 16.5px" tabindex="10" onsubmit="return enroll()" /><input type="button"  id="returnLogin" value="취소" tabindex="11" /></td></tr>
               </table>
             </form>
             </div>

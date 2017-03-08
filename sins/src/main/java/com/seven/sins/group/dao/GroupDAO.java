@@ -16,18 +16,15 @@ public class GroupDAO {
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<GroupVO> selectGroupList() {
-		
 		return (ArrayList<GroupVO>)sqlSession.selectList("group.selectGroupList");
 	}
 
-	public GroupVO selectGroup() {
-		// TODO Auto-generated method stub
-		return null;
+	public GroupVO selectGroup(int groupNo) {
+		return (GroupVO)sqlSession.selectOne("group.selectGroup");
 	}
 
 	public int insertGroup(GroupVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("group.insertGroup", vo);
 	}
 
 	public int updateGroup(GroupVO vo) {

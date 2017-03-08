@@ -2,23 +2,23 @@ package com.seven.sins.group.vo;
 
 @SuppressWarnings("serial")
 public class GroupMemberVO implements java.io.Serializable {
-	
+
 	private int groupNo;
 	private String userId;
 	private int grade;
-	private String classfy;
-	private char groupAccept;
+	private String classify;
+	private String groupAccept;
 	
 	public GroupMemberVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupMemberVO(int groupNo, String userId, int grade, String classfy, char groupAccept) {
+	public GroupMemberVO(int groupNo, String userId, int grade, String classify, String groupAccept) {
 		super();
 		this.groupNo = groupNo;
 		this.userId = userId;
 		this.grade = grade;
-		this.classfy = classfy;
+		this.classify = classify;
 		this.groupAccept = groupAccept;
 	}
 
@@ -46,25 +46,25 @@ public class GroupMemberVO implements java.io.Serializable {
 		this.grade = grade;
 	}
 
-	public String getClassfy() {
-		return classfy;
+	public String getClassify() {
+		return classify;
 	}
 
-	public void setClassfy(String classfy) {
-		this.classfy = classfy;
+	public void setClassify(String classify) {
+		this.classify = classify;
 	}
 
-	public char getGroupAccept() {
+	public String getGroupAccept() {
 		return groupAccept;
 	}
 
-	public void setGroupAccept(char groupAccept) {
+	public void setGroupAccept(String groupAccept) {
 		this.groupAccept = groupAccept;
 	}
 
 	@Override
 	public String toString() {
-		return "GroupMemberVO [groupNo=" + groupNo + ", userId=" + userId + ", grade=" + grade + ", classfy=" + classfy
-				+ ", groupAccept=" + groupAccept + "]";
+		return "GroupMemberVO [groupNo=" + groupNo + ", userId=" + userId + ", grade=" + grade + ", classify="
+				+ classify + ", groupAccept=" + groupAccept + "]";
 	}
 }

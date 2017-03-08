@@ -15,8 +15,8 @@ public class GroupCommentServiceImpl implements GroupCommentService {
 	private GroupCommentDAO groupCommentDAO;
 	
 	@Override
-	public ArrayList<GroupCommentVO> selectGroupCommentList() {
-		ArrayList<GroupCommentVO> list = groupCommentDAO.selectGroupCommentList();
+	public ArrayList<GroupCommentVO> selectGroupCommentList(GroupCommentVO vo) {
+		ArrayList<GroupCommentVO> list = groupCommentDAO.selectGroupCommentList(vo);
 		return list;
 	}
 
@@ -39,8 +39,8 @@ public class GroupCommentServiceImpl implements GroupCommentService {
 	}
 
 	@Override
-	public int countGroupComment(int groupNo) {
-		int result = groupCommentDAO.countGroupComment(groupNo);
+	public int countGroupComment(int writeNo) {
+		int result = groupCommentDAO.countGroupComment(writeNo);
 		return result;
 	}
 }

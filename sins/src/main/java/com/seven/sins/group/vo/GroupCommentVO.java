@@ -14,15 +14,16 @@ public class GroupCommentVO implements java.io.Serializable {
 	private String photopath;
 	private String backupId;
 	private int writeNo;
-	private String classfy;
+	private String classify;
 	private int report;
-
+	private String deleteYN;
+	
 	public GroupCommentVO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public GroupCommentVO(int commentNo, String userId, String content, Date commentDate, int lev, int ref,
-			String photopath, String backupId, int writeNo, String classfy, int report) {
+			String photopath, String backupId, int writeNo, String classify, int report, String deleteYN) {
 		super();
 		this.commentNo = commentNo;
 		this.userId = userId;
@@ -33,8 +34,9 @@ public class GroupCommentVO implements java.io.Serializable {
 		this.photopath = photopath;
 		this.backupId = backupId;
 		this.writeNo = writeNo;
-		this.classfy = classfy;
+		this.classify = classify;
 		this.report = report;
+		this.deleteYN = deleteYN;
 	}
 
 	public int getCommentNo() {
@@ -109,12 +111,12 @@ public class GroupCommentVO implements java.io.Serializable {
 		this.writeNo = writeNo;
 	}
 
-	public String getClassfy() {
-		return classfy;
+	public String getClassify() {
+		return classify;
 	}
 
-	public void setClassfy(String classfy) {
-		this.classfy = classfy;
+	public void setClassify(String classify) {
+		this.classify = classify;
 	}
 
 	public int getReport() {
@@ -125,11 +127,19 @@ public class GroupCommentVO implements java.io.Serializable {
 		this.report = report;
 	}
 
+	public String getDeleteYN() {
+		return deleteYN;
+	}
+
+	public void setDeleteYN(String deleteYN) {
+		this.deleteYN = deleteYN;
+	}
+
 	@Override
 	public String toString() {
 		return "GroupCommentVO [commentNo=" + commentNo + ", userId=" + userId + ", content=" + content
 				+ ", commentDate=" + commentDate + ", lev=" + lev + ", ref=" + ref + ", photopath=" + photopath
-				+ ", backupId=" + backupId + ", writeNo=" + writeNo + ", classfy=" + classfy + ", report=" + report
-				+ "]";
+				+ ", backupId=" + backupId + ", writeNo=" + writeNo + ", classify=" + classify + ", report=" + report
+				+ ", deleteYN=" + deleteYN + "]";
 	}
 }

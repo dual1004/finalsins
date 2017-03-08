@@ -7,4 +7,5 @@ public interface MemberService {
 	MemberVO loginCheck(MemberVO m);
 	int findPw(MemberVO m);
 	int idCheck(String userid);
+	int enrollMember(MemberVO member);
 }

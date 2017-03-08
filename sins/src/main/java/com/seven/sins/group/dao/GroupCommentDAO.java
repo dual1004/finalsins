@@ -9,7 +9,7 @@ import com.seven.sins.group.vo.GroupCommentVO;
 @Repository("groupCommentDAO")
 public class GroupCommentDAO {
 
-	public ArrayList<GroupCommentVO> selectGroupCommentList() {
+	public ArrayList<GroupCommentVO> selectGroupCommentList(GroupCommentVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -29,7 +29,7 @@ public class GroupCommentDAO {
 		return 0;
 	}
 
-	public int countGroupComment(int groupNo) {
+	public int countGroupComment(int writeNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

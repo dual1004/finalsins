@@ -26,4 +26,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.idCheck(userid);
 	}
 
+	@Override
+	public int enrollMember(MemberVO member) {
+		return memberDAO.enrollMember(member);
+	}
+
 }

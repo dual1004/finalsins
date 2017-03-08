@@ -25,5 +25,9 @@ public class MemberDAO {
 	public int idCheck(String userid) {
 		return (int)sqlSession.selectOne(NAMESPACE+"idCheck", userid);
 	}
+	
 
+	public int enrollMember(MemberVO member) {
+		return sqlSession.insert(NAMESPACE+"enrollMember", member);
+	}
 }

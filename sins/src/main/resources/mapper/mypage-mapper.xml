@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+	
+	
+	<resultMap id="resultMypage" type="MypageVO">
+		<id property="writeno" column="WRITE_NO" />
+		<result property="userid" column="USER_ID" />
+		<result property="filepath" column="FILEPATH" />
+		<result property="content" column="CONTENT" />
+		<result property="keyword" column="KEYWORD" />
+		<result property="writedate" column="WRITE_DATE" />
+		<result property="writelike" column="WRITE_LIKE" />
+		<result property="backupid" column="BACKUP_ID" />
+		<result property="classify" column="CLASSIFY" />
+		<result property="createid" column="CREATE_ID" />
+		<result property="report" column="REPORT" />
+	</resultMap>
+	
+	<select id="mypage" parameterType="MypageVO" resultType="MypageVO" resultMap="resultMypage">
+		SELECT * FROM MY_PAGE WHERE USER_ID = #{userId}
+	</select>
+
+	
+<!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
+		select * from message where RECEIVE_ID = #{userid}	
+	</select> -->
+</mapper>

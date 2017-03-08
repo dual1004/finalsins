@@ -22,7 +22,7 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public GroupVO selectGroup(int groupNo) {
-		GroupVO vo = groupDAO.selectGroup();
+		GroupVO vo = groupDAO.selectGroup(groupNo);
 		return vo;
 	}
 
