@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+
+#detailDiv{
+	width:600px;
+	min-height:300px;
+	height:auto;
+}
+#comLocation{
+	width:600px;
+	min-height:50px;
+	height:auto;
+	
+}
+#comForm{
+	width:600px;
+	min-height:100px;
+	height:auto;
+	margin:auto;
+}
+
+.labels{
+	font-size:11px;
+	position:relative;
+	float:left; 
+
+}
+
+.buttons{
+position:relative;
+float:left; 
+
+}

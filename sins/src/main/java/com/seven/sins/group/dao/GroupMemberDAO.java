@@ -34,4 +34,9 @@ public class GroupMemberDAO {
 		return 0;
 	}
 
+	public int countGroupMember(int groupNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

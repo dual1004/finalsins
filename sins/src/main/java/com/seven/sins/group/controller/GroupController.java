@@ -29,10 +29,15 @@ public class GroupController {
 	@RequestMapping("selectGroupList.y")
 	public ModelAndView selectGroupList(ModelAndView mv) {
 		ArrayList<GroupVO> list = groupService.selectGroupList();
-		
 		mv.addObject("list", list);
-		mv.setViewName("group/GroupMain");
+		mv.setViewName("group/GroupList");
 		
+		return mv;
+	}
+	
+	@RequestMapping("insertGroup.y")
+	public ModelAndView insertGroup(ModelAndView mv, GroupVO vo) {
+		groupService.insertGroup(vo);
 		return mv;
 	}
 }

@@ -10,6 +10,8 @@
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="readCount" column="READ_COUNT" />
 		<result property="userId" column="USER_ID" />
+		<result property="comCount" column="COM_COUNT"/>
+		
 	</resultMap>
 	
 	
@@ -28,7 +30,10 @@
 	</resultMap>
 	
 	<select id = "selectList" resultType="QnaContent" resultMap="resultQnaContent">
-	SELECT * FROM QNA ORDER BY 1 DESC
+	SELECT QNA_NO, TITLE, CONTENT, FILEPATH, WRITE_DATE, READ_COUNT, USER_ID, NVL(COM_COUNT, 0) COM_COUNT FROM QNA
+	LEFT JOIN(SELECT QNA_NO, COUNT(*) COM_COUNT FROM QNA_COMMENT GROUP BY QNA_NO)
+	USING(QNA_NO) ORDER BY 1 DESC 
+	
 	
 	</select>
 	
@@ -42,5 +47,55 @@
 	
 	</select> 
 	
+	<select id = "selectComment" parameterType="int" resultType="QnaComment" resultMap="resultQnaComment">
+	SELECT * FROM QNA_COMMENT WHERE QNA_NO = #{qNo}
+	</select>
+	
+	<select id = "keywordCount" parameterType="map" resultType="int">
+	<if test="option==1">
+	 SELECT COUNT(*) FROM QNA WHERE TITLE LIKE #{keyword} OR CONTENT LIKE #{keyword}
+	</if>
+	
+	<if test="option==2">
+	SELECT COUNT(*) FROM QNA WHERE TITLE LIKE #{keyword}
+	</if>
+	
+	<if test="option==3">
+	SELECT COUNT(*) FROM QNA WHERE CONTENT LIKE #{keyword}
+	</if>
+	
+	</select>
+	
+	
+	<select id = "searchList" parameterType="map" resultType="QnaContent" resultMap="resultQnaContent">
+	<if test="option==1">
+	 SELECT * FROM QNA WHERE TITLE LIKE #{keyword} OR CONTENT LIKE #{keyword} ORDER BY 1 DESC 
+	</if>
+	
+	<if test="option==2">
+	SELECT * FROM QNA WHERE TITLE LIKE #{keyword} ORDER BY 1 DESC 
+	</if>
+	
+	<if test="option==3">
+	SELECT * FROM QNA WHERE CONTENT LIKE #{keyword} ORDER BY 1 DESC 
+	</if>
+	
+	</select>
+	
+	
+	<insert id = "commentInsert" parameterType = "QnaComment" >
+	INSERT INTO QNA_COMMENT VALUES(NOH_SEQ_QNA_COMMENT.nextval, #{userId, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, SYSDATE, #{lev, jdbcType=NUMERIC}, 
+	#{ref, jdbcType=NUMERIC}, #{filepath, jdbcType=VARCHAR}, #{backupId, jdbcType=VARCHAR}, #{qnaNo, jdbcType=NUMERIC}, #{classify, jdbcType=VARCHAR} )
+	</insert>
+	
+	<insert id = "insertQna" parameterType = "QnaContent">
+	INSERT INTO QNA VALUES(NOH_SEQ_QNA.NEXTVAL, #{title, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR}, SYSDATE, 0, #{userId, jdbcType=VARCHAR})
+	
+	</insert>
+	
+	<update id="increaseCount" parameterType="int">
+	UPDATE QNA SET READ_COUNT= READ_COUNT+1 WHERE QNA_NO = #{qNo}
+	
+	</update>
 	
 </mapper>

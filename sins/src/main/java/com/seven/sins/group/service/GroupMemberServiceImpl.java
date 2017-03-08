@@ -43,8 +43,10 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		int result = groupMemberDAO.deleteGroupMember(vo);
 		return result;
 	}
-	
-	
-	
-	
+
+	@Override
+	public int countGroupMember(int groupNo) {
+		int result = groupMemberDAO.countGroupMember(groupNo);
+		return 0;
+	}
 }

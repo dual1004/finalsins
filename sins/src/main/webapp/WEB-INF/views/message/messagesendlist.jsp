@@ -7,9 +7,9 @@
 <meta charset=UTF-8>
 <title>MESSAGE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script  src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="/sins/resources/js/message/messagesendlist.js"></script>   
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/newsfeed-common.css" />
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" /> 
 </head>
   <body>
@@ -111,6 +111,9 @@
           <li>Dolor</li>
         </ul>
       </div>
+    </div>
+    <div id="mouseover" style="position:absolute; display:none;">
+    	유저 아이디 넣을 공간 div
     </div>
      <div id="footer">
         <c:import url="../common/footer.jsp" charEncoding="UTF-8" />

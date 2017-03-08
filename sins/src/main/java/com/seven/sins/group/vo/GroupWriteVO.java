@@ -17,13 +17,15 @@ public class GroupWriteVO implements java.io.Serializable {
 	private String userIdBak;
 	private String classify;
 	private int report;
+	private String deleteYN;
 	
 	public GroupWriteVO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public GroupWriteVO(int groupNo, int writeNo, String content, String userId, String filepath, int writeLike,
-			Date writeDate, int groupNoBak, String groupNameBak, String userIdBak, String classify, int report) {
+			Date writeDate, int groupNoBak, String groupNameBak, String userIdBak, String classify, int report,
+			String deleteYN) {
 		super();
 		this.groupNo = groupNo;
 		this.writeNo = writeNo;
@@ -37,6 +39,7 @@ public class GroupWriteVO implements java.io.Serializable {
 		this.userIdBak = userIdBak;
 		this.classify = classify;
 		this.report = report;
+		this.deleteYN = deleteYN;
 	}
 
 	public int getGroupNo() {
@@ -135,11 +138,19 @@ public class GroupWriteVO implements java.io.Serializable {
 		this.report = report;
 	}
 
+	public String getDeleteYN() {
+		return deleteYN;
+	}
+
+	public void setDeleteYN(String deleteYN) {
+		this.deleteYN = deleteYN;
+	}
+
 	@Override
 	public String toString() {
 		return "GroupWriteVO [groupNo=" + groupNo + ", writeNo=" + writeNo + ", content=" + content + ", userId="
 				+ userId + ", filepath=" + filepath + ", writeLike=" + writeLike + ", writeDate=" + writeDate
 				+ ", groupNoBak=" + groupNoBak + ", groupNameBak=" + groupNameBak + ", userIdBak=" + userIdBak
-				+ ", classify=" + classify + ", report=" + report + "]";
+				+ ", classify=" + classify + ", report=" + report + ", deleteYN=" + deleteYN + "]";
 	}
 }

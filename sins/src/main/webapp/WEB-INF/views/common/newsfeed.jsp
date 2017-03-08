@@ -8,7 +8,7 @@
 <title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/sins/resources/css/newsfeed-common.css" />
+    <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
     
 <script type="text/javascript">
 $( document ).ready(function() { 
@@ -40,9 +40,11 @@ $( document ).ready(function() {
       <div id="left" class="box">
         <h2>LEFT</h2>
         <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
+          <li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
+          <li><a href="alink.do?path=channel/channelList">채널</a></li>
+          <li><a href="selectGroupList.y">그룹</a></li>
+          <li><h4>뉴스피드</h4></li>
+          <li><a href="selectQna.n">고객센터</a></li>
         </ul>
       </div>
       <div id="content" class="box">
@@ -106,12 +108,7 @@ $( document ).ready(function() {
         <a href="alink.do?path=message/messagemain">메시지 페이지</a>
       </div>
       <div id="right" class="box">
-        <h2>RIGHT</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
+        <%@include file="/WEB-INF/views/friend/friendView.jsp" %>
       </div>
     </div>
      <div id="footer">

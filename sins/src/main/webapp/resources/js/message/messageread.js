@@ -16,22 +16,25 @@ $(function() {
 	}else{
 		$('#select').val("id").prop("selected", true);
 	}
-	$('.atagname').mouseenter(function(id) {
-		 var ex_obj = $('#lay');
-		    if(!e) e = window.Event;
-		    pos = abspos(e);
-		    ex_obj.style.left = pos.x+"px";
-		    ex_obj.style.top = (pos.y+10)+"px";
-		    ex_obj.style.display = ex_obj.style.display=='none'?'block':'none';
-	});
+	   
 	
-	$('.atagname').mouseleave();
 	
 });
-function abspos(e){
-    this.x = e.clientX + (document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft);
-    this.y = e.clientY + (document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop);
-    return this;
+function view(id) {
+	 x = event.clientX;
+     y = event.clientY; 
+     var di = $('#mouseover');	 
+     di.text(id);
+    di.css({
+         "top": y + 60
+         ,"left": x +10
+         , "position": "absolute"
+    }).show();
+    $(document).on("mouseleave", ".atagname", function(){
+	       var obj = document.getElementById('mouseover');
+	         
+	        obj.style.display = "none";
+	   });
 }
 function spamin() {
 	$('input[name=check_no]').val(chk_values());

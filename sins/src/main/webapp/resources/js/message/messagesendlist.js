@@ -26,7 +26,22 @@ function send_del() {
 	 form.method = "post";
 	 form.submit();
 };
-
+function view(id) {
+	 x = event.clientX;
+    y = event.clientY; 
+    var di = $('#mouseover');	 
+    di.text(id);
+   di.css({
+        "top": y + 60
+        ,"left": x +10
+        , "position": "absolute"
+   }).show();
+   $(document).on("mouseleave", ".atagname", function(){
+	       var obj = document.getElementById('mouseover');
+	         
+	        obj.style.display = "none";
+	   });
+}
 function chk_values() {
 	var chk= new Array();
 	

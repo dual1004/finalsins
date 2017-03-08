@@ -2,7 +2,6 @@ package com.seven.sins.common.mail.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.annotation.Resource;
 
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.common.mail.Email;
 import com.seven.sins.common.mail.EmailSender;
@@ -67,21 +65,23 @@ public class MailController {
 			return result;
 	    }
 	    /*@Resource MappingJacksonJsonView ajaxMainView;*/
-	    @RequestMapping(value="idCheck.p")
+	    @RequestMapping("idCheck.p")
 	    @ResponseBody
-	    public ModelAndView idCheck(MemberVO newid, ModelAndView mv){
-	    	List<String> list = new Vector<>();
-	    	mv.setViewName("jsonView");
-	    	mv.addObject("id", newid);
-	    	//int idCheck = memberService.idCheck(userid);
+	    public String idCheck(@RequestParam(value = "userid") String userid) throws Exception{
 	    	
-	    	//String idc = String.valueOf(idCheck);
+	    	int idCheck = memberService.idCheck(userid);
 	    	
-	    	list.add(newid.getUserId());
-	    	list.add("afsf2sf");
+	    	String idc = String.valueOf(idCheck);
 	    	
-	    	
-	    	return mv;
+	    	if(idc.equals("0")){
+	    		idc = RandomNum();
+	    		email.setContent("인증번호는 "+idc+" 입니다.");
+	            email.setReceiver(userid);
+	            email.setSubject(userid+"님 인증번호 확인 메일입니다.");
+	            emailSender.SendEmail(email);
+	    	}
+	    		    	
+	    	return idc;
 	    }
 	
 }

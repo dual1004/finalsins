@@ -5,7 +5,7 @@ import java.util.*;
 import com.seven.sins.group.vo.GroupCommentVO;
 
 public interface GroupCommentService {
-	public ArrayList<GroupCommentVO> selectGroupCommentList();
+	public ArrayList<GroupCommentVO> selectGroupCommentList(GroupCommentVO vo);
 	
 	public int insertGroupComment(GroupCommentVO vo);
 	
@@ -13,5 +13,5 @@ public interface GroupCommentService {
 	
 	public int deleteGroupComment(GroupCommentVO vo);
 	
-	public int countGroupComment(int groupNo);
+	public int countGroupComment(int writeNo);
 }

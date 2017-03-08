@@ -3,7 +3,7 @@
 #logo {
 	width: 25%;
 	height: 30px;
-	background: url("../images/logo.png") no-repeat;
+	background: url("/sins/resources/images/logo.png") no-repeat;
 	background-size: 100px;
 	float: left;
 	cursor: pointer;
@@ -39,8 +39,13 @@
 	font-size: 13px;
 }
 
+#m {
+	display:block;
+	margin:8px auto;
+}
+
 #allet {
-	background: url("../images/allet.png") no-repeat;
+	background: url("/sins/resources/images/allet.png") no-repeat;
 	background-size: cover;
 	width: 30px;
 	height: 30px;
@@ -50,7 +55,7 @@
 }
 
 #message {
-	background: url("../images/message.png") no-repeat;
+	background: url("/sins/resources/images/message.png") no-repeat;
 	background-size: cover;
 	width: 30px;
 	height: 30px;
@@ -78,7 +83,7 @@
 	#logo {
 		width: 15%;
 		height: 30px;
-		background: url("../images/logo-m.png") no-repeat;
+		background: url("/sins/resources/images/logo-m.png") no-repeat;
 		background-size: 40px;
 		float: left;
 	}

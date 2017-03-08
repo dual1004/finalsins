@@ -43,7 +43,7 @@
 }
 
 #m-sdiv {
-	background: url("../images/Flogo.jpg") no-repeat;
+	background: url("/sins/resources/images/Flogo.jpg") no-repeat;
 	background-size: cover;
 	background-position: center center;
 }
@@ -75,7 +75,7 @@
 }
 
 #loginbtn {
-	height: 25px;
+	height: 92px;
 	width: 90px;
 	font-size: 13px;
 	margin-left: 6px;
@@ -157,6 +157,11 @@
 	margin: 100px auto;
 	text-align: center;
 	border: 1px solid #9581BF;
+}
+
+.btn {
+	width : 100px;
+	height : 25px;
 }
 
 @media screen and (max-width:500px) {
