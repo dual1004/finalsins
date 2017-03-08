@@ -41,7 +41,7 @@ $( document ).ready(function() {
         <h2>LEFT</h2>
         <ul>
           <li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
-          <li><a href="alink.do?path=channelListView/channelList">채널</a></li>
+          <li><a href="alink.do?path=channel/channelList">채널</a></li>
           <li><a href="selectGroupList.y">그룹</a></li>
           <li><h4>뉴스피드</h4></li>
           <li><a href="selectQna.n">고객센터</a></li>

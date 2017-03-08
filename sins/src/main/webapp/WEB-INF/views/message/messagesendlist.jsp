@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="/sins/resources/js/message/messagesendlist.js"></script>   
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/newsfeed-common.css" />
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" /> 
 </head>
   <body>

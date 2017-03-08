@@ -11,7 +11,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/sins/resources/js/message/messagewrite.js"></script>
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/newsfeed-common.css" />
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 </head>
   <body>
   		<div id="header">
