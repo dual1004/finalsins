@@ -7,7 +7,7 @@
 <meta charset=UTF-8>
 <title>MESSAGE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script  src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="/sins/resources/js/message/messageread.js"></script>   
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" /> 
@@ -56,17 +56,14 @@
 	        	${currentPage } / ${maxPage } page
         	</form>
         	</div> 
-        	<div id="lay" style="position:absolute; display:none;">
-내용이 어쩌고 저쩌고
-</div>
-        	
+     	
 	        <table id="listtable" align="center">
-	        	<tr><th><input type="checkbox" id="msgallchk"></th><th>보낸사람</th><th>내용</th><th>보낸날자</th><th>첨부파일</th><th>수신여부</th></tr>
+	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">보낸사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" class="atagname" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
+		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}')" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
 		        	<td class="content">
-		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
+		        	<a href="#" onclick="msgdetail(${msg.message_no})">${msg.content}</a>
 		        
 		        	</td>
 		        	<td>${msg.message_date }</td>
@@ -79,6 +76,8 @@
 	        </table>
 	        <br>
 	        <hr>
+	       
+
 	        <div id="paging">
 		        <a class = "atag"  onclick="pagefn(1)" href="#">[처음] </a> 
 	
@@ -118,6 +117,9 @@
           <li>Dolor</li>
         </ul>
       </div>
+    </div>
+    <div id="mouseover" style="position:absolute; display:none;">
+    	유저 아이디 넣을 공간 div
     </div>
      <div id="footer">
         <c:import url="../common/footer.jsp" charEncoding="UTF-8" />

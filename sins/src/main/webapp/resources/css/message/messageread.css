@@ -1,10 +1,10 @@
 @CHARSET "UTF-8";
 
 #chkth{
-	width : 20px;
+	width : 22px;
 }
 #userth{
-	width : 50px;
+	width : 60px;
 }
 #contentth{
 	width : 200px;
@@ -13,22 +13,27 @@
 	width : 80px;
 }
 #fileth{
-	width : 50px;
+	width : 60px;
 }
 #readth{
-	width : 50px;
+	width : 60px;
 }
 td{
+	
 	text-align: center;
 	
 }
 #listtable{
+	
 	width : 600px;
 	table-layout: fixed;
 	
 }
 .content{
-	
 	text-overflow: ellipsis; overflow: hidden;white-space: nowrap;
-	
+}
+#mouseover{
+	width : 110px;
+	border: 1px solid black;
+	background: white;
 }

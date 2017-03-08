@@ -38,7 +38,7 @@ body {
 	float: left;
 	margin-left: 10px;
 	display: none;
-	background-image: url("../images/min-button.jpg");
+	background-image: url("../../images/min-button.jpg");
 	cursor: pointer;
 }
 
@@ -58,7 +58,7 @@ body {
 	margin-right: 10px;
 	right: 10px;
 	display: none;
-	background-image: url("../images/min-button.jpg");
+	background-image: url("../../images/min-button.jpg");
 	cursor: pointer;
 }
 
