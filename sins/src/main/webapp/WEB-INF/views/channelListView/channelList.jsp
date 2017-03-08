@@ -13,8 +13,8 @@
 <title>Channel List</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/channelList.css" />
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/channel/channelList.css" />
+
 </head>
 
 <body>

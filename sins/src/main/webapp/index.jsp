@@ -210,7 +210,7 @@
 		}
 	});
 </script>
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/index.css" />
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/index.css" />
 </head>
 <body>
 	<div id="container">

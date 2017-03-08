@@ -68,6 +68,7 @@ public class MailController {
 	    @RequestMapping("idCheck.p")
 	    @ResponseBody
 	    public String idCheck(@RequestParam(value = "userid") String userid) throws Exception{
+	    	
 	    	int idCheck = memberService.idCheck(userid);
 	    	
 	    	String idc = String.valueOf(idCheck);
@@ -79,7 +80,7 @@ public class MailController {
 	            email.setSubject(userid+"님 인증번호 확인 메일입니다.");
 	            emailSender.SendEmail(email);
 	    	}
-	    	
+	    		    	
 	    	return idc;
 	    }
 	
