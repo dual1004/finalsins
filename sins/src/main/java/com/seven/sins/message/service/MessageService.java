@@ -24,7 +24,7 @@ public interface MessageService {
 
 	List<MessageVO> getMsgSeachList(MessageListVO listvo, int currentPage, int limit);
 
-	MessageVO getMessageOne(int msgno);
+	MessageVO getMessageOne(int msgno, String recive);
 
 	List<String> autocomresiveid(MessageVO msgvo);
 
@@ -35,6 +35,14 @@ public interface MessageService {
 	int getSendSeachListCount(MessageListVO listvo);
 
 	List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit);
+
+	int getSpamSeachListCount(MessageListVO listvo, String userid);
+
+	List<MessageVO> getSpamMsgSeachList(String loinid, MessageListVO listvo, int currentPage, int limit);
+
+	int getSpamUserListCount(String userId);
+
+	List<MessageVO> getSpamUserMsgList(String userId, int currentPage, int limit);
 
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 

@@ -57,8 +57,8 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public MessageVO getMessageOne(int msgno) {
-		return messageDAO.getMessageOne(msgno);
+	public MessageVO getMessageOne(int msgno, String recive) {
+		return messageDAO.getMessageOne(msgno, recive);
 	}
 
 	@Override
@@ -84,6 +84,26 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit) {
 		return messageDAO.getSendSeachMsgList(listvo, currentPage, limit);
+	}
+
+	@Override
+	public int getSpamSeachListCount(MessageListVO listvo, String userid) {
+		return messageDAO.getSpamSeachListCount(listvo, userid);
+	}
+
+	@Override
+	public List<MessageVO> getSpamMsgSeachList(String loginid, MessageListVO listvo, int currentPage, int limit) {
+		return messageDAO.getSpamMsgSeachList(loginid, listvo, currentPage, limit);
+	}
+
+	@Override
+	public int getSpamUserListCount(String userId) {
+		return messageDAO.getSpamUserListCount(userId);
+	}
+
+	@Override
+	public List<MessageVO> getSpamUserMsgList(String userId, int currentPage, int limit) {
+		return messageDAO.getSpamUserMsgList(userId, currentPage, limit);
 	}
 
 	/*@Override

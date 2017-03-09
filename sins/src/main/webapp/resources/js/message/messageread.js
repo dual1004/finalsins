@@ -16,7 +16,11 @@ $(function() {
 	}else{
 		$('#select').val("id").prop("selected", true);
 	}
-	   
+	$(document).on("mouseleave", ".atagname", function(){
+	       var obj = document.getElementById('mouseover');
+	         
+	        obj.style.display = "none";
+	   });
 	
 	
 });

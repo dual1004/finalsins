@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>MESSAGE READ</title>
+<title>MESSAGE SPAM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script  src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="/sins/resources/js/message/messageread.js"></script>   
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" /> 
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" />
+ 
 </head>
   <body>
   		<div id="header">
@@ -23,10 +24,10 @@
       <div id="left" class="box">
          <h2>메시지함</h2><br>
         <ul>
-        	<li><h4>받은 메세지</h4></li>
+        	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
         	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
-          	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
+          	<li><h4>스팸 보관함</h4></li>
           	<li>스팸 유저</li>
         </ul>
       </div>
@@ -42,8 +43,7 @@
         	<form name = "chkform">
 				<input type="hidden" name="check_no"/>
         	</form>        	
-        	<form id="seachform" name="seachform" action="msgreadlist.j">
-        		<input type="button" value="스팸신고" onclick="spamin()"/>
+        	<form id="seachform" action="msgspamlist.j">
         		<input type="button" value="삭제" onclick="recive_del()"/>
         		<input type="hidden" name="loginid" value="${loginUser.userId }"/>
         		<input type="hidden" id="page" name="page" value="1"/>
@@ -60,9 +60,10 @@
      	
 	        <table id="listtable" align="center">
 	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">보낸사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
-	        	<c:forEach var="msg" items="${msglist }">
+	        	<c:forEach var="msg" items="${msgspamlist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
 		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}')" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
+		        	
 		        	<td class="content">
 		        	<a href="#" onclick="msgdetail(${msg.message_no})">${msg.content}</a>
 		        

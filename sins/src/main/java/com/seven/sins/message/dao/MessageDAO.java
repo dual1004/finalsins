@@ -93,7 +93,12 @@ public class MessageDAO {
 	}
 
 	//메세지 1개 선택(받은거 보낸거둘다)
-	public MessageVO getMessageOne(int msgno) {
+	public MessageVO getMessageOne(int msgno, String recive) {
+		//리시브쪽 디테일 일경우 읽음 y 표시
+		if(recive != null){
+			int result = (int)sqlSession.update(NAMESPACE + "msgread" , msgno);
+		}
+					
 		return (MessageVO)sqlSession.selectOne(NAMESPACE+"selectone", msgno);
 	}
 	// 친구목록 가져오기
@@ -138,6 +143,51 @@ public class MessageDAO {
 			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "contentsendseachlist", listvo, rowbound);
 		}
 		return msglist;
+	}
+
+	//스팸 리스트 카운트
+	public int getSpamSeachListCount(MessageListVO listvo,String userid) {
+		int result = 0;
+		if(listvo.getLoginid() != null){
+			result = (int)sqlSession.selectOne(NAMESPACE+"spamseachlistcount", listvo);
+		}else{
+			result = (int)sqlSession.selectOne(NAMESPACE + "spamlistcount", userid);
+		}
+		return result;
+	}
+
+	//스팸 리스트 
+	@SuppressWarnings("unchecked")
+	public List<MessageVO> getSpamMsgSeachList(String loginid, MessageListVO listvo, int currentPage, int limit) {
+		List<MessageVO> msglist = null;
+
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	    
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		listvo.setSeach("%" + listvo.getSeach() + "%");
+		if(listvo.getLoginid() == null){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "spamseachlist", loginid, rowbound);
+		}else if(listvo.getSelect().equals("name")){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "namespamseachlist", listvo, rowbound);
+		}else if(listvo.getSelect().equals("cont")){
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "contentspamseachlist", listvo, rowbound);
+		}else{
+			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "idspamseachlist", listvo, rowbound);
+		}
+		return msglist;
+	}
+
+	public int getSpamUserListCount(String userId) {
+		return (int)sqlSession.selectOne(NAMESPACE + "spamuserlistcount", userId);
+	}
+
+	public List<MessageVO> getSpamUserMsgList(String userId, int currentPage, int limit) {
+		int startRow = (currentPage - 1) * limit; 
+	    int endRow = startRow + limit - 1; 
+	    
+	    RowBounds rowbound= new RowBounds(startRow, endRow);
+		return (List<MessageVO>)sqlSession.selectList(NAMESPACE + "spamuserlist", userId, rowbound);
 	}
 
 

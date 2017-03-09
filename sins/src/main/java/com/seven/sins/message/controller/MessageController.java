@@ -81,8 +81,8 @@ public class MessageController {
 		String seach = listvo.getSeach();
 		int currentPage = 1;
 		int limit = 10;
-
-
+		
+		
 		if (page != null)
 			currentPage = Integer.parseInt(page);
 		int sendListCount = 0;
@@ -94,7 +94,7 @@ public class MessageController {
 			sendListCount = messageservice.getSendSeachListCount(listvo);
 			msgsendlist = messageservice.getSendSeachMsgList(listvo, currentPage, limit);
 		}
-
+		
 		int maxPage = (int) ((double) sendListCount / limit + 0.9);
 
 		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
@@ -156,8 +156,8 @@ public class MessageController {
 	}
 	//디테일 컨트롤러
 	@RequestMapping("msgdetail.j")
-	public ModelAndView messageDetatil(int msgno, ModelAndView mv){
-		MessageVO msgvo = messageservice.getMessageOne(msgno);
+	public ModelAndView messageDetatil(int msgno,String recive , ModelAndView mv){
+		MessageVO msgvo = messageservice.getMessageOne(msgno, recive);
 		mv.addObject("msgone", msgvo);
 		mv.setViewName("message/msgdetail");
 		return mv;
@@ -189,10 +189,77 @@ public class MessageController {
 	//답장 컨트롤러
 	@RequestMapping("msgreference.j")
 	public ModelAndView messageReference(int check_no, ModelAndView mv){
-		mv = this.messageDetatil(check_no, mv);
+		mv = this.messageDetatil(check_no,null, mv);
 		
 		mv.setViewName("message/messagewrite");
 		return mv;
 	}
+	//메세지 스펨 리스트 컨트롤러
+	@RequestMapping("msgspamlist.j")
+	public ModelAndView messageSpamList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv,
+		MessageListVO listvo){
+		String seach = listvo.getSeach();
+		int currentPage = 1;
+		int limit = 10;
+		
+		if (page != null)
+			currentPage = Integer.parseInt(page);
+		int	totalListCount = messageservice.getSpamSeachListCount(listvo, loginUser.getUserId());
+		List<MessageVO>	msgspamlist = messageservice.getSpamMsgSeachList(loginUser.getUserId(), listvo, currentPage, limit);
+				
+		int maxPage = (int) ((double) totalListCount / limit + 0.9);
+		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+		int endPage = startPage + limit - 1;
+		if (maxPage < endPage)
+		endPage = maxPage;
+		
+		listvo.setSeach(seach);
+		mv.addObject("totalCount", totalListCount);
+		mv.addObject("msgspamlist", msgspamlist);		
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("maxPage", maxPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+		mv.addObject("seach",listvo.getSeach());
+		mv.addObject("select",listvo.getSelect());
+		
+		mv.setViewName("message/messagespamlist");
+		return mv;
+	}	
 	
+	//스팸유저 리스트
+	@RequestMapping("spamuser")
+	public ModelAndView messageSpamUser(int check_no, ModelAndView mv){
+		mv = this.messageDetatil(check_no,null, mv);
+		
+		mv.setViewName("message/messagewrite");
+		return mv;
+	}
+	//메세지 스펨 리스트 컨트롤러
+	@RequestMapping("msgspamlist.j")
+	public ModelAndView messageSpamUserList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv){
+		int currentPage = 1;
+		int limit = 10;
+		
+		if (page != null)
+			currentPage = Integer.parseInt(page);
+		int	totalListCount = messageservice.getSpamUserListCount(loginUser.getUserId());
+		List<MessageVO> msgspamuserlist = messageservice.getSpamUserMsgList(loginUser.getUserId(), currentPage, limit);
+				
+		int maxPage = (int) ((double) totalListCount / limit + 0.9);
+		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+		int endPage = startPage + limit - 1;
+		if (maxPage < endPage)
+		endPage = maxPage;
+		
+		mv.addObject("totalCount", totalListCount);
+		mv.addObject("msgspamuserlist", msgspamuserlist);		
+		mv.addObject("currentPage", currentPage);
+		mv.addObject("maxPage", maxPage);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+		
+		mv.setViewName("message/messagespamlist");
+		return mv;
+	}
 }
