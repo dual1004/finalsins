@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/sins/resources/js/message/messagedetail.js"></script>
- --><link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
+<script type="text/javascript" src="/sins/resources/js/message/messagedatail.js"></script>
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 </head>
   <body>
   		<div id="header">
@@ -36,16 +36,24 @@
         <div id="msgsenddiv">
         	<h2>메시지 자세이보기</h2><br>
         	 <c:if test="${loginUser.userId eq msgone.receivie_id}">
-        	 <input type="button" value="답장"/>
-        	 <input type="button" value="삭제" onclick="recivedel(${msgone.message_no})"/>
-   	 
+        	 <input type="button" value="답장" onclick="reference()"/>
+        	 <input type="button" value="삭제" onclick="recivedel()"/>
+        	 <form name="message_no">
+        	 <input type="hidden" name="check_no" value="${msgone.message_no}">
+   	 		</form>
+   	 		</c:if>
+   	 		<c:if test="${loginUser.userId ne msgone.receivie_id}">
+   	 		 <input type="button" value="삭제" onclick="senddel()"/>
+        	 <form name="message_no">
+        	 <input type="hidden" name="check_no" value="${msgone.message_no}">
+   	 		</form>
+   	 		</c:if>
         		<input type="hidden" id="send_id" name="send_id" value="${loginUser.userId}">
-        		<input type="hidden" name="sendid" value="user01">
-
+        		
 				<label>보낸 사람:</label><label>${msgone.send_id }</label><br/>
         		<textarea rows="10" cols="70" readonly="readonly" name="content">${msgone.content }</textarea><br/>
         		<input type="file" name="filepath">
-        	</c:if>
+        	
 				
 
         	

@@ -10,7 +10,6 @@ $( function() {
 		data : {"receivie_id" : $(this).val(),
 				"send_id" : $('#send_id').val()},
 		success : function(data) {
-			alert(data);
 			$('#reciveid').autocomplete({
 				source : data
 			})

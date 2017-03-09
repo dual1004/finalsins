@@ -57,7 +57,7 @@
 	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">받는사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msgsendlist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" onclick="userpage(${msg.receivie_id})">${msg.user_name }</a></td>
+		        	<td><a href="#" onmouseover="view('${msg.receivie_id}')" onclick="userpage(${msg.receivie_id})">${msg.user_name }</a></td>
 		        	<td class="content">
 		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
 		        

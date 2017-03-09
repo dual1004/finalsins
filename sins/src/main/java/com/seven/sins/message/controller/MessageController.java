@@ -143,6 +143,7 @@ public class MessageController {
 	// 메시지 삭제(받은 메시지)
 	@RequestMapping("msgrecivedel.j")
 	public ModelAndView messageResiveDelete(int[] check_no, ModelAndView mv){
+		System.out.println(check_no.length);
 		int result = messageservice.messageResiveDelet(check_no);
 		
 		if(result > 0){
@@ -184,6 +185,14 @@ public class MessageController {
 	public List<String> autocomresiveid(MessageVO msgvo){
 		List<String> list = messageservice.autocomresiveid(msgvo);
 		return list;
+	}
+	//답장 컨트롤러
+	@RequestMapping("msgreference.j")
+	public ModelAndView messageReference(int check_no, ModelAndView mv){
+		mv = this.messageDetatil(check_no, mv);
+		
+		mv.setViewName("message/messagewrite");
+		return mv;
 	}
 	
 }

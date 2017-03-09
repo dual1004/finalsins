@@ -61,17 +61,19 @@ public class MessageDAO {
 	//리시브쪽 삭제y바꾸기
 	public int messageResiveDelet(int[] check_no) {
 		int result = 0;
-		for(int i =0;i<check_no.length;i++){
-			result += (int)sqlSession.update(NAMESPACE + "resivedel", check_no[i]);
+		if(check_no != null && check_no.length>0){
+			for(int i =0;i<check_no.length;i++){
+				result += (int)sqlSession.update(NAMESPACE + "resivedel", check_no[i]);
+			}
 		}
 		return result;
 	}
-
+	//받은서치리스트 카운트 
 	public int getSeachListCount(MessageListVO listvo) {
 		listvo.setSeach("%"+ listvo.getSeach()+"%");
 		return (int)sqlSession.selectOne(NAMESPACE+"seachlistcount", listvo);
 	}
-
+	//받은메시지서치 리스트 
 	@SuppressWarnings("unchecked")
 	public List<MessageVO> getMsgSeachList(MessageListVO listvo, int currentPage, int limit) {
 		List<MessageVO> msglist = null;
@@ -94,26 +96,32 @@ public class MessageDAO {
 	public MessageVO getMessageOne(int msgno) {
 		return (MessageVO)sqlSession.selectOne(NAMESPACE+"selectone", msgno);
 	}
-
+	// 친구목록 가져오기
 	@SuppressWarnings("unchecked")
 	public List<String> autocomresiveid(MessageVO msgvo) {
 		msgvo.setReceivie_id("%"+ msgvo.getReceivie_id() + "%");
 		RowBounds rowBound = new RowBounds(0,9);
 		return (List<String>)sqlSession.selectList(NAMESPACE + "autocomresiveid", msgvo,rowBound);
 	}
-
+	// 메시지 보내기
 	public int messageSend(MessageVO sendmsg) {
 		return (int)sqlSession.insert(NAMESPACE + "sendmsg", sendmsg);
 	}
-
+	//보낸 메시지 삭제
 	public int gessageSendDel(int[] check_no) {
-		return (int)sqlSession.update(NAMESPACE + "senddel", check_no);
+		int result = 0;
+		if(check_no != null && check_no.length>0){
+			for(int i =0;i<check_no.length;i++){
+				result += (int)sqlSession.update(NAMESPACE + "senddel", check_no[i]);
+			}
+		}
+		return result;
 	}
-
+	//보낸 검색 리스트 카운트
 	public int getSendSeachListCount(MessageListVO listvo) {
 		return (int)sqlSession.selectOne(NAMESPACE + "sendseachlistcount", listvo);
 	}
-
+	// 보낸 검색 메시지 리스트 
 	@SuppressWarnings("unchecked")
 	public List<MessageVO> getSendSeachMsgList(MessageListVO listvo, int currentPage, int limit) {
 		List<MessageVO> msglist = null;

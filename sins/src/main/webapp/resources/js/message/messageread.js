@@ -26,7 +26,7 @@ function view(id) {
      var di = $('#mouseover');	 
      di.text(id);
     di.css({
-         "top": y + 60
+         "top": y 
          ,"left": x +10
          , "position": "absolute"
     }).show();
