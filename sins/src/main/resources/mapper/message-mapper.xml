@@ -15,7 +15,7 @@
 		<result property="read_check" column="READ_CHECK" />
 		<result property="user_name" column="USER_NAME" />
 	</resultMap>
-
+	
 	<select id="readlist" resultMap="messagemap" parameterType="string">
 		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
 			join member on(send_id = user_id)
@@ -194,17 +194,24 @@
 			and (RECEIVE_ID, send_id) in (select * from MESSAGESPAM where receive_id = #{loginid})
 	</select>
 		
-	<select id="spamuserlistcount" parameterType="string">
+	<select id="spamuserlistcount" parameterType="string" resultType="int">
 		select count(*) from MESSAGESPAM
 		join member on(spam_id = user_id)
 		where RECEIVE_ID = #{userId}
 	</select>
 	
-	<select id="spamuserlist" parameterType="string" resultMap="messagemap">
-		select SPAM_ID "RECEIVE_ID", user_name from MESSAGESPAM
+	<select id="spamuserlist" parameterType="string" resultType="MessageVO">
+		select SPAM_ID "SEND_ID", user_name from MESSAGESPAM
 		join member on(spam_id = user_id)
 		where RECEIVE_ID = #{userId}
 	</select>
+	
+	<delete id="spamremove" parameterType="MessageVO">
+		delete from messagespam
+		where RECEIVE_ID = #{send_id}
+		and SPAM_ID = #{receive_id}
+		
+	</delete>
 <!-- 	<select id="selectmap" resultMap="messagemap" resultType="MessageVO" parameterType="string">
 		select * from message where RECEIVE_ID = #{userid}	
 	</select> -->

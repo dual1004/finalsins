@@ -106,6 +106,11 @@ public class MessageServiceImpl implements MessageService{
 		return messageDAO.getSpamUserMsgList(userId, currentPage, limit);
 	}
 
+	@Override
+	public int spamRemove(String userId, String[] check_spamid) {
+		return messageDAO.spamRemove(userId, check_spamid);
+	}
+
 	/*@Override
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {
 		return messageDAO.getMsgMap(userid, currentPage, limit);

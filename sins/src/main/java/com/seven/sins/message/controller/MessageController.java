@@ -22,6 +22,7 @@ import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.message.service.MessageService;
 import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.message.vo.MessageVO;
+import com.seven.sins.message.vo.SpamUser;
 
 @Controller
 public class MessageController {
@@ -228,15 +229,7 @@ public class MessageController {
 	}	
 	
 	//스팸유저 리스트
-	@RequestMapping("spamuser")
-	public ModelAndView messageSpamUser(int check_no, ModelAndView mv){
-		mv = this.messageDetatil(check_no,null, mv);
-		
-		mv.setViewName("message/messagewrite");
-		return mv;
-	}
-	//메세지 스펨 리스트 컨트롤러
-	@RequestMapping("msgspamlist.j")
+	@RequestMapping("msgspamuserlist.j")
 	public ModelAndView messageSpamUserList(@SessionAttribute MemberVO loginUser,@RequestParam(value="page", required=false)String page, ModelAndView mv){
 		int currentPage = 1;
 		int limit = 10;
@@ -245,13 +238,13 @@ public class MessageController {
 			currentPage = Integer.parseInt(page);
 		int	totalListCount = messageservice.getSpamUserListCount(loginUser.getUserId());
 		List<MessageVO> msgspamuserlist = messageservice.getSpamUserMsgList(loginUser.getUserId(), currentPage, limit);
-				
+		
 		int maxPage = (int) ((double) totalListCount / limit + 0.9);
 		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
 		int endPage = startPage + limit - 1;
 		if (maxPage < endPage)
 		endPage = maxPage;
-		
+	
 		mv.addObject("totalCount", totalListCount);
 		mv.addObject("msgspamuserlist", msgspamuserlist);		
 		mv.addObject("currentPage", currentPage);
@@ -259,7 +252,15 @@ public class MessageController {
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
 		
-		mv.setViewName("message/messagespamlist");
+		mv.setViewName("message/spamuser");
+		return mv;
+	}
+	
+	//스팸 등록 삭제
+	@RequestMapping("spamremove.j")
+	public ModelAndView spamRemove(@SessionAttribute MemberVO loginUser, String[] check_spamid , ModelAndView mv){
+		int result = messageservice.spamRemove(loginUser.getUserId(),check_spamid);
+		mv.setViewName("forward:msgspamuserlist.j");
 		return mv;
 	}
 }

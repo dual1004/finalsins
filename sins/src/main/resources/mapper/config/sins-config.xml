@@ -15,6 +15,7 @@
 		<typeAlias type="com.seven.sins.friend.vo.FriendVO" alias="FriendVO"/>
 		<typeAlias type="com.seven.sins.group.vo.GroupVO" alias="GroupVO"/>
 		<typeAlias type="com.seven.sins.mypage.vo.MypageVO" alias="MypageVO"/>
+		<typeAlias type="com.seven.sins.message.vo.SpamUser" alias="SpamVO"/>
 		
 		
       <typeAlias type="com.seven.sins.group.vo.GroupLikeVO" alias="GroupLikeVO"/>

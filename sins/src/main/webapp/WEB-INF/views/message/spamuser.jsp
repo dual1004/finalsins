@@ -8,7 +8,7 @@
 <title>MESSAGE READ</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script  src="https://code.jquery.com/jquery-3.1.1.js"></script>
-<script type="text/javascript" src="/sins/resources/js/message/messageread.js"></script>   
+<script type="text/javascript" src="/sins/resources/js/message/spamuser.js"></script>   
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/message/messageread.css" /> 
 </head>
@@ -23,11 +23,11 @@
       <div id="left" class="box">
          <h2>메시지함</h2><br>
         <ul>
-        	<li><h4>받은 메세지</h4></li>
+        	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
         	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
           	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
-          	<li>스팸 유저</li>
+          	<li><h4>스팸 유저</h4></li>
         </ul>
       </div>
       <div id="content" class="box">
@@ -40,29 +40,20 @@
         	<input type="hidden" id="selectid" value="${select}"/>
         	<div id="tablemenu">
         	<form name = "chkform">
-				<input type="hidden" name="check_no"/>
+				<input type="hidden" name="check_spamid"/>
         	</form>        	
-        	<form id="seachform" name="seachform" action="msgreadlist.j">
-        		<input type="button" value="스팸신고" onclick="spamin()"/>
-        		<input type="button" value="삭제" onclick="recive_del()"/>
-        		<input type="hidden" name="loginid" value="${loginUser.userId }"/>
-        		<input type="hidden" id="page" name="page" value="1"/>
-        		<select id="select" name="select">
-			    	<option value="id">아이디 </option>
-		       		<option value="name">이름</option>
-		       		<option value="cont">내용</option>
-		    	</select>
-		    	<input type="search" id="seach" name="seach" value="${seach}"/>
-        		<input type="submit" value="찾기"/>
+        		<input type="button" value="스팸등록해제" onclick="spamdel()"/>
+        		
 	        	${currentPage } / ${maxPage } page
-        	</form>
         	</div> 
-     	
+			     	
 	        <table id="listtable" align="center">
-	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">보낸사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
+	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">스팸등록이름</th><th>아이디</th></tr>
 	        	<c:forEach var="msg" items="${msgspamuserlist }">
-	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}')" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
+						        	
+	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" ></td>
+		        	<td><label>${msg.user_name }</label></td>
+		        	<td><label>${msg.send_id }</label></td>
 		        
 		        </tr>
 	        	</c:forEach>

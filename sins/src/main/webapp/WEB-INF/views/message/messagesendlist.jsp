@@ -28,7 +28,7 @@
         	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
           	<li><h4>보낸 메시지</h4></li>
           	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
-          	<li>스팸 유저</li>
+          	<li><a class = "atag" href="msgspamuserlist.j">스팸 유저</a></li>
         </ul>
       </div>
       <div id="content" class="box">

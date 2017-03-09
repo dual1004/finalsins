@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.message.vo.MessageVO;
+import com.seven.sins.message.vo.SpamUser;
 
 
 @Repository("messageDAO")
@@ -165,29 +166,51 @@ public class MessageDAO {
 	    int endRow = startRow + limit - 1; 
 	    
 	    RowBounds rowbound= new RowBounds(startRow, endRow);
-		listvo.setSeach("%" + listvo.getSeach() + "%");
-		if(listvo.getLoginid() == null){
+		
+		if(listvo.getLoginid() == null || listvo.getLoginid().equals("")){
+		
 			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "spamseachlist", loginid, rowbound);
 		}else if(listvo.getSelect().equals("name")){
+		
+			listvo.setSeach("%" + listvo.getSeach() + "%");
 			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "namespamseachlist", listvo, rowbound);
 		}else if(listvo.getSelect().equals("cont")){
+		
+			listvo.setSeach("%" + listvo.getSeach() + "%");
 			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "contentspamseachlist", listvo, rowbound);
 		}else{
+		
+			listvo.setSeach("%" + listvo.getSeach() + "%");
 			msglist = (List<MessageVO>)sqlSession.selectList(NAMESPACE + "idspamseachlist", listvo, rowbound);
 		}
 		return msglist;
 	}
-
+	
+	//스팸유저 메시지 카운트
 	public int getSpamUserListCount(String userId) {
 		return (int)sqlSession.selectOne(NAMESPACE + "spamuserlistcount", userId);
 	}
 
+	//스팸 유저 리스트
+	@SuppressWarnings("unchecked")
 	public List<MessageVO> getSpamUserMsgList(String userId, int currentPage, int limit) {
 		int startRow = (currentPage - 1) * limit; 
 	    int endRow = startRow + limit - 1; 
 	    
 	    RowBounds rowbound= new RowBounds(startRow, endRow);
 		return (List<MessageVO>)sqlSession.selectList(NAMESPACE + "spamuserlist", userId, rowbound);
+	}
+	//스팸 등록 삭제
+	public int spamRemove(String userId, String[] check_spamid) {
+		MessageVO vo = new MessageVO();
+		vo.setSend_id(userId);
+		
+		int result = 0;
+		for(int i = 0 ; i < check_spamid.length;i++){
+			vo.setReceivie_id(check_spamid[i]);
+			result += (int)sqlSession.delete(NAMESPACE + "spamremove", vo);
+		}
+		return result;
 	}
 
 
