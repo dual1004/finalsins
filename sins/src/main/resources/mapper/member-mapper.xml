@@ -41,4 +41,8 @@
 	<select id="findId" parameterType="MemberVO" resultType="MemberVO" resultMap="ResultMember">
 		SELECT * FROM MEMBER WHERE USER_NAME = #{userName} AND PHONE = #{phone}
 	</select>
+	
+	<select id="allmemberid" resultType="string">
+		select user_id from member
+	</select>
 </mapper>

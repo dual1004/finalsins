@@ -52,7 +52,8 @@
         		
 				<label>보낸 사람:</label><label>${msgone.send_id }</label><br/>
         		<textarea rows="10" cols="70" readonly="readonly" name="content">${msgone.content }</textarea><br/>
-        		<input type="text" value="${msgone.filepath }"/>
+        		<img alt="" src="/sins/resources/images/file.png">
+		        <input type="text" value="${msgone.filepath }"/>  
         	
 				
 

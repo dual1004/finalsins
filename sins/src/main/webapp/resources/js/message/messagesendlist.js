@@ -65,7 +65,11 @@ function pagefn(no) {
 	 form.submit();
 }
 function userpage(userid) {
-	alert(userid);
+	$('input[name=check_no]').val(chk_values());
+	var form = document.chkform;
+	 form. action =  'msgrecivedel.j';
+	 form.method = "post";
+	 form.submit();
 }
 
 function msgdetail(msgno) {

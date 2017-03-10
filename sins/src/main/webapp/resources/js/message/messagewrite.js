@@ -17,11 +17,34 @@ $( function() {
 	})
 });
 });
-function submit() {
+function subsub() {
 	// ajax로 존재하는 유저인지 검색 후 서브밋
-
-	 return true;
+	var flag = false;
+	var cnt = 0;
+	var reciveid = $('#reciveid').val().split(",");
+	$.ajax({
+		url : "allmemberid.j",
+		type : "get",
+		success : function(data) {
+			var allmemberid = data;
+			for(var i = 0 ; i < allmemberid.length ; i++){
+				for(var j = 0 ; j < reciveid.length ; j ++){
+					if(allmemberid[j] == reciveid[i]){
+						cnt++;
+					}
+				}
+				
+			}
+		}
+			
+	})
+	if(cnt == reciveid.length){
+		flag = true;
+	}
+	
+	 return flag;
 }
+
 /*$('#reciveid').autocomplete({
 source: function(request, response) {
 	$.ajax({

@@ -32,7 +32,7 @@
       </div>
       <div id="content" class="box">
         <div id="listdiv">
-        	<h2>받은 메세지함</h2><br>
+        	<h2>스팸 유저 목록</h2><br>
         	<form name = "detailform">
         		<input type="hidden" id="msgno" name="msgno"/>
         		<input type="hidden" name="recive" value="true"/>

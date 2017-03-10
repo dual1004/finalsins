@@ -1,5 +1,7 @@
 package com.seven.sins.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -83,4 +85,10 @@ public class MemberController {
 		return mv;
 	}
 	
+	//모든맴버 아이디 가져오기 컨트롤러
+	@RequestMapping("allmemberid.j")
+	@ResponseBody
+	public List<String> allMemberId(){
+		return memberService.allMemberId();
+	}
 }

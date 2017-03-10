@@ -1,5 +1,7 @@
 package com.seven.sins.member.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,5 +39,10 @@ public class MemberDAO {
 
 	public MemberVO findId(MemberVO m) {
 		return (MemberVO) sqlSession.selectOne(NAMESPACE+"findId", m);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<String> allMemberId() {
+		return (List<String>)sqlSession.selectList(NAMESPACE + "allmemberid");
 	}
 }

@@ -78,7 +78,11 @@ function pagefn(no) {
 }
 
 function userpage(userid) {
-	alert(userid);
+	$('#userid').val(userid);
+	var form = document.seachform;
+	 form. action =  'mypage.b';
+	 form.method = "post";
+	 form.submit();
 }
 
 function msgdetail(msgno) {
