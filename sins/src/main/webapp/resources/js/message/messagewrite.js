@@ -31,7 +31,9 @@ function subsub() {
 				for(var j = 0 ; j < reciveid.length ; j ++){
 					if(allmemberid[j] == reciveid[i]){
 						cnt++;
+						console.log(allmemberid[j]);
 					}
+					console.log(allmemberid[i]);
 				}
 				
 			}

@@ -80,6 +80,10 @@
  			<url>https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail</url> 
  		</repository> 
  
+ 		<repository>
+ 			<id>servlet</id>
+ 			<url>https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api</url>
+ 		</repository>
            
     </repositories> 
      
@@ -161,12 +165,28 @@
  		</dependency> 
  				 
  		<!-- Servlet --> 
- 		<dependency> 
+ 		
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+    <scope>provided</scope>
+</dependency>
+		<!-- web socket -->
+<dependency>
+    <groupId>javax.websocket</groupId>
+    <artifactId>javax.websocket-api</artifactId>
+    <version>1.1</version>
+</dependency>
+		
+
+ 		
+<!--  		<dependency> 
  			<groupId>javax.servlet</groupId> 
  			<artifactId>servlet-api</artifactId> 
  			<version>2.5</version> 
  			<scope>provided</scope> 
- 		</dependency> 
+ 		</dependency>  -->
  		<dependency> 
  			<groupId>javax.servlet.jsp</groupId> 
  			<artifactId>jsp-api</artifactId> 
