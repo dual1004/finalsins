@@ -30,4 +30,12 @@ public class MemberDAO {
 	public int enrollMember(MemberVO member) {
 		return sqlSession.insert(NAMESPACE+"enrollMember", member);
 	}
+
+	public int phoneCheck(String phone) {
+		return (int)sqlSession.selectOne(NAMESPACE+"phoneCheck", phone);
+	}
+
+	public MemberVO findId(MemberVO m) {
+		return (MemberVO) sqlSession.selectOne(NAMESPACE+"findId", m);
+	}
 }

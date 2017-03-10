@@ -30,7 +30,15 @@
 		SELECT COUNT(USER_ID) FROM MEMBER WHERE USER_ID = #{userid}
 	</select>
 	
+	<select id="phoneCheck" parameterType="string" resultType="int">
+		SELECT COUNT(PHONE) FROM MEMBER WHERE PHONE = #{phone}
+	</select>
+	
 	<select id="enrollMember" parameterType="MemberVO" resultType="int">
 		INSERT INTO MEMBER(USER_ID, USER_PWD, USER_NAME, PHONE, GENDER) VALUES(#{userId}, #{userPwd}, #{userName}, #{phone}, #{gender})
+	</select>
+	
+	<select id="findId" parameterType="MemberVO" resultType="MemberVO" resultMap="ResultMember">
+		SELECT * FROM MEMBER WHERE USER_NAME = #{userName} AND PHONE = #{phone}
 	</select>
 </mapper>

@@ -52,7 +52,7 @@
         		
 				<label>보낸 사람:</label><label>${msgone.send_id }</label><br/>
         		<textarea rows="10" cols="70" readonly="readonly" name="content">${msgone.content }</textarea><br/>
-        		<input type="file" name="filepath">
+        		<input type="text" value="${msgone.filepath }"/>
         	
 				
 

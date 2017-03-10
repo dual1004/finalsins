@@ -31,4 +31,14 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.enrollMember(member);
 	}
 
+	@Override
+	public int phoneCheck(String phone) {
+		return memberDAO.phoneCheck(phone);
+	}
+
+	@Override
+	public MemberVO findId(MemberVO m) {
+		return memberDAO.findId(m);
+	}
+
 }

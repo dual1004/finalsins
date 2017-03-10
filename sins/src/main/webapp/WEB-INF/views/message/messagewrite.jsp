@@ -35,7 +35,7 @@
       <div id="content" class="box">
         <div id="msgsenddiv">
         	<h2>메시지 쓰기</h2><br>
-        	<form action="msgsead.j" enctype="multipart/fora-data" name="sendform" onsubmit="return submit()">
+        	<form action="msgsead.j" enctype="multipart/form-data" method="post" name="sendform" onsubmit="return submit()">
         		<input type="hidden" id="send_id" name="send_id" value="${loginUser.userId}">
         		<input type="submit" id="msgsendbtn" value="쪽지보내기"/><br/>
         		<input type="hidden" name="sendid" value="user01">
@@ -48,7 +48,7 @@
         		<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id" value="${msgone.send_id }"/><br/>
         		<textarea rows="10" cols="70" name="content">RE : ${msgone.content }</textarea><br/>
         		</c:if>
-				<input type="file" name="filepath">
+				<input type="file" name="file">
 				
 
         	</form>

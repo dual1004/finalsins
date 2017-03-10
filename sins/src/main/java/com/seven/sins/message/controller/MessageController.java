@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.member.vo.MemberVO;
@@ -23,12 +25,16 @@ import com.seven.sins.message.service.MessageService;
 import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.message.vo.MessageVO;
 import com.seven.sins.message.vo.SpamUser;
+import com.seven.sins.util.FileUtils;
 
 @Controller
 public class MessageController {
 
 	@Autowired
 	private MessageService messageservice;
+	
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
 	
 	//메세지 리시트 읽기 컨트롤러
 	@RequestMapping("msgreadlist.j")
@@ -166,9 +172,14 @@ public class MessageController {
 
 	//메세지 보내기 컨트롤러 
 	@RequestMapping("msgsead.j")
-	public ModelAndView messageSead(MessageVO sendmsg,String[] resiveid,HttpServletRequest request, ModelAndView mv){		
+	public ModelAndView messageSead(MessageVO sendmsg,@RequestParam("file") MultipartFile file, String[] resiveid, ModelAndView mv) throws Exception{		
 		// 파일 업로드 영역
+		if(file != null){
+			String userid = sendmsg.getSend_id();
+			String filePath = fileUtils.fileInfo(userid, file);
 		
+			sendmsg.setFilepath(filePath);		
+		}
 		
 
 		int result = messageservice.messageSend(sendmsg);

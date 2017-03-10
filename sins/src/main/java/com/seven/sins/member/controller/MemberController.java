@@ -5,7 +5,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
@@ -29,14 +32,55 @@ public class MemberController {
 			
 			return "common/newsfeed";
 		}
-		
 		return null;
 	}
 	
 	@RequestMapping("enroll.k")
-	public String enrollMember(MemberVO member, HttpServletRequest request){
+	public String enrollMember(MemberVO member, Model mo){
+		System.out.println(member);
+		
 		int result = memberService.enrollMember(member);
 		
-		return "../../index";
+		String url = "";
+		if(result > 0){
+			mo.addAttribute(member);
+			url = "member/enrollSuccess";
+		}
+		else {
+			url = "member/enrollFail";
+		}
+		
+		return url;
 	}
+	
+	@RequestMapping("phoneCheck.k")
+	@ResponseBody
+	public String phoneCheck(HttpServletRequest request){
+		
+		String phone = request.getParameter("phone");
+		
+		int check = memberService.phoneCheck(phone);
+
+		String result = String.valueOf(check);
+		
+		return result;
+	}
+	
+	@RequestMapping("findId.k")
+	public ModelAndView findId(MemberVO m, ModelAndView mv){
+		String url = "";
+		
+		MemberVO findMember = memberService.findId(m);
+		System.out.println(findMember);
+		mv.addObject("member", findMember);
+		if(findMember != null){
+			mv.setViewName("member/findIdSuccess");
+		}
+		else {
+			mv.setViewName("member/findIdFail");
+		}
+		
+		return mv;
+	}
+	
 }

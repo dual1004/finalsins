@@ -8,4 +8,6 @@ public interface MemberService {
 	int findPw(MemberVO m);
 	int idCheck(String userid);
 	int enrollMember(MemberVO member);
+	int phoneCheck(String phone);
+	MemberVO findId(MemberVO m);
 }
