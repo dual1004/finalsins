@@ -47,6 +47,7 @@ $( document ).ready(function() {
           <li><a href="selectQna.n">고객센터</a></li>
           
           <li><a href="brodcasting.j">채팅</a></li>
+          
         </ul>
       </div>
       <div id="content" class="box">

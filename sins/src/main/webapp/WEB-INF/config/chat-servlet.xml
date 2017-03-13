@@ -5,10 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<bean id="chat" class="com.seven.sins.chat.handler.ChatHandler"></bean>
+<!-- <bean id="chat" class="com.seven.sins.chat.handler.ChatHandler"></bean>
 
 <websocket:handlers>
 	<websocket:mapping handler="chat" path="/test-ws"/>
 	<websocket:sockjs></websocket:sockjs>
-</websocket:handlers>
+</websocket:handlers> -->
 </beans>
