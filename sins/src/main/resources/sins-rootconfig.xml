@@ -37,7 +37,6 @@
         <property name="maxInMemorySize" value="2048000000" />
     </bean>
     
-    
 	
 	<context:component-scan base-package="com.seven.sins.**.service"></context:component-scan>
 	<context:component-scan base-package="com.seven.sins.**.dao"></context:component-scan>

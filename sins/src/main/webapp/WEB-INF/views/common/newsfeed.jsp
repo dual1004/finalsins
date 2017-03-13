@@ -46,7 +46,7 @@ $( document ).ready(function() {
           <li><h4>뉴스피드</h4></li>
           <li><a href="selectQna.n">고객센터</a></li>
           
-          <li><a href="alink.do?path=chat/test">채팅</a></li>
+          <li><a href="brodcasting.j">채팅</a></li>
         </ul>
       </div>
       <div id="content" class="box">
