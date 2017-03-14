@@ -69,9 +69,8 @@
 		        	<td>${msg.message_date }</td>
 		        	<td><c:if test="${empty msg.filepath }"> 파일없음 </c:if>
 		        	<c:if test="${not empty msg.filepath }">
-		        	<img alt="" src="/sins/resources/images/file.png">
-		        	${msg.filepath }  
-		        	</c:if>
+		        	<img src="${pageContext.request.contextPath}/resources/images/file.png" width="20px"/>
+		        	</c:if>  
 		        	</td>
 		        	<td>${msg.read_check }
 		        </tr>

@@ -1,5 +1,6 @@
 package com.seven.sins.chat.handler;
-/*
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,7 +19,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @ServerEndpoint("/test-ws")
 public class ChatHandler {
-	private List<Session> sessionusers = new ArrayList<Session>();
+	
+	private static List<Session> sessionusers = new ArrayList<Session>();
 	
 	public ChatHandler(){}
 	
@@ -32,7 +34,7 @@ public class ChatHandler {
 	}
 	
 	@OnMessage
-	public void handleMessage(String message)throws Exception{
+	public void handleMessage(String message)throws IOException{
 		Iterator<Session> iterator = sessionusers.iterator();
 		System.out.println("모두에게 메시지");
 		System.out.println(message);
@@ -62,8 +64,7 @@ public class ChatHandler {
 	}
 	
 }
-*/
-
+/*
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -108,4 +109,4 @@ public class ChatHandler {
 		// Remove session from the connected sessions set
 		clients.remove(session);
 	}
-}
+}*/

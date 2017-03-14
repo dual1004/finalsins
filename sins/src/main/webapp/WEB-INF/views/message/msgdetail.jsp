@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="/sins/resources/js/message/messagedatail.js"></script>
+<script src="http://vjs.zencdn.net/c/video.js"></script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
 </head>
   <body>
@@ -34,7 +36,7 @@
       </div>
       <div id="content" class="box">
         <div id="msgsenddiv">
-        	<h2>메시지 자세이보기</h2><br>
+        	<h2>메시지 자세히보기</h2><br>
         	 <c:if test="${loginUser.userId eq msgone.receivie_id}">
         	 <input type="button" value="답장" onclick="reference()"/>
         	 <input type="button" value="삭제" onclick="recivedel()"/>
@@ -52,12 +54,25 @@
         		
 				<label>보낸 사람:</label><label>${msgone.send_id }</label><br/>
         		<textarea rows="10" cols="70" readonly="readonly" name="content">${msgone.content }</textarea><br/>
-        		<img alt="" src="/sins/resources/images/file.png">
-		        <input type="text" value="${msgone.filepath }"/>  
-        	
-				
-
-        	
+        		
+        		<c:if test="${not empty msgone.filepath}">
+        		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
+   				<c:if test="${fn:split(msgone.filepath,'.')[1] eq pic}">
+				<img src="${pageContext.request.contextPath}/resources/file/${msgone.send_id}/${msgone.filepath}" />
+				</c:if>
+        		</c:forTokens>
+        		
+   				<c:if test="${fn:split(msgone.filepath,'.')[1] eq 'mp4'}">
+				<video width="320" height="240" controls>
+  				<source src="${pageContext.request.contextPath}/resources/file/${msgone.send_id}/${msgone.filepath}" type="video/mp4">
+  				</video>
+				</c:if>
+        		
+        		<a href="download.p?userId=${msgone.send_id}&fileName=${msgone.filepath}">${fn:split(msgone.filepath,'=')[1]}</a>
+        		</c:if>
+        		<c:if test="${empty msgone.filepath}">
+        		첨부파일 없음
+        		</c:if>
         </div>
       </div>
       <div id="right" class="box">

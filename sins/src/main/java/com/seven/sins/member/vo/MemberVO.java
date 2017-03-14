@@ -12,7 +12,7 @@ public class MemberVO implements java.io.Serializable{
 	private int manager;
 	private Date enrollDate;
 	private String userProfile;
-	private String parsonalId;
+	private String birth;
 	private String gender;
 	private int loginFailCheck;
 	private Date banTime;
@@ -29,7 +29,7 @@ public class MemberVO implements java.io.Serializable{
 	}
 
 	public MemberVO(String userId, String userPwd, String userName, String phone, String address, int manager,
-			Date enrollDate, String userProfile, String parsonalId, String gender, int loginFailCheck, Date banTime) {
+			Date enrollDate, String userProfile, String birth, String gender, int loginFailCheck, Date banTime) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -39,7 +39,7 @@ public class MemberVO implements java.io.Serializable{
 		this.manager = manager;
 		this.enrollDate = enrollDate;
 		this.userProfile = userProfile;
-		this.parsonalId = parsonalId;
+		this.birth = birth;
 		this.gender = gender;
 		this.loginFailCheck = loginFailCheck;
 		this.banTime = banTime;
@@ -109,12 +109,12 @@ public class MemberVO implements java.io.Serializable{
 		this.userProfile = userProfile;
 	}
 
-	public String getParsonalId() {
-		return parsonalId;
+	public String getBirth() {
+		return birth;
 	}
 
-	public void setParsonalId(String parsonalId) {
-		this.parsonalId = parsonalId;
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 
 	public String getGender() {
@@ -145,7 +145,7 @@ public class MemberVO implements java.io.Serializable{
 	public String toString() {
 		return "MemberVO [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", phone=" + phone
 				+ ", address=" + address + ", manager=" + manager + ", enrollDate=" + enrollDate + ", userProfile="
-				+ userProfile + ", parsonalId=" + parsonalId + ", gender=" + gender + ", loginFailCheck="
+				+ userProfile + ", birth=" + birth + ", gender=" + gender + ", loginFailCheck="
 				+ loginFailCheck + ", banTime=" + banTime + "]";
 	}
 	

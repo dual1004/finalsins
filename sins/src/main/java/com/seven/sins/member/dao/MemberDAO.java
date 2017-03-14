@@ -1,6 +1,6 @@
 package com.seven.sins.member.dao;
 
-import java.util.List;
+import java.util.*;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +40,37 @@ public class MemberDAO {
 	public MemberVO findId(MemberVO m) {
 		return (MemberVO) sqlSession.selectOne(NAMESPACE+"findId", m);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<String> allMemberId() {
 		return (List<String>)sqlSession.selectList(NAMESPACE + "allmemberid");
+	}
+
+	public int changePwd(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"changePwd", m);
+	}
+
+	public int changeBirth(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"changeBirth", m);
+	}
+
+	public int phoneChange(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"phoneChange", m);
+	}
+
+	public int deleteMember(MemberVO m) {
+		return sqlSession.delete(NAMESPACE+"deleteMember", m);
+	}
+
+	public ArrayList<String> getCity() {
+		return (ArrayList<String>) sqlSession.selectList(NAMESPACE+"getCity");
+	}
+
+	public ArrayList<String> getPartition(String city) {
+		return (ArrayList<String>) sqlSession.selectList(NAMESPACE+"getPartition", city);
+	}
+
+	public int changeAddress(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"changeAddress", m);
 	}
 }

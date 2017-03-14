@@ -8,6 +8,6 @@ public class BrodCast {
 
 	@RequestMapping("brodcasting.j")
 	public String viewChatingPage(){
-		return "chat/chat-1";
+		return "chat/chat";
 	}
 }

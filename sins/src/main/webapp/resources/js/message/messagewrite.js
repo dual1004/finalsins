@@ -2,6 +2,15 @@
  * 
  */
 
+function areakeyup() {
+	var area = $('textarea[name=content]');
+	
+	if(area.val().length > 600){
+		alert('글자는 600자 제한입니다.');
+		area.val(area.val().substring(0,1800));
+		area.focus();
+	}
+}
 $( function() {
   $('#reciveid').keyup(function() {
 	$.ajax({

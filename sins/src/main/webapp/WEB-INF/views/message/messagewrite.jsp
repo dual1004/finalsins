@@ -34,19 +34,19 @@
       </div>
       <div id="content" class="box">
         <div id="msgsenddiv">
-        	<h2>메시지 쓰기</h2><br>        	
-        	<form action="msgsead.j" enctype="multipart/form-data" method="post" name="sendform" onsubmit="return subsub()">
+        	<h2>메시지 쓰기</h2><br>
+        	<form action="msgsead.j" enctype="multipart/form-data" method="post" name="sendform" onsubmit="return submit()" accept-charset="UTF-8">
         		<input type="hidden" id="send_id" name="send_id" value="${loginUser.userId}">
         		<input type="submit" id="msgsendbtn" value="쪽지보내기"/><br/>
         		<input type="hidden" name="sendid" value="user01">
 				<c:if test="${empty msgone.send_id}">
-				<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id" placeholder="아이디 구분은 , 로 구분"/><br/> <br/>
-        		<textarea rows="10" cols="70" name="content"></textarea><br/>
+				<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id"/><br/>
+        		<textarea rows="10" cols="70" name="content" onkeyup="areakeyup()"></textarea><br/>
         		</c:if>
         		<c:if test="${not empty msgone.send_id}">
         		<label>답장</label>
         		<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id" value="${msgone.send_id }"/><br/>
-        		<textarea rows="10" cols="70" name="content">RE : ${msgone.content }</textarea><br/>
+        		<textarea rows="10" cols="70" name="content" onkeyup="areakeyup()">RE : ${msgone.content }</textarea><br/>
         		</c:if>
 				<input type="file" name="file">
 				

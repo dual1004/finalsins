@@ -1,6 +1,6 @@
 package com.seven.sins.member.service;
 
-import java.util.List;
+import java.util.*;
 
 import com.seven.sins.member.vo.MemberVO;
 
@@ -13,4 +13,12 @@ public interface MemberService {
 	int phoneCheck(String phone);
 	MemberVO findId(MemberVO m);
 	List<String> allMemberId();
+	int changePwd(MemberVO m);
+	int changeBirth(MemberVO m);
+	int phoneChange(MemberVO m);
+	int deleteMember(MemberVO m);
+	ArrayList<String> getCity();
+	ArrayList<String> getPartition(String city);
+	int changeAddress(MemberVO m);
+	
 }
