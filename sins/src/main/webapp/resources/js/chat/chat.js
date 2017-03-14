@@ -7,13 +7,19 @@ $(function() {
 	})
 })
 function online() {
+<<<<<<< HEAD
 	var wsuri = "ws://localhost:9999/sins/test-ws";
 	websocket = new WebSocket(wsuri);
+=======
+	var groupNo = 1;
+	
+	var wsuri = "ws://192.168.20.89:9999/sins/test-ws";
+	websocket = new WebSocket(wsuri,'a');
+>>>>>>> refs/remotes/origin/master
 	var userid = $('#userid').val();
 	console.log(websocket.readyState);
 	websocket.onopen = function(event) {
-		websocket.send('접속유저명' + event.data);
-		
+		websocket.send('접속유저명' + event.data);	
 	}
 	websocket.onmessage = function(event) {
 		msg = JSON.parse(event.data);

@@ -21,9 +21,9 @@ public class FileUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         
     	String originalFileName = file.getOriginalFilename();
-        String originalFileExtension = originalFileName + "-" + sdf.format(new java.sql.Date(time));
-                 
-        String filePath = dir + userid + "\\" + originalFileExtension;
+        String originalFileExtension = sdf.format(new java.sql.Date(time)) + "=" + originalFileName;
+        
+        String filePath = dir + userid + "/" + originalFileExtension;
         File sFile = new File(filePath);
         file.transferTo(sFile);
            

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 @SuppressWarnings("serial")
 public class GroupVO implements java.io.Serializable {
-	
+
 	private int groupNo;
 	private String groupName;
 	private String groupInfo;
@@ -15,6 +15,7 @@ public class GroupVO implements java.io.Serializable {
 	private Date createDate;
 	private String classify;
 	private String userId;
+	private String userName;
 	private int memberCount;
 	private String deleteYN;
 
@@ -23,7 +24,8 @@ public class GroupVO implements java.io.Serializable {
 	}
 
 	public GroupVO(int groupNo, String groupName, String groupInfo, String keyword, int groupLike, String filepath,
-			String category1, Date createDate, String classify, String userId, int memberCount, String deleteYN) {
+			String category1, Date createDate, String classify, String userId, String userName, int memberCount,
+			String deleteYN) {
 		super();
 		this.groupNo = groupNo;
 		this.groupName = groupName;
@@ -35,6 +37,7 @@ public class GroupVO implements java.io.Serializable {
 		this.createDate = createDate;
 		this.classify = classify;
 		this.userId = userId;
+		this.userName = userName;
 		this.memberCount = memberCount;
 		this.deleteYN = deleteYN;
 	}
@@ -119,6 +122,14 @@ public class GroupVO implements java.io.Serializable {
 		this.userId = userId;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public int getMemberCount() {
 		return memberCount;
 	}
@@ -133,5 +144,13 @@ public class GroupVO implements java.io.Serializable {
 
 	public void setDeleteYN(String deleteYN) {
 		this.deleteYN = deleteYN;
+	}
+
+	@Override
+	public String toString() {
+		return "GroupVO [groupNo=" + groupNo + ", groupName=" + groupName + ", groupInfo=" + groupInfo + ", keyword="
+				+ keyword + ", groupLike=" + groupLike + ", filepath=" + filepath + ", category1=" + category1
+				+ ", createDate=" + createDate + ", classify=" + classify + ", userId=" + userId + ", userName="
+				+ userName + ", memberCount=" + memberCount + ", deleteYN=" + deleteYN + "]";
 	}
 }

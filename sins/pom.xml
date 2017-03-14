@@ -289,11 +289,11 @@
  		</dependency>
 
 		<!-- websocket -->
- 		<!-- <dependency>
+ 		<dependency>
  			<groupId>org.springframework.boot</groupId>
  			<artifactId>spring-boot-starter-websocket</artifactId>
  			<version>1.5.0.RELEASE</version>
- 		</dependency> -->
+ 		</dependency>
  		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
 <!-- <dependency>
     <groupId>org.springframework</groupId>

@@ -2,6 +2,8 @@ package com.seven.sins.group.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.seven.sins.group.vo.GroupMemberVO;
@@ -9,9 +11,12 @@ import com.seven.sins.group.vo.GroupMemberVO;
 @Repository("groupMemberDAO")
 public class GroupMemberDAO {
 
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@SuppressWarnings("unchecked")
 	public ArrayList<GroupMemberVO> selectGroupMemberList(int groupNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList<GroupMemberVO>)sqlSession.selectList("group.selectGroupMemberList", groupNo);
 	}
 
 	public int requestGroupMember(GroupMemberVO vo) {

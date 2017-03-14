@@ -1,6 +1,6 @@
 package com.seven.sins.member.service;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +47,41 @@ public class MemberServiceImpl implements MemberService{
 	public List<String> allMemberId() {
 		return memberDAO.allMemberId();
 	}
+
+	@Override
+	public int changePwd(MemberVO m) {
+		return memberDAO.changePwd(m);
+	}
+
+	@Override
+	public int changeBirth(MemberVO m) {
+		return memberDAO.changeBirth(m);
+	}
+
+	@Override
+	public int phoneChange(MemberVO m) {
+		return memberDAO.phoneChange(m);
+	}
+
+	@Override
+	public int deleteMember(MemberVO m) {
+		return memberDAO.deleteMember(m);
+	}
+
+	@Override
+	public ArrayList<String> getCity() {
+		return memberDAO.getCity();
+	}
+
+	@Override
+	public ArrayList<String> getPartition(String city) {
+		return memberDAO.getPartition(city);
+	}
+
+	@Override
+	public int changeAddress(MemberVO m) {
+		return memberDAO.changeAddress(m);
+	}
+
 
 }

@@ -15,8 +15,8 @@ public class GroupWriteServiceImpl implements GroupWriteService {
 	private GroupWriteDAO groupWriteDAO;
 	
 	@Override
-	public ArrayList<GroupWriteVO> selectGroupWriteList() {
-		ArrayList<GroupWriteVO> list = groupWriteDAO.selectGroupWriteList();
+	public ArrayList<GroupWriteVO> selectGroupWriteList(int groupNo) {
+		ArrayList<GroupWriteVO> list = groupWriteDAO.selectGroupWriteList(groupNo);
 		return list;
 	}
 
@@ -33,8 +33,8 @@ public class GroupWriteServiceImpl implements GroupWriteService {
 	}
 
 	@Override
-	public int deleteGroupWrite(GroupWriteVO vo) {
-		int result = groupWriteDAO.deleteGroupWrite(vo);
+	public int deleteGroupWrite(int writeNo) {
+		int result = groupWriteDAO.deleteGroupWrite(writeNo);
 		return result;
 	}
 }

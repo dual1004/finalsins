@@ -29,6 +29,26 @@
 		});
 	});
 	
+	$(function(){
+		/* $(".groupList").click(function() {
+			var groupNo = $(this).children().first().val();
+			var url = "selectGroup.y?groupNo="+groupNo;
+			$(location).attr('href', url);
+		}); */
+		
+		
+		$(".groupPageBtn").click(function(){
+			var groupNo = $(this).next().val();
+			var url = "selectGroup.y?groupNo="+groupNo;		
+			$(location).attr('href', url);
+		});
+		
+		$(".requestBtn").click(function(){
+			
+			
+		});
+	});
+	
 </script>
 <style>
 	.groupList{
@@ -91,45 +111,36 @@
 		<div id="left" class="box">
 			<h2>LEFT</h2>
 			<ul>
-				<li><a href="alink.do?path=group/GroupMain">그룹</a></li>
-				<li><a href="alink.do?path=group/GroupList">그룹리스트</a></li>
-				<li><a href="alink.do?path=group/CreateGroup">그룹생성</a></li>
+				 <li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
+				 <li><a href="alink.do?path=channel/channelList">채널</a></li>
+				 <li><a href="selectGroupList.y">그룹</a></li>
+				 <li><h4>뉴스피드</h4></li>
+				 <li><a href="selectQna.n">고객센터</a></li>
 			</ul>
 		</div>
 		<div id="content" class="box">
 			<h2 id="pageName">그룹리스트</h2>
 			<c:forEach var="item" items="${list}">
 				<div class="groupList">
+					<input type="hidden" class="groupNo" value="${item.groupNo}"/>
 					<label class="groupName">${item.groupName}</label>
 					<div class="memberCount">${item.memberCount} 명</div>
 					<div class="category">${item.category1}</div>
+					
+					<div class="groupBtnContainer">
+						<input type="button" class="groupPageBtn" value="그룹페이지로"/>
+						<input type="hidden" class="groupNo" value="${item.groupNo}"/>
+					</div>
+					
 				</div>
+				
 			</c:forEach>
-			<%-- <div class="groupList">
-				<label class="groupName">${list[0].groupName}</label>
-				<div class="memberCount">회원수</div>
-				<div class="category">카테고리</div>
-			</div>
-			<div class="groupList">
-				<label class="groupName">그룹 이름</label>
-				<div class="memberCount">회원수</div>
-				<div class="category">카테고리</div>
-			</div>
-			<div class="groupList">
-				<label class="groupName">그룹 이름</label>
-				<div class="memberCount">회원수</div>
-				<div class="category">카테고리</div>
-			</div>
-			<div class="groupList">
-				<label class="groupName">그룹 이름</label>
-				<div class="memberCount">회원수</div>
-				<div class="category">카테고리</div>
-			</div> --%>
 		</div>
 		<div id="right" class="box">
 			<br/>
         	<div id="center"><h3>빠른 그룹 개설</h3></div>
 			<form id="createGroup" action="insertGroup.y" method="post" enctype="multipart/form-data">
+            	<input type="hidden" name="userId" value="${loginUser.userId}"/>
             	<div id="case">
             		<br/><br/>
             		<div id="side">
@@ -150,11 +161,11 @@
 					<br/>
 					<div>
 						<label id="ho" for="categories">카테고리 설정</label>
-						<label><br/><input type="checkbox" id="categories" name="category" class="c1" value="1">여행 </label> 
-						<label><input type="checkbox" id="categories" name="category" class="c1" value="2">책</label>
-						<label><input type="checkbox" id="categories" name="category" class="c1" value="3">뷰티 </label>
-                 		<label><input type="checkbox" id="categories" name="category" class="c1" value="4">패션</label>
-						<label><input type="checkbox" id="categories" name="category" class="c1" value="5">스터디</label>
+						<label><br/><input type="checkbox" id="categories" name="category1" class="c1" value="여행" />여행 </label> 
+						<label><input type="checkbox" id="categories" name="category1" class="c1" value="책" />책</label>
+						<label><input type="checkbox" id="categories" name="category1" class="c1" value="뷰티" />뷰티 </label>
+                 		<label><input type="checkbox" id="categories" name="category1" class="c1" value="패션" />패션</label>
+						<label><input type="checkbox" id="categories" name="category1" class="c1" value="스터디" />스터디</label>
 					</div>
 					<br/><br/>
 					<div id="tag">

@@ -24,6 +24,10 @@
 	</beans:bean>
 	
 	
+	<beans:bean class="com.seven.sins.util.service.DownLoadImpl" id="downloadView"/>
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="fileViewResolver">
+		<beans:property value="0" name="order"/>
+	</beans:bean>
 	
 
 	<context:component-scan base-package="com.seven.sins.**.controller" />

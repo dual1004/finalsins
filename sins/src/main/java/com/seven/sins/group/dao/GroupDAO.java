@@ -10,21 +10,29 @@ import com.seven.sins.group.vo.GroupVO;
 
 @Repository("groupDAO")
 public class GroupDAO {
-
+	
+	private static final String NAMESPACE = "group.";
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<GroupVO> selectGroupList() {
-		return (ArrayList<GroupVO>)sqlSession.selectList("group.selectGroupList");
+		return (ArrayList<GroupVO>)sqlSession.selectList(NAMESPACE + "selectGroupList");
 	}
 
 	public GroupVO selectGroup(int groupNo) {
-		return (GroupVO)sqlSession.selectOne("group.selectGroup");
+		return (GroupVO)sqlSession.selectOne(NAMESPACE + "selectGroup", groupNo);
 	}
 
 	public int insertGroup(GroupVO vo) {
-		return sqlSession.insert("group.insertGroup", vo);
+		int groupResult = sqlSession.insert(NAMESPACE + "insertGroup", vo);
+
+		// 그룹 생성 성공시, 생성자를 멤버 테이블에 운영자로 추가.
+		if(groupResult > 0) 
+			sqlSession.insert(NAMESPACE + "insertGroupAdmin", vo);
+		
+		return groupResult;
 	}
 
 	public int updateGroup(GroupVO vo) {

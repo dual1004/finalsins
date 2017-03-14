@@ -19,6 +19,15 @@
 	function goHome() {
 		location.href="alink.do?path=common/newsfeed";
 	}
+	
+	function goMyInfo() {
+		location.href="alink.do?path=member/myInfo";
+	}
+	
+	function logout(){
+		location.href="logout.k";
+	}
+	
 </script>
 	</head>
 <body>
@@ -29,7 +38,8 @@
 <div id="mylayout">
 	<div id="message" onclick="message()"></div>
 	<div id="allet"></div>
-	<div id="my"><p id="m">내 정보보기</p></div>
+	<div id="logout" onclick="logout()"></div>
+	<div id="my" onclick="goMyInfo()"><p id="m">내 정보보기</p></div>
 </div>
 </body>
 </html>
