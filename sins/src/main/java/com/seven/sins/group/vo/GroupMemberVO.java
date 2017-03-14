@@ -5,6 +5,7 @@ public class GroupMemberVO implements java.io.Serializable {
 
 	private int groupNo;
 	private String userId;
+	private String userName;
 	private int grade;
 	private String classify;
 	private String groupAccept;
@@ -13,10 +14,11 @@ public class GroupMemberVO implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupMemberVO(int groupNo, String userId, int grade, String classify, String groupAccept) {
+	public GroupMemberVO(int groupNo, String userId, String userName, int grade, String classify, String groupAccept) {
 		super();
 		this.groupNo = groupNo;
 		this.userId = userId;
+		this.userName = userName;
 		this.grade = grade;
 		this.classify = classify;
 		this.groupAccept = groupAccept;
@@ -36,6 +38,14 @@ public class GroupMemberVO implements java.io.Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public int getGrade() {
@@ -64,7 +74,7 @@ public class GroupMemberVO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "GroupMemberVO [groupNo=" + groupNo + ", userId=" + userId + ", grade=" + grade + ", classify="
-				+ classify + ", groupAccept=" + groupAccept + "]";
+		return "GroupMemberVO [groupNo=" + groupNo + ", userId=" + userId + ", userName=" + userName + ", grade="
+				+ grade + ", classify=" + classify + ", groupAccept=" + groupAccept + "]";
 	}
 }

@@ -40,13 +40,17 @@
         		<input type="submit" id="msgsendbtn" value="쪽지보내기"/><br/>
         		<input type="hidden" name="sendid" value="user01">
 				<c:if test="${empty msgone.send_id}">
-				<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id"/><br/>
+				<div class="areadiv">
+				<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id"/><label class="keycnt" >0</label>/600글자</label><br/>
         		<textarea rows="10" cols="70" name="content" onkeyup="areakeyup()"></textarea><br/>
+        		</div>
         		</c:if>
         		<c:if test="${not empty msgone.send_id}">
         		<label>답장</label>
-        		<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id" value="${msgone.send_id }"/><br/>
+        		<div class="areadiv">
+        		<label for="reciveid">받는 사람 :</label><input type="text" required="required" id="reciveid" name="receivie_id" value="${msgone.send_id }"/><label class="keycnt" >0</label>/600글자<br/>
         		<textarea rows="10" cols="70" name="content" onkeyup="areakeyup()">RE : ${msgone.content }</textarea><br/>
+        		</div>
         		</c:if>
 				<input type="file" name="file">
 				

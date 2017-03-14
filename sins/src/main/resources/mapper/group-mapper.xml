@@ -4,6 +4,7 @@
 	<resultMap type="GroupVO" id="resultGroup">
 		<id property="groupNo" column="GROUP_NO"/>
 		<result property="groupName" column="GROUP_NAME"/>
+		<result property="groupInfo" column="GROUP_INFO"/>
 		<result property="keyword" column="KEYWORD"/>
 		<result property="groupLike" column="GROUP_LIKE"/>
 		<result property="filepath" column="FILEPATH"/>
@@ -11,12 +12,13 @@
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="classify" column="CLASSIFY"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="memberCount" column="MEMBER_COUNT"/>
 		<result property="deleteYN" column="DELETE_YN"/>
 	</resultMap>
 	
 	<!-- Group -->
-	<select id="selectGroupList" parameterType="GroupVO" resultType="GroupVO" resultMap="resultGroup">
+	<select id="selectGroupList" resultType="GroupVO" resultMap="resultGroup">
 		SELECT GROUP_NO, GROUP_NAME, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
             L.CLASSIFY, L.USER_ID, L.DELETE_YN, CATEGORY_NAME, COUNT(GROUP_NO) MEMBER_COUNT
 		FROM GROUP_LIST L
@@ -29,12 +31,24 @@
 		<!-- SELECT * FROM GROUP_LIST JOIN CATEGORY1 ON CATEGORY1 = CATEGORY1_NO WHERE DELETE_YN = 'N' -->
 	</select>
 	<select id="selectGroup" parameterType="int" resultType="GroupVO" resultMap="resultGroup">
-		SELECT * FROM GROUP_LIST WHERE DELETE_YN = 'N' GROUP_NO = ${groupNo}
+		SELECT GROUP_NO, GROUP_NAME, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
+            L.CLASSIFY, L.USER_ID, L.DELETE_YN, CATEGORY_NAME, USER_NAME, COUNT(GROUP_NO) MEMBER_COUNT
+		FROM GROUP_LIST L
+		JOIN CATEGORY1 ON CATEGORY1 = CATEGORY_NAME
+		JOIN GROUP_MEMBER USING (GROUP_NO)
+        JOIN MEMBER ON (L.USER_ID = MEMBER.USER_ID)
+		WHERE DELETE_YN = 'N' AND GROUP_NO = #{groupNo}
+		GROUP BY GROUP_NO, GROUP_NAME, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
+		                L.CLASSIFY, L.USER_ID, L.DELETE_YN, CATEGORY_NAME, USER_NAME
+		ORDER BY MEMBER_COUNT DESC
 	</select>
 	<insert id="insertGroup" parameterType="GroupVO">
 		INSERT INTO GROUP_LIST VALUES 
-		(YOON_SEQ_GROUP.NEXTVAL, ${groupName}, ${groupInfo}, ${keyword}, 0, DEFAULT, 
-		${category1}, DEFAULT, GROUP_LIST, ${userId}, DEFAULT)
+		(YOON_SEQ_GROUP.NEXTVAL, #{groupName}, #{groupInfo}, #{keyword, jdbcType=VARCHAR}, 0, #{filepath, jdbcType=VARCHAR}, 
+		#{category1}, DEFAULT, 'GROUP_LIST', #{userId}, DEFAULT)
+		<!-- 
+		INSERT INTO GROUP_MEMBER VALUES
+		(YOON_SEQ_GRADE.CURRVAL, '${userId}', 0, 'GROUP_LIST', 'Y') -->
 	</insert>	
 	<update id="updateGroup" parameterType="GroupVO">
 		UPDATE GROUP_LIST
@@ -62,6 +76,7 @@
 		<result property="groupNo" column="GROUP_NO"/>
 		<result property="content" column="CONTENT"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="filepath" column="FILEPATH"/>
 		<result property="writeLike" column="WRITE_LIKE"/>
 		<result property="writeDate" column="WRITE_DATE"/>
@@ -73,13 +88,16 @@
 		<result property="deleteYN" column="DELETE_YN"/>
 	</resultMap>
 	
-	<select id="selectGroupWriteList" parameterType="GroupWriteVO" resultType="GroupWriteVO" resultMap="resultGroupWrite">
-		SELECT * FROM GROUP_MAIN WHERE DELETE_YN = 'N' AND GROUP_NO = ${groupNo} ORDER BY WRITE_NO DESC
+	<select id="selectGroupWriteList" parameterType="int" resultType="GroupWriteVO" resultMap="resultGroupWrite">
+		SELECT * FROM GROUP_MAIN JOIN MEMBER USING(USER_ID)
+		WHERE DELETE_YN = 'N' AND GROUP_NO = #{groupNo} ORDER BY WRITE_NO DESC
 	</select>
 	<insert id="insertGroupWrite" parameterType="GroupWriteVO">
-		INSERT INTO GROUP_WRITE VALUES (
-			${groupNo}, YOON_SEQ_WRITE.NEXTVAL, ${content}, ${userId}, ${filepath}, 0, 
-			DEFAULT, ${groupNo}, ${groupName}, ${userId}, ${classify}, 0, DEFAULT
+		INSERT INTO GROUP_MAIN VALUES (
+			#{groupNo}, YOON_SEQ_WRITE.NEXTVAL, #{content}, #{userId}, #{filepath, jdbcType=VARCHAR}, 0, 
+			DEFAULT, #{groupNo}, (SELECT GROUP_NAME
+									FROM GROUP_LIST
+									WHERE GROUP_NO = #{groupNo}), #{userId}, 'GROUP_MAIN', 0, DEFAULT
 		)
 	</insert>
 	<update id="updateGroupWrite" parameterType="GroupWriteVO">
@@ -87,7 +105,7 @@
 		SET CONTENT = ${content}, FILEPATH = ${filepath}, GROUP_NAME = ${groupName}
 		WHERE WRITE_NO = ${writeNo}
 	</update>
-	<update id="deleteGroupWrite" parameterType="GroupWriteVO">
+	<update id="deleteGroupWrite" parameterType="int">
 		UPDATE GROUP_WRITE SET DELETE_YN = 'Y' WHERE WRITE_NO = ${writeNo}
 	</update>
 	
@@ -95,14 +113,18 @@
 	<resultMap type="GroupMemberVO" id="resultGroupMember">
 		<id property="groupNo" column="GROUP_NO"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="grade" column="GRADE"/>
 		<result property="classify" column="CLASSIFY"/>
 		<result property="groupAccept" column="GROUP_ACCEPT"/>
 	</resultMap>
 	
 	<select id="selectGroupMemberList" parameterType="int" resultType="GroupMemberVO" resultMap="resultGroupMember">
-		SELECT * FROM GROUP_MEMBER JOIN MEMBER USING (USER_ID) WHERE GROUP_NO = ${groupNo} ORDER BY GRADE, USER_NAME;
+		SELECT * FROM GROUP_MEMBER JOIN MEMBER USING (USER_ID) WHERE GROUP_NO = #{groupNo} ORDER BY GRADE, USER_NAME
 	</select>
+	<insert id="insertGroupAdmin" parameterType="GroupVO">
+		INSERT INTO GROUP_MEMBER VALUES (YOON_SEQ_GROUP.CURRVAL, '${userId}', 0, 'GROUP_MEMBER', 'Y')
+	</insert>
 	<insert id="requestGroupMember" parameterType="GroupMemberVO">
 		INSERT INTO GROUP_MEMBER VALUES (${groupNo}, ${userId}, 2, GROUP_MEMBER, DEFAULT)
 	</insert>

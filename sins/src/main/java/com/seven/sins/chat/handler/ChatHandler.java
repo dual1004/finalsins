@@ -3,31 +3,50 @@ package com.seven.sins.chat.handler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.websocket.Decoder;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONObject;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.junit.runners.Parameterized.Parameters;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.seven.sins.group.vo.GroupMemberVO;
 
 @ServerEndpoint("/test-ws")
 public class ChatHandler {
 	
 	private static List<Session> sessionusers = new ArrayList<Session>();
 	
-	public ChatHandler(){}
+	public ChatHandler(){
+		//디비가서 기존 그룹 리스트 가져와 맵에 만들기..
+	}
 	
 	@OnOpen
-	public void handleOpen(Session usersession){
+	public void handleOpen(Session usersession) throws IOException {
 		System.out.println("웹소켓 접속" + usersession.getId());
 		System.out.println(usersession);
+		
+		//int key = groupvo.getGroupNo();
+		//System.out.println(groupvo.toString());
+		/*if(grouproom.containsKey(key)){
+			grouproom.get(key).add(usersession);
+		}else{
+			grouproom.put(key, sessionusers);
+		}*/
+		
 		
 		sessionusers.add(usersession);
 		
@@ -63,50 +82,9 @@ public class ChatHandler {
 		return jsonObject.toString();
 	}
 	
+	public int newgroup(){
+		return 0;
+	}
+	
+	
 }
-/*
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
-
-@ServerEndpoint("/test-ws")
-public class ChatHandler {
-
-	private static Set<Session> clients = Collections
-			.synchronizedSet(new HashSet<Session>());
-
-	@OnMessage
-	public void onMessage(String message, Session session) throws IOException {
-		System.out.println(message);
-		synchronized (clients) {
-			// Iterate over the connected sessions
-			// and broadcast the received message
-			for (Session client : clients) {
-				if (!client.equals(session)) {
-					client.getBasicRemote().sendText(message);
-				}
-			}
-		}
-	}
-
-	@OnOpen
-	public void onOpen(Session session) {
-		// Add session to the connected sessions set
-		System.out.println(session);
-		clients.add(session);
-		System.out.println(clients.size());
-	}
-
-	@OnClose
-	public void onClose(Session session) {
-		// Remove session from the connected sessions set
-		clients.remove(session);
-	}
-}*/
