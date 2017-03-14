@@ -1,10 +1,10 @@
 package com.seven.sins.chat.handler;
-/*
-import java.util.ArrayList;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.websocket.OnClose;
@@ -14,11 +14,12 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONObject;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+
 
 @ServerEndpoint("/test-ws")
 public class ChatHandler {
-	private List<Session> sessionusers = new ArrayList<Session>();
+	private static Set<Session> sessionusers = Collections.synchronizedSet(new HashSet<Session>());
+	private static Map<Integer, Set<Session>> groupsession = Collections.synchronizedMap(new HashMap<Integer, Set<Session>>());
 	
 	public ChatHandler(){}
 	
@@ -27,7 +28,10 @@ public class ChatHandler {
 		System.out.println("웹소켓 접속" + usersession.getId());
 		System.out.println(usersession);
 		
-		sessionusers.add(usersession);
+		/*sessionusers.add(usersession);*/
+		
+		groupsession.put(key, sessionusers.add(usersession));
+		
 		
 	}
 	
@@ -35,8 +39,6 @@ public class ChatHandler {
 	public void handleMessage(String message)throws Exception{
 		Iterator<Session> iterator = sessionusers.iterator();
 		System.out.println("모두에게 메시지");
-		System.out.println(message);
-		System.out.println(sessionusers.size());
 		if(sessionusers.size() > 0) {
 			while(iterator.hasNext()) {
 				iterator.next().getBasicRemote().
@@ -62,8 +64,8 @@ public class ChatHandler {
 	}
 	
 }
-*/
 
+/*
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -108,4 +110,4 @@ public class ChatHandler {
 		// Remove session from the connected sessions set
 		clients.remove(session);
 	}
-}
+}*/

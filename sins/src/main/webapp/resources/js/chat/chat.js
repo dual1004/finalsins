@@ -7,7 +7,7 @@ $(function() {
 	})
 })
 function online() {
-	var wsuri = "ws://192.168.20.89:9999/sins/test-ws";
+	var wsuri = "ws://localhost:9999/sins/test-ws";
 	websocket = new WebSocket(wsuri);
 	var userid = $('#userid').val();
 	console.log(websocket.readyState);
