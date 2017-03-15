@@ -11,24 +11,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/top-common.css" />
 <title>Insert title here</title>
-<script type="text/javascript">
-	function message() {
-		location.href="msgreadlist.j";
-	}
-	
-	function goHome() {
-		location.href="alink.do?path=common/newsfeed";
-	}
-	
-	function goMyInfo() {
-		location.href="alink.do?path=member/myInfo";
-	}
-	
-	function logout(){
-		location.href="logout.k";
-	}
-	
-</script>
+<script type="text/javascript" src="/sins/resources/js/common/top.js"></script>
 	</head>
 <body>
 <div id="logo" onclick="goHome()"></div>
@@ -36,10 +19,11 @@
 	<input id="s" type="text" name="serch" placeholder="검색하기"/>
 </div>
 <div id="mylayout">
-	<div id="message" onclick="message()"></div>
+	<div id="message" onmouseover="messagemover()" onclick="message()"></div>
 	<div id="allet"></div>
 	<div id="logout" onclick="logout()"></div>
 	<div id="my" onclick="goMyInfo()"><p id="m">내 정보보기</p></div>
+	<iframe id="msg" width="500" height="500" z-index="99" src="/sins/index.jsp"></iframe>
 </div>
 </body>
 </html>

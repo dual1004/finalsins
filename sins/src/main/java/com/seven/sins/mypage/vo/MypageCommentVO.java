@@ -1,12 +1,12 @@
 package com.seven.sins.mypage.vo;
 
 import java.sql.Date;
-
+@SuppressWarnings("serial")
 public class MypageCommentVO {
 
-	private int writeno;
+	private int commentno;
 	private String userid;
-	private String comment;
+	private String content;
 	private Date commentdate;
 	private int lev;
 	private int ref;
@@ -14,6 +14,9 @@ public class MypageCommentVO {
 	private String backupid;
 	private int contentno;
 	private String classfy;
+	private int report;
+	private String username;
+	private String userprofile;
 	
 	
 	public MypageCommentVO() {
@@ -21,12 +24,12 @@ public class MypageCommentVO {
 	}
 
 	//MYPAGE_COMMENT 용
-	public MypageCommentVO(int writeno, String userid, String comment, Date commentdate, int lev, int ref,
-			String photopath, String backupid, int contentno, String classfy) {
+	public MypageCommentVO(int commentno, String userid, String content, Date commentdate, int lev, int ref,
+			String photopath, String backupid, int contentno, String classfy, int report, String username, String userprofile) {
 		super();
-		this.writeno = writeno;
+		this.commentno = commentno;
 		this.userid = userid;
-		this.comment = comment;
+		this.content = content;
 		this.commentdate = commentdate;
 		this.lev = lev;
 		this.ref = ref;
@@ -34,14 +37,51 @@ public class MypageCommentVO {
 		this.backupid = backupid;
 		this.contentno = contentno;
 		this.classfy = classfy;
+		this.report = report;
+		this.username = username;
+		this.userprofile = userprofile;
 	}
 
-	public int getWriteno() {
-		return writeno;
+	
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setWriteno(int writeno) {
-		this.writeno = writeno;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUserprofile() {
+		return userprofile;
+	}
+
+	public void setUserprofile(String userprofile) {
+		this.userprofile = userprofile;
+	}
+
+	public int getCommentno() {
+		return commentno;
+	}
+
+	public void setCommentno(int commentno) {
+		this.commentno = commentno;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getReport() {
+		return report;
+	}
+
+	public void setReport(int report) {
+		this.report = report;
 	}
 
 	public String getUserid() {
@@ -50,14 +90,6 @@ public class MypageCommentVO {
 
 	public void setUserid(String userid) {
 		this.userid = userid;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
 	}
 
 	public Date getCommentdate() {
@@ -118,9 +150,9 @@ public class MypageCommentVO {
 
 	@Override
 	public String toString() {
-		return  writeno + ", " + userid + ", " + comment + ", "
+		return  commentno + ", " + userid + ", " + content + ", "
 				+ commentdate + ", " + lev + ", " + ref + ", " + photopath + ", " + backupid
-				+ ", " + contentno + ", " + classfy;
+				+ ", " + contentno + ", " + classfy + ", " + report + ", " + username + ", " + userprofile;
 	}
 	
 	

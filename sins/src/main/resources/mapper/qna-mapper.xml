@@ -10,6 +10,7 @@
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="readCount" column="READ_COUNT" />
 		<result property="userId" column="USER_ID" />
+		<result property="userProfile" column="USER_PROFILE"/>
 		<result property="comCount" column="COM_COUNT"/>
 		
 	</resultMap>
@@ -38,7 +39,10 @@
 	</select>
 	
 	<select id = "selectQna" parameterType = "int" resultType="QnaContent" resultMap="resultQnaContent">
-	SELECT * FROM QNA WHERE QNA_NO = #{qNo}
+	
+	SELECT QNA_NO, TITLE, CONTENT, FILEPATH, WRITE_DATE, READ_COUNT, USER_ID, USER_PROFILE FROM QNA
+	JOIN MEMBER USING(USER_ID)
+	WHERE QNA_NO = #{qNo}
 	
 	</select>
 	

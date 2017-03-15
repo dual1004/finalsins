@@ -7,13 +7,35 @@
 <meta charset=UTF-8>
 <title>Q&A</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript"
-	src="<c:url value='/resources/js/jquery-3.1.1.min.js'/>"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
 
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qna-common.css" />
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qnaMain.css" />
+	
+		
+<style>
+	.font9pt{
+		font-size:10pt;
+	
+	}
+	.idLabel{
+		color:blue;
+		
+	}
+	
+	.idLabel:hover{
+		text-decoration:under_line;
+		color:red;
+		
+	}
+	
+	
+</style>
+	
+	
 	<script>
 	function writeForm(){
 		location.href="alink.do?path=qna/QnaWrite";
@@ -58,7 +80,7 @@ $(document).ready(function(){
 	<div id="container">
 		<div id="left" class="box">
 			<h2>left</h2>
-			<br>
+			<br> 
 			<ul>
 
 			</ul>
@@ -81,16 +103,16 @@ $(document).ready(function(){
 					</tr>
 					<c:forEach var="qna" items="${qnaList }">
 						<tr>
-							<td class='tds'>${qna.qnaNo }</td>
+							<td class='tds'><label class="font9pt">${qna.qnaNo }</label></td>
 							<td class='tds'><a class="atag"
 								href="detailQna.n?no=${qna.qnaNo }">${qna.title }</a></td>
 							<td class='tds'><a class="atag"
-								style='text-decoration: none;' href='#'>${qna.userId }</a></td>
-							<td class='tds'>${qna.readCount }</td>
-							<td class='tds'>${qna.writeDate }</td>
+								style='text-decoration: none;' href='#'><label class="idLabel">${qna.userId }</label></a></td>
+							<td class='tds'><label class="font9pt">${qna.readCount }</label></td>
+							<td class='tds'><label class="font9pt">${qna.writeDate }</label></td>
 							<td class='tds'><c:if test="${qna.comCount gt 0}">
-									<label style='font-color: red'>답변 완료</label>
-								</c:if> <c:if test="${qna.comCount eq 0}">미답변</c:if></td>
+									<label class="font9pt" style='color: red'>답변 완료</label>
+								</c:if> <c:if test="${qna.comCount eq 0}"><label class="font9pt">미답변</label></c:if></td>
 						</tr>
 					</c:forEach>
 
@@ -109,10 +131,15 @@ $(document).ready(function(){
 
 			<div id="pageSection" align="center">
 			
+				<c:if test="${currentPage gt 1 }">
 				<a class="atag" href="<c:if test="${empty keyword }">selectQna.n?page=1</c:if>
 				<c:if test="${not empty keyword }">selectQna.n?page=1&keyword=${keyword }&option=${option }</c:if>
 				">[처음] </a>
 
+				</c:if>
+				<c:if test="${currentPage eq 1 }">
+				[처음]
+				</c:if>
 				
 					
 				<c:if test="${currentPage gt 1 }">
@@ -128,7 +155,7 @@ $(document).ready(function(){
 					step="1">
 
 					<c:if test="${num eq currentPage }">
-						<strong><b>${num }</b></strong>&nbsp;
+						<strong>${num }</strong>&nbsp;
 	</c:if>
 					<c:if test="${num ne currentPage }">
 						<a class="atag" href="
@@ -150,10 +177,17 @@ $(document).ready(function(){
 				<c:if test="${currentPage eq maxPage }">[다음]
 </c:if>
 
+
+			<c:if test="${currentPage lt maxPage }">
 				<a class="atag" href="
 				<c:if test="${empty keyword }">selectQna.n?page=${maxPage }</c:if>
 				<c:if test="${not empty keyword }">selectQna.n?page=${maxPage }&keyword=${keyword }&option=${option }</c:if>
 				"> [마지막]</a>
+				</c:if>
+				
+				<c:if test="${currentPage eq maxPage }">
+				[마지막]
+				</c:if>
 			</div>
 
 <br><br>
@@ -176,7 +210,7 @@ $(document).ready(function(){
 	
 </div>
 		<div id="right" class="box">
-			<h2>RIGHT</h2>
+			
 			
 			<%@include file="/WEB-INF/views/friend/friendView.jsp" %>
 

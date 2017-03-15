@@ -33,7 +33,6 @@ public class ChatHandler {
 	private Session usersession; 	
 	
 	public ChatHandler(){
-		//디비가서 기존 그룹 리스트 가져와 맵에 만들기..
 	}
 	
 	@OnOpen
@@ -51,13 +50,15 @@ public class ChatHandler {
 		ChatVO chatvo = this.msgTochatvo(message);
 		this.groupDiv(chatvo,sessionusers.get(0));
 		
-		System.out.println(groupmap.get(chatvo.getGroupno()));
 		List<Session> list = groupmap.get(chatvo.getGroupno());
-		System.out.println(list.size());
 		if(list.size() > 0) {
 			for(int i = 0 ; i < list.size(); i++){
 				System.out.println(list.get(i));
-				list.get(i).getBasicRemote().sendText(JSONConverter(chatvo.getText(), "message", "event"));
+				if(list.get(i).getId() == sessionusers.get(0).getId()){
+					
+				}else{
+					list.get(i).getBasicRemote().sendText(JSONConverter(chatvo.getId(), chatvo.getText(), "message", "event"));
+				}				
 			}				
 		} else {
 			System.out.println("여긴 한명도없다");
@@ -66,14 +67,17 @@ public class ChatHandler {
 	
 	private void groupDiv(ChatVO chatvo, Session usersession2) {
 		System.out.println("여기");
+		System.out.println(usersession2);
 		if(groupmap.containsKey(chatvo.getGroupno())){
 			System.out.println("같은값 ");
-			// 리스트에 세션 아이디가 없을때만 add 테스트필요
-			boolean flag = false;
+			// 
+			boolean flag = true;
 			List<Session> list = groupmap.get(chatvo.getGroupno());
 			for(int i =0;i<list.size();i++){
-				if(list.get(i).getId().equals(usersession2.getId())){
-					flag = true;
+				System.out.println(list.get(i).getId());
+				if(list.get(i).getId() == (usersession2.getId())){
+					System.out.println("트루");
+					flag = false;
 				}
 			}
 			if(flag){
@@ -88,7 +92,8 @@ public class ChatHandler {
 	private ChatVO msgTochatvo(String message) {
 		Gson gson = new Gson();
 		
-		ChatVO chatvo = gson.fromJson(message, ChatVO.class);		
+		ChatVO chatvo = gson.fromJson(message, ChatVO.class);
+		System.out.println(chatvo.getId());
 		return chatvo;
 	}
 
@@ -98,8 +103,9 @@ public class ChatHandler {
 		sessionusers.remove(session);
 	}
 	
-	public String JSONConverter(String message, String command, String type) {
+	public String JSONConverter(String id, String message, String command, String type) {
 		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id", id);
 		jsonObject.put("type", type);
 		jsonObject.put("command", command);
 		jsonObject.put("message", message);

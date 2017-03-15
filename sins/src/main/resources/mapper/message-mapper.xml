@@ -130,7 +130,7 @@
 	
 	<insert id="sendmsg" parameterType="MessageVO">
 		insert into message values(
-			#{send_id},#{receivie_id},#{content},sysdate,#{filepath}
+			#{send_id},#{receivie_id},#{content},sysdate,#{filepath jdbcType=VARCHAR}
 			,default, default, 'MESSAGE', default, JUN_MESSAGE_SEQ.nextval)
 	</insert>
 	

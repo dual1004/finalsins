@@ -24,7 +24,7 @@
 		FROM GROUP_LIST L
 		JOIN CATEGORY1 ON CATEGORY1 = CATEGORY_NAME
 		JOIN GROUP_MEMBER USING (GROUP_NO)
-		WHERE DELETE_YN = 'N'
+		WHERE DELETE_YN = 'N'  AND GROUP_ACCEPT = 'Y'
 		GROUP BY GROUP_NO, GROUP_NAME, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
 		                L.CLASSIFY, L.USER_ID, L.DELETE_YN, CATEGORY_NAME
 		ORDER BY MEMBER_COUNT DESC
@@ -120,18 +120,19 @@
 	</resultMap>
 	
 	<select id="selectGroupMemberList" parameterType="int" resultType="GroupMemberVO" resultMap="resultGroupMember">
-		SELECT * FROM GROUP_MEMBER JOIN MEMBER USING (USER_ID) WHERE GROUP_NO = #{groupNo} ORDER BY GRADE, USER_NAME
+		SELECT * FROM GROUP_MEMBER JOIN MEMBER USING (USER_ID) 
+		WHERE GROUP_NO = #{groupNo} ORDER BY GRADE, USER_NAME
 	</select>
 	<insert id="insertGroupAdmin" parameterType="GroupVO">
 		INSERT INTO GROUP_MEMBER VALUES (YOON_SEQ_GROUP.CURRVAL, '${userId}', 0, 'GROUP_MEMBER', 'Y')
 	</insert>
 	<insert id="requestGroupMember" parameterType="GroupMemberVO">
-		INSERT INTO GROUP_MEMBER VALUES (${groupNo}, ${userId}, 2, GROUP_MEMBER, DEFAULT)
+		INSERT INTO GROUP_MEMBER VALUES (#{groupNo}, #{userId}, 2, 'GROUP_MEMBER', 'N')
 	</insert>
 	<update id="agreeGroupMember" parameterType="GroupMemberVO">
 		UPDATE GROUP_MEMBER
 		SET GROUP_ACCEPT = 'Y'
-		WHERE GROUP_NO = ${groupNo} AND USER_ID = ${userId}
+		WHERE GROUP_NO = #{groupNo} AND USER_ID = #{userId}
 	</update>
 	<update id="updateGroupMember">
 		UPDATE GROUP_MEMBER
@@ -139,7 +140,7 @@
 		WHERE GROUP_NO = ${groupNo} AND USER_ID = ${userId}
 	</update>	
 	<delete id="deleteGroupMember">
-		DELETE FROM GROUP_MEMBER WHERE GROUP_NO = ${groupNo} AND USER_ID = ${userId}
+		DELETE FROM GROUP_MEMBER WHERE GROUP_NO = #{groupNo} AND USER_ID = #{userId}
 	</delete>	
 
 	<!-- GroupComment -->

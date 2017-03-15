@@ -54,6 +54,7 @@ $( document ).ready(function() {
  		}
  		else if(nowIndex >= 0 && nowIndex == index){
  			$(this).next($(".answerTr")).slideUp("slow");
+ 			nowIndex = -1;
  		}
  		else if(nowIndex >= 0 && nowIndex != index) {
  			$(".answerTr").slideUp("slow");
@@ -83,9 +84,9 @@ $( document ).ready(function() {
 			<li><a href="selectGroupList.y">그룹</a></li>
 			<li><h4>뉴스피드</h4></li>
 			<li id="notice">고객센터</li>
-	        <li class="notice"><a href="#"> └공지사항</a></li>
-	        <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
-	        <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	       <li class="notice"><a href="selectNotice.k">└공지사항</a></li>
+	          	<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          	<li class="notice"><a href="selectQna.n">└QNA</a></li>
         </ul>
       </div>
       <div id="content" class="box">

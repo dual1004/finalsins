@@ -13,8 +13,11 @@ public class QnaContent implements java.io.Serializable{
 	private Date writeDate;
 	private int readCount;
 	private String userId;
+	private String userProfile;
 	private int comCount;
 	
+	
+
 	public QnaContent(){}
 	
 	
@@ -32,6 +35,7 @@ public class QnaContent implements java.io.Serializable{
 		
 	}
 
+	
 	public int getQnaNo() {
 		return qnaNo;
 	}
@@ -88,15 +92,27 @@ public class QnaContent implements java.io.Serializable{
 		this.userId = userId;
 	}
 	
+	
+
+	
+	public String getUserProfile() {
+		return userProfile;
+	}
+
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
+	}
+
+
 	public int getComCount() {
 		return comCount;
 	}
+
 
 	public void setComCount(int comCount) {
 		this.comCount = comCount;
 	}
 
-	
-	
 	
 }

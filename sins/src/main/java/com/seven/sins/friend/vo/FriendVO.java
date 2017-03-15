@@ -7,7 +7,7 @@ public class FriendVO implements java.io.Serializable{
 	private String userId;
 	private String userName;
 	private String userProfile;
-	
+	private int count;
 	
 	
 	public FriendVO() {
@@ -22,6 +22,14 @@ public class FriendVO implements java.io.Serializable{
 	}
 	
 	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public String getUserId() {
 		return userId;
 	}

@@ -11,22 +11,22 @@ import com.seven.sins.group.vo.GroupMemberVO;
 @Repository("groupMemberDAO")
 public class GroupMemberDAO {
 
+	private static final String NAMESPACE = "group.";
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<GroupMemberVO> selectGroupMemberList(int groupNo) {
-		return (ArrayList<GroupMemberVO>)sqlSession.selectList("group.selectGroupMemberList", groupNo);
+		return (ArrayList<GroupMemberVO>)sqlSession.selectList(NAMESPACE + "selectGroupMemberList", groupNo);
 	}
 
 	public int requestGroupMember(GroupMemberVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert(NAMESPACE + "requestGroupMember", vo);
 	}
 
 	public int agreeGroupMember(GroupMemberVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update(NAMESPACE + "agreeGroupMember", vo);
 	}
 
 	public int updateGroupMember(GroupMemberVO vo) {
@@ -35,8 +35,7 @@ public class GroupMemberDAO {
 	}
 
 	public int deleteGroupMember(GroupMemberVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete(NAMESPACE + "deleteGroupMember", vo);
 	}
 
 	public int countGroupMember(int groupNo) {

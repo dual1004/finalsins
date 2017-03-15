@@ -29,6 +29,42 @@
 		<beans:property value="0" name="order"/>
 	</beans:bean>
 	
+	<interceptors> 
+		<interceptor> 
+		<mapping path="/**"/> 
+		<exclude-mapping path="/loginCheck.k"/>
+		<beans:bean class="com.seven.sins.interceptor.LoginCheck"/> 
+	</interceptor>
+	
+	<interceptor> 
+<mapping path="/*.do"/>
+<mapping path="/*.j"/>
+<mapping path="/*.y"/>
+<mapping path="/*.b"/>
+<mapping path="/*.p"/>
+<mapping path="/*.k"/>
+<mapping path="/*.n"/>
+<mapping path="/*.l"/> 
+<exclude-mapping path="/loginCheck.k"/>
+
+<beans:bean class="com.seven.sins.interceptor.LogInterceptor"/> 
+</interceptor>  
+
+<interceptor> 
+	<mapping path="/*.do"/>
+	<mapping path="/*.j"/>
+	<mapping path="/*.y"/>
+	<mapping path="/*.b"/>
+	<mapping path="/*.p"/>
+	<mapping path="/*.k"/>
+	<mapping path="/*.n"/>
+	<mapping path="/*.l"/> 
+	<exclude-mapping path="/loginCheck.k"/>
+
+	<beans:bean class="com.seven.sins.interceptor.LogInterceptor"/> 
+</interceptor> 	
+
+</interceptors>
 
 	<context:component-scan base-package="com.seven.sins.**.controller" />
 	

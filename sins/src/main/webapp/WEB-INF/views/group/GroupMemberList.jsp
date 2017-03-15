@@ -29,6 +29,30 @@
 		});
 	});
 	
+	$(function(){
+		$(".disagreeBtn").click(function(){
+			var userId = $(this).siblings().prop('type', 'hidden');
+		
+			
+		});
+	});
+	
+	function resultMember(userId, result){
+		var groupNo = ${group.groupNo};
+		var url;
+		console.log(userId);
+		console.log(groupNo);
+		console.log(result);
+		
+		if(result == 'agree')
+		 	url = "agreeGroupMember.y?userId=" + userId + "&groupNo=" + groupNo;
+		else
+			url = "disagreeGroupMember.y?userId=" + userId + "&groupNo=" + groupNo;
+			
+		location.href = url;
+	};
+	
+	
 </script>
 <style>
 	.groupList{
@@ -93,17 +117,35 @@
 		</div>
 		<div id="content" class="box" style="position:relative;	border: 1px solid">
 			<h2 id="pageName">그룹 멤버</h2>
-			<div id="requestContainer">
-				<h4>가입 요청한 회원</h4>
-			</div>
+				<c:if test="${member.grade == 0 || member.grade == 1}">
+					<div id="requestContainer">
+						<h4>가입 요청한 회원</h4>
+						<table>
+							<c:forEach var="item" items="${list}">
+								<c:if test="${item.groupAccept == 'N'}">
+									<tr>
+										<td>사진</td>
+										<td>${item.userName}</td>
+										<td><input type="button" class="agreeBtn" onclick="resultMember('${item.userId}', 'agree');" value="수락"/></td>
+										<td><input type="button" class="disagreeBtn" onclick="resultMember('${item.userId}', 'disagree');" value="거절"/></td>
+									</tr>
+								</c:if>
+							</c:forEach>
+						</table>
+					</div>
+				</c:if>
 			<hr/>
 			<div id="adminContainer">
 				<h4>운영진</h4>
 				<table>
-					<tr>
-						<td>사진</td>
-						<td>${group.userName}</td>
-					</tr>
+					<c:forEach var="item" items="${list}">
+						<c:if test="${item.grade == 0 || item.grade == 1}">
+							<tr>
+								<td>사진</td>
+								<td>${item.userName}</td>
+							</tr>
+						</c:if>
+					</c:forEach>
 				</table>
 			</div>
 			<hr/>
@@ -111,10 +153,12 @@
 				<h4>회원</h4>
 				<table>
 					<c:forEach var="item" items="${list}">
-						<tr>
-							<td>사진</td>
-							<td>${item.userName}</td>
-						</tr>
+						<c:if test="${item.grade == 2 && item.groupAccept == 'Y'}">
+							<tr>
+								<td>사진</td>
+								<td>${item.userName}</td>
+							</tr>
+						</c:if>
 					</c:forEach>
 				</table>
 			</div>

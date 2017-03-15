@@ -44,16 +44,17 @@
 		    return this;
 		}
 		
-		 $(".openMask").click(function(e){
+		
+		/*  $(".openMask").click(function(e){
 	            e.preventDefault();
 	            wrapWindowByMask();
-        });
+        }); */
 			
 		 // 삭제 버튼 클릭 시
 		 $(".window #deleteBtn").click(function(){
 			 
 		 });
-		 
+				 
         //닫기 버튼을 눌렀을 때
         $(".window #cancelBtn").click(function (e) {  
             //링크 기본동작은 작동하지 않도록 한다.
@@ -65,10 +66,21 @@
         $("#mask").click(function () {  
             $(this).hide();  
             $(".window").hide();  
- 
-        });      
+        });     
+        
+        // 가입하기 버튼 클릭 시
+        $("#requestBtn").click(function(){
+			var groupNo = $("#groupNo").val();
+			var userId = $("#userId").val();
+        	
+			location.href = "requestGroupMember.y?groupNo=" + groupNo + "&userId=" + userId;
+        });
 	});
 	
+	function deleteWrite(writeNo) {
+		/*  e.preventDefault(); */
+           wrapWindowByMask();
+	}
 	
 	function wrapWindowByMask(){
 		 
@@ -90,6 +102,7 @@
  
     }
 
+	
 </script>
 
 <style type="text/css">
@@ -213,6 +226,14 @@
 		height: 30%;
 	}
 	
+	/* 그룹회원이 아닌 경우  */
+	#requestContainer {
+		width: 70%;
+		height: 30%;
+		margin-top: 10px;
+		margin-right: 10px;
+		border: 1px solid;
+	}
 	
 	* {
 		border: 1px solid;
@@ -261,74 +282,84 @@
 				<h3><a href="groupMemberDetail.y?groupNo=${group.groupNo}">그룹 멤버</a></h3>
 				<ul id="groupMemberList">
 					<c:forEach var="item" items="${memberList}">
-						<li>
-							<table class="groupMember">
-								<tr>
-									<td rowspan=2 class="profilePhoto">사진</td>
-									<td class="memberInfo">${item.userName}</td>
-								</tr>
-							</table>
-						</li>
-						<hr/>
+						<c:if test="${item.groupAccept == 'Y'}">
+							<li>
+								<table class="groupMember">
+									<tr>
+										<td rowspan=2 class="profilePhoto">사진</td>
+										<td class="memberInfo">${item.userName}</td>
+									</tr>
+								</table>
+							</li>
+							<hr/>
+						</c:if>
 					</c:forEach>
 				</ul>			
 			</div>
-			<div id="groupWriteContainer">
-				<form id="insertWrite" action="insertGroupWrite.y" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="userId" value="${loginUser.userId}"/>
-					<input type="hidden" name="groupNo" value="${group.groupNo}"/>
-					<div id="writeAreaContainer">
-						<label>새글쓰기</label>
-						<label>
-							<textarea name="content" placeholder="내용입력"></textarea>
-						</label>
-					</div>
-					<div id="writeBtnContainer">
-						<input id="writeBtn" type="submit" value="올리기"/>
-					</div>
-				</form>
-			</div>
-			<c:forEach var="item" items="${writeList}">
-				<form action="deleteGroupWrite.y">
-					<div class="writeList">
-						<div>
-							<div class="window">
-								<div id="messageArea">정말 삭제 하시겠습니까?</div>
-								<div id="deleteBtnArea">
-									<input type="submit" id="deleteBtn" value="삭제"/>
-									<input type="hidden" value="${item.writeNo}">
-									<input type="button" id="cancelBtn" value="취소"/>
-								</div>
-						    </div>
-							<table class="writerInfo">
-								<tr class="writerInfoTr">
-									<td class="writerPhoto" rowspan="2">사진</td>
-									<td class="writerName">${item.userName}</td>
-								</tr>
-								<tr>
-									<td class="writeDate">${item.writeDate}</td>
-								</tr>
-							</table>
-							<div class="contentContainer">
-								${item.content}
+			<c:choose>
+				<c:when test="${memberCheck == true}">
+					<div id="groupWriteContainer">
+						<form id="insertWrite" action="insertGroupWrite.y" method="post" enctype="multipart/form-data">
+							<input type="hidden" id="userId" name="userId" value="${loginUser.userId}"/>
+							<input type="hidden" id="groupNo" name="groupNo" value="${group.groupNo}"/>
+							<div id="writeAreaContainer">
+								<label>새글쓰기</label>
+								<label>
+									<textarea name="content" placeholder="내용입력"></textarea>
+								</label>
 							</div>
-							<div class="buttonContainer">
-								<table>
+							<div id="writeBtnContainer">
+								<input id="writeBtn" type="submit" value="올리기"/>
+							</div>
+						</form>
+					</div>
+					<c:forEach var="item" items="${writeList}">
+						<div class="writeList">
+							<div>
+								<table class="writerInfo">
+									<tr class="writerInfoTr">
+										<td class="writerPhoto" rowspan="2">사진</td>
+										<td class="writerName">${item.userName}</td>
+									</tr>
 									<tr>
-										<td><input type="button" class="comment" value="댓글"/></td>
-										<td><input type="button" class="like" value="좋아요"/></td>
-										<c:if test="${item.userId == loginUser.userId}">
-											<td><input type="button" class="update" value="수정"/></td>
-											<td><input type="button" class="openMask" value="삭제"/></td>
-											<input type="hidden" value="${item.writeNo}"/>
-										</c:if>
+										<td class="writeDate">${item.writeDate}</td>
 									</tr>
 								</table>
+								<div class="contentContainer">
+									${item.content}
+								</div>
+								<div class="buttonContainer">
+									<table>
+										<tr>
+											<td><input type="button" class="comment" value="댓글"/></td>
+											<td><input type="button" class="like" value="좋아요"/></td>
+											<c:if test="${item.userId == loginUser.userId}">
+												<td><input type="button" class="update" value="수정"/></td>
+												<td><input type="button" class="deleteWrite" 
+													onclick="deleteWrite(${item.writeNo});"value="삭제"/></td>
+											</c:if>
+										</tr>
+									</table>
+								</div>
 							</div>
 						</div>
+					</c:forEach>
+				</c:when>
+				
+				<c:when test="${memberCheck == 'false'}">
+					<div id="requestContainer">
+						<input type="hidden" id="userId" name="userId" value="${loginUser.userId}"/>
+						<input type="hidden" id="groupNo" name="groupNo" value="${group.groupNo}"/>
+						<input type="button" id="requestBtn" value="가입하기"/>				
 					</div>
-				</form>
-			</c:forEach>
+				</c:when>
+				
+				<c:otherwise>
+					<div id="requestContainer">
+						<label>가입 요청됨</label>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div id="right" class="box">
 			<h2>친구목록</h2>

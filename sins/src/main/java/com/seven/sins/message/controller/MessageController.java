@@ -174,10 +174,10 @@ public class MessageController {
 	@RequestMapping("msgsead.j")
 	public ModelAndView messageSead(MessageVO sendmsg,@RequestParam("file") MultipartFile file, String[] resiveid, ModelAndView mv) throws Exception{		
 		// 파일 업로드 영역
-		if(file != null){
+
+		if(file.isEmpty() == false){
 			String userid = sendmsg.getSend_id();
 			String filePath = fileUtils.fileInfo(userid, file);
-		
 			sendmsg.setFilepath(filePath);		
 		}
 		

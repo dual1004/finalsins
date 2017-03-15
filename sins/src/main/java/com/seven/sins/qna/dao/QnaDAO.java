@@ -12,6 +12,9 @@ import com.seven.sins.qna.vo.QnaContent;
 @Repository("qnaDao")
 public class QnaDAO {
 
+	private static final String NAMESPACE="Qna.";
+	
+	
 	@Autowired
 	private SqlSession sqlSession;
 
@@ -19,40 +22,41 @@ public class QnaDAO {
 	public List<QnaContent> selectList(int currentPage, int listLimit) {
 
 		int startRow = (currentPage - 1) * listLimit;
-		int endRow = startRow + listLimit;
+		
+		
+		
+		RowBounds rowbounds = new RowBounds(startRow, listLimit);
 
-		RowBounds rowbounds = new RowBounds(startRow, endRow);
-
-		return (List<QnaContent>) sqlSession.selectList("selectList", null, rowbounds);
+		return (List<QnaContent>) sqlSession.selectList(NAMESPACE+"selectList", null, rowbounds);
 
 	}
 
 	public int selectCount() {
-		return (Integer) sqlSession.selectOne("selectCount");
+		return (Integer) sqlSession.selectOne(NAMESPACE+"selectCount");
 	}
 
 	public QnaContent getContent(int qNo) {
 
-		return (QnaContent) sqlSession.selectOne("selectQna", qNo);
+		return (QnaContent) sqlSession.selectOne(NAMESPACE+"selectQna", qNo);
 	}
 
 	public int insertCom(QnaComment qc) {
 
-		return sqlSession.insert("commentInsert", qc);
+		return sqlSession.insert(NAMESPACE+"commentInsert", qc);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<QnaComment> getCommentList(int qNo) {
-		return (ArrayList<QnaComment>) sqlSession.selectList("selectComment", qNo);
+		return (ArrayList<QnaComment>) sqlSession.selectList(NAMESPACE+"selectComment", qNo);
 	}
 
 	public int insertQna(QnaContent qna) {
 
-		return sqlSession.insert("insertQna", qna);
+		return sqlSession.insert(NAMESPACE+"insertQna", qna);
 	}
 
 	public void increaseCount(int qNo) {
-		sqlSession.update("increaseCount", qNo);
+		sqlSession.update(NAMESPACE+"increaseCount", qNo);
 	}
 
 	public int getKeywordCount(String option, String keyword) {
@@ -63,7 +67,7 @@ public class QnaDAO {
 		map.put("option", option);
 		map.put("keyword", keyword);
 
-		return (int) sqlSession.selectOne("keywordCount", map);
+		return (int) sqlSession.selectOne(NAMESPACE+"keywordCount", map);
 
 	}
 
@@ -82,7 +86,7 @@ public class QnaDAO {
 
 		RowBounds rowbounds = new RowBounds(startRow, endRow);
 
-		return (List<QnaContent>) sqlSession.selectList("searchList", map, rowbounds);
+		return (List<QnaContent>) sqlSession.selectList(NAMESPACE+"searchList", map, rowbounds);
 	}
 
 }

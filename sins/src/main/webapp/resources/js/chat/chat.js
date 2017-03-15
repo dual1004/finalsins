@@ -7,7 +7,7 @@ $(function() {
 	})
 })
 function online() {
-	var wsuri = "ws://localhost:9999/sins/test-ws";
+	var wsuri = "ws://192.168.20.89:8888/sins/test-ws";
 	websocket = new WebSocket(wsuri);
 	var userid = $('#userid').val();
 	console.log(websocket.readyState);
@@ -20,8 +20,9 @@ function online() {
 			switch(msg.type){
 				case "event":{
 					console.log("가져온값");
+					console.log(msg);
 					console.log(msg.message);
-					writeToScreen(msg.message);
+					writeToScreen(msg.id + " : " + msg.message);
 					break;
 				}
 			}
@@ -32,6 +33,9 @@ function online() {
 //Send text to all users through the server
 function sendText() {
   // Construct a msg object containing the data the server needs to process the message from the chat client.
+	var id = $('#userid').val() +" : " + $('#message').val();
+	writeToScreen(id);
+	
   var msg = {
 	groupno : $('#groupno').val(),
     type: "message",
@@ -39,7 +43,7 @@ function sendText() {
     id:   $('#userid').val(),
     date: Date.now()
   };
-
+  console.log($('#userid').val());
   // Send the msg object as a JSON-formatted string.
   websocket.send(JSON.stringify(msg));
   console.log('서버로 메시지 전송');

@@ -54,6 +54,16 @@
 	cursor: pointer;
 }
 
+#logout {
+	background: url("/sins/resources/images/logoutbtm.png") no-repeat;
+	background-size: cover;
+	width: 30px;
+	height: 30px;
+	float: right;
+	margin-left: 5%;
+	cursor: pointer;
+}
+
 #message {
 	background: url("/sins/resources/images/message.png") no-repeat;
 	background-size: cover;
@@ -96,5 +106,10 @@
 	}
 	#s {
 		width: 90%;
+	}
+	#msg{
+		width : 100px;
+		height: 100px;
+		background: red; 
 	}
 }

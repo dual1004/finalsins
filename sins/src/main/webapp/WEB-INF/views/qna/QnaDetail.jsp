@@ -7,8 +7,8 @@
 <meta charset=UTF-8>
 <title>Q&A</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript"
-	src="<c:url value='/resources/js/jquery-3.1.1.min.js'/>"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
 <script src="/sins/resources/js/qna/qna.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qna-common.css" />
@@ -121,9 +121,17 @@
 				<br>
 				<table>
 					<tr>
-						<td><a href="#">사진</a></td>
+						<td><a href="#"><img src="${qna.userProfile }" style='width:50px;height:50px;'></a></td>
 						<td>${qna.content }</td>
 					</tr>
+					<tr>
+					<td></td>
+					<td><img src="${pageContext.request.contextPath}/resources/file/${loginUser.userId}/${qna.filepath}" style='width:300px; height:300px;'></td>
+					
+					
+					
+					</tr>
+					
 					<tr>
 						<td></td>
 						<td><br>이름 or 아이디 : ${qna.userId }</td>
@@ -187,10 +195,9 @@
 
 		</div>
 		<div id="right" class="box">
-			<h2>RIGHT</h2>
-			<ul>
-
-			</ul>
+			
+			
+			<%@include file="/WEB-INF/views/friend/friendView.jsp" %>
 		</div>
 	</div>
 	<div id="footer"><%@include

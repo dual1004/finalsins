@@ -8,8 +8,8 @@
 <title>Q&A</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src='<c:url value='/resources/smarteditor/js/service/HuskyEZCreator.js'/>' charset="utf-8"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/jquery-3.1.1.min.js'/>"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
 <script src="/sins/resources/js/qna/qna.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qna-common.css" />
@@ -25,23 +25,38 @@ $(function(){
 		oAppRef: editor_object,
 		elPlaceHolder:"contents",
 		sSkinURI:"/sins/resources/smarteditor/SmartEditor2Skin.html",
-		htParams:{
+		 fCreator: "createSEditor2",
+		/* htParams:{
 			bUseToolbar:true,
 			bUseVerticalResizer:true,
 			bUseModeChanger:true,
 			
 		}
+	 */
+	  
+	   
+	
+	
 	
 	
 		
 	});
-	
 	$("#submitBtn").click(function(){
-		editor_object.getById["contents"].exec("UPDATE_CONTENTS_FIELD",[]);
+
+		if($("#title").val().length>0){
+			editor_object.getById["contents"].exec("UPDATE_CONTENTS_FIELD",[]);
+
+			$("#write_form").submit();
+			
+		}
+			
+		else{
+			alert("제목을 입력해주세요.");
+			
+		}
 		
-		
-		$("#write_form").submit();
 	});
+	
 	
 	$('#rev').hide(); 
 	
@@ -50,38 +65,9 @@ $(function(){
 });
 
 
-function check(){
-	
-	
-	
-	
-	if($("#title").val().length>0)
-		return true;
-	else{
-		alert("제목을 입력해주세요.");
-		return false;
-	}
-	
-}
-
-
-/* $(function(){
-	var oEditors = [];
-
-	nhn.husky.EZCreator.createInIFrame({
-
-	oAppRef: oEditors,
-
-	elPlaceHolder: "content", //textarea에서 지정한 id와 일치해야 합니다.
-
-	sSkinURI: "${contextPath}/smarteditor/SmartEditor2Skin.html",
-
-	fCreator: "createSEditor2"
-});
 
 
 
-}); */
 
 </script>
 <body>
@@ -103,7 +89,7 @@ function check(){
 			<strong class="titleFont"><a href="selectQna.n" class="atag">Q&A</a> - 문의하기</strong><br><br>
 		
 		<div id="writeForm" style='width:600px;'>
-			<form action="write.n" method="post">
+			<form id="write_form" action="write.n" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 			
 				
 					
@@ -114,18 +100,18 @@ function check(){
 						
 					<input id="contents" name="content"/>
 				<br>
-
+				
+				<input type="file" name="uploadFile" value="파일선택"/>
 			
-				<input type="submit" id= "submitBtn" value="작성" onclick="return check();" style='position:relative; float:left; left:470px; width:100px;'/>
+				<input type="button" id= "submitBtn" value="작성" style='position:relative; float:left; left:470px; width:100px;'/>
 			</form>
 
 		</div>
 		</div>
 		<div id="right" class="box">
-			<h2>RIGHT</h2>
-			<ul>
-
-			</ul>
+		
+			
+			<%@include file="/WEB-INF/views/friend/friendView.jsp" %>
 		</div>
 	</div>
 	<div id="footer"><%@include
