@@ -15,8 +15,8 @@
         <div style="text-align: center;">
         	<input type="button" onclick="online()" value="연결하기">
             <form action="">
-            	<input name="userId" value="user01"/>
-            	<input name="groupNo" value="1"/>
+            	<input id="userid" name="userId" value="user01"/>
+            	<input id="groupno" name="groupNo" value="1"/>
                 <input onclick="sendText()" value="Send" type="button">
                 <input id="message" name="message" value="웹소켓 세상"><br>
             </form>

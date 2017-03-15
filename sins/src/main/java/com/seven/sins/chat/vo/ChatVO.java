@@ -1,54 +1,52 @@
 package com.seven.sins.chat.vo;
 
-import com.google.gson.Gson;
-
 public class ChatVO {
-	private String message;
+	private int groupno;
 	private String type;
-	private String to;
-	
-	public static ChatVO converMessage(String source){
-		ChatVO message = new ChatVO();
-		Gson gson = new Gson();
-		message = gson.fromJson(source, ChatVO.class);
-		return message;
-	}
-
+	private String text;
+	private String id;
+	private String date;
 	public ChatVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public ChatVO(String message, String type, String to) {
+	public ChatVO(int groupno, String type, String text, String id, String date) {
 		super();
-		this.message = message;
+		this.groupno = groupno;
 		this.type = type;
-		this.to = to;
+		this.text = text;
+		this.id = id;
+		this.date = date;
 	}
-
-	public String getMessage() {
-		return message;
+	public int getGroupno() {
+		return groupno;
 	}
-
-	public void setMessage(String message) {
-		this.message = message;
+	public void setGroupno(int groupno) {
+		this.groupno = groupno;
 	}
-
 	public String getType() {
 		return type;
 	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	public String getTo() {
-		return to;
+	public String getText() {
+		return text;
 	}
-
-	public void setTo(String to) {
-		this.to = to;
+	public void setText(String text) {
+		this.text = text;
 	}
-	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	
 }

@@ -12,7 +12,7 @@ function online() {
 	var userid = $('#userid').val();
 	console.log(websocket.readyState);
 	websocket.onopen = function(event) {
-		websocket.send('접속유저명' + event.data);	
+		sendText();	
 	}
 	websocket.onmessage = function(event) {
 		msg = JSON.parse(event.data);
@@ -33,6 +33,7 @@ function online() {
 function sendText() {
   // Construct a msg object containing the data the server needs to process the message from the chat client.
   var msg = {
+	groupno : $('#groupno').val(),
     type: "message",
     text: $('#message').val(),
     id:   $('#userid').val(),
