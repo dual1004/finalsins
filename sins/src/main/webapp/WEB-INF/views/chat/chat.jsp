@@ -19,6 +19,7 @@
             	<input id="groupno" name="groupNo" value="1"/>
                 <input onclick="sendText()" value="Send" type="button">
                 <input id="message" name="message" value="웹소켓 세상"><br>
+                <input type="button" value="나가기" onclick="exitchat()"/>
             </form>
         </div>
         <div id="text"></div>

@@ -48,7 +48,7 @@
         	</div> 
 			     	
 	        <table id="listtable" align="center">
-	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">스팸등록이름</th><th>아이디</th></tr>
+	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">이름</th><th>아이디</th></tr>
 	        	<c:forEach var="msg" items="${msgspamuserlist }">
 						        	
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" ></td>

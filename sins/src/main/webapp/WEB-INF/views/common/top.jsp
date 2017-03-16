@@ -19,11 +19,11 @@
 	<input id="s" type="text" name="serch" placeholder="검색하기"/>
 </div>
 <div id="mylayout">
-	<div id="message" onmouseover="messagemover()" onclick="message()"></div>
+	<div id="message" onmouseover="msgover()" onclick="message()"></div>
 	<div id="allet"></div>
 	<div id="logout" onclick="logout()"></div>
 	<div id="my" onclick="goMyInfo()"><p id="m">내 정보보기</p></div>
-	<iframe id="msg" width="500" height="500" z-index="99" src="/sins/index.jsp"></iframe>
 </div>
+<div id="msglist"></div>
 </body>
 </html>

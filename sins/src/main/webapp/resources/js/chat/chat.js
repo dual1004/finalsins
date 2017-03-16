@@ -1,16 +1,10 @@
 /**
  * 
  */
-$(function() {
-	$('#ttt').click(function() {
-		console.log(websocket.readyState);
-	})
-})
 function online() {
-	var wsuri = "ws://192.168.20.89:8888/sins/test-ws";
-	websocket = new WebSocket(wsuri);
 	var userid = $('#userid').val();
-	console.log(websocket.readyState);
+	var wsuri = "ws://192.168.20.89:9999/sins/test-ws";
+	websocket = new WebSocket(wsuri);
 	websocket.onopen = function(event) {
 		sendText();	
 	}
@@ -51,18 +45,6 @@ function sendText() {
   /*$('#text').val("");*/
 }
 
-/*websocket.onmessage = function(event){
-	console.log('서버서 메시지전송받음');
-            	   msg = JSON.parse(event.data);
-           		if(msg.command == "message"){
-           			switch(msg.type){
-           				case "event":{
-           					writeToScreen(msg.message);
-           					break;
-           				}
-           			}
-           		}
-}*/
 function writeToScreen(message) {
     var pre = document.createElement("p");
     pre.style.wordWrap = "break-word";
@@ -70,4 +52,7 @@ function writeToScreen(message) {
     
     text.appendChild(pre);
 }
-
+function exitchat() {
+	console.log('나가기');
+	websocket.close();
+}

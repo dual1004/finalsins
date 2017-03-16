@@ -76,7 +76,6 @@
 		        	<c:if test="${not empty msg.filepath }">
 		        	<img src="${pageContext.request.contextPath}/resources/images/file.png" width="20px"/>
 		        	</c:if> 
-		        	</c:if>
 		        	</td>
 		        	<td>${msg.read_check }
 		        </tr>

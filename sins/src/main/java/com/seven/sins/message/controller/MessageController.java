@@ -150,14 +150,14 @@ public class MessageController {
 	// 메시지 삭제(받은 메시지)
 	@RequestMapping("msgrecivedel.j")
 	public ModelAndView messageResiveDelete(int[] check_no, ModelAndView mv){
-		System.out.println(check_no.length);
 		int result = messageservice.messageResiveDelet(check_no);
 		
 		if(result > 0){
 			mv.setViewName("forward:msgreadlist.j");
 		}else{
 			//삭제 실페페이지
-			mv.setViewName("");
+			mv.addObject("message","메시지 삭제에 실패하엿습니다.");
+			mv.setViewName("common/commerror");
 		}
 		return mv;
 	}
@@ -175,7 +175,7 @@ public class MessageController {
 	public ModelAndView messageSead(MessageVO sendmsg,@RequestParam("file") MultipartFile file, String[] resiveid, ModelAndView mv) throws Exception{		
 		// 파일 업로드 영역
 
-		if(file.isEmpty() == false){
+		if(!file.isEmpty()){
 			String userid = sendmsg.getSend_id();
 			String filePath = fileUtils.fileInfo(userid, file);
 			sendmsg.setFilepath(filePath);		
@@ -186,7 +186,8 @@ public class MessageController {
 		if(result > 0){
 			mv.setViewName("forward:msgsendlist.j");
 		}else{
-			mv.setViewName("에러페이지");
+			mv.addObject("message","메시지를 보내는데 실패하엿습니다.");
+			mv.setViewName("common/commerror");
 		}
 		
 		return mv;
@@ -273,5 +274,12 @@ public class MessageController {
 		int result = messageservice.spamRemove(loginUser.getUserId(),check_spamid);
 		mv.setViewName("forward:msgspamuserlist.j");
 		return mv;
+	}
+	
+	//리스트 헤더 쪽에 받은 쪽지
+	@RequestMapping("headmsglist.j")
+	@ResponseBody
+	public List<MessageVO> headmsglist(@SessionAttribute MemberVO loginUser){
+		return messageservice.getMsgList(loginUser.getUserId(), 1, 5);
 	}
 }
