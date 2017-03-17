@@ -25,7 +25,7 @@
          <h2>메시지함</h2><br>
         <ul>
         	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
-        	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
+        	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
           	<li><h4>보낸 메시지</h4></li>
           	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
           	<li><a class = "atag" href="msgspamuserlist.j">스팸 유저</a></li>
@@ -52,7 +52,7 @@
 		    	</select>
 		    	<input type="search" id="seach" name="seach" value="${seach}"/>
         		<input type="submit" value="찾기"/>
-	        	${currentPage } / ${maxPage } page
+	        	<div id="page">${currentPage } / ${maxPage } page</div>
         	</form>
         	<form name = "chkform">
 				<input type="hidden" name="check_no"/>
@@ -61,7 +61,7 @@
 	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">받는사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msgsendlist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" class="atagname" onmouseover="view('${msg.receivie_id}')" onclick="userpage('${msg.receivie_id}')">${msg.user_name }</a></td>
+		        	<td><a href="#" class="atagname" onmouseover="view('${msg.receivie_id}')" onclick="userpage('${msg.receivie_id}','${profile}')">${msg.user_name }</a></td>
 		        	<td class="content">
 		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
 		        
@@ -118,8 +118,11 @@
         </ul>
       </div>
     </div>
-    <div id="mouseover" style="position:absolute; display:none;">
-    	유저 아이디 넣을 공간 div
+     <div id="mouseover" style="position:absolute; display:none;">
+    	<img alt="" id="proimg" src="" style="width: 50px; height: 50px; border: 1px solid black;">
+    	<input type="hidden" id="propath" value="${pageContext.request.contextPath}/resources/file/">
+   	<div id="mouseoverid">
+    	<div id="movtext">유저 아이디 넣을 공간 div</div></div>
     </div>
      <div id="footer">
         <c:import url="../common/footer.jsp" charEncoding="UTF-8" />

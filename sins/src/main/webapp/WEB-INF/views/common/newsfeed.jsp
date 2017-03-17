@@ -48,7 +48,8 @@ $( document ).ready(function() {
 	<div id="header">
 		<div id="overlay_t"></div> 
 		<div id="t-l"></div>
-		<div id="top"><c:import url="top.jsp" charEncoding="UTF-8" /></div>
+		<%-- <c:import url="top.jsp" charEncoding="UTF-8" /> --%>
+		<div id="top"><jsp:include page="top.jsp"></jsp:include></div>
 		<div id="t-r"></div>
     </div>
    	<div id="container">

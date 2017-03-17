@@ -35,7 +35,8 @@
       <div id="content" class="box">
         <div id="msgsenddiv">
         	<h2>메시지 쓰기</h2><br>
-        	<form action="msgsead.j" enctype="multipart/form-data" method="post" name="sendform" onsubmit="return submit()" accept-charset="UTF-8">
+        	<input type="hidden"id="alluser"value="${allmember }"/>
+        	<form action="msgsead.j" enctype="multipart/form-data" method="post" name="sendform" onsubmit="return subsub(file)" accept-charset="UTF-8">
         		<input type="hidden" id="send_id" name="send_id" value="${loginUser.userId}">
         		<input type="submit" id="msgsendbtn" value="쪽지보내기"/><br/>
         		<input type="hidden" name="sendid" value="user01">

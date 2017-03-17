@@ -25,15 +25,47 @@ td{
 }
 #listtable{
 	
+	margin-top :  20px;
 	width : 600px;
 	table-layout: fixed;
-	
 }
+
+#listtable th{
+	background: #E7E4F9;
+	color : black;
+	font-weight : bold;
+	padding: 5px;
+}
+
+#listtable td{
+	padding: 5px;
+	border-bottom: 1px solid #E7E4F9;
+	font-size : 15px;
+}
+
 .content{
 	text-overflow: ellipsis; overflow: hidden;white-space: nowrap;
 }
 #mouseover{
-	width : 110px;
-	border: 1px solid black;
+	width : 300px;
 	background: white;
+}
+#mouseoverid{
+	width: 200px;
+	height: 50px;
+	vertical-align: top;
+	display: inline-block;	
+}
+#movtext{
+	height : 20px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#paging {
+	margin-top :  10px;
+	text-align : center;
+}
+#page {
+	float: right;
 }

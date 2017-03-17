@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.message.service.MessageService;
 import com.seven.sins.message.vo.MessageListVO;
@@ -32,6 +33,9 @@ public class MessageController {
 
 	@Autowired
 	private MessageService messageservice;
+	
+	@Autowired
+	private MemberService memberservice;
 	
 	@Resource(name="fileUtils")
     private FileUtils fileUtils;
@@ -150,14 +154,14 @@ public class MessageController {
 	// 메시지 삭제(받은 메시지)
 	@RequestMapping("msgrecivedel.j")
 	public ModelAndView messageResiveDelete(int[] check_no, ModelAndView mv){
+		System.out.println(check_no.length);
 		int result = messageservice.messageResiveDelet(check_no);
 		
 		if(result > 0){
 			mv.setViewName("forward:msgreadlist.j");
 		}else{
 			//삭제 실페페이지
-			mv.addObject("message","메시지 삭제에 실패하엿습니다.");
-			mv.setViewName("common/commerror");
+			mv.setViewName("");
 		}
 		return mv;
 	}
@@ -175,7 +179,7 @@ public class MessageController {
 	public ModelAndView messageSead(MessageVO sendmsg,@RequestParam("file") MultipartFile file, String[] resiveid, ModelAndView mv) throws Exception{		
 		// 파일 업로드 영역
 
-		if(!file.isEmpty()){
+		if(file.isEmpty() == false){
 			String userid = sendmsg.getSend_id();
 			String filePath = fileUtils.fileInfo(userid, file);
 			sendmsg.setFilepath(filePath);		
@@ -186,8 +190,7 @@ public class MessageController {
 		if(result > 0){
 			mv.setViewName("forward:msgsendlist.j");
 		}else{
-			mv.addObject("message","메시지를 보내는데 실패하엿습니다.");
-			mv.setViewName("common/commerror");
+			mv.setViewName("에러페이지");
 		}
 		
 		return mv;
@@ -204,7 +207,7 @@ public class MessageController {
 	public ModelAndView messageReference(int check_no, ModelAndView mv){
 		mv = this.messageDetatil(check_no,null, mv);
 		
-		mv.setViewName("message/messagewrite");
+		mv.setViewName("forward:msgbeforewrite.j");
 		return mv;
 	}
 	//메세지 스펨 리스트 컨트롤러
@@ -275,11 +278,19 @@ public class MessageController {
 		mv.setViewName("forward:msgspamuserlist.j");
 		return mv;
 	}
-	
 	//리스트 헤더 쪽에 받은 쪽지
 	@RequestMapping("headmsglist.j")
 	@ResponseBody
 	public List<MessageVO> headmsglist(@SessionAttribute MemberVO loginUser){
 		return messageservice.getMsgList(loginUser.getUserId(), 1, 5);
+	}
+	
+	//라이트페이지
+	@RequestMapping("msgbeforewrite.j")
+	public ModelAndView messageBeforeWrite(ModelAndView mv){
+		List<String> list = memberservice.allMemberId();
+		mv.addObject("allmember",list);
+		mv.setViewName("message/messagewrite");
+		return mv;
 	}
 }

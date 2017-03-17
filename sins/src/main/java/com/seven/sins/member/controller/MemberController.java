@@ -248,11 +248,4 @@ public class MemberController {
 		return url;
 	}
 	
-	//모든맴버 아이디 가져오기 컨트롤러
-	@RequestMapping("allmemberid.j")
-	@ResponseBody
-	public List<String> allMemberId(){
-		return memberService.allMemberId();
-	}
-	
 }

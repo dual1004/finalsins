@@ -27,12 +27,15 @@ function send_del() {
 	 form.method = "post";
 	 form.submit();
 };
-function view(id) {
+function view(id,path) {
 	 x = event.clientX;
     y = event.clientY; 
-    var di = $('#mouseover');	 
+    var propath = $('#propath').val()+id+"/"+path;
+    $('#proimg').src = propath;
+    var di = $('#movtext');	
     di.text(id);
-   di.css({
+    var mouseover = $('#mouseover');
+   mouseover.css({
         "top": y 
         ,"left": x +10
         , "position": "absolute"

@@ -2,7 +2,7 @@
  * 
  */
 
-function fileCheck(file)	{
+function fileCheck(file){
 	if (file != null){
 	// 사이즈체크
 	var maxSize  = 2048000000;    //2GB
@@ -25,6 +25,8 @@ function fileCheck(file)	{
 	    {
 	        alert("첨부파일 사이즈는 2GB 이내로 등록 가능합니다.");
 	        return false;
+	    }else{
+	    	return true;
 	    }
 	} else{
 	return true;
@@ -56,10 +58,11 @@ $( function() {
 	})
 });
 });
-function subsub() {
+function subsub(file) {
 	// ajax로 존재하는 유저인지 검색 후 서브밋
-	var flag = false;
+	/*var ccc = 0;
 	var cnt = 0;
+	var flag = false;
 	var reciveid = $('#reciveid').val().split(",");
 	$.ajax({
 		url : "allmemberid.j",
@@ -68,53 +71,50 @@ function subsub() {
 			var allmemberid = data;
 			for(var i = 0 ; i < allmemberid.length ; i++){
 				for(var j = 0 ; j < reciveid.length ; j ++){
-					if(allmemberid[j] == reciveid[i]){
+					if(allmemberid[i] == reciveid[j]){
 						cnt++;
-						console.log(allmemberid[j]);
 					}
-					console.log(allmemberid[i]);
 				}
-				
 			}
+			if(cnt == reciveid.length){
+				ccc++;
+			}
+			
 		}
 			
-	})
-	if(cnt == reciveid.length && fileCheck($('input[name=file]'))){
+	});
+	 if(ccc == 1 && fileCheck(file)){
+		 flag = true;
+	 }else{
+		 flag = false;
+	 }
+	 console.log(flag);*/
+	var flag = false;
+	console.log(fileCheck(file));
+	if(fileCheck(file) && chkallmem()){
 		flag = true;
 	}
-	
-	
 	 return flag;
+	 
 }
 
-/*$('#reciveid').autocomplete({
-source: function(request, response) {
-	$.ajax({
-		url : "autocomresiveid.j",
-		type : "post",
-		//request.term >> 이거 자체가 text박스내에 입력된 값이다. 
-		data : {"resiveid" : request.term},
-		success : function(result) {
-		//return 된놈을 response() 함수내에 다음과 같이 정의해서 뽑아온다. 
-			response(
-					$.map(result, function(item) {
-						return {
-							//label : 화면에 보여질 텍스트
-							//value : 실제 text태그에 들어갈 값
-							label : item.data,
-							value : item.data
-						}
-					})
-			);
+function chkallmem() {
+	var cnt = 0;
+	var flag = false;
+	var alluser = $('#alluser').val().split(",");
+	var reciveid = $('#reciveid').val().split(",");
+	for(var i = 0 ; i < alluser.length;i++){
+		for(var j = 0 ; j<reciveid.length;j++){
+			if(alluser[i].trim() == reciveid[j]){
+				cnt = cnt + 1;
+			}
 		}
-	});
-},
-// 최소 글자수 설정
-minLength : 2,
-//자동완성 목록에서 특정값 선택시 처리하는 동작구현
-// 구현이없으면 단순 text가 들어감
-select : function(event, ui) {
+	}
+	if(cnt == reciveid.length){
+		flag = true;
+	}else{
+		flag = false;
+	}
+	return flag;
 	
 }
-})*/
-//});

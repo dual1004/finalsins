@@ -24,7 +24,7 @@
          <h2>메시지함</h2><br>
         <ul>
         	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
-        	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
+        	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
           	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
           	<li><h4>스팸 유저</h4></li>
@@ -44,7 +44,7 @@
         	</form>        	
         		<input type="button" value="스팸등록해제" onclick="spamdel()"/>
         		
-	        	${currentPage } / ${maxPage } page
+	        	<div id="page">${currentPage } / ${maxPage } page</div>
         	</div> 
 			     	
 	        <table id="listtable" align="center">

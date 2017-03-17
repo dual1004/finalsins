@@ -25,7 +25,7 @@
          <h2>메시지함</h2><br>
         <ul>
         	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
-        	<li><a class = "atag" href="alink.do?path=message/messagewrite">메시지 쓰기</a></li>
+        	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
           	<li><h4>스팸 보관함</h4></li>
           	<li><a class = "atag" href="msgspamuserlist.j">스팸 유저</a></li>
@@ -57,7 +57,7 @@
 		    	</select>
 		    	<input type="search" id="seach" name="seach" value="${seach}"/>
         		<input type="submit" value="찾기"/>
-	        	${currentPage } / ${maxPage } page
+	        	<div id="page">${currentPage } / ${maxPage } page</div>
         	</form>
         	</div> 
      	
@@ -126,7 +126,10 @@
       </div>
     </div>
     <div id="mouseover" style="position:absolute; display:none;">
-    	유저 아이디 넣을 공간 div
+    	<img alt="" id="proimg" src="" style="width: 50px; height: 50px; border: 1px solid black;">
+    	<input type="hidden" id="propath" value="${pageContext.request.contextPath}/resources/file/">
+   	<div id="mouseoverid">
+    	<div id="movtext">유저 아이디 넣을 공간 div</div></div>
     </div>
      <div id="footer">
         <c:import url="../common/footer.jsp" charEncoding="UTF-8" />

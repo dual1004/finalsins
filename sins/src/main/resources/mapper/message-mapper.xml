@@ -14,10 +14,12 @@
 		<result property="classify" column="CLASSIFY" />
 		<result property="read_check" column="READ_CHECK" />
 		<result property="user_name" column="USER_NAME" />
+		<result property="profile" column="PROFILE" />
 	</resultMap>
 	
 	<select id="readlist" resultMap="messagemap" parameterType="string">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+		    from message 
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{userid} and MES_RES_DEL = 'N' 
 			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{userid})
@@ -32,7 +34,8 @@
 	</select>
 	
 	<select id="sendlist" resultMap="messagemap" parameterType="string">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+	        from message 
 			join member on(RECEIVE_ID = user_id)
 			where SEND_ID = #{userid} and MES_REQ_DEL = 'N' 
 			order by message_no desc
@@ -65,7 +68,8 @@
 	</select> 
 	
 	<select id="idseachlist" parameterType="MsglistVO" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+	        from message 
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid} and MES_RES_DEL = 'N' 
 			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{loginid})
@@ -74,7 +78,8 @@
 	</select>
 	
 	<select id="nameseachlist" parameterType="MsglistVO" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+		    from message 
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid} and MES_RES_DEL = 'N' 
 			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{loginid})
@@ -83,7 +88,8 @@
 	</select>
 	
 	<select id="contentseachlist" parameterType="MsglistVO" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+		    from message 
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid} and MES_RES_DEL = 'N' 
 			and (RECEIVE_ID, send_id) not in (select * from MESSAGESPAM where receive_id = #{loginid})
@@ -92,7 +98,8 @@
 	</select>
 	
 	<select id="contentsendseachlist" parameterType="MsglistVO" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+	       from message 
 			join member on(send_id = user_id)
 			where SEND_ID = #{loginid} and MES_RES_DEL = 'N' 
 			and content like #{seach}
@@ -100,7 +107,8 @@
 	</select>
 	
 	<select id="namesendseachlist" parameterType="MsglistVO" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+	        from message 
 			join member on(send_id = user_id)
 			where SEND_ID = #{loginid} and MES_RES_DEL = 'N' 
 			and user_name like #{seach}
@@ -108,14 +116,16 @@
 	</select>
 		
 	<select id="idsendseachlist" parameterType="MsglistVO" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+	        from message 
 			join member on(send_id = user_id)
 			where SEND_ID = #{loginid} and MES_RES_DEL = 'N' 
 			and RECEIVE_ID like #{seach}
 			order by message_no desc
 	</select>
 	<select id="selectone" parameterType="int" resultMap="messagemap">
-		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name"        from message 
+		select send_id,RECEIVE_ID, CONTENT,MESSAGE_DATE,FILEPATH,MES_REQ_DEL,MES_RES_DEL,CLASSIFY, READ_CHECK,MESSAGE_NO, user_name "user_name",USER_PROFILE "PROFILE"
+	        from message 
 			join member on(send_id = user_id)
 			where message_no = #{msg_no}
 	</select>
@@ -153,7 +163,7 @@
 	
 	<select id="idspamseachlist" parameterType="MsglistVO" resultType="MessageVO">
 		select SEND_ID,RECEIVE_ID, CONTENT, MESSAGE_DATE, FILEPATH
-			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME
+			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME,USER_PROFILE "PROFILE"
 			from message
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid}
@@ -164,7 +174,7 @@
 	
 	<select id="namespamseachlist" parameterType="MsglistVO" resultType="MessageVO">
 		select SEND_ID,RECEIVE_ID, CONTENT, MESSAGE_DATE, FILEPATH
-			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME
+			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME,USER_PROFILE "PROFILE"
 			from message
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid}
@@ -175,7 +185,7 @@
 	
 	<select id="contentspamseachlist" parameterType="MsglistVO" resultType="MessageVO">
 		select SEND_ID,RECEIVE_ID, CONTENT, MESSAGE_DATE, FILEPATH
-			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME
+			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME,USER_PROFILE "PROFILE"
 			from message
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid}
@@ -186,7 +196,7 @@
 	
 	<select id="spamseachlist" parameterType="MsglistVO" resultType="MessageVO">
 		select SEND_ID,RECEIVE_ID, CONTENT, MESSAGE_DATE, FILEPATH
-			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME
+			, MES_REQ_DEL, MES_RES_DEL, CLASSIFY, READ_CHECK, MESSAGE_NO, USER_NAME,USER_PROFILE "PROFILE"
 			from message
 			join member on(send_id = user_id)
 			where RECEIVE_ID = #{loginid}

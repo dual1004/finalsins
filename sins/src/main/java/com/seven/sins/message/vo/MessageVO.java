@@ -16,13 +16,14 @@ public class MessageVO implements Serializable{
 	private String read_check;
 	private int message_no;
 	private String user_name;
+	private String profile;
 	public MessageVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public MessageVO(String send_id, String receivie_id, String content, Date message_date, String filepath,
 			String mes_req_del, String mes_res_del, String classify, String read_check, int message_no,
-			String user_name) {
+			String user_name, String profile) {
 		super();
 		this.send_id = send_id;
 		this.receivie_id = receivie_id;
@@ -35,6 +36,7 @@ public class MessageVO implements Serializable{
 		this.read_check = read_check;
 		this.message_no = message_no;
 		this.user_name = user_name;
+		this.profile = profile;
 	}
 	public String getSend_id() {
 		return send_id;
@@ -101,6 +103,12 @@ public class MessageVO implements Serializable{
 	}
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 	
 	
