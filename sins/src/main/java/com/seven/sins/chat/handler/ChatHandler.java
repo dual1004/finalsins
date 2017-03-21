@@ -1,11 +1,9 @@
 package com.seven.sins.chat.handler;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,19 +13,21 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.json.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.seven.sins.chat.vo.ChatVO;
+
 
 @ServerEndpoint("/test-ws")
 public class ChatHandler {
-
+	
+	private static Logger logger = LoggerFactory.getLogger("sinsLog");
+	  
 	private List<Session> sessionusers = Collections.synchronizedList(new ArrayList<Session>());
 	private static Map<Integer,List<Session>> groupmap = Collections.synchronizedMap(new HashMap<Integer, List<Session>>());
 	private Session usersession; 	
@@ -38,12 +38,11 @@ public class ChatHandler {
 	@OnOpen
 	public void handleOpen(Session usersession) throws IOException {
 		sessionusers.add(usersession);
-		System.out.println("접속");
+		logger.info(usersession + "접속");
 	}
 	
 	@OnMessage
 	public void handleMessage(String message)throws IOException{
-		System.out.println("메시지");
 		ChatVO chatvo = this.msgTochatvo(message);
 		this.groupDiv(chatvo,sessionusers.get(0));
 		
@@ -66,7 +65,6 @@ public class ChatHandler {
 			boolean flag = true;
 			List<Session> list = groupmap.get(chatvo.getGroupno());
 			for(int i =0;i<list.size();i++){
-				System.out.println(list.get(i).getId());
 				if(list.get(i).getId() == (usersession2.getId())){
 					flag = false;
 				}
@@ -86,16 +84,16 @@ public class ChatHandler {
 	}
 
 	@OnClose
-	public void handleClose(Session session){
+	public void handleClose(Session session) throws IOException{
 		Set<Integer> k = groupmap.keySet();
 		Iterator iter = k.iterator();
 		while(iter.hasNext()){
-			System.out.println("반복");
 			int i = (int) iter.next();
 			if(groupmap.get(i).contains(session)){
 				groupmap.get(i).remove(session);
 			}
 		}
+		logger.info(session + "나가기");
 	
 	}
 	

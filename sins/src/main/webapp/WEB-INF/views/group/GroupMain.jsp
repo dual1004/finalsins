@@ -342,6 +342,9 @@
 	#container {
 		margin-bottom: 30px;
 	}
+	#rightchat{
+		position: fixed;
+	}
 	
 		
 	
@@ -516,10 +519,13 @@
 		</c:choose>
 	</div>
 	<div id="right" class="box">
-		<h2>친구목록</h2>
+	<div id="rightchat">
+		<h2>그룹 채팅</h2>
+		<c:import url="/WEB-INF/views/chat/chat.jsp"></c:import>
 		<ul>
 			
 		</ul>
+	</div>
 	</div>
 </div>
 <div id="footer">

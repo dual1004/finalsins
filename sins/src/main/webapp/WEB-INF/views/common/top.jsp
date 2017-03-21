@@ -15,7 +15,7 @@
 
 	</head>
 <body>
-<div id="logo"></div>
+<div id="logo" onclick="goHome()"></div>
 <div id="serchbar">
 	<%@include file="/WEB-INF/views/search/searchBar.jsp" %>
 </div>

@@ -6,6 +6,11 @@ $(function() {
 		$('#msglist').hide();
 		$('#msglist').text("");
 	})
+	$(document).on("mouseenter",".msglistajax",function(){
+		
+		$(this).css("background","red");
+	})
+	
 	$(document).on("mouseleave",".msglistajax", function() {
 		$(this).css("background","white");
 	})
@@ -33,7 +38,7 @@ function message() {
 			success : function(list) {
 				for(var i = 0  ; i < list.length; i++){
 					var x = 
-					"<div class='msglistajax'"+"onmouseover='mousepoint()' onclick='msgdetail("+
+					"<div class='msglistajax'"+"onclick='msgdetail("+
 					list[i].message_no+")'>" +
 					"<img class='msgajaximg' src="+list[i].profil+">"+
 					/*"<a class='ataglist' href='msgdetail.j?msgno="
@@ -57,8 +62,4 @@ function alertover() {
 }
 function msgdetail(msgno) {
 	location.href="msgheaddetail.j?msgno="+msgno;		
-}
-function mousepoint() {
-	$('.msglistajax').css({"background":"red", "cursor" : "pointer"});
-	
 }
