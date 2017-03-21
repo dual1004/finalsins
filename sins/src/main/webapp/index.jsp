@@ -67,11 +67,12 @@ var checkNum;
 			
 			var id = $("#email").val();
 			var check = /^[a-zA-Z]{1}[A-Za-z0-9-_]{4,13}\@[a-zA-Z]{1,6}.(com|co.kr|net)$/;
-
+		
+			console.log(id);
 			
 			if(check.test(id)){
 				$.ajax({
-					url : 'idCheck.p',
+					url : 'idCheck.m',
 					type : "post",
 					data : {"userid" : id},
 		            success : function(data){
@@ -140,7 +141,7 @@ var checkNum;
 		$("#pwdc").blur(function(){
 			var pwdc = $("#pwdc").val();
 			
-			if(pwdc == pwd){
+			if(pwdc == pwd && pwdc != ""){
 				pwdcCheck = 1;
 				$("#pwdc").css("border", "2px solid green");
 			}
@@ -173,7 +174,7 @@ var checkNum;
 				
 				if(phoneCheck == 1){
 					$.ajax({
-						url : "phoneCheck.k?phone="+phone,
+						url : "phoneCheck.m?phone="+phone,
 						type : "post",
 			            success : function(data){
 							console.log(data);			            	
@@ -243,22 +244,66 @@ var checkNum;
 			return false;
 		}
 	}
+	
+	function setsave(name, value, expiredays){
+		var today = new Date();
+		today.setDate( today.getDate() + expiredays );
+		document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + today.toGMTString() + ";"
+	}
+	
+	function saveLogin(id){
+		if(id != "")
+		{
+			 // userid 쿠키에 id 값을 7일간 저장
+			 setsave("userid", id, 7);
+		}else{
+			 // userid 쿠키 삭제
+			 setsave("userid", id, -1);
+		}
+	}
+	function loginCheck(){
+		if(login.idSaveCheck.checked) 
+			saveLogin(login.userid.value);
+		else 
+			saveLogin("");
+		return true;
+	}
+	function getLogin(){
+		// userid 쿠키에서 id 값을 가져온다.
+		var cook = document.cookie + ";";
+		var idx = cook.indexOf("=")+1;
+		var index;
+		var val;
+		if(cook.length <= 8) {
+			document.login.userid.value = "";
+		 	document.login.idSaveCheck.checked = false;
+		}
+		else {
+			index = cook.indexOf(";");
+			val = cook.substring(idx, index);
+			
+			document.login.userid.value = val;
+			document.login.idSaveCheck.checked = true;
+		}
+		
+	}
+
 </script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/index.css" />
 </head>
-<body>
+<body onLoad="getLogin()">
 	<div id="container">
 		<div id="header"></div>
 
 		<div id="mdiv">
 			<div id="m-fdiv">
-				<form action="loginCheck.k" method="post">
+				<form action="loginCheck.k" method="post" name="login" onsubmit="return loginCheck();">
 					<table id="m-f-ltable" style="cellpadding: 0; cellspacing: 0">
 						<tr style="height: 100px;">
 							<td><h2>로그인</h2></td>
 						</tr>
 
-						<tr style="height: 100px;">
+						<tr style="height: 120px;">
 							<td colspan="2">
 								<table id="LT" style="cellpadding: 0; cellspacing: 0; height: 100px">
 									<tr style="height: 50px;">
@@ -269,6 +314,7 @@ var checkNum;
 										<td><input id="tdd2" type="password" class="box" name="userpwd" tabindex="2"/></td>
 										<td></td>
 									</tr>
+									<tr><td><input type="checkbox" name="idSaveCheck" id="idSaveCheck"/><label style="font-size : 10pt">아이디 저장</label></td></tr>
 								</table>
 							</td>
 						</tr>
@@ -359,13 +405,13 @@ var checkNum;
 			</div>
 
 			<div id="m-sdiv2">
-			<form action="enroll.k" method="post" onsubmit="return enroll();">
+			<form action="enroll.m" method="post" onsubmit="return enroll();">
                <table id="m-s-enrolltable">
                   <tr class="tr1"><td class="std" style="text-align : center"><h2>회원가입</h2></td></tr>
                   <tr class="tr1"><td class="std"><input type="email" size="25" maxlength="25" name="userId" id="email" tabindex="1" placeholder="아이디@이메일"/></td><td class="ttd"><input type="button" id="idCheck" value="중복확인" tabindex="2" /></td></tr>
                   <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="25" name="check" id="check" tabindex="3" placeholder="인증번호"/><td class="ttd"><input type="button" id="checkbtn" value="인증확인" /></td></tr>
-                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="userPwd" id="pwd" tabindex="3" placeholder="비밀번호(특수문자, 영문, 숫자 반드시 한개씩 포함  8~25자)" /></td><td class="ttd"></td></tr>
-                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="pwdc" id="pwdc" tabindex="4" placeholder="비밀번호 확인"/></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="userPwd" id="pwd" tabindex="3" placeholder="암호(특문,영문,숫자 조합 8~25자)" /></td><td class="ttd"></td></tr>
+                  <tr class="tr1"><td class="std"><input type="password" size="25" maxlength="25" name="pwdc" id="pwdc" tabindex="4" placeholder="암호 확인"/></td><td class="ttd"></td></tr>
                   <tr class="tr1"><td class="std"><input type="text" size="25" maxlength="15" name="userName" id="name" tabindex="5" placeholder="이름"/></td><td class="ttd"></td></tr>
                   <tr class="tr1"><td class="std"><input type="phone" size="25" maxlength="13" name="phone" id="phone" tabindex="6" placeholder="010-0000-0000"/></td><td class="ttd"></td></tr>
                   <tr class="tr1"><td class="std">
@@ -378,7 +424,7 @@ var checkNum;
             </div>
 			
 			<div id="m-fdiv3">
-			<form action="findId.k" method="post">
+			<form action="findId.m" method="post">
 			<table id="idt">
 			<tr><td><h2>아이디 찾기</h2></td></tr>
 			<tr><td><input class="box" name="userName" placeholder="이  름" /></td></tr>
@@ -389,7 +435,7 @@ var checkNum;
 			</div>
 			
 			<div id="m-sdiv3">
-			<form action="findPwd.p" method="post">
+			<form action="findPwd.m" method="post">
 			<table id="pwdt">
 			<tr><td><h2>비밀번호 찾기</h2></td></tr>
 			<tr><td><input type="email" class="box" name="userid" placeholder="이메일형식 아이디" /></td></tr>

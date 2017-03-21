@@ -62,12 +62,22 @@
 	</update>
 	
 	<!-- GroupLike -->
+	<resultMap type="GroupLikeVO" id="resultGroupLike">
+		<id property="writeNo" column="WRITE_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="classify" column="CLASSIFY"/>
+		<result property="groupNo" column="GROUP_NO"/>		
+	</resultMap>
+	
+	<select id="groupLikeList" parameterType="GroupLikeVO" resultType="GroupLikeVO" resultMap="resultGroupLike">
+		SELECT * FROM GROUP_LIKE WHERE GROUP_NO = #{groupNo} AND USER_ID = #{userId}
+	</select>
 	<insert id="groupLike" parameterType="GroupLikeVO">
-		INSERT INTO GROUP_LIKE VALUES (${writeNo}, ${userId}, ${classify})
+		INSERT INTO GROUP_LIKE VALUES (#{writeNo}, #{userId}, 'GROUP_LIKE', #{groupNo})
 	</insert>
 	<delete id="groupUnlike" parameterType="GroupLikeVO">
 		DELETE FROM GROUP_LIKE 
-		WHERE WRITE_NO = ${writeNo} AND USER_ID = ${userId} AND CLASSIFY = ${classify}
+		WHERE WRITE_NO = #{writeNo} AND USER_ID = #{userId}
 	</delete>
 	
 	<!-- GroupWrite -->
@@ -101,12 +111,11 @@
 		)
 	</insert>
 	<update id="updateGroupWrite" parameterType="GroupWriteVO">
-		UPDATE GROUP_WRITE
-		SET CONTENT = ${content}, FILEPATH = ${filepath}, GROUP_NAME = ${groupName}
-		WHERE WRITE_NO = ${writeNo}
+		UPDATE GROUP_MAIN SET CONTENT = #{content}, FILEPATH = #{filepath}
+		WHERE WRITE_NO = #{writeNo}
 	</update>
 	<update id="deleteGroupWrite" parameterType="int">
-		UPDATE GROUP_WRITE SET DELETE_YN = 'Y' WHERE WRITE_NO = ${writeNo}
+		UPDATE GROUP_MAIN SET DELETE_YN = 'Y' WHERE WRITE_NO = #{writeNo}
 	</update>
 	
 	<!-- GroupMember -->
@@ -147,6 +156,7 @@
 	<resultMap type="GroupCommentVO" id="resultGroupComment">
 		<id property="commentNo" column="COMMENT_NO"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="content" column="CONTENT"/>
 		<result property="commentDate" column="COMMENT_DATE"/>
 		<result property="lev" column="LEV"/>
@@ -160,12 +170,16 @@
 	</resultMap>
 	
 	<select id="selectGroupCommentList" parameterType="GroupCommentVO" resultType="GroupCommentVO" resultMap="resultGroupComment">
-		SELECT * FROM GROUP_COMMENT WHERE DELETE_YN = 'N' AND WRITE_NO = ${write_no}
+		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, PHOTO_PATH
+		FROM GROUP_COMMENT 
+		JOIN MEMBER USING(USER_ID)
+		WHERE DELETE_YN = 'N' AND WRITE_NO = #{WRITE_NO}
+		ORDER BY COMMENT_NO DESC
 	</select>
 	<insert id="insertGroupComment" parameterType="GroupCommentVO">
 		INSERT INTO GROUP_COMMENT VALUES (
-			YOON_SEQ_COMMENT.NEXTVAL, ${userId}, ${content}, ${lev}, ${ref}, 
-			${photopath}, ${backupId}, ${writeNo}, ${classify}, 0, DEFAULT
+			YOON_SEQ_COMMENT.NEXTVAL, #{userId}, #{content}, SYSDATE, 0, 0, 
+			#{photopath, jdbcType=VARCHAR}, #{userId}, #{writeNo}, 'GROUP_COMMENT', 0, DEFAULT
 		) 
 	</insert>
 	<update id="updateGroupComment" parameterType="GroupCommentVO">

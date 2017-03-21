@@ -38,12 +38,16 @@
 
 
 #container {
-	width: 1000px;
+	width:1120px;
 	height: 770px;
 	margin: 0px auto;
 	background-color: #E7E4F9;
 }
 
+
+#left{
+width: 200px;
+}
 
 
 
@@ -60,10 +64,6 @@ $(document).on("click", ".addBtn", function(){
 	var resId= $(this).val();
 	
 
-	
-	
-	
-	
 	
 	
 	$.ajax({
@@ -97,7 +97,7 @@ $(document).on("click", ".addBtn", function(){
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
- 		<div id="top"><%@include file="/WEB-INF/views/common/top.jsp"%></div>
+ 		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
 	<div id="container">
@@ -173,6 +173,12 @@ $(document).on("click", ".addBtn", function(){
 
 	<div id="spot1"></div>
 	<div id="spot2"></div>
+	<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><%@include
+			file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="spot5"></div>
+	</div>
 </body>
 
 <footer>

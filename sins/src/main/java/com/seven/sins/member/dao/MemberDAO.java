@@ -73,4 +73,28 @@ public class MemberDAO {
 	public int changeAddress(MemberVO m) {
 		return sqlSession.update(NAMESPACE+"changeAddress", m);
 	}
+
+	public int setLoginFailCheck(String userid) {
+		return sqlSession.update(NAMESPACE+"setLoginFailCheck", userid);
+	}
+	
+	public int getLoginFailCheck(String userid) {
+		return (int)sqlSession.selectOne(NAMESPACE+"getLoginFailCheck", userid);
+	}
+
+	public int setBanTime(String userid) {
+		return sqlSession.update(NAMESPACE+"setBanTime", userid);
+	}
+
+	public int loginFailCheckZero(MemberVO loginUser) {
+		return sqlSession.update(NAMESPACE+"loginFailCheckZero", loginUser);
+	}
+
+	public int addressDelete(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"addressDelete", m);
+	}
+
+	public int birthDelete(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"birthDelete", m);
+	}
 }

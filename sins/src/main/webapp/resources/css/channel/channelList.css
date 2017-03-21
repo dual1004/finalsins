@@ -1,4 +1,49 @@
 @CHARSET "UTF-8";
+a:link, a:visited { text-decoration: none; color: #000000; }
+a:hover { text-decoration: none; color: #0080ff; }
+
+ul, li {list-style:none; margin:0; padding:10px;}
+	#center{
+	text-align: center;
+	
+	}
+	.channelList{
+		position: relative;
+		float: left;
+		width: 230px;
+		height: 200px;
+		margin: 1%;
+		border: 1px solid lightgrey;
+	}
+	.channelName{
+		display: inline-block;
+		border: 1px solid;
+		background: pink;
+		margin-left: 5px;
+		margin-top: 5px;
+	}
+	
+	.memberCount {
+		position: absolute;
+		display: inline-block;
+		border: 1px solid;
+		margin-bottom: 5px;
+		margin-right: 5px;
+		right: 0;
+		bottom: 0;
+		font-size: 12px;
+	}
+	
+	.category {
+		position: absolute;
+		display: inline-block;
+		border: 1px solid;
+		margin-bottom: 5px;
+		margin-left: 5px;
+		left: 0;
+		bottom: 0;
+		font-size: 13px;
+	}
 
 * {
 	margin: 0;
@@ -16,7 +61,7 @@ body {
 }
 
 #container {
-	width: 1300px;
+	width: 1000px;
 	height: 770px;
 	margin: 0px auto;
 	background-color: #E7E4F9;
@@ -64,27 +109,25 @@ body {
 
 #left {
 	width: 130px;
-	height: 500px;
-	margin-left: 50px;
+	height: 550px;
+	margin-left: 10px;
 	float: left;
 	background-color: white;
 }
 
 #content {
-	width: 700px;
+	width: 500px;
 	height: 760px;
 	padding: 20px;
-	margin-left: 40px;
+	margin-left: 20px;
 	float: left;
 	background-color: white;
 	overflow:auto;
 }
-#center {
-	text-align: center;
-}
+
 #right {
-	width: 300px;
-	height: 500px;
+	width: 240px;
+	height: 550px;
 	margin-right: 30px;
 	float: right;
 	background-color: white;

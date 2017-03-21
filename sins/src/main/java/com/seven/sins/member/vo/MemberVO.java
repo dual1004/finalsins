@@ -15,7 +15,7 @@ public class MemberVO implements java.io.Serializable{
 	private String birth;
 	private String gender;
 	private int loginFailCheck;
-	private Date banTime;
+	private String banTime;
 	
 	public MemberVO() {}
 
@@ -29,7 +29,7 @@ public class MemberVO implements java.io.Serializable{
 	}
 
 	public MemberVO(String userId, String userPwd, String userName, String phone, String address, int manager,
-			Date enrollDate, String userProfile, String birth, String gender, int loginFailCheck, Date banTime) {
+			Date enrollDate, String userProfile, String birth, String gender, int loginFailCheck, String banTime) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -133,13 +133,14 @@ public class MemberVO implements java.io.Serializable{
 		this.loginFailCheck = loginFailCheck;
 	}
 
-	public Date getBanTime() {
+	public String getBanTime() {
 		return banTime;
 	}
 
-	public void setBanTime(Date banTime) {
+	public void setBanTime(String banTime) {
 		this.banTime = banTime;
 	}
+
 
 	@Override
 	public String toString() {

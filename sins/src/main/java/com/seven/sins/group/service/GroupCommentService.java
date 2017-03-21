@@ -6,7 +6,7 @@ import com.seven.sins.group.vo.GroupCommentVO;
 
 public interface GroupCommentService {
 	// 댓글 리스트.
-	public ArrayList<GroupCommentVO> selectGroupCommentList(GroupCommentVO vo);
+	public ArrayList<GroupCommentVO> selectGroupCommentList(int writeNo);
 	
 	// 댓글 쓰기.
 	public int insertGroupComment(GroupCommentVO vo);

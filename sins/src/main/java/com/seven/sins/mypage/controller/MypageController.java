@@ -2,21 +2,24 @@ package com.seven.sins.mypage.controller;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
-import com.seven.sins.message.vo.MessageListVO;
 import com.seven.sins.mypage.service.MypageService;
 import com.seven.sins.mypage.vo.MypageCommentVO;
+import com.seven.sins.mypage.vo.MypageLikeVO;
 import com.seven.sins.mypage.vo.MypageVO;
+import com.seven.sins.util.FileUtils;
 
 @Controller("MypageController.b")
 public class MypageController {
@@ -24,6 +27,9 @@ public class MypageController {
 
 	@Autowired
 	private MypageService mypageService;
+	
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
 	
 	//마이페이지 글 목록 조회용
 	@RequestMapping("mypage.b")
@@ -56,9 +62,10 @@ public class MypageController {
 		
 		
 		if (keyword == null)*/
+		MypageLikeVO mylike = new MypageLikeVO();
+		mylike.setUserid(loginUser.getUserId());
+		ArrayList<MypageLikeVO> likeList = mypageService.mypageLikeList(mylike);
 		ArrayList<MypageVO> mylist = null;
-		
-		
 		 mylist = mypageService.selectMypage(loginUser.getUserId());
 		 ArrayList<MypageCommentVO> mycolist = null;
 		 mycolist = mypageService.selectMypageComment(loginUser.getUserId());
@@ -68,12 +75,13 @@ public class MypageController {
 		mv.addObject("mycolist" , mycolist);
 		mv.addObject("memberUser" , memberUser);
 		mv.addObject("loginUser" , loginUser);
+		mv.addObject("likeList" , likeList);
 		
 		mv.setViewName("mypage/mypage");
 		
 		return mv;
 	}
-	//마이페이지 댓글 조회용
+	//마이페이지 사진 조회용
 	@RequestMapping("mypagePoto.b")
 	public ModelAndView mypagePoto(@SessionAttribute MemberVO loginUser,ModelAndView mv){
 		//페이징 처리 필요
@@ -91,6 +99,8 @@ public class MypageController {
 	public ModelAndView mypage2(@SessionAttribute MemberVO loginUser,@RequestParam(value="userid", required=false)String userid, ModelAndView mv, MemberVO m, MypageVO my){
 		ArrayList<MypageVO> mylist = null;
 		ArrayList<MypageCommentVO> mycolist = null;
+		 MypageLikeVO mylike = new MypageLikeVO();
+		 ArrayList<MypageLikeVO> likeList = null;
 		if(userid == null){
 			 mylist = mypageService.selectMypage(masterId);
 			 
@@ -99,6 +109,7 @@ public class MypageController {
 			 m.setUserId(masterId);
 			 
 			 userid = masterId;
+		
 		}else{
 		
 		 mylist = mypageService.selectMypage(userid);
@@ -107,6 +118,8 @@ public class MypageController {
 		 
 		 m.setUserId(userid);
 		}
+		mylike.setUserid(loginUser.getUserId());
+		likeList = mypageService.mypageLikeList(mylike);
 		 MemberVO memberUser = mypageService.memberCheck(m);
 		
 		mv.addObject("mylist" , mylist);
@@ -114,6 +127,7 @@ public class MypageController {
 		mv.addObject("userid" , userid);
 		mv.addObject("memberUser" , memberUser);
 		mv.addObject("loginUser" , loginUser);
+		mv.addObject("likeList" , likeList);
 		
 		
 		
@@ -151,9 +165,21 @@ public class MypageController {
 	//글 작성 하기
 	@RequestMapping("mypageInsert.b")
 	public ModelAndView mypageInsert(@SessionAttribute MemberVO loginUser, HttpServletRequest request, ModelAndView mv, MypageVO mypage
-			,@RequestParam(value = "txtContent") String txtContent, @RequestParam(value = "pageid") String pageid
-			){
-		System.out.println(pageid);
+			,@RequestParam(value = "txtContent") String txtContent, @RequestParam(value = "pageid") String pageid,
+			@RequestParam("file") MultipartFile file){
+		
+		if(file.isEmpty() == false){
+			String userid = loginUser.getUserId();
+			try {
+				String filePath = fileUtils.fileInfo(userid, file);
+				mypage.setFilepath(filePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{String a= "";
+			mypage.setFilepath(a);
+		}
+		System.out.println(txtContent);
 		mypage.setContent(txtContent);
 		mypage.setUserid(loginUser.getUserId());
 		mypage.setCreateid(pageid);
@@ -176,7 +202,12 @@ public class MypageController {
 			){
 		mypageComment.setContent(txtComment);
 		mypageComment.setUserid(loginUser.getUserId());
+		mypageComment.setBackupid(pageid);
 		mypageComment.setContentno(writeno);
+		System.out.println(pageid);
+		System.out.println(pageid);
+		System.out.println(pageid);
+		System.out.println(pageid);
 		int result = mypageService.mypageComment(mypageComment);
 		if(result > 0){
 			masterId=pageid;
@@ -191,14 +222,32 @@ public class MypageController {
 	//글 수정
 	@RequestMapping("mypageUpdate.b")
 	public ModelAndView mypageUpdate(@SessionAttribute MemberVO loginUser, HttpServletRequest request, ModelAndView mv, MypageVO mypageComment
-			,@RequestParam(value = "txtComment") String txtComment, @RequestParam(value = "writeno") int writeno, @RequestParam(value = "filepath") String filepath
+			,@RequestParam(value = "txtComment") String txtComment, @RequestParam(value = "writeno") int writeno, @RequestParam(value = "filepath") String filepath,
+			@RequestParam(value = "pageid") String pageid, @RequestParam("file") MultipartFile file
 			){
+		
+		if(file.isEmpty() == false){
+			String userid = loginUser.getUserId();
+			try {
+				String filePath = fileUtils.fileInfo(userid, file);
+				System.out.println(filePath);
+				System.out.println("1111");
+				
+				mypageComment.setFilepath(filePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			mypageComment.setFilepath(filepath);
+		}
+		
 		mypageComment.setContent(txtComment);
 		mypageComment.setUserid(loginUser.getUserId());
 		mypageComment.setWriteno(writeno);
-		mypageComment.setFilepath(filepath);
+		
 		int result = mypageService.mypageUpdate(mypageComment);
 		if(result > 0){
+			masterId=pageid;
 			mv.setViewName("forward:mypage2.b");
 		}else{
 			mv.setViewName("에러페이지");
@@ -215,9 +264,12 @@ public class MypageController {
 			){
 		mypageComment.setContent(txtComment);
 		mypageComment.setUserid(loginUser.getUserId());
-		mypageComment.setContentno(writeno);
+		mypageComment.setCommentno(writeno);
+		System.out.println(txtComment+" "+writeno+" "+loginUser.getUserId());
+		
 		
 		int result = mypageService.mypageCommentUpdate(mypageComment);
+		System.out.println(result);
 		if(result > 0){
 			masterId=pageid;
 			mv.setViewName("forward:mypage2.b");
@@ -268,6 +320,62 @@ public class MypageController {
 		
 		return mv;
 	}
+	
+	// 좋아요 ----------------------------------------------------------------------
+		@RequestMapping("mypageLike.b")
+		public @ResponseBody int MypageLike(MypageLikeVO vo, ModelAndView mv) {
+			MypageVO myvo = new MypageVO();
+			myvo.setWriteno(vo.getWriteNo());
+			
+			int result = mypageService.MypageLike(vo);
+			
+			myvo = mypageService.MypageSelectLike(myvo);
+			int like = myvo.getWritelike();
+			System.out.println(like);
+			like +=1;
+			MypageVO myvo2 = new MypageVO();
+			myvo2.setWritelike(like);
+			myvo2.setWriteno(vo.getWriteNo());
+			
+			int result2 = mypageService.mypageLikeUpdate(myvo2);
+			
+			return result;
+		}
+		
+		@RequestMapping("MypageUnLike.b")
+		public @ResponseBody int MypageUnLike(MypageLikeVO vo, ModelAndView mv) {
+			MypageVO myvo = new MypageVO();
+			myvo.setWriteno(vo.getWriteNo());
+			
+			int result = mypageService.MypageUnLike(vo);
+			
+			myvo = mypageService.MypageSelectLike(myvo);
+			int like = myvo.getWritelike();
+			
+			System.out.println(like);
+			like -=1;
+			if(like<0)
+				like=0;
+			
+			MypageVO myvo2 = new MypageVO();
+			myvo2.setWritelike(like);
+			myvo2.setWriteno(vo.getWriteNo());
+			
+			int result2 = mypageService.mypageLikeUpdate(myvo2);
+			
+			return result;
+		}
+		
+		
+		@RequestMapping("contentsMain.b")
+		public ModelAndView contentsMain(@SessionAttribute MemberVO loginUser,
+				@RequestParam(value="userid", required=false)String userid,
+				ModelAndView mv, MemberVO m, MypageVO my){
+			
+			
+			
+		}
+			
 	
 	
 	}

@@ -38,8 +38,8 @@
 <title></title>
 <style>
 .textsize{
-width:110px;
-font-size:8px;
+width:140px;
+font-size:9pt;
 }
 .btnsize{
 width:50px;
@@ -60,9 +60,9 @@ margin-left:60px;
 <div id="find" style='margin-left:10px; margin-top:50px; margin-bottom:50px;'>
 <form id=findForm action="friendFind.n" method="post">
 
-<label class="font8pt">이름</label><br>
+<label class="font9pt"><strong>이름</strong></label><br>
 <input id="userName" class="textsize" name="userName" placeholder="이름을 입력하세요"><br><br>
-<label class="font8pt">출생년도</label><br>
+<label class="font9pt"><strong>출생년도</strong></label><br>
 
 
 
@@ -78,9 +78,9 @@ margin-left:60px;
 <option value="0" selected>년도 선택</option>
 
 </select><br><br>
-<label class="font8pt">주소</label><br>
+<label class="font9pt"><strong>주소</strong></label><br>
 <input id="address" class="textsize" name="address" placeholder="도시를 입력하세요"><br><br>
-<label class="font8pt">전화번호</label><br>
+<label class="font9pt"><strong>전화번호</strong></label><br>
 <input id="phone" class="textsize" type="tel" name="phone" placeholder="전화번호를 입력하세요"><br><br>
 
 <input id="subBtn" class="btnsize" type="button" value="찾기">

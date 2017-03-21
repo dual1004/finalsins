@@ -1,9 +1,13 @@
 package com.seven.sins.member.controller;
 
 import java.io.File;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,28 +29,90 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	// 로그인용 컨트롤러
+	 // 로그인용 컨트롤러
 	@RequestMapping("loginCheck.k")
-	public String loginCheck(String userid, String userpwd, HttpSession session, MemberVO m){
-		
+	public String loginCheck(String userid, String userpwd, HttpSession session, MemberVO m, Model mo){
+		String url = "";
 		m.setUserId(userid);
 		m.setUserPwd(userpwd);
 		
-		MemberVO loginUser = memberService.loginCheck(m);
-		
-		if(loginUser != null){
-			session.setAttribute("loginUser", loginUser);
+		int idCheck = memberService.idCheck(userid);
+		if(idCheck > 0){
+			MemberVO loginUser = memberService.loginCheck(m);
 			
-			return "common/newsfeed";
+			if(loginUser != null){
+				if(loginUser.getUserId().equals("admin")){
+					session.setAttribute("loginUser", loginUser);
+					url="";
+				}
+				else{
+					String sar[] = loginUser.getBanTime().split(" ");
+					
+					int year = Integer.parseInt(sar[0].split("/")[0]);
+					int month = Integer.parseInt(sar[0].split("/")[1]);
+					int day = Integer.parseInt(sar[0].split("/")[2]);
+					int hour = Integer.parseInt(sar[1].split(":")[0]);
+					int minute = Integer.parseInt(sar[1].split(":")[1]);
+					int second = Integer.parseInt(sar[1].split(":")[2]);
+					
+					String banTime = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
+					
+					Calendar cld = new GregorianCalendar().getInstance();
+					Calendar cld2 = new GregorianCalendar().getInstance();
+					Date d = new Date();
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd kk:mm:ss");
+					Date ban;
+					long diff;
+					try {
+						ban = sdf.parse(banTime);
+						cld.setTime(ban);
+						cld2.setTime(d);
+						diff = ((cld2.getTimeInMillis()-cld.getTimeInMillis()) / 1000)/60;
+						
+						// 밴타임 없고 아이디비번 맞고 어드민아니고
+						if(diff >= 0){
+							session.setAttribute("loginUser", loginUser);
+							int nul = memberService.loginFailCheckZero(loginUser);
+							url="common/newsfeed";
+						}
+						// 밴타임이 있을경우
+						else {
+							mo.addAttribute("time", Math.abs(diff));
+							url="member/banTime";
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
+			}
+			else {
+				int loginFailCheck = memberService.setLoginFailCheck(userid);
+				int count = memberService.getLoginFailCheck(userid);
+				System.out.println(count);
+				if(count > 4 && count < 6){
+					int result = memberService.setBanTime(userid);
+				}
+				mo.addAttribute("count", count);
+				url="member/pwdCheckFail";
+			}
+			
 		}
-		return "member/idCheckFail";
+		else {
+			url = "member/idCheckFail";
+		}
+		
+		
+		return url;
 	}
 	
 	// 회원가입용 컨트롤러
 	@Value("#{dir['dir.url']}")
 	private String dir;
 	
-	@RequestMapping("enroll.k")
+	@RequestMapping("enroll.m")
 	public String enrollMember(MemberVO member, Model mo){
 		
 		int result = memberService.enrollMember(member);
@@ -71,7 +137,7 @@ public class MemberController {
 	}
 	
 	// 전화번호 중복체크용 컨트롤러
-	@RequestMapping("phoneCheck.k")
+	@RequestMapping("phoneCheck.m")
 	@ResponseBody
 	public String phoneCheck(HttpServletRequest request){
 		String phone = request.getParameter("phone");
@@ -83,8 +149,8 @@ public class MemberController {
 		return result;
 	}
 	
-	// 비밀번호 찾기용 컨트롤러
-	@RequestMapping("findId.k")
+	// 아이디 찾기용 컨트롤러
+	@RequestMapping("findId.m")
 	public ModelAndView findId(MemberVO m, ModelAndView mv){
 		String url = "";
 		
@@ -246,6 +312,59 @@ public class MemberController {
 		
 		
 		return url;
+	}
+	
+	// 주소 삭제용 컨트롤러
+	@RequestMapping("addressDelete.k")
+	public String addressDelete(Model mo, HttpSession session){
+		String url = "";
+		
+		MemberVO m = (MemberVO)session.getAttribute("loginUser");
+		
+		int result = memberService.addressDelete(m);
+		
+		if(result > 0){
+			MemberVO loginUser = memberService.loginCheck(m);
+			session.setAttribute("loginUser", loginUser);
+			mo.addAttribute("message", "주소");
+			url = "member/infoModifySuccess";
+		}
+		else{
+			mo.addAttribute("message", "주소 바꾸기");
+			url = "member/changeFail";
+		}
+		
+		return url;
+	}
+	
+	// 생일 삭제용 컨트롤러
+	@RequestMapping("birthDelete.k")
+	public String birthDeleteDelete(Model mo, HttpSession session){
+		String url = "";
+		
+		MemberVO m = (MemberVO)session.getAttribute("loginUser");
+		
+		int result = memberService.birthDelete(m);
+		
+		if(result > 0){
+			MemberVO loginUser = memberService.loginCheck(m);
+			session.setAttribute("loginUser", loginUser);
+			mo.addAttribute("message", "생일");
+			url = "member/infoModifySuccess";
+		}
+		else{
+			mo.addAttribute("message", "생일 정보 바꾸기");
+			url = "member/changeFail";
+		}
+		
+		return url;
+	}
+	
+	//모든맴버 아이디 가져오기 컨트롤러
+	@RequestMapping("allmemberid.j")
+	@ResponseBody
+	public List<String> allMemberId(){
+		return memberService.allMemberId();
 	}
 	
 }

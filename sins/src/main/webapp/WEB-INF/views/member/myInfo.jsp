@@ -269,7 +269,6 @@ var checkAddress = 0;
 		// 도 선택 셀렉트 박스 값이 변할경우
 		$(document).on("change","#city", function(){
 			city = $("#city").val();
-			console.log(city);
 			
 			if(city != "0" || city != "세종특별자치시"){
 				$.ajax({
@@ -287,12 +286,14 @@ var checkAddress = 0;
 		
 		$(document).on("change","#partition", function(){
 			var par = $("#partition").val();
-			if(par != "0" || par != null){
-				checkAddress = 1;
-			}
-			else {
+			console.log(par);
+			if(par === '0'){
 				checkAddress = 0;
 			}
+			else {
+				checkAddress = 1;
+			}
+			console.log(checkAddress);
 		});
 		
 		// 주소 수정 취소 클릭시
@@ -302,6 +303,17 @@ var checkAddress = 0;
 			$("#addressChangebtn").show();
 			
 		});
+		
+		// 주소 삭제 버튼 클릭시
+		$("#addressDeleteBtn").click(function(){
+			location.href = "addressDelete.k";
+		});
+		
+		// 생일 삭제 버튼 클릭시
+		$("#birthDeletebtn").click(function(){
+			location.href = "birthDelete.k";
+		});
+		
 		
 		$('#t-l').click(function(){ 
 			$('#spot1, #overlay_t').show(); 
@@ -339,13 +351,20 @@ var checkAddress = 0;
 	
 	function birthCheck(){
 		var birth = $("#datePicker").val();
+		var check = /^[0-9]{4}-[0-9]{2}-[0-9]{2}/;
 		
-		if(birth != ""){
-			return true;
+		if(check.test(birth)){
+			if(birth != ""){
+				return true;
+			}
+			else{
+				return false;
+			}	
 		}
-		else{
+		else {
+			alert("날짜 입력 정보가 잘못되었습니다.");
 			return false;
-		}	
+		}
 	}
 	
 	function phoneCheck(){
@@ -399,8 +418,8 @@ var checkAddress = 0;
 					<tr><td class="ftd"><label>비밀번호</label></td><td class="std"><input type="password" id="userPwd" size="25" maxlength="25" class="t" name="userPwd" value="${loginUser.userPwd}" readonly/></td><td><input type="button" value="수정하기" id="pwdchangebtn"><input type="button" value="수정취소" id="pwdchangecanclebtn" /></td></tr>
 					<form action="changePwd.k" method="post" onsubmit="return pwdCheck()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
-						<tr class="pwdchange"><td class="ftd"><label>비밀번호 바꾸기</label></td><td class="std"><input type="password" id="pwdChange" size="25" maxlength="25" class="t" name="userPwd" /></td><td><input type="submit" value="수정완료" id="pwdmodifybtn"/></td></tr>
-						<tr class="pwdchange"><td class="ftd"><label>비밀번호 확인</label></td><td class="std"><input type="password" id="pwdCheck" size="25" maxlength="25" class="t"/></td><td></td></tr>
+						<tr class="pwdchange"><td class="ftd"><label>비밀번호 바꾸기</label></td><td class="std"><input type="password" id="pwdChange" size="25" maxlength="25" class="t" name="userPwd" placeholder="암호(특문,영문,숫자 조합 8~25자)" /></td><td><input type="submit" value="수정완료" id="pwdmodifybtn"/></td></tr>
+						<tr class="pwdchange"><td class="ftd"><label>비밀번호 확인</label></td><td class="std"><input type="password" id="pwdCheck" size="25" maxlength="25" class="t" placeholder="암호 확인"/></td><td></td></tr>
 					</form>
 					<tr><td class="ftd"><label>이름</label></td><td colspan="2" class="std"><input type="text" size="25" maxlength="25" class="t" id="userName" name="userName" value="${loginUser.userName}" readonly/></td></tr>
 					<tr><td class="ftd"><label>성별</label></td><td colspan="2" class="std"><input type="text" size="25" maxlength="25" class="t" id="gender" name="gender" value="${loginUser.gender}" readonly /></td></tr>
@@ -408,22 +427,22 @@ var checkAddress = 0;
 						<tr><td class="ftd"><label>생일</label></td><td class="std"><input type="text" size="25" maxlength="25" class="t" value="등록되지 않은 정보입니다." readonly /></td><td><input type="button" class="birthChangebtn" value="수정하기" /><input type="button" id="birthCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<c:if test="${not empty loginUser.birth}">
-						<tr><td class="ftd"><label>생일</label></td><td class="std"><input type="text" size="25" maxlength="25" class="t" value="${loginUser.birth}" readonly /></td><td><input type="button" class="birthChangebtn" value="수정하기" /><input type="button" id="birthCenclebtn" value="수정취소" /></td></tr>
+						<tr><td class="ftd"><label>생일</label></td><td class="std"><input type="text" size="25" maxlength="25" class="t" value="${loginUser.birth}" readonly /><input type="button" value="삭제" id="birthDeletebtn" /></td><td><input type="button" class="birthChangebtn" value="수정하기" /><input type="button" id="birthCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<form action="changeBirth.k" onsubmit="return birthCheck()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
-						<tr id="birthchange"><td class="ftd"><label>생일 수정</label></td><td class="std"><input type="text" class="t" id="datePicker" name="birth" value=""/></td><td><input type="submit" value="수정완료" /></td></tr>
+						<tr id="birthchange"><td class="ftd"><label>생일 수정</label></td><td class="std"><input type="text" class="t" id="datePicker" name="birth" value="" placeholder="YYYY-MM-DD"/></td><td><input type="submit" value="수정완료" /></td></tr>
 					</form>	
 					<tr><td class="ftd"><label>전화번호</label></td><td class="std"><input type="text" id="phone" size="25" maxlength="25" class="t" value="${loginUser.phone}" readonly /></td><td><input type="button" id="phoneChangebtn" value="수정하기" /><input type="button" id="phoneCenclebtn" value="수정취소" /></td></tr>
 					<form action="phoneChange.k" onsubmit="return phoneCheck()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
-						<tr id="phonechange"><td class="ftd"><label>전화번호</label></td><td class="std"><input type="text" id="phoneChange" size="20" maxlength="20" class="t" name="phone" /></td><td><input type="button" id="phoneChangeFinish" value="중복체크" /><input type="submit" id="phoneSubmit" value="수정완료" /></td></tr>
+						<tr id="phonechange"><td class="ftd"><label>전화번호</label></td><td class="std"><input type="text" id="phoneChange" size="20" maxlength="20" class="t" name="phone" placeholder="010-0000-0000" /></td><td><input type="button" id="phoneChangeFinish" value="중복체크" /><input type="submit" id="phoneSubmit" value="수정완료" /></td></tr>
 					</form>
-					<c:if test="${empty loginUser.birth}">
+					<c:if test="${empty loginUser.address}">
 						<tr><td class="ftd"><label>주소</label></td><td class="std"><input type="text" id="address" size="25" class="t" maxlength="25" name="address"  value="등록되지 않은 정보입니다." readonly/></td><td><input type="button" id="addressChangebtn" value="수정하기" /><input type="button" id="addressCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
-					<c:if test="${not empty loginUser.birth}">
-						<tr><td class="ftd"><label>주소</label></td><td class="std"><input type="text" id="address" size="25" class="t" maxlength="25" name="address"  value="${loginUser.address}" readonly/></td><td><input type="button" id="addressChangebtn" value="수정하기" /><input type="button" id="addressCenclebtn" value="수정취소" /></td></tr>
+					<c:if test="${not empty loginUser.address}">
+						<tr><td class="ftd"><label>주소</label></td><td class="std"><input type="text" id="address" size="25" class="t" maxlength="25" name="address"  value="${loginUser.address}" readonly/><input type="button" value="삭제" id="addressDeleteBtn"/></td><td><input type="button" id="addressChangebtn" value="수정하기" /><input type="button" id="addressCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<form action="changeAddress.k" onsubmit="return checkAddress()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />

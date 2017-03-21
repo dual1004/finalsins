@@ -23,13 +23,24 @@
 	#page{
 	
 	position:relative; 
-	min-height:100px;
+	min-height:0px;
 	height:auto;
 	width:100%;
 	float:left;
 	text-align:center;
 	
 	z-index:101;
+	}
+	
+	#btns{
+	position:relative;
+	width:100%;
+	background:white;
+	}
+	
+	.gray{
+	color:gray;
+	font-size:8pt;
 	}
 	
 	@media screen and (max-width:900px) {
@@ -54,6 +65,10 @@
 	cursor:pointer;
 	
 	}
+	
+	.resultTable{
+	
+	}
 	</style>
 <script>
 
@@ -63,9 +78,9 @@
 
 $( function() {
 	
-	
+	word="";
   $('#s').keyup(function() {
-	  
+	  word=$(this).val();
 	  if($('#s').val().length == 0){
 		  $("#searchResult").css("display", "none");
 		  return;
@@ -80,25 +95,47 @@ $( function() {
            
       success : function(result) {
     	 
+    	  var tag="";
     	  if(result.mlist.length>0){
-    	  	tag="사람<br><table class='resultTable'>";
+    	  	tag+="사람<br><table class='resultTable'>";
 	    	  for(var i=0;i<result.mlist.length;i++){
 	    	 
 	    		
 	    	  
 				tag+="<tr onClick="+"location.href=mypage2.b?userId="+result.mlist[i].userId+" class='trs'><td>"+
 				"<img src=" +result.mlist[i].userProfile+" style='width: 50px; height: 50px;' />"+
-				"</td><td>"+result.mlist[i].userName+"</td></tr>";
+				"</td><td>"+result.mlist[i].userName+"</td><td style='padding-left:10px;'>";
+				if(result.mlist[i].isFriend=='Y')
+					tag+="<label class='gray'>이미 친구입니다.</label>";
+							
+				tag+="<br><label class='gary'>"+result.mlist[i].address+" 거주</label>";	
+					
+				
+				tag+="</td></tr>";
 					
 	    	  }
 	    	  
-	    	  tag+="</table> <a href='searchMember.n?word='더보기";
+	    	  tag+="</table> <button id='btns' onclick='searchMember.n?word="+word+"'>더보기</button><br><hr>";
     	  }
 	    	  
-	    	  
-	    	  
-	    	  
-	    	  
+	     	if(result.clist.length>0){
+	    		
+	     		tag+="채널<br><table class='resultTable'>";
+		    	  for(var i=0;i<result.clist.length;i++){
+		    	 
+		    		
+		    	  
+					tag+="<tr onClick="+"location.href=mypage2.b?userId="+result.clist[i].channelNo+" class='trs'><td>"+
+					"<img src=" +result.clist[i].filePath+" style='width: 50px; height: 50px;' />"+
+					"</td><td>"+result.clist[i].channelName+"</td></tr>";
+						
+		    	  }
+		    	  
+		    	  tag+="</table> <button id='btns' onclick='searchChannel.n?word="+word+"'>더보기</button><br><hr>";
+	    		
+	    		
+	    		
+	    	} 
 	    	
 	    	  $("#searchResult").html(tag);
 	      

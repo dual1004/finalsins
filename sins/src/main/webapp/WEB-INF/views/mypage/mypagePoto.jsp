@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 <title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
     <link rel="stylesheet" type="text/css" href="/sins/resources/css/mypage/mypage-common.css" />
     
 <script type="text/javascript">
@@ -77,7 +79,13 @@ $( document ).ready(function() {
       <div class="content2">
         <h2>Poto</h2>
         <c:forEach var="item" items="${mylist}">
-        <a href="#"><img src="${item.userprofile }" class="imgmy"></a>
+        <c:if test="${not empty item.filepath}">
+        		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
+   				<c:if test="${fn:split(item.filepath,'.')[1] eq pic}">
+				<img src="${pageContext.request.contextPath}/resources/file/${item.userid}/${item.filepath}" class="imgmy" />
+				</c:if>
+        		</c:forTokens>
+        		</c:if>
         </c:forEach>
        </div>
       </div>

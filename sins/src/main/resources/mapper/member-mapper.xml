@@ -17,7 +17,9 @@
 	</resultMap>
 	
 	<select id="loginCheck" parameterType="MemberVO" resultType="MemberVO" resultMap="ResultMember">
-		SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
+		SELECT *
+		FROM MEMBER 
+		WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
 	</select>
 	
 	<update id="findPw" parameterType="MemberVO">
@@ -35,7 +37,7 @@
 	</select>
 	
 	<select id="enrollMember" parameterType="MemberVO" resultType="int">
-		INSERT INTO MEMBER(USER_ID, USER_PWD, USER_NAME, PHONE, GENDER) VALUES(#{userId}, #{userPwd}, #{userName}, #{phone}, #{gender})
+		INSERT INTO MEMBER(USER_ID, USER_PWD, USER_NAME, PHONE, GENDER, BAN_TIME) VALUES(#{userId}, #{userPwd}, #{userName}, #{phone}, #{gender}, TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS'))
 	</select>
 	
 	<select id="findId" parameterType="MemberVO" resultType="MemberVO" resultMap="ResultMember">
@@ -86,8 +88,40 @@
 		WHERE USER_ID = #{userId}
 	</update>
 	
+	<update id="setLoginFailCheck" parameterType="string">
+		UPDATE MEMBER
+		SET LOGIN_FAIL_CHECK = LOGIN_FAIL_CHECK + 1
+		WHERE USER_ID = #{userid}
+	</update>
 	
+	<select id="getLoginFailCheck" parameterType="string" resultType="int">
+		SELECT LOGIN_FAIL_CHECK
+		FROM MEMBER
+		WHERE USER_ID = #{userid}
+	</select>
 	
+	<update id="setBanTime" parameterType="string">
+		UPDATE MEMBER
+		SET BAN_TIME = TO_CHAR(SYSDATE + 30/(24*60), 'YYYY/MM/DD HH24:MI:SS')
+		WHERE USER_ID = #{userid}
+	</update>
+	
+	<update id="loginFailCheckZero" parameterType="MemberVO">
+		UPDATE MEMBER
+		SET LOGIN_FAIL_CHECK = 0
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<update id="addressDelete">
+		UPDATE MEMBER
+		SET ADDRESS = ''
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<update id="birthDelete">
+		UPDATE MEMBER
+		SET BIRTH = ''
+		WHERE USER_ID = #{userId}
+	</update>
 
-   
 </mapper>

@@ -2,21 +2,27 @@ package com.seven.sins.group.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.seven.sins.group.vo.GroupCommentVO;
 
 @Repository("groupCommentDAO")
 public class GroupCommentDAO {
+	
+	private static final String NAMESPACE = "group.";
+	
+	@Autowired
+	private SqlSession sqlSession;
 
-	public ArrayList<GroupCommentVO> selectGroupCommentList(GroupCommentVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	@SuppressWarnings("unchecked")
+	public ArrayList<GroupCommentVO> selectGroupCommentList(int writeNo) {
+		return (ArrayList<GroupCommentVO>)sqlSession.selectList(NAMESPACE + "selectGroupCommentList", writeNo);
 	}
 
 	public int insertGroupComment(GroupCommentVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert(NAMESPACE + "insertGroupComment", vo);
 	}
 
 	public int updateGroupComment(GroupCommentVO vo) {

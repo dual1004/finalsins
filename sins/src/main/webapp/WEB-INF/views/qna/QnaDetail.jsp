@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
 
 <script src="/sins/resources/js/qna/qna.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/qna/qna-common.css" />
+	href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qnaDetail.css" />
 <script>
@@ -88,7 +90,7 @@
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
-	<div id="top"><%@include file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="top"></div>
 
 		<div id="t-r"></div>
 	</div>
@@ -113,29 +115,26 @@
 				</h2>
 				<br>
 				<hr />
-
-				<label style="left: 400px;" class="labels">작성일 :
-					${qna.writeDate }</label> <label style="left: 420px;" class="labels">조회수
+				<label style='left: 50px;' class="labels">
+				
+				작성자 : <c:set var="sym" value="${fn:indexOf(qna.userId, '@') }"/>
+						 <c:out value="${fn:substring(qna.userId, 0, sym)} "/>
+				</label>
+				<label style="left: 330px;" class="labels">작성일 :
+					${qna.writeDate }</label> <label style="left: 350px;" class="labels">조회수
 					: ${qna.readCount }</label> <br>
 				<hr />
 				<br>
 				<table>
 					<tr>
-						<td><a href="#"><img src="${qna.userProfile }" style='width:50px;height:50px;'></a></td>
-						<td>${qna.content }</td>
-					</tr>
-					<tr>
-					<td></td>
-					<td><img src="${pageContext.request.contextPath}/resources/file/${loginUser.userId}/${qna.filepath}" style='width:300px; height:300px;'></td>
-					
-					
-					
+						<td style='padding:30px; '><a href="#"><img src="${qna.userProfile }" style='width:70px;height:70px;'></a></td>
+						<td style='padding:10px;'>${qna.content }</td>
 					</tr>
 					
-					<tr>
-						<td></td>
-						<td><br>이름 or 아이디 : ${qna.userId }</td>
-					</tr>
+					
+					
+					
+					
 				</table>
 				<br>
 				<hr />
@@ -206,5 +205,12 @@
 	</div> 
 	<div id="spot1"></div>
 	<div id="spot2"></div>
+		<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><%@include
+			file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="spot5"></div>
+	</div>
+	
 </body>
 </html>

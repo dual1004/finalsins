@@ -9,6 +9,7 @@ import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.dao.MypageDAO;
 import com.seven.sins.mypage.service.MypageService;
 import com.seven.sins.mypage.vo.MypageCommentVO;
+import com.seven.sins.mypage.vo.MypageLikeVO;
 import com.seven.sins.mypage.vo.MypageVO;
 @Service("mypageService")
 public class MypageServiceImpl implements MypageService{
@@ -74,6 +75,36 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int getKeywordCount(String option, String keyword) {
 		return mypageDAO.getKeywordCount(option, keyword);
+	}
+
+	@Override
+	public int MypageLike(MypageLikeVO vo) {
+		// TODO Auto-generated method stub
+		return mypageDAO.MypageLike(vo);
+	}
+
+	@Override
+	public int MypageUnLike(MypageLikeVO vo) {
+		// TODO Auto-generated method stub
+		return mypageDAO.MypageUnLike(vo);
+	}
+
+	@Override
+	public ArrayList<MypageLikeVO> mypageLikeList(MypageLikeVO mylike) {
+		// TODO Auto-generated method stub
+		return mypageDAO.mypageLikeList(mylike);
+	}
+
+	@Override
+	public int mypageLikeUpdate(MypageVO myvo) {
+		// TODO Auto-generated method stub
+		return mypageDAO.mypageLikeUpdate(myvo);
+	}
+
+	@Override
+	public MypageVO MypageSelectLike(MypageVO myvo) {
+		// TODO Auto-generated method stub
+		return mypageDAO.MypageSelectLike(myvo);
 	}
 	
 	

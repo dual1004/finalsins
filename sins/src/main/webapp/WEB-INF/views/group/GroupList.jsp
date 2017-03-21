@@ -30,22 +30,10 @@
 	});
 	
 	$(function(){
-		/* $(".groupList").click(function() {
-			var groupNo = $(this).children().first().val();
-			var url = "selectGroup.y?groupNo="+groupNo;
-			$(location).attr('href', url);
-		}); */
-		
-		
 		$(".groupPageBtn").click(function(){
 			var groupNo = $(this).next().val();
 			var url = "selectGroup.y?groupNo="+groupNo;		
-			$(location).attr('href', url);
-		});
-		
-		$(".requestBtn").click(function(){
-			
-			
+			$(location).prop('href', url);
 		});
 	});
 	
@@ -71,7 +59,6 @@
 	.memberCount {
 		position: absolute;
 		display: inline-block;
-		border: 1px solid;
 		margin-bottom: 5px;
 		margin-right: 5px;
 		right: 0;
@@ -82,7 +69,6 @@
 	.category {
 		position: absolute;
 		display: inline-block;
-		border: 1px solid;
 		margin-bottom: 5px;
 		margin-left: 5px;
 		left: 0;
@@ -92,9 +78,13 @@
 	
 	#content {
 		position: relative;
-		border: 1px solid;
 	}
 	
+	#createTable {
+		width: 150px;
+		height: 400px;
+		border-collapse: collapse;
+	}
 	
 </style>
 </head>
@@ -126,56 +116,46 @@
 					<label class="groupName">${item.groupName}</label>
 					<div class="memberCount">${item.memberCount} 명</div>
 					<div class="category">${item.category1}</div>
-					
 					<div class="groupBtnContainer">
 						<input type="button" class="groupPageBtn" value="그룹페이지로"/>
 						<input type="hidden" class="groupNo" value="${item.groupNo}"/>
 					</div>
-					
 				</div>
 				
 			</c:forEach>
 		</div>
 		<div id="right" class="box">
 			<br/>
-        	<div id="center"><h3>빠른 그룹 개설</h3></div>
+        	<div id="center"><h3>그룹 개설</h3></div>
 			<form id="createGroup" action="insertGroup.y" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="userId" value="${loginUser.userId}"/>
-            	<div id="case">
-            		<br/><br/>
-            		<div id="side">
-            			<label id="title" for="groupName"></label>
-            			<input type="text" id="groupName" name="groupName" size="18" 
-            					maxlength="11" required placeholder="그룹 이름">
-            			<button type="button" id="dupcheck" name="dupcheck" onclick="checkTitle()">중복확인</button>
-            			<br/><br/>
-            		</div>
-					<div id="groupComment">
-						<textarea class="groupInfo" rows="5" cols="30" name="groupInfo" placeholder="그룹 정보 입력"></textarea>
-					</div>
-					<br/><br/>
-					<div id="image">
-						<label id="ima" for="image">대표 이미지</label>
-						<input type="file" name="images" id="images">
-					</div>
-					<br/>
-					<div>
-						<label id="ho" for="categories">카테고리 설정</label>
-						<label><br/><input type="checkbox" id="categories" name="category1" class="c1" value="여행" />여행 </label> 
-						<label><input type="checkbox" id="categories" name="category1" class="c1" value="책" />책</label>
-						<label><input type="checkbox" id="categories" name="category1" class="c1" value="뷰티" />뷰티 </label>
-                 		<label><input type="checkbox" id="categories" name="category1" class="c1" value="패션" />패션</label>
-						<label><input type="checkbox" id="categories" name="category1" class="c1" value="스터디" />스터디</label>
-					</div>
-					<br/><br/>
-					<div id="tag">
-						<textarea class="form-control" rows="5" cols="30" id="tags" name="tags" placeholder="태그 설정"></textarea>
-					</div>
-					<br/><br/><br/>
-            	</div>
-            	<button type="submit" name="skins" class="btn btn-default2" id="makeGroup">그룹 생성</button>
-            	<button type="reset" name="reset" class="btn btn-default3">선택 취소</button>
-            	<br/><br/>
+            	<table id="createTable">
+            		
+            		<tr><td><input type="text" id="groupName" name="groupName" size="18" 
+            					maxlength="11" required placeholder="그룹 이름"></td></tr>
+            		
+            		<tr><td><textarea id="groupInfo" rows="5" cols="30" 
+            					name="groupInfo" placeholder="그룹 정보 입력"></textarea></td></tr>
+            		
+            		<tr><td><label>대표 이미지</label>
+            				<input type="file" id="filepath" name="filepath"></td></tr>
+
+            		<tr><td>
+            				<label>카테고리</label><br/>
+	            			<select id="selectCategory" name="category1">
+								<option value="">선택</option>
+								<option value="여행">여행</option>
+								<option value="책">책</option>
+								<option value="뷰티">뷰티</option>
+								<option value="패션">패션</option>
+								<option value="스터디">스터디</option>						
+							</select>
+					</td></tr>
+            	
+            		<tr><td><button type="submit" id="makeGroup" class="create">그룹 생성</button></td></tr>
+            	
+            	</table>
+            	<input type="hidden" name="keyword" value=""/>
 			</form>
 		</div>
 	</div>

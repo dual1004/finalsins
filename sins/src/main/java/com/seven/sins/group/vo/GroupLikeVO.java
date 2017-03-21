@@ -5,17 +5,19 @@ public class GroupLikeVO implements java.io.Serializable {
 
 	private int writeNo;
 	private String userId;
-	private String classfy;
+	private String classify;
+	private int groupNo;
 
 	public GroupLikeVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupLikeVO(int writeNo, String userId, String classfy) {
+	public GroupLikeVO(int writeNo, String userId, String classify, int groupNo) {
 		super();
 		this.writeNo = writeNo;
 		this.userId = userId;
-		this.classfy = classfy;
+		this.classify = classify;
+		this.groupNo = groupNo;
 	}
 
 	public int getWriteNo() {
@@ -34,16 +36,25 @@ public class GroupLikeVO implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	public String getClassfy() {
-		return classfy;
+	public String getClassify() {
+		return classify;
 	}
 
-	public void setClassfy(String classfy) {
-		this.classfy = classfy;
+	public void setClassify(String classify) {
+		this.classify = classify;
+	}
+
+	public int getGroupNo() {
+		return groupNo;
+	}
+
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
 	}
 
 	@Override
 	public String toString() {
-		return "GroupLikeVO [writeNo=" + writeNo + ", userId=" + userId + ", classfy=" + classfy + "]";
+		return "GroupLikeVO [writeNo=" + writeNo + ", userId=" + userId + ", classify=" + classify + ", groupNo="
+				+ groupNo + "]";
 	}
 }

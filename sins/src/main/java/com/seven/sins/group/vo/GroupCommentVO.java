@@ -7,12 +7,12 @@ public class GroupCommentVO implements java.io.Serializable {
 
 	private int commentNo;
 	private String userId;
+	private String userName;
 	private String content;
 	private Date commentDate;
 	private int lev;
 	private int ref;
 	private String photopath;
-	private String backupId;
 	private int writeNo;
 	private String classify;
 	private int report;
@@ -22,17 +22,17 @@ public class GroupCommentVO implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupCommentVO(int commentNo, String userId, String content, Date commentDate, int lev, int ref,
-			String photopath, String backupId, int writeNo, String classify, int report, String deleteYN) {
+	public GroupCommentVO(int commentNo, String userId, String userName, String content, Date commentDate, int lev,
+			int ref, String photopath, int writeNo, String classify, int report, String deleteYN) {
 		super();
 		this.commentNo = commentNo;
 		this.userId = userId;
+		this.userName = userName;
 		this.content = content;
 		this.commentDate = commentDate;
 		this.lev = lev;
 		this.ref = ref;
 		this.photopath = photopath;
-		this.backupId = backupId;
 		this.writeNo = writeNo;
 		this.classify = classify;
 		this.report = report;
@@ -53,6 +53,14 @@ public class GroupCommentVO implements java.io.Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getContent() {
@@ -95,14 +103,6 @@ public class GroupCommentVO implements java.io.Serializable {
 		this.photopath = photopath;
 	}
 
-	public String getBackupId() {
-		return backupId;
-	}
-
-	public void setBackupId(String backupId) {
-		this.backupId = backupId;
-	}
-
 	public int getWriteNo() {
 		return writeNo;
 	}
@@ -137,9 +137,9 @@ public class GroupCommentVO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "GroupCommentVO [commentNo=" + commentNo + ", userId=" + userId + ", content=" + content
-				+ ", commentDate=" + commentDate + ", lev=" + lev + ", ref=" + ref + ", photopath=" + photopath
-				+ ", backupId=" + backupId + ", writeNo=" + writeNo + ", classify=" + classify + ", report=" + report
-				+ ", deleteYN=" + deleteYN + "]";
+		return "GroupCommentVO [commentNo=" + commentNo + ", userId=" + userId + ", userName=" + userName + ", content="
+				+ content + ", commentDate=" + commentDate + ", lev=" + lev + ", ref=" + ref + ", photopath="
+				+ photopath + ", writeNo=" + writeNo + ", classify=" + classify + ", report=" + report + ", deleteYN="
+				+ deleteYN + "]";
 	}
 }

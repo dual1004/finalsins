@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
 
 
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/qna/qna-common.css" />
+	href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qnaMain.css" />
 	
@@ -23,6 +24,8 @@
 	}
 	.idLabel{
 		color:blue;
+		font-size:10pt;
+		
 		
 	}
 	
@@ -32,6 +35,24 @@
 		
 	}
 	
+	.atag{
+	text-decoration:none;
+	color:black;
+	}
+
+.titleFont {
+		font-size: 30px;
+	}
+	.ths{
+	font-size:10pt;
+	
+	
+	}
+	
+	
+	
+	
+
 	
 </style>
 	
@@ -74,7 +95,7 @@ $(document).ready(function(){
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
-		<div id="top"><%@include file="/WEB-INF/views/common/top.jsp"%></div>
+		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
 	<div id="container">
@@ -94,25 +115,32 @@ $(document).ready(function(){
 				<table id="qnaTable" style='text-align: center;' align="center">
 
 					<tr>
-						<th class='ths'>글번호</th>
-						<th class='ths'>제목</th>
-						<th class='ths'>작성자</th>
-						<th class='ths'>조회수</th>
-						<th class='ths'>작성일</th>
-						<th class='ths'>답변상태</th>
+						<th class='ths'><label class="ths">글번호</label></th>
+						<th class='ths'><label class="ths">제목</label></th>
+						<th class='ths'><label class="ths">작성자</label></th>
+						<th class='ths'><label class="ths">조회수</label></th>
+						<th class='ths'><label class="ths">작성일</label></th>
+						<th class='ths'><label class="ths">답변상태</label></th>
 					</tr>
 					<c:forEach var="qna" items="${qnaList }">
 						<tr>
-							<td class='tds'><label class="font9pt">${qna.qnaNo }</label></td>
+							<td class='tds'><label style='font-size:8pt;'>${qna.qnaNo }</label></td>
 							<td class='tds'><a class="atag"
-								href="detailQna.n?no=${qna.qnaNo }">${qna.title }</a></td>
+								href="detailQna.n?no=${qna.qnaNo }"><label class="font9pt">${qna.title }</label></a></td>
 							<td class='tds'><a class="atag"
-								style='text-decoration: none;' href='#'><label class="idLabel">${qna.userId }</label></a></td>
-							<td class='tds'><label class="font9pt">${qna.readCount }</label></td>
-							<td class='tds'><label class="font9pt">${qna.writeDate }</label></td>
+								style='text-decoration: none;' href='#'><label class="idLabel">
+								
+								
+								 <c:set var="sym" value="${fn:indexOf(qna.userId, '@') }"/>
+								
+						 
+								
+								 <c:out value="${fn:substring(qna.userId, 0, sym)} "/>   </label></a></td> 
+							<td class='tds'><label style='font-size:8pt;'>${qna.readCount }</label></td>
+							<td class='tds'><label style='font-size:8pt;'>${qna.writeDate }</label></td>
 							<td class='tds'><c:if test="${qna.comCount gt 0}">
-									<label class="font9pt" style='color: red'>답변 완료</label>
-								</c:if> <c:if test="${qna.comCount eq 0}"><label class="font9pt">미답변</label></c:if></td>
+									<label style='color: red; font-size:9pt;' >답변 완료</label>
+								</c:if> <c:if test="${qna.comCount eq 0}"><label style='font-size:8pt;'>미답변</label></c:if></td>
 						</tr>
 					</c:forEach>
 
@@ -223,5 +251,11 @@ $(document).ready(function(){
 	</div>
 	<div id="spot1"></div>
 	<div id="spot2"></div>
+	<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><%@include
+			file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="spot5"></div>
+	</div>
 </body>
 </html>

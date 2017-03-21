@@ -5,11 +5,14 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.group.service.*;
+import com.seven.sins.group.vo.GroupCommentVO;
+import com.seven.sins.group.vo.GroupLikeVO;
 import com.seven.sins.group.vo.GroupMemberVO;
 import com.seven.sins.group.vo.GroupVO;
 import com.seven.sins.group.vo.GroupWriteVO;
@@ -18,16 +21,11 @@ import com.seven.sins.member.vo.MemberVO;
 @Controller("GroupController.y")
 public class GroupController {
 
-	@Autowired
-	private GroupService groupService;
-	@Autowired
-	private GroupLikeService groupLikeService;
-	@Autowired
-	private GroupWriteService groupWriteService;
-	@Autowired
-	private GroupMemberService groupMemberService;
-	@Autowired
-	private GroupCommentService groupCommentService;
+	@Autowired private GroupService groupService;
+	@Autowired private GroupLikeService groupLikeService;
+	@Autowired private GroupWriteService groupWriteService;
+	@Autowired private GroupMemberService groupMemberService;
+	@Autowired private GroupCommentService groupCommentService;
 
 	// 그룹 관련------------------------------------------------------------------
 
@@ -35,6 +33,7 @@ public class GroupController {
 	@RequestMapping("selectGroupList.y")
 	public ModelAndView selectGroupList(ModelAndView mv) {
 		ArrayList<GroupVO> list = groupService.selectGroupList();
+		
 		mv.addObject("list", list);
 		mv.setViewName("group/GroupList");
 
@@ -42,11 +41,24 @@ public class GroupController {
 	}
 
 	// 그룹 리스트에서 그룹 하나 선택 시, 그룹 메인으로 이동함.
+	@SuppressWarnings("null")
 	@RequestMapping("selectGroup.y")
 	public ModelAndView selectGroup(ModelAndView mv, int groupNo, @SessionAttribute MemberVO loginUser) {
 		GroupVO vo = groupService.selectGroup(groupNo);
+		GroupLikeVO likevo = new GroupLikeVO();
+		
+		likevo.setGroupNo(groupNo);
+		likevo.setUserId(loginUser.getUserId());
+
+		ArrayList<GroupLikeVO> likeList = groupLikeService.groupLikeList(likevo);
 		ArrayList<GroupWriteVO> writeList = groupWriteService.selectGroupWriteList(groupNo);
 		ArrayList<GroupMemberVO> memberList = groupMemberService.selectGroupMemberList(groupNo);
+
+		if(likeList == null) { 
+			GroupLikeVO dummylike = new GroupLikeVO();
+			dummylike.setWriteNo(0);
+			likeList.add(dummylike);
+		}
 		
 		// 그룹 회원인지 확인.
 		String memberCheck = "false";
@@ -59,10 +71,9 @@ public class GroupController {
 			}
 		}
 		
-		System.out.println(memberCheck);
-		
 		mv.addObject("memberCheck", memberCheck);
 		mv.addObject("group", vo);
+		mv.addObject("likeList", likeList);
 		mv.addObject("writeList", writeList);
 		mv.addObject("memberList", memberList);
 		mv.setViewName("group/GroupMain");
@@ -72,8 +83,9 @@ public class GroupController {
 
 	// 그룹 생성.
 	@RequestMapping("insertGroup.y")
-	public String insertGroup(GroupVO vo) {
+	public String insertGroup(/*@RequestParam(value="" required=false) */GroupVO vo) {
 		groupService.insertGroup(vo);
+		
 		return "forward:/selectGroupList.y";
 	}
 
@@ -132,13 +144,58 @@ public class GroupController {
 	
 	// 글 삭제
 	@RequestMapping("deleteGroupWrite.y")
-	public String deleteGroupWrite(int writeNo) {
+	public String deleteGroupWrite(int writeNo, int groupNo) {
 		groupWriteService.deleteGroupWrite(writeNo);
-
-		return "forward:/selectGroup.y";
+		
+		return "forward:/selectGroup.y?groupNo=" + groupNo;
 	}
+	
+	// 글 수정
+	@RequestMapping("updateGroupWrite.y")
+	public String updateGroupWrite(GroupWriteVO vo) {
+		groupWriteService.updateGroupWrite(vo);
+		System.out.println(vo);
+		
+		return "forward:/selectGroup.y?groupNo=" + vo.getGroupNo();
+	}
+	
+	/*@RequestMapping("reportWrite.y")
+	public @ResponseBody int reportWrite() {
+		groupWriteService.reportWrite();
+		
+		return 0;
+	}*/
 
 	// 좋아요 ----------------------------------------------------------------------
-
+	@RequestMapping("groupLike.y")
+	public @ResponseBody int groupLike(GroupLikeVO vo) {
+		int result = groupLikeService.groupLike(vo);
+		
+		return result;
+	}
+	
+	@RequestMapping("groupUnlike.y")
+	public @ResponseBody int groupUnlike(GroupLikeVO vo) {
+		int result = groupLikeService.groupUnlike(vo);
+		
+		return result;
+	}
+	
 	// 댓글 -----------------------------------------------------------------------
+	@RequestMapping("selectGroupCommentList.y")
+	public @ResponseBody ArrayList<GroupCommentVO> selectGroupCommentList(int writeNo) {
+		ArrayList<GroupCommentVO> commentList = groupCommentService.selectGroupCommentList(writeNo);
+		
+		return commentList;
+	}
+	
+	@RequestMapping("insertGroupComment.y")
+	public @ResponseBody ArrayList<GroupCommentVO> insertGroupComment(GroupCommentVO vo) {
+
+		groupCommentService.insertGroupComment(vo);
+		
+		return selectGroupCommentList(vo.getWriteNo());
+	}
+	
+	
 }

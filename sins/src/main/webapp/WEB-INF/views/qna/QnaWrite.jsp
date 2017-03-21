@@ -7,63 +7,62 @@
 <meta charset=UTF-8>
 <title>Q&A</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src='<c:url value='/resources/smarteditor/js/service/HuskyEZCreator.js'/>' charset="utf-8"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 
 <script src="/sins/resources/js/qna/qna.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/qna/qna-common.css" />
+	href="/sins/resources/css/common/newsfeed-common.css" />
+
 
 </head>
 
 <script>
 
+fileName = "";	
+
+
+var oEditors = [];
 $(function(){
-	var editor_object = [];
+	
+	
 	
 	nhn.husky.EZCreator.createInIFrame({
-		oAppRef: editor_object,
-		elPlaceHolder:"contents",
-		sSkinURI:"/sins/resources/smarteditor/SmartEditor2Skin.html",
-		 fCreator: "createSEditor2",
-		/* htParams:{
-			bUseToolbar:true,
-			bUseVerticalResizer:true,
-			bUseModeChanger:true,
-			
-		}
-	 */
-	  
-	   
-	
-	
-	
-	
-		
-	});
-	$("#submitBtn").click(function(){
-
-		if($("#title").val().length>0){
-			editor_object.getById["contents"].exec("UPDATE_CONTENTS_FIELD",[]);
-
-			$("#write_form").submit();
-			
-		}
-			
-		else{
-			alert("제목을 입력해주세요.");
-			
-		}
-		
+	    oAppRef: oEditors,
+	    elPlaceHolder: "textAreaContent",
+	    sSkinURI: "<%=request.getContextPath()%>/resources/se2/SmartEditor2Skin.html",
+	    fCreator: "createSEditor2"
 	});
 	
 	
-	$('#rev').hide(); 
 	
 	
 	
 });
 
+
+$(document).on("click", "#submitBtn", function(){
+	oEditors.getById["textAreaContent"].exec("UPDATE_CONTENTS_FIELD", []);
+	$("#fileName").attr("value", fileName);
+	
+	
+	if($("#title").val().length>0)
+	 	$("#write_form").submit();
+	else{
+		alert("제목을 입력해주세요.")
+	}
+	
+});
+ 
+
+
+function pasteHTML(filepath){
+	var tag="<img src='${pageContext.request.contextPath}/temp/"+filepath+"' style='width:300px; height:300px;'>";
+	
+	fileName+=filepath+" ";
+	
+	oEditors.getById["textAreaContent"].exec("PASTE_HTML", [tag]);
+}
 
 
 
@@ -74,10 +73,10 @@ $(function(){
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
-		<div id="top"><%@include file="/WEB-INF/views/common/top.jsp"%></div>
+		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
-	<div id="container">
+	<div id="container" >
 		<div id="left" class="box">
 			<h2>left</h2>
 			<br>
@@ -85,26 +84,31 @@ $(function(){
 
 			</ul>
 		</div>
-		<div id="content" class="box">
+		<div id="content" class="box" >
 			<strong class="titleFont"><a href="selectQna.n" class="atag">Q&A</a> - 문의하기</strong><br><br>
 		
 		<div id="writeForm" style='width:600px;'>
-			<form id="write_form" action="write.n" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-			
+			<form id="write_form" action="write.n" method="post">
+			<input type="hidden" id="fileName" name="fileName" value=""/>
+		
 				
 					
 					
-					제목 <input id="title" name="title" style='width:530px;'/>
+					제목 <input id="title" name="title" style='width:530px;' />
 				
 				<br><br>
 						
-					<input id="contents" name="content"/>
+		<textarea style="width: 100%" rows="10" name="content" id="textAreaContent" cols="80">
+		</textarea>
+		
 				<br>
 				
-				<input type="file" name="uploadFile" value="파일선택"/>
+				</form>
 			
-				<input type="button" id= "submitBtn" value="작성" style='position:relative; float:left; left:470px; width:100px;'/>
-			</form>
+			
+			<button id= "submitBtn" style='position:relative; float:left; left:470px; width:100px;'>작성</button>
+
+
 
 		</div>
 		</div>
@@ -120,5 +124,12 @@ $(function(){
 	</div>
 	<div id="spot1"></div>
 	<div id="spot2"></div>
+		<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><%@include
+			file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="spot5"></div>
+	</div>
+	
 </body>
 </html>

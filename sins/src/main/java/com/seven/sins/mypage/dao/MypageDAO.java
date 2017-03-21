@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.vo.MypageCommentVO;
+import com.seven.sins.mypage.vo.MypageLikeVO;
 import com.seven.sins.mypage.vo.MypageVO;
 
 @Repository("mypageDAO")
@@ -78,6 +79,31 @@ public class MypageDAO {
 		map.put("keyword", keyword);
 
 		return (int) sqlSession.selectOne("keywordCount", map);
+	}
+
+	public int MypageLike(MypageLikeVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NAMESPACE + "MypageLike", vo);
+	}
+
+	public int MypageUnLike(MypageLikeVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(NAMESPACE + "MypageUnLike", vo);
+	}
+
+	public ArrayList<MypageLikeVO> mypageLikeList(MypageLikeVO mylike) {
+		// TODO Auto-generated method stub
+		return (ArrayList<MypageLikeVO>)sqlSession.selectList(NAMESPACE + "mypageLikeList", mylike);
+	}
+
+	public int mypageLikeUpdate(MypageVO myvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NAMESPACE + "mypageLikeUpdate", myvo);
+	}
+
+	public MypageVO MypageSelectLike(MypageVO myvo) {
+		// TODO Auto-generated method stub
+		return (MypageVO) sqlSession.selectOne(NAMESPACE + "MypageSelectLike", myvo);
 	}
 	
 

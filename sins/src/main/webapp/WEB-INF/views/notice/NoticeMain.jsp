@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>SINS</title>
+<title>공지사항</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" type="text/css"
@@ -62,8 +62,21 @@
 
 			console.log(index);
 		});
+		
+		// 타이틀 클릭시
+		$(".titleA").click(function(){
+			var index = $(this).parent().parent().index();
+			var xx = $(this).parent().siblings($(".noticeNo")).text();
+			var noticeNo = xx.split("관")[0];
+
+			location.href = "noticeDetail.k?noticeNo="+noticeNo;
+		});
 
 	});
+	
+	function writeBtn(){
+		location.href = "alink.do?path=notice/NoticeNew";
+	}
 </script>
 <style type="text/css">
 #noticeTable{
@@ -73,6 +86,31 @@
 }
 #noticeTable td{
 	border : 1px solid;
+}
+
+.noticeNo {
+	width : 68px;
+}
+.title {
+	width : 279px;
+}
+.admin {
+	width : 69px;
+}
+.writeDate {
+	width : 109px;
+}
+.readCount {
+	width : 69px;
+}
+#adminWriteBtn{
+	width : 600px;
+	text-align : right;
+	margin-bottom : 10px;
+}
+.title a {
+	text-decoration: none;
+	color : black;
 }
 </style>
 </head>
@@ -105,11 +143,24 @@
 				<br />
 				<hr />
 				<br />
+				
+				<c:if test="${loginUser.userId eq 'admin'}">
+					<div id="adminWriteBtn">
+						<button onclick="writeBtn()">글쓰기</button>
+					</div>
+				</c:if>
 				<table id="noticeTable" style='text-align: center;'>
+					<tr>
+						<td class="noticeNo">글번호</td>
+						<td class="title">제목</td>
+						<td class="admin">작성자</td>
+						<td class="writeDate">작성 날짜</td>
+						<td class="readCount">조회수</td>
+					</tr>
 					<c:forEach var="notice" items="${list}">
 						<tr>
 							<td class="noticeNo">${notice.noticeNo}</td>
-							<td class="title">${notice.title}</td>
+							<td class="title"><a href="#" class="titleA">${notice.title}</a></td>
 							<td class="admin">관리자</td>
 							<td class="writeDate">${notice.writeDate}</td>
 							<td class="readCount">${notice.readCount}</td>

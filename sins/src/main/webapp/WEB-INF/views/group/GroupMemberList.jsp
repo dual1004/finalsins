@@ -117,7 +117,7 @@
 		</div>
 		<div id="content" class="box" style="position:relative;	border: 1px solid">
 			<h2 id="pageName">그룹 멤버</h2>
-				<c:if test="${member.grade == 0 || member.grade == 1}">
+				<c:if test="${member.grade <= 1}">
 					<div id="requestContainer">
 						<h4>가입 요청한 회원</h4>
 						<table>
@@ -139,7 +139,7 @@
 				<h4>운영진</h4>
 				<table>
 					<c:forEach var="item" items="${list}">
-						<c:if test="${item.grade == 0 || item.grade == 1}">
+						<c:if test="${item.grade <= 1}">
 							<tr>
 								<td>사진</td>
 								<td>${item.userName}</td>

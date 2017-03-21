@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Search">
+
+	<resultMap id="resultMember" type="SMemberVO">
+		
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userProfile" column="USER_PROFILE" />
+		<result property="isFriend" column="ACCEPT_YN"/>
+		<result property="address" column="ADDRESS"/>
+		
+	</resultMap>
+	
+	<resultMap id="resultChannel" type="SChannelVO">
+		
+		<result property="channelNo" column="CHANNEL_NO" />
+		<result property="channelName" column="CHANNEL_NAME" />
+		<result property="filePath" column="CHANNEL_FILEPATH1" />
+		<result property="category" column="CATEGORY1"/>
+		<result property="like" column="CHANNEL_LIKE"/>
+		<result property="isFollow" column="IS_FOLLOW"/>
+		
+	</resultMap>
+
+	<resultMap id="resultGroup" type="SGroupVO">
+	
+	
+	
+	</resultMap>
+
+	<select id="searchMember" parameterType="map" resultMap="resultMember">
+	SELECT * FROM MEMBER LEFT JOIN
+	  (SELECT RESPONSE_ID AS USER_ID, ACCEPT_YN
+	  FROM FRIEND
+	  WHERE REQUEST_ID
+	  IN( 
+	   SELECT * FROM 
+	  (SELECT RESPONSE_ID FROM FRIEND WHERE REQUEST_ID = #{userId} AND ACCEPT_YN = 'Y')
+	  UNION ALL
+	  (SELECT REQUEST_ID FROM FRIEND WHERE RESPONSE_ID = #{userId} AND ACCEPT_YN = 'Y')
+	  )
+
+	 UNION ALL
+  
+ 
+	  SELECT REQUEST_ID, ACCEPT_YN
+	  FROM FRIEND
+	  WHERE RESPONSE_ID
+	  IN( 
+	     SELECT * FROM 
+	    (SELECT RESPONSE_ID FROM FRIEND WHERE REQUEST_ID = #{userId} AND ACCEPT_YN = 'Y')
+	    UNION ALL
+	    (SELECT REQUEST_ID FROM FRIEND WHERE RESPONSE_ID = #{userId} AND ACCEPT_YN = 'Y')))
+	    
+	    USING(USER_ID)
+		 WHERE USER_NAME LIKE #{word}
+	</select>
+
+<select id="searchChannel" parameterType="map" resultMap="resultChannel">
+SELECT CHANNEL_NO, CHANNEL_NAME, CHANNEL_FILEPATH1, CHANNEL_LIKE, CATEGORY1, DECODE(USER_ID, #{userId}, 'Y', 'N') AS IS_FOLLOW 
+FROM CHANNEL_LIST
+LEFT JOIN CHANNEL_FOLLOWER USING(CHANNEL_NO) WHERE CHANNEL_NAME LIKE #{word}
+
+
+
+</select>	
+	
+</mapper>
+

@@ -52,6 +52,7 @@
 		<url-pattern>*.k</url-pattern>
 		<url-pattern>*.n</url-pattern>
 		<url-pattern>*.l</url-pattern>
+		<url-pattern>*.m</url-pattern>
 	</servlet-mapping>
 	
 	

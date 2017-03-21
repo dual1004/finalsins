@@ -20,5 +20,11 @@ public interface MemberService {
 	ArrayList<String> getCity();
 	ArrayList<String> getPartition(String city);
 	int changeAddress(MemberVO m);
+	int setLoginFailCheck(String userid);
+	int getLoginFailCheck(String userid);
+	int setBanTime(String userid);
+	int loginFailCheckZero(MemberVO loginUser);
+	int addressDelete(MemberVO m);
+	int birthDelete(MemberVO m);
 	
 }

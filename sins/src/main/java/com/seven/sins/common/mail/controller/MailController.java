@@ -1,10 +1,14 @@
 package com.seven.sins.common.mail.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.annotation.Resource;
-
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +42,7 @@ public class MailController {
     		return sb.toString();
     	}
 		
-	    @RequestMapping("findPwd.p")
+	    @RequestMapping("findPwd.m")
 	    public String sendEmailAction (String userid, MemberVO m, Model mo ) throws Exception{
 	    	
 	    	String rePwd = RandomNum();
@@ -65,10 +69,10 @@ public class MailController {
 			return result;
 	    }
 	    /*@Resource MappingJacksonJsonView ajaxMainView;*/
-	    @RequestMapping("idCheck.p")
+	    @RequestMapping("idCheck.m")
 	    @ResponseBody
 	    public String idCheck(@RequestParam(value = "userid") String userid) throws Exception{
-	    	
+	    	System.out.println("왔다 : " + userid);
 	    	int idCheck = memberService.idCheck(userid);
 	    	
 	    	String idc = String.valueOf(idCheck);

@@ -83,5 +83,34 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.changeAddress(m);
 	}
 
+	@Override
+	public int setLoginFailCheck(String userid) {
+		return memberDAO.setLoginFailCheck(userid);
+	}
+	
+	@Override
+	public int getLoginFailCheck(String userid) {
+		return memberDAO.getLoginFailCheck(userid);
+	}
 
+	@Override
+	public int setBanTime(String userid) {
+		return memberDAO.setBanTime(userid);
+	}
+
+	@Override
+	public int loginFailCheckZero(MemberVO loginUser) {
+		return memberDAO.loginFailCheckZero(loginUser);
+	}
+
+	@Override
+	public int addressDelete(MemberVO m) {
+		return memberDAO.addressDelete(m);
+	}
+
+	
+	@Override
+	public int birthDelete(MemberVO m) {
+		return memberDAO.birthDelete(m);
+	}
 }

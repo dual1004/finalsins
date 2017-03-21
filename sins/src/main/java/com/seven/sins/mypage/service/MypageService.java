@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.vo.MypageCommentVO;
+import com.seven.sins.mypage.vo.MypageLikeVO;
 import com.seven.sins.mypage.vo.MypageVO;
 
 public interface MypageService {
@@ -33,5 +34,15 @@ public interface MypageService {
 	public int getMypageCount();
 
 	public int getKeywordCount(String option, String keyword);
+
+	public int MypageLike(MypageLikeVO vo);
+
+	public int MypageUnLike(MypageLikeVO vo);
+
+	public ArrayList<MypageLikeVO> mypageLikeList(MypageLikeVO mylike);
+
+	public int mypageLikeUpdate(MypageVO myvo);
+
+	public MypageVO MypageSelectLike(MypageVO myvo);
 
 }

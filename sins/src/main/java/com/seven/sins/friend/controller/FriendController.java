@@ -178,7 +178,6 @@ public class FriendController {
 	public @ResponseBody Map<String, String> addFriend(@SessionAttribute("loginUser") MemberVO member,
 			@RequestParam("resId") String resId
 			){
-		
 		Map<String,String> map=new HashMap<String,String>();
 		String userId=member.getUserId();
 		

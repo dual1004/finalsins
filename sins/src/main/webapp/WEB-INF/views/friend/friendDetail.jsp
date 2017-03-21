@@ -26,9 +26,17 @@
 }
 
 
+#requestDiv{
+display:none;
+}
 
+#left{
+width: 200px;
+}
 
-
+#container {
+width:1120px;
+}
 
 </style>
 <script type="text/javascript">
@@ -40,14 +48,14 @@ $(document).ready(function(){
 	accept(null, 0);
 	cancelReq(null, 0);
 	recommend(null);
-	$("#requestDiv").hide();
+	
 	
 });
 
 
  $(document).on("click", "#hideRes", function(){
 	
-	
+	 cancelReq(null, 0);
 	 $('#responseDiv').animate({  borderSpacing: -360 }, {
 		 step: function(now,fx) {
 		    	
@@ -63,8 +71,8 @@ $(document).ready(function(){
 	
 	 
 	 setTimeout(function(){
-		 $("#responseDiv").hide();
-		 $("#requestDiv").show();
+		 $("#responseDiv").css("display","none");
+		 $("#requestDiv").css("display", "block");
 	 },950);
 	 
 }); 
@@ -72,7 +80,7 @@ $(document).ready(function(){
 
 
 $(document).on("click", "#hideReq", function(){
- 	
+		accept(null, 0);
 	 $('#requestDiv').animate({  borderSpacing: -360 }, {
 		 step: function(now,fx) {
 		    	
@@ -87,8 +95,8 @@ $(document).on("click", "#hideReq", function(){
 	 
 	 
 	 setTimeout(function(){
-		 $("#requestDiv").hide();
-		 $("#responseDiv").show();
+		 $("#requestDiv").css("display","none");
+		 $("#responseDiv").css("display","block");
 	 },950);
 	
 	
@@ -307,7 +315,7 @@ function recommend(userId){
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
- 		<div id="top"><%@include file="/WEB-INF/views/common/top.jsp"%></div>
+ 		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
 	<div id="container">
@@ -356,6 +364,12 @@ function recommend(userId){
 
 	<div id="spot1"></div>
 	<div id="spot2"></div>
+	<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><%@include
+			file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="spot5"></div>
+	</div>
 </body>
 
 <footer>

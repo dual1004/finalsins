@@ -24,7 +24,6 @@ public class QnaDAO {
 		int startRow = (currentPage - 1) * listLimit;
 		
 		
-		
 		RowBounds rowbounds = new RowBounds(startRow, listLimit);
 
 		return (List<QnaContent>) sqlSession.selectList(NAMESPACE+"selectList", null, rowbounds);

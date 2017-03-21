@@ -1,48 +1,46 @@
 package com.seven.sins.qna.controller;
 
-
-
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.qna.service.QnaService;
 import com.seven.sins.qna.vo.QnaComment;
 import com.seven.sins.qna.vo.QnaContent;
-import com.seven.sins.util.FileUtils;
 
 @Controller
 public class QnaController {
 
 	@Autowired
 	private QnaService qnaService;
-	
-	@Resource
-	private FileUtils fileUtils;
+
+	@Value("#{dir['dir.url']}")
+	private String dir;
 
 	@RequestMapping("selectQna.n")
 	public ModelAndView selectList(ModelAndView mv, @RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "keyword", required = false) String keyword,
 			@RequestParam(value = "option", required = false) String option) {
-
 		int currentPage = 1;
 		int listLimit = 10;
 		if (page != null)
@@ -55,35 +53,30 @@ public class QnaController {
 		else
 			totalListCount = qnaService.getKeywordCount(option, keyword);
 
-		
-		
 		int maxPage = (int) ((double) totalListCount / listLimit + 0.9);
 		int startPage = (((int) ((double) currentPage / listLimit + 0.9)) - 1) * listLimit + 1;
 
 		int endPage = startPage + listLimit - 1;
-		
-		
+
 		if (maxPage < endPage)
 			endPage = maxPage;
 
 		List<QnaContent> qnaList;
 		if (keyword == null)
 			qnaList = qnaService.selectList(currentPage, listLimit);
-			
-		
-		else{
+
+		else {
 			qnaList = qnaService.searchList(currentPage, listLimit, option, keyword);
 			mv.addObject("keyword", keyword);
 			mv.addObject("option", option);
 		}
-		
+
 		mv.addObject("totalCount", totalListCount);
 		mv.addObject("qnaList", qnaList);
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("maxPage", maxPage);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
-		
 
 		mv.setViewName("qna/QnaMain");
 		return mv;
@@ -91,7 +84,6 @@ public class QnaController {
 
 	@RequestMapping("detailQna.n")
 	public ModelAndView detailView(ModelAndView mv, @RequestParam(value = "no", required = false) String no) {
-
 
 		if (no != null) {
 			int qNo = Integer.parseInt(no);
@@ -114,11 +106,10 @@ public class QnaController {
 
 	@RequestMapping("insertCom.n")
 	public @ResponseBody Map<String, ArrayList<QnaComment>> insertCom(@RequestParam(value = "content") String content,
-			@RequestParam(value = "qnaNo") int qnaNo,
-			@RequestParam(value = "lev") int lev, QnaComment qc,
+			@RequestParam(value = "qnaNo") int qnaNo, @RequestParam(value = "lev") int lev, QnaComment qc,
 			@SessionAttribute("loginUser") MemberVO member) {
 
-		String userId=member.getUserId();
+		String userId = member.getUserId();
 		Map<String, ArrayList<QnaComment>> map = new HashMap<String, ArrayList<QnaComment>>();
 
 		qc.setBackupId(userId);
@@ -142,58 +133,122 @@ public class QnaController {
 		}
 		return map;
 	}
-	
-	
-
 	@RequestMapping("write.n")
-	public String qnaWrite(QnaContent qna, @RequestParam("title") String title,
-			@RequestParam("content") String content,
-			@SessionAttribute("loginUser") MemberVO member,
-			@RequestParam(value="uploadFile", required=false) MultipartFile file,
+	public ModelAndView qnaWrite(ModelAndView mv, QnaContent qna,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestParam(value = "content", required = false) String content,
+			@SessionAttribute(value = "loginUser", required = false) MemberVO member,
+			@RequestParam(value = "fileName", required = false) String fileName,
 			HttpServletRequest request) {
-		
-		
-		
-		String userId=member.getUserId();
+
+		String userId = member.getUserId();
 		qna.setUserId(userId);
 		qna.setTitle(title);
-		qna.setContent(content);
-		
-		
-		
-		if(file != null){
-			
-			String filePath="";
-			try {
-				filePath = fileUtils.fileInfo(userId, file);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-			qna.setFilepath(filePath);		
-		}
-		
-	     
-		
-		
-		int result = qnaService.insertQna(qna);
 
-		String viewName = "";
-		if (result > 0) 
-			viewName = "redirect:selectQna.n";
-		 else 
-			viewName = "qna/error?message=글쓰기 에러";
-		
-
-		request.setAttribute("log", "글쓰기 완료");
-		return viewName;
 	
+		
+		
+
+			if (fileName != null) {
+				
+				String[] fileNames=fileName.split(" ");
+				
+				for (int i = 0; i < fileNames.length; i++) {
+					File originFile = new File(request.getSession().getServletContext().getRealPath("/") + "/temp/" + fileNames[i]);
+
+					File newFile = new File(dir + "/" + userId + "/" + fileNames[i]);
+					originFile.renameTo(newFile);
+
+					originFile.delete();
+
+				}
+
+				content = content.replaceAll("/sins/temp/", "/sins/resources/file/" + userId + "/");
+			}
+
+			qna.setContent(content);
+			qna.setFilepath(fileName);
+
+			int result = qnaService.insertQna(qna);
+
+			if (result > 0)
+				mv.setViewName("redirect:selectQna.n");
+			else
+				mv.setViewName("qna/error?message=글쓰기 에러");
+
+			request.setAttribute("log", "글쓰기 완료");
+
+		
+
+		return mv;
 
 	}
 
+	//임시 파일 업로드
+	@RequestMapping("tempUp.n")
+	public @ResponseBody Map<String, String> tempUp(HttpServletRequest request, @RequestParam("filedata") MultipartFile file){
+		
+		Map<String, String> map=new HashMap<String, String>();
+		
+			
+			
+			if(request.getContentLength()  > 10*1024*1024){
+				map.put("error", "10MB를 초과하였습니다.");
+				return map;
+			}
+			
+			
+			
+			
+			
+			String[] fileExts={"jpg", "gif", "png", "bmp"};
+			String fileName=file.getOriginalFilename().toLowerCase();
+			String fileExt=fileName.substring(fileName.indexOf(".")+1, fileName.length());
+			
+			int cnt=0;
+			for(int i=0; i<fileExts.length;i++){
+				if(fileExts[i].equals(fileExt))
+					cnt++;
+			}
+			
+			
+			if(cnt==0){
+				map.put("error", "올바른 확장자가 아닙니다.");
+				return map;
+			}
+				
+			
+			String filePath= request.getSession().getServletContext().getRealPath("/")+File.separator+"temp/";
+			
+			File dir= new File(filePath);
+			
+			if(!dir.exists())
+				dir.mkdirs();
+			
+			
+			String newFileName= new SimpleDateFormat("yyyyMMddhhmmss").format(new Date())+"."+fileExt;
+			
+			
+			File newFile=new File(filePath+newFileName);
+			
+			try {
+				file.transferTo(newFile);
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			filePath=filePath.replaceAll("\\\\", "/");
+			map.put("filePath", "/temp/");
+			map.put("fileName", newFileName);
+		
+		
+		
+		
+		return map;
+		
+		
+	}
+
 }
-
-
-
-
