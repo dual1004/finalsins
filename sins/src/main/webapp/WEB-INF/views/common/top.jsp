@@ -9,13 +9,10 @@
 <!-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/top-common.css" />
+<script src="/sins/resources/js/common/top.js"></script>
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/top-common.css" />
 <title>Insert title here</title>
-<script type="text/javascript">
-	function message() {
-		location.href="msgreadlist.j";
-	}
-</script>
+
 	</head>
 <body>
 <div id="logo"></div>
@@ -24,9 +21,13 @@
 </div>
 
 <div id="mylayout">
-	<div id="message" onclick="message()"></div>
-	<div id="allet"></div>
+	<div id="blacnk" onmouseover="removemsglist()"></div>
+	<div id="message" onmouseover="msgover()" onclick="message()"></div>
+	<div id="allet" onmouseover="alertover()"></div>
 	<div id="my">${ loginUser.userId } <br/></div>
+	<div id="msglist"></div>
+	
+	
 </div>
 </body>
 </html>

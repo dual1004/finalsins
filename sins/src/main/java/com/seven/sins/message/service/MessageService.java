@@ -46,6 +46,8 @@ public interface MessageService {
 
 	int spamRemove(String userId, String[] check_spamid);
 
+	MessageVO getMessageOne(int msgno);
+
 	//Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit);
 
 }

@@ -213,6 +213,10 @@ public class MessageDAO {
 		return result;
 	}
 
+	public MessageVO getMessageOne(int msgno) {
+		return (MessageVO)sqlSession.selectOne(NAMESPACE + "msglisthead", msgno);
+	}
+
 
 /*	@SuppressWarnings("unchecked")
 	public Map<String, MessageVO> getMsgMap(String userid, int currentPage, int limit) {
