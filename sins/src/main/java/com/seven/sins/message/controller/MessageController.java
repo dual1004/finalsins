@@ -173,6 +173,14 @@ public class MessageController {
 		mv.setViewName("message/msgdetail");
 		return mv;
 	}
+	//디테일 컨트롤러 (헤더부분)
+	@RequestMapping("msgheaddetail.j")
+	public ModelAndView messageHeadDetatil(int msgno, ModelAndView mv,MessageVO msgvo){
+		msgvo = messageservice.getMessageOne(msgno);
+		mv.addObject("msgone", msgvo);
+		mv.setViewName("message/msgdetail");
+		return mv;
+	}
 
 	//메세지 보내기 컨트롤러 
 	@RequestMapping("msgsead.j")
