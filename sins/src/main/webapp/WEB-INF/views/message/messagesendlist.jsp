@@ -34,8 +34,8 @@
       <div id="content" class="box">
         <div id="listdiv">
         	<h2>보낸 메세지함</h2><br>
-        	<form action="userpage">
-        		<input type="hidden" id="userid"/>
+        	<form name="userform">
+        		<input type="hidden" name="userid" id="userid"/>
         	</form>
         	<form name = "detailform">
         		<input type="hidden" id="msgno" name="msgno"/>
@@ -61,7 +61,7 @@
 	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">받는사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msgsendlist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" class="atagname" onmouseover="view('${msg.receivie_id}')" onclick="userpage('${msg.receivie_id}','${profile}')">${msg.user_name }</a></td>
+		        	<td><a href="#" class="atagname" onmouseover="view('${msg.receivie_id}','${msg.profile }')" onclick="userpage('${msg.receivie_id}')">${msg.user_name }</a></td>
 		        	<td class="content">
 		        	<a href="#" onclick="msgdetail(${msg.message_no })">${msg.content}</a>
 		        

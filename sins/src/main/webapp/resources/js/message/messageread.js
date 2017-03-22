@@ -82,8 +82,8 @@ function pagefn(no) {
 
 function userpage(userid) {
 	$('#userid').val(userid);
-	var form = document.seachform;
-	 form. action =  'mypage.b';
+	var form = document.userform;
+	 form. action =  'mypage2.b';
 	 form.method = "post";
 	 form.submit();
 }

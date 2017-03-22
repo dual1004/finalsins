@@ -34,8 +34,8 @@
       <div id="content" class="box">
         <div id="listdiv">
         	<h2>스팸 메세지함</h2><br>
-        	<form action="userpage">
-        		<input type="hidden" id="userid"/>
+        	<form name = "userform">
+        		<input type="hidden" name="userid" id="userid"/>
         	</form>
         	<form name = "detailform">
         		<input type="hidden" id="msgno" name="msgno"/>

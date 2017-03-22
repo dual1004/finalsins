@@ -97,6 +97,7 @@ public class MypageController {
 	//다른 사람의 마이페이지로 갔을 경우
 	@RequestMapping("mypage2.b")
 	public ModelAndView mypage2(@SessionAttribute MemberVO loginUser,@RequestParam(value="userid", required=false)String userid, ModelAndView mv, MemberVO m, MypageVO my){
+		System.out.println(userid);
 		ArrayList<MypageVO> mylist = null;
 		ArrayList<MypageCommentVO> mycolist = null;
 		 MypageLikeVO mylike = new MypageLikeVO();

@@ -68,9 +68,9 @@ function pagefn(no) {
 	 form.submit();
 }
 function userpage(userid) {
-	$('input[name=check_no]').val(chk_values());
-	var form = document.chkform;
-	 form. action =  'msgrecivedel.j';
+	$('#userid').val(userid);
+	var form = document.userform;
+	 form. action =  'mypage2.b';
 	 form.method = "post";
 	 form.submit();
 }

@@ -96,7 +96,8 @@ public class MemberController {
 					int result = memberService.setBanTime(userid);
 				}
 				mo.addAttribute("count", count);
-				url="member/pwdCheckFail";
+				/*url="member/pwdCheckFail";*/
+				url="alert/alert";
 			}
 			
 		}
