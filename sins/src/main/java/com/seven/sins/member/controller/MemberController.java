@@ -74,7 +74,8 @@ public class MemberController {
 						if(diff >= 0){
 							session.setAttribute("loginUser", loginUser);
 							int nul = memberService.loginFailCheckZero(loginUser);
-							url="common/newsfeed";
+							/*url="common/newsfeed";*/
+							url="alert/alert";
 						}
 						// 밴타임이 있을경우
 						else {
@@ -96,8 +97,7 @@ public class MemberController {
 					int result = memberService.setBanTime(userid);
 				}
 				mo.addAttribute("count", count);
-				/*url="member/pwdCheckFail";*/
-				url="alert/alert";
+				url="member/pwdCheckFail";
 			}
 			
 		}

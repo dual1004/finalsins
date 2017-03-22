@@ -1,25 +1,24 @@
 /**
  * 
  */
+
 $(function(){
-	var wsuri = "ws://localhost:9999/sins/alert-ws";
+	var wsuri = "ws://192.168.20.89:9999/sins/alert-ws";
 	websocket = new WebSocket(wsuri);
 	websocket.onopen = function(event) {
-		websocket.send('전송');
+		sendAlert();	
 	}
-	websocket.onmessage = function(event) {
-		msg = JSON.parse(event.data);
-		if(msg.command == "message"){
-			switch(msg.type){
-				case "event":{
-					var text = "<div class='youtext'>"+
-					msg.id + "<br/>" + msg.message +
-					"<div>";
-					writeToScreen(text);
-					$('#text').scrollTop($('#text')[0].scrollHeight);
-					break;
-				}
-			}
+	websocket.onmessage = function(evnet) {
+		alert = JSON.parse(event.data);
+		if(alert.type == "alert"){
+			console.log(alert);
 		}
 	}
 })
+function sendAlert() {
+	var user ={
+		user_id : $('#userid').val()
+	}
+	console.log('보내기');
+	websocket.send(JSON.stringify(user));
+}

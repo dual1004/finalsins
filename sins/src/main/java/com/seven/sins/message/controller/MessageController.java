@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gargoylesoftware.htmlunit.AlertHandler;
 import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.message.service.MessageService;
@@ -194,7 +195,6 @@ public class MessageController {
 			String filePath = fileUtils.fileInfo(userid, file);
 			sendmsg.setFilepath(filePath);		
 		}
-		
 
 		int result = messageservice.messageSend(sendmsg);
 		if(result > 0){
