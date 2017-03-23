@@ -14,6 +14,7 @@
 		<typeAlias type="com.seven.sins.message.vo.MessageVO" alias="MessageVO"/>
 		<typeAlias type="com.seven.sins.message.vo.MessageListVO" alias="MsglistVO"/>
 		<typeAlias type="com.seven.sins.message.vo.SpamUser" alias="SpamVO"/>
+		<typeAlias type="com.seven.sins.alert.vo.AlertVO" alias="AlertVO"/>
 				
 		<typeAlias type="com.seven.sins.member.vo.MemberVO" alias="MemberVO"/>
 		

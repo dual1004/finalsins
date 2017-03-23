@@ -64,6 +64,7 @@ $( document ).ready(function() {
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
 	          
+	          <li><a href="alertlist.j">알림</a></li>
 	          <li><a href="brodcasting.j">채팅</a></li>
 	        </ul>
       	</div>

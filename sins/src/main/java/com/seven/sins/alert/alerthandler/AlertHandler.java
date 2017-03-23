@@ -1,4 +1,4 @@
-package com.seven.sins.common.alert.alerthandler;
+package com.seven.sins.alert.alerthandler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,12 +15,11 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
-import com.seven.sins.common.alertvo.AlertVO;
-
-
+import com.seven.sins.alert.vo.AlertVO;
 
 @ServerEndpoint("/alert-ws")
-public class AlertHandler{
+public class AlertHandler {
+
 	private static Map<String, Session> alluser = new HashMap<String, Session>();
 	private Session user;
 	@OnOpen
@@ -36,6 +35,7 @@ public class AlertHandler{
 		System.out.println(message);
 		System.out.println(alertvo.getUser_id());
 		if(alluser.containsValue(user)){
+			System.out.println();
 			Set<String> key = alluser.keySet();
 			Iterator<String> iter = key.iterator();
 			while(iter.hasNext()){

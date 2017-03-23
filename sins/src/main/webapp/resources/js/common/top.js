@@ -14,6 +14,7 @@ $(function() {
 	$(document).on("mouseleave",".msglistajax", function() {
 		$(this).css("background","white");
 	})
+	parent.onalert();
 })
 function message() {
 		location.href="msgreadlist.j";
@@ -63,3 +64,5 @@ function alertover() {
 function msgdetail(msgno) {
 	location.href="msgheaddetail.j?msgno="+msgno;		
 }
+
+

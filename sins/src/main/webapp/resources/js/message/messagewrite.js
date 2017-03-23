@@ -89,22 +89,14 @@ function subsub(file) {
 		 flag = false;
 	 }
 	 console.log(flag);*/
+	parent.alertto($('#reciveid').val(), "M@SSAGE");
 	var flag = false;
 	console.log(fileCheck(file));
 	if(fileCheck(file) && chkallmem()){
 		flag = true;
 	}
-	alertto();
 	 return flag;
 	 
-}
-function alertto() {
-	var alvo = {
-		user_id : $('#reciveid').val(),
-		classify : "MESSAGE",
-		type : "alert"
-	}
-	top.websocket.send(JSON.stringify(alvo));
 }
 function chkallmem() {
 	var cnt = 0;

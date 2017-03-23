@@ -1,8 +1,9 @@
-package com.seven.sins.common.alertvo;
+package com.seven.sins.alert.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
 
+@SuppressWarnings("serial")
 public class AlertVO implements Serializable{
 	private String user_id;
 	private String classify;
@@ -10,11 +11,13 @@ public class AlertVO implements Serializable{
 	private Date insert_date;
 	private int lev;
 	private int coment_no;
+	private String filepath;
 	public AlertVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AlertVO(String user_id, String classify, int content_no, Date insert_date, int lev, int coment_no) {
+	public AlertVO(String user_id, String classify, int content_no, Date insert_date, int lev, int coment_no,
+			String filepath) {
 		super();
 		this.user_id = user_id;
 		this.classify = classify;
@@ -22,6 +25,7 @@ public class AlertVO implements Serializable{
 		this.insert_date = insert_date;
 		this.lev = lev;
 		this.coment_no = coment_no;
+		this.filepath = filepath;
 	}
 	public String getUser_id() {
 		return user_id;
@@ -58,6 +62,12 @@ public class AlertVO implements Serializable{
 	}
 	public void setComent_no(int coment_no) {
 		this.coment_no = coment_no;
+	}
+	public String getFilepath() {
+		return filepath;
+	}
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
 	}
 	
 }
