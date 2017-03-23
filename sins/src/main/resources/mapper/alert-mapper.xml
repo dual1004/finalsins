@@ -10,6 +10,7 @@
 		<result property="lev" column="LEV" />
 		<result property="coment_no" column="COMENT_NO" />
 		<result property="filepath" column="FILEPATH" />
+		<result property="send_id" column="SEND_ID" />
 	</resultMap>
 	
 	<select id="startlist" parameterType="string" resultMap="alertmap">
@@ -21,6 +22,14 @@
 	<select id="allcount" parameterType="string" resultType="int">
 		select count(*) from alert 
 		where user_id = #{userid}
-	</select>	
+	</select>
+	
+	<delete id="alertdelete" parameterType="AlertVO">
+		delete from alert 
+		where user_id=#{user_id}
+		and classify=#{classify}
+		and content_no = #{content_no}
+		
+	</delete>	
 	
 </mapper>

@@ -26,4 +26,8 @@ public class AlsertDAO {
 	public int getAllcount(String userId) {
 		return (int) sqlSession.selectOne(NAMESPACE+"allcount", userId);
 	}
+
+	public int alertDelete(AlertVO alvo) {
+		return (int)sqlSession.delete(NAMESPACE + "alertdelete", alvo);
+	}
 }

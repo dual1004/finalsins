@@ -12,12 +12,13 @@ public class AlertVO implements Serializable{
 	private int lev;
 	private int coment_no;
 	private String filepath;
+	private String send_id;
 	public AlertVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public AlertVO(String user_id, String classify, int content_no, Date insert_date, int lev, int coment_no,
-			String filepath) {
+			String filepath, String send_id) {
 		super();
 		this.user_id = user_id;
 		this.classify = classify;
@@ -26,6 +27,7 @@ public class AlertVO implements Serializable{
 		this.lev = lev;
 		this.coment_no = coment_no;
 		this.filepath = filepath;
+		this.send_id = send_id;
 	}
 	public String getUser_id() {
 		return user_id;
@@ -68,6 +70,12 @@ public class AlertVO implements Serializable{
 	}
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
+	}
+	public String getSend_id() {
+		return send_id;
+	}
+	public void setSend_id(String send_id) {
+		this.send_id = send_id;
 	}
 	
 }

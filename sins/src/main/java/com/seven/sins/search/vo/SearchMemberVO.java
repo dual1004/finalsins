@@ -41,12 +41,21 @@ public class SearchMemberVO implements java.io.Serializable {
 	public void setUserProfile(String userProfile) {
 		this.userProfile = userProfile;
 	}
-	public String isFriend() {
+
+	
+	
+	public String getIsFriend() {
 		return isFriend;
 	}
-	public void setFriend(String isFriend) {
+
+
+
+	public void setIsFriend(String isFriend) {
 		this.isFriend = isFriend;
 	}
+
+
+
 	public String getAddress() {
 		return address;
 	}

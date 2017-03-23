@@ -10,4 +10,6 @@ public interface AlsertServceinter {
 
 	int getAllcount(String userId);
 
+	int alertDelete(AlertVO alvo);
+
 }

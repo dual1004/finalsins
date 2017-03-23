@@ -35,14 +35,8 @@ public class AlertHandler {
 		System.out.println(message);
 		System.out.println(alertvo.getUser_id());
 		if(alluser.containsValue(user)){
-			System.out.println();
-			Set<String> key = alluser.keySet();
-			Iterator<String> iter = key.iterator();
-			while(iter.hasNext()){
-				String userkey = iter.next();
-				if(alluser.containsKey(user)){
-					alluser.get(userkey).getBasicRemote().sendText(JSONConverter(alertvo,"alert"));
-				}
+			if(alluser.containsKey(alertvo.getUser_id())){
+				alluser.get(alertvo.getUser_id()).getBasicRemote().sendText(JSONConverter(alertvo,"alert"));
 			}
 		}else{
 			alluser.put(alertvo.getUser_id(), user);

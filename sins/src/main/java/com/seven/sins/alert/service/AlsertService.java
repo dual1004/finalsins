@@ -24,4 +24,9 @@ public class AlsertService implements AlsertServceinter{
 		return alertDAO.getAllcount(userId);
 	}
 
+	@Override
+	public int alertDelete(AlertVO alvo) {
+		return alertDAO.alertDelete(alvo);
+	}
+
 }

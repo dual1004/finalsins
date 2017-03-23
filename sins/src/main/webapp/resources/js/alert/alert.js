@@ -3,18 +3,20 @@
  */
 
 $(function(){
-	var wsuri = "ws://219.255.2.30:9999/sins/alert-ws";
+	var wsuri = "ws://192.168.20.89:9999/sins/alert-ws";
 	websocket = new WebSocket(wsuri);
 	websocket.onopen = function(event) {
 		sendAlert();	
 	}
 	onalert();
+	
 })
 function onalert() {
 	websocket.onmessage = function(evnet) {
 		alert = JSON.parse(event.data);
 		if(alert.type == "alert"){
-			console.log(alert.classify);
+			var alert = "<div id='alert'>"+alert.classify+"에서 새로운 아림이 있습니다."+"</div>"
+			setInterval()
 		}
 	}
 }
