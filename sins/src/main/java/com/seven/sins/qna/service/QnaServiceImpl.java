@@ -66,6 +66,23 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.searchList(currentPage, listLimit, option, keyword);
 	}
 
+	@Override
+	public void deleteCom(int qnaNo, int comNo) {
+
+		qnaDao.deleteCom(qnaNo, comNo);
+	}
+
+	@Override
+	public void deleteQna(int qnaNo) {
+
+		qnaDao.deleteQna(qnaNo);
+	}
+
+	@Override
+	public int updateQna(QnaContent qna) {
+		return qnaDao.updateQna(qna);
+	}
+
 
 
 	

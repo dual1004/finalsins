@@ -59,9 +59,7 @@
 	button{
 	cursor:pointer;
 	}
-	button:hover{
-	cursor:hand;
-	}
+	
 	
 	
 	@media screen and (max-width:900px) {
@@ -217,7 +215,7 @@ $(document).on("mouseenter",".trs", function(){
 	$(this).css("background","#9581BF");
 	$(this).css("color","white");
 	$(this).css("border","1px solid #9581BF");
-	$(this).css("cursor","hand");
+	
 	
 });
 
@@ -225,7 +223,7 @@ $(document).on("mouseleave",".trs", function(){
 	$(this).css("background","white");
 	$(this).css("color","#9581BF");
 	$(this).css("border","none");
-	$(this).css("cursor","pointer");
+	
 	
 });
 
@@ -233,18 +231,6 @@ $(document).on("mouseleave",".trs", function(){
 
 
 
-/* $(window).resize(function(){
-	var obj = $("#s").offset();
-	var element = $("#s");//길이 알아내기
-	//#div의 현재 위치
-
-	//#div의 현재 위치에서 특정치(50px)만큼 이동
-	$("#searchResult").css("left", obj.left);
-	$("#searchResult").css("top", obj.top + 30);
-
-	
-	$("#searchResult").css("width", element.outerWidth(true));  
-}).resize(); */
 
 
 

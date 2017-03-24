@@ -26,6 +26,14 @@ public interface QnaService {
 
 	List<QnaContent> searchList(int currentPage, int listLimit, String option, String keyword);
 
+	void deleteCom(int qnaNo, int comNo);
+
+	void deleteQna(int qnaNo);
+
+	int updateQna(QnaContent qna);
+
+	
+
 	
 
 

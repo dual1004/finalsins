@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -34,6 +34,7 @@
 	float: left;
 	background-color: white;
 	overflow: auto;
+	
 }
 
 
@@ -49,8 +50,32 @@
 width: 200px;
 }
 
+#resultFindTable{
+width:100%;
+border-spacing:0px;
+}
+.resultTds{
+padding-top:10px;
+padding-bottom:10px;
+border-width:0px; border-bottom-width:2px; height:1px; border-style:groove;
+text-align:left;
 
+}
 
+.nameLink{
+color:#9581BF;
+cursor:pointer;
+}
+.nameLink:hover{
+
+text-decoration:underline;
+}
+.addBtn{
+background:white;
+outline:0;
+border:0;
+color:#9581BF;
+}
 
 
 
@@ -58,6 +83,7 @@ width: 200px;
 
 <script>
 
+page=1;
 
 $(document).on("click", ".addBtn", function(){
 	
@@ -77,20 +103,82 @@ $(document).on("click", ".addBtn", function(){
 		success : function(result) {
 			
 			
-				
-				
-				
-			
 		}
 	
 		
 	}); 
 	
 	$(this).text("친구 요청을 보냈습니다.");
+	$(this).css("color", "white");
+	$(this).css("background", "#9581BF");
 	
 });
 
 
+$(function(){
+	$("#content").scroll( function() {
+		  var elem = $("#content");
+		 
+		  if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+		    {
+			 
+		        setTimeout(function(){
+		        	fAppender();	
+		        },300);
+		        
+		    }
+		});
+	
+});
+	
+
+
+
+function fAppender(){
+	
+	
+	var pag= ++page;
+	var userName='${query.userName}';
+	var birth='${query.birth}';
+	var address='${query.address}';
+	var phone='${query.phone}';
+	
+	$.ajax({
+		url : 'appendFriend.n',
+		
+		dataType : 'json',
+		
+		data : {"userName" : userName, "birth" : birth, "address" : address, "phone" : phone, "page" : pag},
+
+		contentType : 'application/json; charset=utf-8',
+
+		success : function(result) {
+			
+			if(result.flist.length>0){
+				
+				for(var i=0; i<result.flist.length; i++){
+				 
+					var tag="<tr>"+
+					"<td class='resultTds' onclick=location.href='mypage2.b?userId="+result.flist[i].userId+"' style='width:20%; padding-left:20px;'><img class='nameLink' src='${pageContext.request.contextPath}/resources/file/"+result.flist[i].userId+"/"+result.flist[i].userProfile+"' style='width: 80px; height: 80px;' /></td>"+
+					"<td class='resultTds' style='width:50%;'><label class='nameLink' onclick=location.href='mypage2.b?userId="+result.flist[i].userId+"' > "+result.flist[i].userName+"</label><br>"+
+					"<label class='font8ptGray'>"+result.flist[i].address+
+					"거주</label></td>"+
+					"<td  class='resultTds' style='width:30%;'><button class= 'addBtn' value='"+result.flist[i].userId+"'>친구 요청</button></td></tr>";
+					
+					
+					$("#resultFindTable > tbody:last").append(tag);
+				
+				}
+				
+			
+			}
+		}
+	
+	
+	});
+	
+	
+}
 </script>
 </head>
 <body>
@@ -117,29 +205,27 @@ $(document).on("click", ".addBtn", function(){
 			<br>
 			<c:if test="${not empty resultList }">
 			
-			
+			<table id="resultFindTable">
+			<tbody>
 			 <c:forEach var="member" items="${resultList }">
 			
-				<div id="friendDiv" >
-				<a class="no_underline" href="#" style='margin-left:50px;'>
-				<img src="${member.userProfile }" style='width: 80px; height: 80px;' />&nbsp;
-					${member.userName }</a>
-					<c:if test="${not empty viewAddress }">
-					&nbsp; <label class="font8ptGray">${member.address } 거주</label>
-					</c:if>
-					
-					
+			<tr>
+			<td class="resultTds" onclick="location.href='mypage2.b?userId=${member.userId}'" style='width:20%; padding-left:20px;'><img class="nameLink" src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
+			<td class="resultTds" style='width:50%;'><label class="nameLink" onclick="location.href='mypage2.b?userId=${member.userId}'" > ${member.userName }</label><br>
+			<label class="font8ptGray">
+			${member.address } 거주
+			</label>
+			
+			</td>
+			<td  class="resultTds" style='width:30%;'><button class= 'addBtn' value="${member.userId }">친구 요청</button></td>
+			
+			
+			</tr>
 				
-				
-				
-					<button class= 'addBtn' value="${member.userId }" style='margin-left:170px; '>친구 요청</button>
-						 
-					
-					
-					<br>
-					</div>
-			<br><hr><br>
+		
 			</c:forEach> 
+			</tbody>
+			</table>
 	</c:if>
 	<c:if test="${empty resultList }">
 		<br><br><label class="font10pt" style='margin-left:170px;'>조건을 만족하는 결과가 없습니다.</label>

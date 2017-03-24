@@ -146,6 +146,33 @@
 		DELETE FROM MYPAGE_LIKE WHERE WRITE_NO = #{writeNo} AND USER_ID = #{userid}
 	</delete>
 	
+	<!-- 부석호 게시글 하나만 상세보기(mypage-mapper.xml) -->
+	<select id="contentsMain" parameterType="MypageVO" resultType="MypageVO" resultMap="resultMypage">
+		SELECT WRITE_NO, USER_ID, FILEPATH, CONTENT, KEYWORD, WRITE_DATE, WRITE_LIKE, BACKUP_ID, CLASSIFY, CREATE_ID, REPORT, USER_NAME, USER_PROFILE FROM MY_PAGE join MEMBER using(USER_ID)
+		WHERE WRITE_NO = #{writeno}
+	</select>
+	<!-- 부석호 게시글 하나의 댓글 상세보기(mypage-mapper.xml) -->
+	<select id="contentsMainComment" parameterType="String" resultMap="resultMypageComment">
+	SELECT COMMENT_NO, M.USER_ID, C.CONTENT, C.COMMENT_DATE, C.LEV, C.REF, C.PHOTO_PATH, C.BACKUP_ID, C.CONTENT_NO, C.CLASSIFY, C.REPORT, USER_NAME, USER_PROFILE
+    FROM MYPAGE_COMMENT C
+    JOIN MEMBER USING(USER_ID)
+    JOIN MY_PAGE M ON(C.CONTENT_NO = M.WRITE_NO)
+    WHERE C.CONTENT_NO = #{writeno}
+	</select>
+	
+	<!-- 댓글 불러오기 -->
+	<select id="selectMypageCommentList" parameterType="MypageCommentVO" resultType="MypageCommentVO" resultMap="resultMypageComment">
+		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, PHOTO_PATH, USER_PROFILE
+		FROM MYPAGE_COMMENT 
+		JOIN MEMBER USING(USER_ID)
+		where CONTENT_NO = #{writeNo}
+		ORDER BY COMMENT_NO DESC
+	</select>
+	<!-- 댓글 입력 -->
+	<insert id="insertMypageComment" parameterType="MypageCommentVO">
+		INSERT INTO MYPAGE_COMMENT VALUES (BU_SEQ_MYPAGE_COMMENT.nextval,#{userid, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},sysdate, 0,0,#{photopath, jdbcType=VARCHAR},#{userid, jdbcType=VARCHAR},#{contentno},'MYPAGE_COMMENT', 0) 
+	</insert>
+	
 	
 	
 	<!-- 임시 -->

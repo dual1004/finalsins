@@ -11,26 +11,55 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://vjs.zencdn.net/c/video.js"></script>
     <link rel="stylesheet" type="text/css" href="/sins/resources/css/mypage/mypage-common.css" />
+    <link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
     
 <script type="text/javascript">
 $( document ).ready(function() { 
-    $('#t-l').click(function(){ 
-     	$('#spot1, #overlay_t').show(); 
- 	}); 
- 	$('#overlay_t').click(function(e){ 
+    
+	
+	
+	$("#t-l").click(function(){ 
+		$("#spot1, #overlay_t").show(300);
+	}); 
+ 	$("#overlay_t").click(function(e){ 
      	e.preventDefault(); 
-     	$('#spot1, #overlay_t').hide(); 
+     	$("#spot1, #spot2, #overlay_t").hide(300); 
 	});
- 	$('#t-r').click(function(){ 
-     	$('#spot2, #overlay_t').show(); 
+ 	$("#t-r").click(function(){ 
+ 		$("#spot2, #overlay_t").show(300);
  	}); 
- 	$('#overlay_t').click(function(e){ 
-     	e.preventDefault(); 
-     	$('#spot2, #overlay_t').hide(); 
-	});
+ 	
+ 	var noticeMenuStatus = 0;
+ 	$(".notice").hide();
+ 	
+ 	$("#notice1, #notice2").click(function(){
+ 		if(noticeMenuStatus == 0){
+ 			noticeMenuStatus = 1;
+ 			$(".notice").slideDown("slow");
+ 		}
+ 		else {
+ 			noticeMenuStatus = 0;
+ 			$(".notice").slideUp("slow");
+ 		}
+ 		
+ 	});
+ 	
+ 	
+ 	setTimeout(function(){
+ 		$('#friend').html(friendTag);
+ 		
+ 	},500);
+ 	
+
+function check_form(){
+	  var m = document.fname;
+	  m.action = "test.php";
+	  m.submit();
+	}
+	
 });
 </script>
-<style type="text/css">
+<!-- <style type="text/css">
 .content2{
     width: 560px;
 	padding: 20px;
@@ -45,64 +74,104 @@ $( document ).ready(function() {
 		margin: auto;
 		}
 	}
-	.imgmy{
-	width:135px;
-	height:135px;
-	}
-	.pototable{
-	width:550px;
-	}
-</style>
+	
+</style> -->
   </head>
   <body>
   		<div id="header">
       	<div id="overlay_t"></div> 
       	<div id="t-l"></div>
-      	<div id="top"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
+      	<div id="top"></div>
        	<div id="t-r"></div>
       </div>
     <div id="container">
       <div id="left" class="box">
-        
-        <center>
-        <h2>Mypage</h2>
-        <img src="" style="width:160px; height:160px;">
-        <h3>${ loginUser.userName } 님</h3><br>
-        ${ loginUser.phone }<br>
-        <h4><a href="mypage.b">MyPage</a></h4>
-         <h4><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></h4>
-        <h4><a href="mypagePoto.b">사진 보기</a></h4>
-        <h4><a href="mypageDetail.b">정보 보기</a></h4>
-        </center>
-      </div>
+
+			<br/>
+			<h2>Mypage</h2>
+			<br/>
+			<c:if test="${memberUser.userProfile != null}">
+				<img src="${memberUser.userProfile}"
+					style="width: 160px; height: 160px;">
+			</c:if>
+			<c:if test="${memberUser.userProfile eq null}">
+				<img src="/sins/resources/images/missingNO.jpg"
+					style="width: 160px; height: 160px;">
+			</c:if>
+
+			<h3>${ memberUser.userName }님</h3>
+			<br> ${ memberUser.phone }<br>
+			<ul>
+				<li><a href="mypage.b">MyPage</a></li>
+				<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
+				<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
+				<li><a href="alink.do?path=member/myInfo">내정보 보기</a></li>
+			</ul>
+
+		</div>
       <div id="content">
       <div class="content2">
-        <h2>Poto</h2>
+        <h2>Photo</h2>
         <c:forEach var="item" items="${mylist}">
         <c:if test="${not empty item.filepath}">
+        
         		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
    				<c:if test="${fn:split(item.filepath,'.')[1] eq pic}">
+   				<form name ="contentsMain" id="contentsMain" enctype="multipart/form-data" method="post" action="contentsMain.b" accept-charset="UTF-8">
 				<img src="${pageContext.request.contextPath}/resources/file/${item.userid}/${item.filepath}" class="imgmy" />
+				<input type="hidden" value="${item.writeno }" name="writeno">
+				<input type="hidden" value="${item.classify }" name="classify">
+				<input type="hidden" value="${item.userid }" name="userid">
+				<input type = "submit" value="자세히 보기">
+				</form>
 				</c:if>
         		</c:forTokens>
+        		
         		</c:if>
         </c:forEach>
        </div>
       </div>
       
       <div id="right" class="box">
-        <h2>RIGHT</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
-      </div>
-    </div>
-     <div id="footer">
-        <c:import url="../common/footer.jsp" charEncoding="UTF-8" />
-      </div>
-    <div id="spot1"></div>
-    <div id="spot2"></div>
+			<%@include file="/WEB-INF/views/friend/friendView.jsp"%>
+		</div>
+	</div>
+	<div id="footer">
+		<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
+	</div>
+	<div id="spot1">
+		<ul>
+			<li><a href="mypage.b">MyPage</a></li>
+			<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
+			<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
+			<li><a href="selectChannelList.l">채널</a></li>
+			<li><a href="selectGroupList.y">그룹</a></li>
+			<li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+			<li id="notice2">고객센터</li>
+			<li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+			<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+			<li class="notice"><a href="selectQna.n">└QNA</a></li>
+
+		</ul>
+	</div>
+	<div id="spot2">
+		<ul>
+			<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+			<li><a href="javascript:message();">메세지 보기</a></li>
+			<li><a href="javascript:alertover()">알림 보기</a></li>
+			<li><a href="javascript:logout()">로그 아웃</a></li>
+		</ul>
+		<hr style="width: 100px; margin: auto;">
+		<br />
+		<h4 align="center">친구 목록</h4>
+		<br>
+		<hr style="width: 100px; margin: auto;">
+		<div id='friend'></div>
+
+	</div>
+
+	<div id="spot3">
+		<c:import url="../common/top.jsp" charEncoding="UTF-8" />
+	</div>
   </body>
 </html>

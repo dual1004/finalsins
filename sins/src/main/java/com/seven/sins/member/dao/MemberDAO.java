@@ -24,8 +24,8 @@ public class MemberDAO {
 		return sqlSession.update(NAMESPACE+"findPw", m);
 	}
 
-	public int idCheck(String userid) {
-		return (int)sqlSession.selectOne(NAMESPACE+"idCheck", userid);
+	public int idCheck(MemberVO m) {
+		return (int)sqlSession.selectOne(NAMESPACE+"idCheck", m);
 	}
 	
 
@@ -74,16 +74,16 @@ public class MemberDAO {
 		return sqlSession.update(NAMESPACE+"changeAddress", m);
 	}
 
-	public int setLoginFailCheck(String userid) {
-		return sqlSession.update(NAMESPACE+"setLoginFailCheck", userid);
+	public int setLoginFailCheck(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"setLoginFailCheck", m);
 	}
 	
-	public int getLoginFailCheck(String userid) {
-		return (int)sqlSession.selectOne(NAMESPACE+"getLoginFailCheck", userid);
+	public int getLoginFailCheck(MemberVO m) {
+		return (int)sqlSession.selectOne(NAMESPACE+"getLoginFailCheck", m);
 	}
 
-	public int setBanTime(String userid) {
-		return sqlSession.update(NAMESPACE+"setBanTime", userid);
+	public int setBanTime(MemberVO m) {
+		return sqlSession.update(NAMESPACE+"setBanTime", m);
 	}
 
 	public int loginFailCheckZero(MemberVO loginUser) {
@@ -96,5 +96,25 @@ public class MemberDAO {
 
 	public int birthDelete(MemberVO m) {
 		return sqlSession.update(NAMESPACE+"birthDelete", m);
+	}
+
+	public int userCheck(MemberVO m) {
+		return (int)sqlSession.selectOne(NAMESPACE+"userCheck", m);
+	}
+
+	public ArrayList<MemberVO> getAllMember() {
+		return (ArrayList<MemberVO>)sqlSession.selectList(NAMESPACE+"getAllMember");
+	}
+
+	public int banTimePlus(MemberVO vo) {
+		return sqlSession.update(NAMESPACE+"banTimePlus", vo);
+	}
+
+	public int banTimeMinus(MemberVO vo) {
+		return sqlSession.update(NAMESPACE+"banTimeMinus", vo);
+	}
+
+	public int memberDelete(MemberVO vo) {
+		return sqlSession.delete(NAMESPACE+"memberDelete", vo);
 	}
 }

@@ -30,11 +30,7 @@
 	</beans:bean>
 	
 	<interceptors> 
-		<interceptor> 
-		<mapping path="/**"/> 
-		<exclude-mapping path="/loginCheck.k"/>
-		<beans:bean class="com.seven.sins.interceptor.LoginCheck"/> 
-	</interceptor>
+	
 	
 	<interceptor> 
 <mapping path="/*.do"/>
@@ -45,10 +41,9 @@
 <mapping path="/*.k"/>
 <mapping path="/*.n"/>
 <mapping path="/*.l"/>
-<mapping path="/*.m"/> 
 <exclude-mapping path="/loginCheck.k"/>
 
-<beans:bean class="com.seven.sins.interceptor.LogInterceptor"/> 
+<beans:bean class="com.seven.sins.interceptor.LoginCheck"/> 
 </interceptor>  
 
 <interceptor> 
@@ -60,7 +55,6 @@
 	<mapping path="/*.k"/>
 	<mapping path="/*.n"/>
 	<mapping path="/*.l"/>
-	<mapping path="/*.m"/> 
 	<exclude-mapping path="/loginCheck.k"/>
 
 	<beans:bean class="com.seven.sins.interceptor.LogInterceptor"/> 

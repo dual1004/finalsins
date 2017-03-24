@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seven.sins.fire.service.FireService;
 import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
 
@@ -29,21 +30,69 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private FireService fireService;
+	
 	 // 로그인용 컨트롤러
 	@RequestMapping("loginCheck.k")
-	public String loginCheck(String userid, String userpwd, HttpSession session, MemberVO m, Model mo){
+	public String loginCheck(HttpSession session, MemberVO m, Model mo){
 		String url = "";
-		m.setUserId(userid);
-		m.setUserPwd(userpwd);
 		
-		int idCheck = memberService.idCheck(userid);
+		int idCheck = memberService.idCheck(m);
 		if(idCheck > 0){
 			MemberVO loginUser = memberService.loginCheck(m);
 			
 			if(loginUser != null){
+				// 어드민일경우
 				if(loginUser.getUserId().equals("admin")){
 					session.setAttribute("loginUser", loginUser);
-					url="";
+					ArrayList<MemberVO> member = memberService.getAllMember();
+					for(int x = 0; x<member.size();x++){
+						String sar[] = member.get(x).getBanTime().split(" ");
+						
+						int year = Integer.parseInt(sar[0].split("/")[0]);
+						int month = Integer.parseInt(sar[0].split("/")[1]);
+						int day = Integer.parseInt(sar[0].split("/")[2]);
+						int hour = Integer.parseInt(sar[1].split(":")[0]);
+						int minute = Integer.parseInt(sar[1].split(":")[1]);
+						int second = Integer.parseInt(sar[1].split(":")[2]);
+						
+						String banTime = year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
+						
+						Calendar cld = new GregorianCalendar().getInstance();
+						Calendar cld2 = new GregorianCalendar().getInstance();
+						Date d = new Date();
+						
+						SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd kk:mm:ss");
+						Date ban;
+						long diff;
+						try {
+							ban = sdf.parse(banTime);
+							cld.setTime(ban);
+							cld2.setTime(d);
+							diff = ((cld2.getTimeInMillis()-cld.getTimeInMillis()) / 1000)/60;
+							
+							System.out.println(diff);
+							// 전체유저 벤타임 조회
+							if(diff >= 0){
+								member.get(x).setBanTime("없음");
+							}
+							// 영구정지일 경우
+							else if(Math.abs(diff) > 31){
+								System.out.println("들어옴");
+								member.get(x).setBanTime("영정");
+							}
+							// 밴타임이 있을경우
+							else {
+								String banMinute = String.valueOf(Math.abs(diff));
+								member.get(x).setBanTime(banMinute+"분");
+							}
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+					}
+					mo.addAttribute("allMember", member);
+					url="admin/adminPage";
 				}
 				else{
 					String sar[] = loginUser.getBanTime().split(" ");
@@ -74,7 +123,6 @@ public class MemberController {
 						if(diff >= 0){
 							session.setAttribute("loginUser", loginUser);
 							int nul = memberService.loginFailCheckZero(loginUser);
-							/*url="common/newsfeed";*/
 							url="alert/alert";
 						}
 						// 밴타임이 있을경우
@@ -90,11 +138,11 @@ public class MemberController {
 				
 			}
 			else {
-				int loginFailCheck = memberService.setLoginFailCheck(userid);
-				int count = memberService.getLoginFailCheck(userid);
-				System.out.println(count);
+				int loginFailCheck = memberService.setLoginFailCheck(m);
+				int count = memberService.getLoginFailCheck(m);
+
 				if(count > 4 && count < 6){
-					int result = memberService.setBanTime(userid);
+					int result = memberService.setBanTime(m);
 				}
 				mo.addAttribute("count", count);
 				url="member/pwdCheckFail";
@@ -359,6 +407,45 @@ public class MemberController {
 		}
 		
 		return url;
+	}
+	
+	// 마이페이지 로그인 체크
+	@RequestMapping("userCheck.k")
+	@ResponseBody
+	public String userCheck(MemberVO m){
+		System.out.println(m);
+		int res = memberService.userCheck(m);
+		
+		String result = String.valueOf(res);
+		
+		return result;
+	}
+	
+	// 벤타임 추가
+	@RequestMapping("banTimePlus.k")
+	@ResponseBody
+	public String banTimePlus(MemberVO vo){
+		String result = String.valueOf(memberService.banTimePlus(vo));
+		
+		return result;
+	}
+	
+	// 벤타임 삭제
+	@RequestMapping("banTimeMinus.k")
+	@ResponseBody
+	public String banTimeMinus(MemberVO vo){
+		String result = String.valueOf(memberService.banTimeMinus(vo));
+		
+		return result;
+	}
+	
+	// 회원 삭제용 컨트롤러
+	@RequestMapping("memberDelete.k")
+	@ResponseBody
+	public String memberDelete(MemberVO vo){
+		String result = String.valueOf(memberService.memberDelete(vo));
+		
+		return result;
 	}
 	
 	//모든맴버 아이디 가져오기 컨트롤러

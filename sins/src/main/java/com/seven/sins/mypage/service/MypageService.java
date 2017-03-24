@@ -2,6 +2,7 @@ package com.seven.sins.mypage.service;
 
 import java.util.ArrayList;
 
+import com.seven.sins.fire.vo.FireVO;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.vo.MypageCommentVO;
 import com.seven.sins.mypage.vo.MypageLikeVO;
@@ -44,5 +45,15 @@ public interface MypageService {
 	public int mypageLikeUpdate(MypageVO myvo);
 
 	public MypageVO MypageSelectLike(MypageVO myvo);
+
+	public MypageVO contentsMain(MypageVO my);
+
+	public ArrayList<MypageCommentVO> contentsMainComment(int writeno);
+
+	public ArrayList<MypageCommentVO> selectMypageCommentList(int writeno);
+
+	public int insertMypageComment(MypageCommentVO vo);
+
+	public ArrayList<FireVO> getFireList(FireVO search);
 
 }

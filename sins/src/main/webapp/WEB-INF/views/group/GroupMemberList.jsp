@@ -10,23 +10,40 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/common/newsfeed-common.css" />
+	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#t-l').click(function() {
-			$('#spot1, #overlay_t').show();
+		$("#t-l").click(function(){ 
+			$("#spot1, #overlay_t").show(300);
+		}); 
+	 	$("#overlay_t").click(function(e){ 
+	     	e.preventDefault(); 
+	     	$("#spot1, #spot2, #overlay_t").hide(300); 
 		});
-		$('#overlay_t').click(function(e) {
-			e.preventDefault();
-			$('#spot1, #overlay_t').hide();
-		});
-		$('#t-r').click(function() {
-			$('#spot2, #overlay_t').show();
-		});
-		$('#overlay_t').click(function(e) {
-			e.preventDefault();
-			$('#spot2, #overlay_t').hide();
-		});
+	 	$("#t-r").click(function(){ 
+	 		$("#spot2, #overlay_t").show(300);
+	 	}); 
+	 	
+	 	var noticeMenuStatus = 0;
+	 	$(".notice").hide();
+	 	
+	 	$("#notice1, #notice2").click(function(){
+	 		if(noticeMenuStatus == 0){
+	 			noticeMenuStatus = 1;
+	 			$(".notice").slideDown("slow");
+	 		}
+	 		else {
+	 			noticeMenuStatus = 0;
+	 			$(".notice").slideUp("slow");
+	 		}
+	 		
+	 	});
+	 	
+	 	setTimeout(function(){
+	 		$('#friend').html(friendTag);
+	 		
+	 	},500);
 	});
 	
 	$(function(){
@@ -55,67 +72,55 @@
 	
 </script>
 <style>
-	.groupList{
-		position: relative;
-		float: left;
-		width: 47%;
-		height: 20%;
-		margin: 1%;
-		border: 1px solid blue;
+	
+	#content {
+		margin-left : 5px;
+	}
+	#pageName {
+		width: 100%;
+		background-color: white;
+		margin-bottom: 10px;
+	}
+	#requestContainer {
+		width: 100%;
+		background-color: white;
+		margin-bottom: 10px;
+	}
+	#adminContainer {
+		width: 100%;
+		background-color: white;
+		margin-bottom: 10px;
+	}
+	#memberContainer {
+		width: 100%;
+		background-color: white;
+		margin-bottom: 10px;
 	}
 	
-	.groupName{
-		display: inline-block;
-		border: 1px solid;
-		background: lightblue;
-		margin-left: 5px;
-		margin-top: 5px;
-	}
-	
-	.memberCount {
-		position: absolute;
-		display: inline-block;
-		border: 1px solid;
-		margin-bottom: 5px;
-		margin-right: 5px;
-		right: 0;
-		bottom: 0;
-		font-size: 12px;
-	}
-	
-	.category {
-		position: absolute;
-		display: inline-block;
-		border: 1px solid;
-		margin-bottom: 5px;
-		margin-left: 5px;
-		left: 0;
-		bottom: 0;
-		font-size: 13px;
-	}
-	
-	* { border: 1px solid;}
 </style>
 </head>
 <body>
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
-		<div id="top">
-			<c:import url="../common/top.jsp" charEncoding="UTF-8" />
-		</div>
+		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
 	<div id="container">
 		<div id="left" class="box">
-			<h2>LEFT</h2>
 			<ul>
-				<li><a href="alink.do?path=group/GroupMain">그룹</a></li>
-				<li><a href="alink.do?path=group/GroupList">그룹리스트</a></li>
-				<li><a href="alink.do?path=group/CreateGroup">그룹생성</a></li>
+				<li><a href="selectGroup.y?groupNo=${group.groupNo}">그룹 메인</a></li>
+				<li><a href="selectGroupList.y">그룹 리스트</a></li>
+				<li><a href="selectGroupList.y">그룹생성</a></li>
+				<li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          	<li id="notice2">고객센터</li>
+	          	<li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          	<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          	<li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
 			</ul>
 		</div>
-		<div id="content" class="box" style="position:relative;	border: 1px solid">
+		<div id="content">
 			<h2 id="pageName">그룹 멤버</h2>
 				<c:if test="${member.grade <= 1}">
 					<div id="requestContainer">
@@ -134,7 +139,7 @@
 						</table>
 					</div>
 				</c:if>
-			<hr/>
+			
 			<div id="adminContainer">
 				<h4>운영진</h4>
 				<table>
@@ -148,7 +153,7 @@
 					</c:forEach>
 				</table>
 			</div>
-			<hr/>
+			
 			<div id="memberContainer">
 				<h4>회원</h4>
 				<table>
@@ -164,16 +169,42 @@
 			</div>
 		</div>
 		<div id="right" class="box">
-			<h2>친구 목록</h2>
-			<ul>
-				
-			</ul>
-		</div>
+    		<%@include file="/WEB-INF/views/friend/friendView.jsp" %> </div>
+   	</div>
+ 	<div id="footer">
+    	<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
+  	</div>
+	<div id="spot1">
+		<ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroup.y?groupNo=${group.groupNo}">그룹 메인</a></li>
+			  <li><a href="selectGroupList.y">그룹 리스트</a></li>
+			  <li><a href="selectGroupList.y">그룹생성</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	     
+	    </ul>
 	</div>
-	<div id="footer">
-		<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
+	<div id="spot2">
+		<ul>
+		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+		<li><a href="javascript:message();">메세지 보기</a></li>
+		<li><a href="javascript:alertover()">알림 보기</a></li>
+		<li><a href="javascript:logout()">로그 아웃</a></li>
+	</ul>
+	<hr style="width:100px; margin:auto;">
+	<br/>
+	<h4 align="center">친구 목록</h4><br>
+	<hr style="width:100px; margin:auto;">
+	<div id='friend'></div>
+	
 	</div>
-	<div id="spot1"></div>
-	<div id="spot2"></div>
+	
+	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
 </body>
 </html>

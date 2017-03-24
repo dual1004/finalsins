@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 $( document ).ready(function() { 
     $('#t-l').click(function(){ 
      	$('#spot1, #overlay_t').show(); 

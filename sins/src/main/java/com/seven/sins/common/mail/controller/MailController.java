@@ -71,17 +71,17 @@ public class MailController {
 	    /*@Resource MappingJacksonJsonView ajaxMainView;*/
 	    @RequestMapping("idCheck.m")
 	    @ResponseBody
-	    public String idCheck(@RequestParam(value = "userid") String userid) throws Exception{
-	    	System.out.println("왔다 : " + userid);
-	    	int idCheck = memberService.idCheck(userid);
+	    public String idCheck(MemberVO vo) throws Exception{
+	    	
+	    	int idCheck = memberService.idCheck(vo);
 	    	
 	    	String idc = String.valueOf(idCheck);
 	    	
 	    	if(idc.equals("0")){
 	    		idc = RandomNum();
 	    		email.setContent("인증번호는 "+idc+" 입니다.");
-	            email.setReceiver(userid);
-	            email.setSubject(userid+"님 인증번호 확인 메일입니다.");
+	            email.setReceiver(vo.getUserId());
+	            email.setSubject(vo.getUserId()+"님 인증번호 확인 메일입니다.");
 	            emailSender.SendEmail(email);
 	    	}
 	    		    	

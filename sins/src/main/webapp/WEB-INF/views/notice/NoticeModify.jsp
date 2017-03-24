@@ -14,6 +14,7 @@
  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/notice/noticeModify.css" />
+	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script>
 	$(function(){
 		if($("p").height() <= 500){

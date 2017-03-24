@@ -24,8 +24,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int idCheck(String userid) {
-		return memberDAO.idCheck(userid);
+	public int idCheck(MemberVO m) {
+		return memberDAO.idCheck(m);
 	}
 
 	@Override
@@ -84,18 +84,18 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int setLoginFailCheck(String userid) {
-		return memberDAO.setLoginFailCheck(userid);
+	public int setLoginFailCheck(MemberVO m) {
+		return memberDAO.setLoginFailCheck(m);
 	}
 	
 	@Override
-	public int getLoginFailCheck(String userid) {
-		return memberDAO.getLoginFailCheck(userid);
+	public int getLoginFailCheck(MemberVO m) {
+		return memberDAO.getLoginFailCheck(m);
 	}
 
 	@Override
-	public int setBanTime(String userid) {
-		return memberDAO.setBanTime(userid);
+	public int setBanTime(MemberVO m) {
+		return memberDAO.setBanTime(m);
 	}
 
 	@Override
@@ -112,5 +112,30 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int birthDelete(MemberVO m) {
 		return memberDAO.birthDelete(m);
+	}
+
+	@Override
+	public int userCheck(MemberVO m) {
+		return memberDAO.userCheck(m);
+	}
+
+	@Override
+	public ArrayList<MemberVO> getAllMember() {
+		return memberDAO.getAllMember();
+	}
+
+	@Override
+	public int banTimePlus(MemberVO vo) {
+		return memberDAO.banTimePlus(vo);
+	}
+
+	@Override
+	public int banTimeMinus(MemberVO vo) {
+		return memberDAO.banTimeMinus(vo);
+	}
+
+	@Override
+	public int memberDelete(MemberVO vo) {
+		return memberDAO.memberDelete(vo);
 	}
 }

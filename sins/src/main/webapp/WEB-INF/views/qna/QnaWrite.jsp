@@ -13,6 +13,7 @@
 <script src="/sins/resources/js/qna/qna.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/common/newsfeed-common.css" />
+	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 
 
 </head>

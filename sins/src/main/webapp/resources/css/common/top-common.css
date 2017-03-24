@@ -28,7 +28,7 @@
 }
 
 #my {
-	width: 95px;
+	width: 70px;
 	height: 30px;
 	background: white;
 	float: right;
@@ -71,7 +71,7 @@
 	width: 30px;
 	height: 30px;
 	float: right;
-	margin-left: 5%;
+	margin-left: 2%;
 	cursor: pointer;
 }
 #msglist{
@@ -85,19 +85,14 @@
 	display: none;
 	text-align: center;
 }
-#blacnk{
-	float: right;;
-	width : 30px;	
-	height: 30px;
-	margin-left: 5%;
-}
+
 #message {
 	background: url("/sins/resources/images/message.png") no-repeat;
 	background-size: cover;
 	width: 30px;
 	height: 30px;
 	float: right;
-	margin-left: 5%;
+	margin-left: 2%;
 	cursor: pointer;
 }
 .msgajaximg{
@@ -109,16 +104,10 @@
 	width : 150px;
 	height: 35px;
 	border: 1px solid black;
-	cursor: pointer;
+	
 }
-#alertdiv{
-	width: 200px;
-	height: 150px;
-	background: red;
-	position: absolute;
-	top : 10%;
-	left : 88%;
-}
+
+
 #alertlist{
 	position : relative;
 	border : 1px solid black;;
@@ -129,6 +118,31 @@
 	background: white;
 	display: none;
 	text-align: center;
+}
+
+#friendTab{
+   background: url("/sins/resources/images/friendTab.png") no-repeat;
+   background-size: cover;
+   width: 30px;
+   height: 30px;
+   float: right;
+   margin-left: 2%;
+   cursor: pointer;
+
+}
+
+#friendlist{
+   position : relative;
+   border : 1px solid #9581BF;
+   top : 100%;
+   left : -70px;
+   width: 200px;
+   min-height: 200px;
+   background: white;
+   display: none;
+   height:auto;
+   cursor:default;
+   
 }
 
 @media screen and (max-width:900px) {
@@ -144,11 +158,13 @@
 	#mylayout {
 		display: none;
 	}
+	
 }
 
 @media screen and (max-width:500px) {
 	#logo {
-		width: 15%;
+		width: 13%;
+		margin-left : 3%;
 		height: 30px;
 		background: url("/sins/resources/images/logo-m.png") no-repeat;
 		background-size: 40px;
@@ -158,8 +174,6 @@
 		width: 80%;
 		float: left;
 		margin-top: 3px;
-		margin-left: 3%;
-		text-align: center;
 	}
 	#s {
 		width: 90%;

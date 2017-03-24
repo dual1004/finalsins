@@ -118,7 +118,9 @@ public class FriendController {
 			@RequestParam(value="birth", defaultValue="%") String birth,
 			@RequestParam(value="address", defaultValue="%") String address,
 			@RequestParam(value="phone", defaultValue="%") String phone,
-			@SessionAttribute("loginUser") MemberVO member
+			@SessionAttribute("loginUser") MemberVO member,
+			@RequestParam(value="page", defaultValue="0") int page
+			
 			){
 		
 		Map<String, String> query=new HashMap<String, String>();
@@ -134,7 +136,7 @@ public class FriendController {
 		
 		if(!address.equals("%")){
 			address="%"+address+"%";
-			mv.addObject("viewAddress",1);
+			
 		}
 		
 		query.put("userId", member.getUserId());
@@ -143,10 +145,11 @@ public class FriendController {
 		query.put("address", address);
 		query.put("phone", phone);
 		
-		ArrayList<MemberVO> resultList=friendService.friendFind(query);
+		
+		ArrayList<MemberVO> resultList=friendService.friendFind(query, page, 10);
 		
 		mv.addObject("resultList", resultList);
-		
+		mv.addObject("query", query);
 		
 		mv.setViewName("friend/resultFind");
 		
@@ -185,6 +188,36 @@ public class FriendController {
 		friendService.addFriend(userId, resId);
 		
 		map.put("result", "ok");
+		return map;
+		
+	}
+	
+	
+	
+	@RequestMapping("appendFriend.n")
+	public @ResponseBody Map<String, ArrayList<MemberVO>> appendFriend(
+			@RequestParam("userName") String userName,
+			@RequestParam("birth") String birth,
+			@RequestParam("address") String address,
+			@RequestParam("phone") String phone,
+			@SessionAttribute("loginUser") MemberVO loginUser,
+			@RequestParam(value="page", defaultValue="0") int page){
+		
+		
+		
+		Map<String, ArrayList<MemberVO>> map= new HashMap<String, ArrayList<MemberVO>>();
+		Map<String, String> query = new HashMap<String, String>();
+		
+		query.put("userId", loginUser.getUserId());
+		query.put("userName", userName);
+		query.put("birth", birth);
+		query.put("address", address);
+		query.put("phone", phone);
+		
+		ArrayList<MemberVO> flist=friendService.friendFind(query, page, 5);
+		
+		map.put("flist", flist);
+		
 		return map;
 		
 	}

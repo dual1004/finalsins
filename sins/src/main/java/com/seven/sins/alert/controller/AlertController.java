@@ -55,9 +55,9 @@ public class AlertController {
 	//알람 클릭시 컨트롤러
 	@RequestMapping("alertdelet.j")
 	public ModelAndView alertDelete(AlertVO alvo,String userid, ModelAndView mv){
-		int resut = alertservice.alertDelete(alvo);
 		
-		mv.setViewName("forward:mypage2.b?userid="+userid);
+		int resut = alertservice.alertDelete(alvo);
+		mv.setViewName("forward:mypage2.b");
 		return mv;
 	}
 	//알람 탑

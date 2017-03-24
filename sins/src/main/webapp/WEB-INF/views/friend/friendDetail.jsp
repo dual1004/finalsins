@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -14,6 +14,10 @@
 <style>
 .no_underline {
 	text-decoration: none;
+	color:#9581BF;
+}
+.no_underline:hover {
+	text-decoration: underline;
 }
 .link{
 
@@ -38,6 +42,15 @@ width: 200px;
 width:1120px;
 }
 
+#acceptBtn, #rejectBtn{
+background:white;
+width:50px;
+}
+
+#addBtn, #cancelBtn{
+background:white;
+width:80px;
+}
 </style>
 <script type="text/javascript">
 
@@ -162,9 +175,10 @@ function accept(userId, option){
 		
 				
 				
-				tag+= "<a class='no_underline' href='#'>"+ 
-				"<img src=" +result.resList[i].userProfile+" style='width: 80px; height: 80px;' />&nbsp"+ 
+				tag+= "<a class='no_underline' href='mypage2.b?userId="+result.resList[i].userId+"'>"+ 
+				"<img src='" +"${pageContext.request.contextPath}/resources/file/"+result.resList[i].userId+"/"+result.resList[i].userProfile+"' style='width: 80px; height: 80px;' />&nbsp"+ 
 					result.resList[i].userName +"</a>"+
+					
 				
 				
 					"<div class='btnDiv'>"+
@@ -181,7 +195,7 @@ function accept(userId, option){
 		
 			tag+="<label class='link' id='hideRes'>내가 전송한 요청 보기</label><br><br><br><br>"+
 			"<label style='margin: 150px;'>받은 요청이 없습니다. <br></label>"+
-			"<label style='margin:170px;'><a class='no_underline' href='#'>친구를 찾아보세요.</a></label>";
+			"<label style='margin:160px; color:blue;'>친구를 찾아보세요.</label>";
 		
 			 
 		}
@@ -195,6 +209,7 @@ function accept(userId, option){
 	
 	}); 
 }
+
 
 
 function cancelReq(userId, option){
@@ -222,8 +237,8 @@ function cancelReq(userId, option){
 				for(var i =0; i<result.reqList.length; i++){
 				
 	
-					tag+="<a class='no_underline' href='#'>"+
-					"<img src="+ result.reqList[i].userProfile +" style='width: 80px; height: 80px;' />"+
+					tag+="<a class='no_underline' href='mypage2.b?userId="+result.reqList[i].userId+"'>"+
+					"<img src='"+ "${pageContext.request.contextPath}/resources/file/"+result.reqList[i].userId+"/"+result.reqList[i].userProfile+"' style='width: 80px; height: 80px;' />"+
 						result.reqList[i].userName +"</a>"+
 	
 					"<div class='btnDiv'>"+
@@ -236,7 +251,7 @@ function cancelReq(userId, option){
 		
 				tag+="<label class='link' id='hideReq'>내게 전송된 요청 보기</label><br><br><br><br>"+
 				"<label style='margin: 150px;'>보낸 요청이 없습니다. <br></label>"+
-				"<label style='margin:170px;'><a class='no_underline' href='#'>친구를 찾아보세요.</a></label>";
+				"<label style='margin:160px; color:blue;'>친구를 찾아보세요.</label>";
 			}
 			
 			$("#requestDiv").html(tag);
@@ -279,8 +294,8 @@ function recommend(userId){
 				for(var i =0; i<result.recList.length; i++){
 				
 	
-					tag+= "<a class='no_underline' href='#'>"+ 
-					"<img src=" +result.recList[i].userProfile+" style='width: 80px; height: 80px;' />&nbsp"+ 
+					tag+= "<a class='no_underline' href='mypage2.b?userId="+result.recList[i].userId+"'>"+ 
+					"<img src='" +"${pageContext.request.contextPath}/resources/file/"+result.recList[i].userId+"/"+result.recList[i].userProfile+"' style='width: 80px; height: 80px;' />&nbsp"+ 
 						result.recList[i].userName +"</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
 						"<label class='font8ptGray'>함께 아는 친구 "+result.recList[i].count+"명</label>"+
 					

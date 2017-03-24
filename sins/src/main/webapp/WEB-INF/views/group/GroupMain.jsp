@@ -13,28 +13,63 @@
 <link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 
 <script type="text/javascript">
-	// 문호형꺼
+
 	$(document).ready(function() {
-		$('#t-l').click(function() {
-			$('#spot1, #overlay_t').show();
+		$("#t-l").click(function(){ 
+			$("#spot1, #overlay_t").show(300);
+		}); 
+	 	$("#overlay_t").click(function(e){ 
+	     	e.preventDefault(); 
+	     	$("#spot1, #spot2, #overlay_t").hide(300); 
 		});
-		$('#overlay_t').click(function(e) {
-			e.preventDefault();
-			$('#spot1, #overlay_t').hide();
-		});
-		$('#t-r').click(function() {
-			$('#spot2, #overlay_t').show();
-		});
-		$('#overlay_t').click(function(e) {
-			e.preventDefault();
-			$('#spot2, #overlay_t').hide();
-		});
+	 	$("#t-r").click(function(){ 
+	 		$("#spot2, #overlay_t").show(300);
+	 	}); 
+	 	
+	 	var noticeMenuStatus = 0;
+	 	$(".notice").hide();
+	 	
+	 	$("#notice1, #notice2").click(function(){
+	 		if(noticeMenuStatus == 0){
+	 			noticeMenuStatus = 1;
+	 			$(".notice").slideDown("slow");
+	 		}
+	 		else {
+	 			noticeMenuStatus = 0;
+	 			$(".notice").slideUp("slow");
+	 		}
+	 		
+	 	});
+	 	
+	 	setTimeout(function(){
+	 		$('#friend').html(friendTag);
+	 		
+	 	},500);
 	});
+	
+	function fnclick(){
+		var div = document.getElementById("flipper");
+		div.style.transform="rotateY(180deg)";
+		div.style.transition= "0.8s";
+	}
+	
+	function fnReclick(){
+		var div = document.getElementById("flipper");
+		div.style.transform="rotateY(0deg)";
+		div.style.transition= "0.8s";
+	}
+
+	
+	
 	
 	
 	
 	// 내꺼
 	$(function(){
+		
+		// 메뉴버튼 클릭 전, 버튼 숨겨놓음.
+		$(".hbtn").hide();
+		
 		// 화면 중앙에 배치.		
 		jQuery.fn.center = function () {
 		    this.css("position","absolute");
@@ -103,26 +138,79 @@
     		});
 		});
         
+		 // 신고
+		$(document).on("click", ".report", function(){
+       		var th = $(this);
+       		var fireNo = th.parent().next().children().val();
+       		var fireId = th.parent().next().next().children().val();
+       		
+       		console.log(fireNo +" "+ fireId);
+       		
+       		$.ajax({
+       			url : "fireContent.k",
+       			type : "post",
+       			data : {
+       				"fireNo" : fireNo,
+       				"fireId" : fireId,
+       				"classify" : "GROUP_MAIN"
+       			},
+       			success : function(data){
+       				th.parent().html("<input type='button' class='unReport hbtn' value='신고취소'/>");
+       			}
+       		})
+       	});
+        
+    	$(document).on("click", ".unReport", function(){
+       		var th = $(this);
+       		var fireNo = th.parent().next().children().val();
+       		var fireId = th.parent().next().next().children().val();
+       		
+       		console.log(fireNo +" "+ fireId);
+       		
+       		$.ajax({
+       			url : "cancelFireContent.k",
+       			type : "post",
+       			data : {
+       				"fireNo" : fireNo,
+       				"fireId" : fireId,
+       				"classify" : "GROUP_MAIN"
+       			},
+       			success : function(data){
+       				th.parent().html("<input type='button' class='report hbtn' value='신고'/>");
+       			}
+       		})
+       	});
+        
+	// 신고 끝 --------------------------
+        
         
         // 댓글 클릭 시, 댓글 리스트 보여주기
         $(".comment").on("click", function(){
         	
+        	 var state = $(this).parent().parent().parent().parent().parent().next().css('display');
+        	 /* var state = $(this).parent().parent().parent().parent().parent().next().attr('class');
+        	 alert(state); */
+        	 if(state == 'none') {
+				$(this).parent().parent().parent().parent().parent().next().show(300);
+			} else {
+				$(this).parent().parent().parent().parent().parent().next().hide(300);
+			}
+        	
         	var writeNo = $(this).parent().next().next().val();
-    		var userId = '${loginUser.userId}';
-    		var thediv = $(this).parent().parent().parent().parent().next().children('.commentListContainer').text();
+    		var commentlist = $(this).parent().parent().parent().parent().parent().next().children('.commentListContainer');
+			
     		$.ajax({
 				url : 'selectGroupCommentList.y?writeNo=' + writeNo
 				,dataType : 'json'
 				,contentType : 'application/json; charset=utf-8'
 				,success : function(list) {
 					
-					console.log(thediv);
-					console.log(list);
-					for(var i = 0; i < list.length; i ++) {
-						
-						/* thediv.append($('<div>', {html : list[i].userId}));
-						thediv.append($('<div>', {class : 'commentOne', text : list[i].content}));	 */
-					}
+					$("div").remove(".commentOne");
+					
+					$(".commentTextarea").val("");
+					
+					tag(list, writeNo);
+					
 				}
     		});
         });
@@ -130,24 +218,146 @@
         // 댓글에 글쓰기 했을 때
         $(".commentSubmit").on("click", function(){
         	var commentForm = $(this).parent().serialize();
-			var thisdiv = $(this).parent().parent().next();
-        	
+			var writeNo = $(this).siblings("input[name=writeNo]").val();
+			
         	$.ajax({
 				url : 'insertGroupComment.y'
 				,dataType : 'json'
 				,data : commentForm
 				,contentType : 'application/json; charset=utf-8'
-				,success : function(commentList) {
+				,success : function(list) {
 					
-					for(var i = 0; i < commentList.length; i ++) {
-						thisdiv.append($('<div>', {html : commentList[i].userId}));
-						thisdiv.append($('<div>', {class : 'commentOne', text : commentList[i].content}));	
-					}
+					$("div").remove(".commentOne");
+					
+					$(".commentTextarea").val("");
+					
+					tag(list, writeNo);						
 				}
 			});
         });
         
-	});
+        
+        // 댓글 삭제
+        $(document).on("click", ".delete2", function(){
+        	var commentNo = $(this).parent().siblings(".hdcommentNo").val();
+			var writeNo = $(this).parent().siblings(".hdwriteNo").val();
+			
+        	$.ajax({
+        		url : "deleteGroupComment.y?commentNo=" + commentNo + "&writeNo=" + writeNo	 
+   				,dataType : 'json'
+   				,contentType : 'application/json; charset=utf-8'
+       			,success : function(list){
+					$("div").remove(".commentOne");
+					
+					$(".commentTextarea").val("");
+					
+					tag(list, writeNo);
+       			}
+       		});
+        });
+        
+        
+        // 댓글 수정
+        
+         // ajax, 댓글 뿌려주는 메소드
+        function tag(list, writeNo) {
+        	
+        	var userId = '${loginUser.userId}';
+        	
+			var tag = "";
+			
+			for(var i = 0; i < list.length; i++) {
+				
+				tag += "<div class='commentOne'><label class='commentlabel'>" + '사진' + "</label><table><tr><td>" + list[i].userName 
+						+ "</td><td>" + list[i].content + "</td></tr></table><div>" 
+						+ "<input type='button' class='comment2' value='답글'/>";
+				
+				if(list[i].userId == userId) {
+				
+					tag += "<input type='button' class='update2' value='수정'/><input type='button' class='delete2' value='삭제'/>";
+				
+				} else {
+				
+					tag += "<input type='button' class='report2' value='신고'/>";
+				
+				}
+				tag += "</div><input type='hidden' class='hdcommentNo' value='" + list[i].commentNo 
+				+ "'/><input type='hidden' class='hdwriteNo' value='" + writeNo + "'/></div>";
+				
+			}
+			
+			$(".commentListContainer").append(tag);	
+        }
+        
+        // 댓댓글 시작----------------------------------------------------------------
+		$(document).on("click", ".comment2", function(){
+			
+			var tag = "";
+        	
+        	tag += "<div class='commentContainer2'><div class='commentWriteContainer2'><textarea class='commentTextarea2' name='content'></textarea>"
+        	+"<input type='button' class='commentSubmit2' value='답글쓰기'/></div>" 
+        	+ "<div class='commentListContainer2'></div></div>'";			
+			
+			$(this).parent().parent().append(tag);
+		});
+        
+        
+        // 답글쓰기 눌렀을 시
+        $(document).on("click", ".commentSubmit2", function(){
+        	var ref = $(this).parent().parent().siblings(".hdcommentNo").val();
+			var writeNo = $(this).parent().parent().siblings(".hdwriteNo").val();
+        	var userId = '${loginUser.userId}';
+			var content = $(this).siblings('.commentTextarea2').val();
+			
+			console.log(ref + " " + userId + " " + content + " " + writeNo);
+			
+			$.ajax({
+				url : 'insertGroupComment2.y'
+				,data : {
+					'ref' : ref,
+					'writeNo' : writeNo,
+					'userId' : userId,
+					'content' : content
+				}
+				,dataType : 'json'
+				,success : function(list) {
+					
+					$(".commentTextarea2").val("");
+
+					tag2(list);
+				}
+			}) 
+        });
+        
+        
+        function tag2(list) {
+        	var tag = "";
+        	
+        	console.log(list);
+        	
+        	for(var i = 0; i < list.length; i++) {
+        		tag += "<div class=commentTwo><label class='commentlabel2'>" + '사진' + "</label><table><tr><td>" + list[i].userName 
+        		+ "</td><td>" + list[i].content + "</td></tr></table></div>";
+        		
+      	 	}
+
+        	$(".commentListContainer2").append(tag);
+        }
+       
+        
+        // 댓댓글 끝 -----------------------------------------------------------------
+        
+        
+        // 포켓볼 클릭 시 
+        $(".menu-button").on("click", function(){
+			$(this).parent().siblings().children(".hbtn").toggle();
+    	});
+        
+        
+       
+	});// document ready 끝
+	
+	
 	
 	// main화면에서 삭제버튼 클릭 시 작동.
 	function deleteWrite(writeNo) {
@@ -177,14 +387,15 @@
         var maskWidth = $(window).width();  
  
         //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-        $(".window").center();
-        $("#mask").css({"width":maskWidth,"height":maskHeight});  
+        /* $(".window").center();
+        $("#mask").css({"width":maskWidth,"height":maskHeight});   */
         
         //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
  
         $("#mask").fadeIn(0);      
         $("#mask").fadeTo("slow",0.6);    
 	}
+	
 	
 </script>
 
@@ -194,31 +405,79 @@
 	a:hover { text-decoration: none; color: #0080ff; }
 	ul, li {list-style:none; margin:0; padding:10px;}
 	/* ---------------------------------------------- */
-	
-	
-	#mask {  
+	/* 팝업 */
+#mask {
+	position: fixed;
+	width:100%;
+	height:100%;
+	z-index: 9000;
+	background-color: #000;
+	display: none;
+}
+
+/* 팝업으로 뜨는 윈도우 css  */
+#updateMessage {
+	text-align: center;
+	margin: 35px auto;
+}
+
+#updateContent {
+	height: 25px;
+}
+
+#updateBtnArea {
+	text-align: center;
+}
+
+#deleteMessageArea{
+	text-align: center;
+	margin: 45px auto;
+	font-size : 20px;
+}
+
+#deleteBtnArea{
+	text-align: center;
+}
+.window {
+	display: none;
+	position: absolute;
+	margin :  200px 35%;
+	width: 400px;
+	height: 180px;
+	background-color: white;
+	z-index: 10000;
+	border-radius: 15px 15px 15px 15px;
+}
+	/* ///////// */
+	/* #mask {  
 	    position:absolute;  
 	    z-index:9000;  
 	    background-color:#000;  
 	    display:none;  
 	    left:0;
 	    top:0;
-	} 
+	}  */
 	
 	/* 팝업으로 뜨는 윈도우 css  */ 
-	.window{
+	/* .window{
 	    display: none;
 	    position:absolute;  
 	    width:30%;
 	    height:20%;
 	    background-color:#FFF;
 	    z-index:10000;   
-	 }
+	 } */
 	
 	/* main(대표사진, 그룹정보 등) */
+	#content {
+		margin-left : 5px;
+		margin-right : 5px;
+	}
 	#mainContainer {
-		 width:100%;
-		 height:20%;
+		width : 100%;
+		height : 150px;
+		background-color : white;
+		margin-bottom : 20px;
 	}
 
 	/* 그룹 멤버 리스트  */
@@ -226,6 +485,7 @@
 		float: right;
 		width: 28%;
 		margin-top: 10px;
+		background-color : white;
 	}
 	
 	.groupMember {
@@ -248,12 +508,14 @@
 	/* 게시글 쓰기 */
 	#groupWriteContainer {
 		width: 70%;
-		height: 20%;
+		height: 100px;
 		margin-top: 10px;
 		margin-right: 10px;
+		background-color: white;
 	}
 	
 	#writeAreaContainer {
+		margin-left: 10px;
 		width: 100%;
 		height: 80%;
 	}
@@ -263,7 +525,7 @@
 		height: 90%;
 		padding: 1%;
 		resize: none;
-		float: right;
+		float: left;
 	}
 	
 	#writeBtnContainer {
@@ -285,6 +547,7 @@
 		margin-right: 10px;
 		-moz-box-shadow: 1px 1px 1px #888888;
 		box-shadow: 1px 1px 1px #888888;
+		background-color: white;
 	}
 	
 	.writeList .writerInfo {
@@ -308,11 +571,30 @@
 	}
 	
 	.buttonContainer {
-		background: #ededed;
+		position: relative;
+		background: #E7E4F9;
+	}
+	
+	.buttonContainer table {
+		display: inline-block;
+	}
+	
+	/* 글쓰기에서 수정, 삭제 or 신고 메뉴버튼 */
+	.menu-button {
+		position: relative;
+		float: right;
+		width: 25px;
+		height: 25px;
+		cursor: pointer;
+	}
+	
+	.button-table {
+		position: absolute;
+		right: 0;
 	}
 	
 	/* 삭제클릭 시 영역, 버튼 */
-	#deleteMessageArea {
+	/* #deleteMessageArea {
 		width: 100%;
 		height: 70%;
 		text-align: center;
@@ -322,14 +604,44 @@
 	#deleteBtnArea {
 		width: 100%;
 		height: 30%;
-	}
+	} */
 	
 	/* 댓글 */
 	.commentOne {
+		clear : left;
 		border-bottom : 1px solid;
 	}
 	
+	.commentWriteContainer textarea {
+		width: 80%;
+		height: 30%;
+		padding: 1%;
+		resize: none;
+		float: left;
+	}
 	
+	.commentlabel {
+		border: 1px solid orange; 
+		float: left; 
+		width: 40px; 
+		height: 40px;
+		margin-right: 10px; 
+		vertical-align: middle;
+	}
+	
+	.commentTwo {
+		margin-left: 20px;
+		height: 40px;
+	}
+	
+	.commentlabel2 {
+		border: 1px solid orange; 
+		float: left; 
+		width: 35px; 
+		height: 35px;
+		margin-right: 10px; 
+		vertical-align: middle;
+	}
 	/* 그룹회원이 아닌 경우  */
 	#requestContainer {
 		width: 70%;
@@ -339,12 +651,9 @@
 	}
 	
 	/* footer 에 마지막 글이 가려지는 문제 해결 */
-	#container {
+	/* #container {
 		margin-bottom: 30px;
-	}
-	#rightchat{
-		position: fixed;
-	}
+	} */
 	
 		
 	
@@ -352,6 +661,105 @@
 		background-color : white;
 		border-radius: 5px;
 	}
+	
+	#mContainer {
+			display : none;
+		}
+		
+	.flip-container {
+	   perspective: 680px;
+	   border:2px solid rgba(0,0,0,0) !important;
+	}
+	
+	.front{
+	  z-index:2;
+	  transform: rotateY(0deg);
+	}
+		
+	.back {
+	    transform: rotateY(180deg);
+	}
+	
+	.flip-container, .front, .back {
+	    width: 680px;
+	    height: 150px;
+	
+	}
+	
+	.flipper {
+	   /* 하위요소에 3D 좌표값 지정 */
+	    transform-style: preserve-3d;
+	    position: relative;
+	}
+	
+	.front, .back{
+	  position: absolute;
+	  backface-visibility:hidden;
+	  
+		width: 100%;
+		height: 150px;
+		background-color: white;
+	}
+	
+	#signalImageArea {
+		margin: 3px auto;
+		padding : 10px;
+		width: 95%;
+		height: 80%;
+		position: relative;
+		
+	}
+	
+	#backForm {
+		width : 70%;
+		height : 100px;
+		margin : 10px auto;
+		text-align: center;
+	}
+	
+	#groupName {
+		width : 70%;
+		margin-bottom : 2px;
+	}
+	
+	#groupInfo {
+		width : 70%;
+		margin-bottom : 2px;
+	}
+	
+@media screen and (max-width:500px) {
+	.window {
+		margin: 200px 10%;
+		width: 300px;
+	}
+	
+	#memberContainer {
+		display : none;
+	}
+	
+	#groupWriteContainer {
+		width: 100%;
+	}
+	
+	.writeList {
+		width: 100%;
+	}
+	
+	#mContainer {
+		margin : auto;
+		display : block;
+		width : 150px; 
+	}
+	
+	.flip-container {
+	   perspective: 100%;
+	}
+	
+	.flip-container, .front, .back {
+	    width: 100%;
+	}
+	
+}	
 	
 	
 </style>
@@ -384,27 +792,55 @@
 <div id="header">
 	<div id="overlay_t"></div>
 	<div id="t-l"></div>
-	<div id="top">
-		<c:import url="../common/top.jsp" charEncoding="UTF-8" />
-	</div>
+	<div id="top"></div>
 	<div id="t-r"></div>
 </div>
 <div id="container">
 	<div id="left" class="box">
-		<h2>LEFT</h2>
-		<ul>
-			 <li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
-			 <li><a href="alink.do?path=channel/channelList">채널</a></li>
-			 <li><a href="selectGroupList.y">그룹</a></li>
-			 <li><h4>뉴스피드</h4></li>
-			 <li><a href="selectQna.n">고객센터</a></li>
-		</ul>
-	</div>
-	<div id="content" class="box" style="position:relative;">
-		<h2>${group.groupName}</h2>
-		<div id="mainContainer" class="box">
-			<h3>메인 사진</h3>
+			<ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	          <li><a href="brodcasting.j">채팅</a></li>
+	    </ul>
 		</div>
+	<div id="content" style="position:relative;">
+		<div class="flip-container">
+				<div class="flipper" id="flipper">
+					<div class="front">
+						<div id="signalImageArea">
+							그룹 이름 : ${group.groupName}<br> 그룹 정보 : ${group.groupInfo}<br>
+							<c:if test="${group.userId eq loginUser.userId}">
+								<button onclick="fnclick();">그룹 수정/삭제</button>
+							</c:if>
+						</div>
+					</div>
+					<div class="back">
+						<div id="signalImageArea">
+							<form id="backForm" action="updateGroup.y" method="post">
+								<input type="hidden" id="groupNo" name="groupNo" value="${groupe.groupNo}" /> 
+								<input type="text" id="groupName" placeholder="그룹 이름 입력" name="groupName" />
+								<br /> 
+								<input type="text" id="groupInfo" placeholder="그룹 정보 입력" name="groupInfo" /> 
+								<br /> 
+								<input type="file" id="filepath" name="filepath" /> 
+								<br />
+								<br /> 
+								<input type="button" value="수정취소" onclick="fnReclick();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="button" value="채널삭제" onclick="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" value="수정완료" />
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		<div id="memberContainer" class="box">
 			<h3><a href="groupMemberDetail.y?groupNo=${group.groupNo}">그룹 멤버</a></h3>
 				<c:forEach var="item" items="${memberList}">
@@ -428,7 +864,9 @@
 						<input type="hidden" id="userId" name="userId" value="${loginUser.userId}"/>
 						<input type="hidden" id="groupNo" name="groupNo" value="${group.groupNo}"/>
 						<div id="writeAreaContainer">
+						<br/>
 							<label>새글쓰기</label>
+							<br/>
 							<label>
 								<textarea name="content" placeholder="내용입력"></textarea>
 							</label>
@@ -473,30 +911,50 @@
 										</c:if>
 											<input type="hidden" class="writeNo" value="${item.writeNo}"/>
 										
-										<c:if test="${item.userId == loginUser.userId}">
-											<td><input type="button" class="update" 
-												onclick="updateWritePage(${item.writeNo}, '${item.content}', '${filepath}');"value="수정"/></td>
-											<td><input type="button" class="deleteWrite" 
-												onclick="deleteWrite(${item.writeNo});"value="삭제"/></td>
-										</c:if>
-										<c:if test="${item.userId != loginUser.userId}">
-											<td><input type="button" class="report" 
-												onclick="reportWrite('${item.userId}', ${item.writeNo});" value="신고"/></td>
-										</c:if>
 											<td class="countLike">${count}</td>
 									</tr>
 								</table>
+								
+								<table class="button-table">
+									<tr>
+										<c:if test="${item.userId == loginUser.userId}">
+											<td><input type="button" class="update hbtn" 
+												onclick="updateWritePage(${item.writeNo}, '${item.content}', '${filepath}');"value="수정"/></td>
+											<td><input type="button" class="deleteWrite hbtn" 
+												onclick="deleteWrite(${item.writeNo});"value="삭제"/></td>
+										</c:if>
+										<c:if test="${item.userId != loginUser.userId}">
+											<c:set var="fireCheck" value="0"/>
+											<c:forEach var="fire" items="${fireContentList}">
+												<c:if test="${item.writeNo eq fire.fireNo }">
+													<c:set var="fireCheck" value="1"/>
+												</c:if>												
+											</c:forEach>
+											<c:if test="${fireCheck eq 0 }">
+												<td><input type="button" class="report hbtn" value="신고"/></td>
+											</c:if>
+											<c:if test="${fireCheck eq 1 }">
+												<td><input type="button" class="unReport hbtn" value="신고취소"/></td>
+											</c:if>
+											<td><input type="hidden" name="fireNo" value="${item.writeNo}" /></td>
+											<td><input type="hidden" name="fireId" value="${item.userId}" /></td>
+										</c:if>
+										<td><img class="menu-button" src="/sins/resources/images/menu-button.png"/></td>
+									</tr>
+								</table>
+								
 							</div>
-							<div class="commentContainer" style="border:1px solid red; width: 100%;">
+							<div class="commentContainer" style="display: none;">
 								<div class="commentWriteContainer">
 									<form action="" class="commentForm" method="post" enctype="multipart/form-data">
 										<input type="hidden" name="userId" value="${loginUser.userId}"/>
 										<input type="hidden" name="writeNo" value="${item.writeNo}"/>
-										<textarea name="content"></textarea>
+										<textarea class="commentTextarea" name="content"></textarea>
 										<input type="button" class="commentSubmit" value="댓글쓰기"/>
 									</form>
 								</div>
-								<div class="commentListContainer">${item.writeNo }</div>
+								<div class="commentListContainer"></div>
+							
 							</div>
 						</div>
 					</div>
@@ -519,20 +977,41 @@
 		</c:choose>
 	</div>
 	<div id="right" class="box">
-	<div id="rightchat">
-		<h2>그룹 채팅</h2>
-		<c:import url="/WEB-INF/views/chat/chat.jsp"></c:import>
+    		<%-- <%@include file="/WEB-INF/views/friend/friendView.jsp" %> </div> --%>
+    		<c:import url="/WEB-INF/views/chat/chat.jsp"></c:import>
+   	</div>
+ 	<div id="footer">
+    	<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
+  	</div>
+	<div id="spot1">
 		<ul>
-			
-		</ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	          <li><a href="brodcasting.j">채팅</a></li>
+	    </ul>
 	</div>
+	<div id="spot2">
+		<ul>
+		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+		<li><a href="javascript:message();">메세지 보기</a></li>
+		<li><a href="javascript:alertover()">알림 보기</a></li>
+		<li><a href="javascript:logout()">로그 아웃</a></li>
+	</ul>
+	<hr style="width:100px; margin:auto;">
+	<br/>
+	<h4 align="center">친구 목록</h4><br>
+	<hr style="width:100px; margin:auto;">
+	<div id='friend'></div>
+	
 	</div>
-</div>
-<div id="footer">
-	<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
-</div>
-<div id="spot1"></div>
-<div id="spot2"></div>
-
+	
+	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
 </body>
 </html>

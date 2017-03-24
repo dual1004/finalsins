@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.seven.sins.fire.vo.FireVO;
+import com.seven.sins.group.vo.GroupCommentVO;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.dao.MypageDAO;
 import com.seven.sins.mypage.service.MypageService;
@@ -105,6 +107,36 @@ public class MypageServiceImpl implements MypageService{
 	public MypageVO MypageSelectLike(MypageVO myvo) {
 		// TODO Auto-generated method stub
 		return mypageDAO.MypageSelectLike(myvo);
+	}
+
+	@Override
+	public MypageVO contentsMain(MypageVO my) {
+		// TODO Auto-generated method stub
+		return mypageDAO.contentsMain(my);
+	}
+
+	@Override
+	public ArrayList<MypageCommentVO> contentsMainComment(int writeno) {
+		// TODO Auto-generated method stub
+		return mypageDAO.contentsMainComment(writeno);
+	}
+
+	@Override
+	public ArrayList<MypageCommentVO> selectMypageCommentList(int writeno) {
+		ArrayList<MypageCommentVO> list = mypageDAO.selectMypageCommentList(writeno);
+		return list;
+	}
+
+	@Override
+	public int insertMypageComment(MypageCommentVO vo) {
+		int result = mypageDAO.insertMypageComment(vo);
+		return result;
+		
+	}
+
+	@Override
+	public ArrayList<FireVO> getFireList(FireVO search) {
+		return mypageDAO.getFireList(search);
 	}
 	
 	

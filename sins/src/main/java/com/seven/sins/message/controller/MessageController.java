@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gargoylesoftware.htmlunit.AlertHandler;
+
 import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.message.service.MessageService;

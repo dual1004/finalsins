@@ -1,4 +1,5 @@
 @CHARSET "UTF-8";
+
 a:link, a:visited { text-decoration: none; color: #000000; }
 a:hover { text-decoration: none; color: #0080ff; }
 
@@ -9,11 +10,12 @@ ul, li {list-style:none; margin:0; padding:10px;}
 	}
 	.channelList{
 		position: relative;
-		float: left;
-		width: 230px;
-		height: 200px;
-		margin: 1%;
-		border: 1px solid lightgrey;
+	float: left;
+	width: 47%;
+	height: 180px;
+	margin: 1%;
+	border: 1px solid #9581BF;
+	cursor : pointer;
 	}
 	.channelName{
 		display: inline-block;
@@ -26,7 +28,6 @@ ul, li {list-style:none; margin:0; padding:10px;}
 	.memberCount {
 		position: absolute;
 		display: inline-block;
-		border: 1px solid;
 		margin-bottom: 5px;
 		margin-right: 5px;
 		right: 0;
@@ -37,13 +38,36 @@ ul, li {list-style:none; margin:0; padding:10px;}
 	.category {
 		position: absolute;
 		display: inline-block;
-		border: 1px solid;
 		margin-bottom: 5px;
 		margin-left: 5px;
 		left: 0;
 		bottom: 0;
 		font-size: 13px;
 	}
+	#insertChannel {
+		width : 200px;
+		margin : auto;
+	}
+	
+	#channel_filepath {
+		width : 200px;
+		margin : auto;
+	}
+	
+	#cover {
+	width : 100%;
+	height : 30px;
+	background-color:rgba(255,255,255,0.7);
+	position: absolute;
+	display: inline-block;
+	right: 0;
+	bottom: 0;
+}
+
+#center {
+	width : 240px;
+	text-align: center;
+}
 
 * {
 	margin: 0;
@@ -55,16 +79,27 @@ ul, li {list-style:none; margin:0; padding:10px;}
 	box-shadow: 1px 1px 1px #888888;
 }
 
+#spot3 {
+	margin-left : 20%;
+	width: 80%;
+	position: absolute;
+	top: 0;
+	margin : 5px 10%;
+	z-index: 101;
+	float: left;
+}
+
 body {
 	width: 100%;
 	background-color: #E7E4F9;
 }
 
 #container {
-	width: 1000px;
+	width: 1050px;
 	height: 770px;
 	margin: 0px auto;
 	background-color: #E7E4F9;
+
 }
 
 #header {
@@ -83,7 +118,7 @@ body {
 	float: left;
 	margin-left: 10px;
 	display: none;
-	background-image: url("../images/min-button.jpg");
+	background-image: url("../../images/min-button.jpg");
 	cursor: pointer;
 }
 
@@ -103,7 +138,7 @@ body {
 	margin-right: 10px;
 	right: 10px;
 	display: none;
-	background-image: url("../images/min-button.jpg");
+	background-image: url("../../images/min-button.jpg");
 	cursor: pointer;
 }
 
@@ -116,10 +151,10 @@ body {
 }
 
 #content {
-	width: 500px;
-	height: 760px;
+	width: 600px;
+	min-height: 500px;
 	padding: 20px;
-	margin-left: 20px;
+	margin-left: 10px;
 	float: left;
 	background-color: white;
 	overflow:auto;
@@ -128,7 +163,7 @@ body {
 #right {
 	width: 240px;
 	height: 550px;
-	margin-right: 30px;
+	margin-right: 10px;
 	float: right;
 	background-color: white;
 }
@@ -139,7 +174,8 @@ body {
 	clear: both;
 	border: 1px solid #9581BF;
 	background-color: white;
-	position: absolute;
+	position:fixed;
+	bottom : 0px;
 }
 
 @media screen and (max-width:900px) {
@@ -173,7 +209,7 @@ body {
 
 #spot1 {
 	width: 200px;
-	height: 300px;
+	min-height: 300px;
 	background-color: white;
 	position: absolute;
 	left: 10px;
@@ -185,7 +221,7 @@ body {
 
 #spot2 {
 	width: 200px;
-	height: 300px;
+	min-height: 300px;
 	background-color: white;
 	position: absolute;
 	right: 10px;
@@ -216,14 +252,26 @@ body {
 		width: auto;
 	}
 	#content {
-		overflow:hidden;
+		overflow: hidden;
 		float: none;
 		width: auto;
-		margin: auto;
+		margin: auto 5px 10px 10px;
 	}
 	#right {
-		display: none;
+		display: block;
 		float: none;
 		width: auto;
+		margin: auto 5px 10px 10px;
+	}
+	.channelList {
+		height : 150px;
+	}
+	#center {
+		width: 400px;
+		text-align: center;
+		margin :  auto;
+	}
+	#insertChannel {
+		width : 340px;
 	}
 }

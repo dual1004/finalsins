@@ -173,7 +173,7 @@
 		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, PHOTO_PATH
 		FROM GROUP_COMMENT 
 		JOIN MEMBER USING(USER_ID)
-		WHERE DELETE_YN = 'N' AND WRITE_NO = #{WRITE_NO}
+		WHERE DELETE_YN = 'N' AND WRITE_NO = #{writeNo} AND LEV = 0
 		ORDER BY COMMENT_NO DESC
 	</select>
 	<insert id="insertGroupComment" parameterType="GroupCommentVO">
@@ -186,9 +186,25 @@
 		UPDATE GROUP_COMMENT SET CONTENT = ${content}, PHOTO_PATH = ${photopath}
 	</update>		
 	<update id="deleteGroupComment" parameterType="GroupCommentVO">
-		UPDATE GROUP_COMMENT SET DELETE_YN = 'Y' WHERE COMMENT_NO = ${commentNo}
+		UPDATE GROUP_COMMENT SET DELETE_YN = 'Y' WHERE COMMENT_NO = #{commentNo}
 	</update>
 	<select id="countGroupComment" parameterType="int">
 		SELECT COUNT(*) FROM GROUP_COMMENT WHERE DELETE_YN = 'N' AND WRITE_NO = ${writeNo}
 	</select>	
+	
+	<!-- 답글 -->
+	<select id="selectGroupCommentList2" parameterType="GroupCommentVO" resultType="GroupCommentVO" resultMap="resultGroupComment">
+		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, PHOTO_PATH
+		FROM GROUP_COMMENT 
+		JOIN MEMBER USING(USER_ID)
+		WHERE DELETE_YN = 'N' AND REF = #{ref} AND LEV = 1
+		ORDER BY COMMENT_NO DESC
+	</select>
+	<insert id="insertGroupComment2" parameterType="GroupCommentVO">
+		INSERT INTO GROUP_COMMENT VALUES (
+			YOON_SEQ_COMMENT.NEXTVAL, #{userId}, #{content}, SYSDATE, 1, #{ref}, 
+			#{photopath, jdbcType=VARCHAR}, #{userId}, #{writeNo}, 'GROUP_COMMENT', 0, DEFAULT
+		)
+	</insert>
+	
 </mapper>

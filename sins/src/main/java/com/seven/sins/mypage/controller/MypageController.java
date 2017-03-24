@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seven.sins.channel.service.ChannelService;
+import com.seven.sins.channel.vo.ChannelArticleVO;
+import com.seven.sins.fire.service.FireService;
+import com.seven.sins.fire.vo.FireVO;
+import com.seven.sins.group.service.GroupService;
+import com.seven.sins.group.vo.GroupCommentVO;
+import com.seven.sins.group.vo.GroupWriteVO;
+import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.service.MypageService;
 import com.seven.sins.mypage.vo.MypageCommentVO;
@@ -27,6 +35,17 @@ public class MypageController {
 
 	@Autowired
 	private MypageService mypageService;
+	@Autowired
+	private GroupService groupService;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private ChannelService channelservice;
+	
+
+	@Autowired
+	private FireService fireService;
+	
 	
 	@Resource(name="fileUtils")
     private FileUtils fileUtils;
@@ -62,6 +81,25 @@ public class MypageController {
 		
 		
 		if (keyword == null)*/
+		
+		// 원석 부분
+				 FireVO search = new FireVO();
+				 
+				 search.setClassify("MY_PAGE");
+				 search.setFireById(loginUser.getUserId());
+				
+				 ArrayList<FireVO> fireList = mypageService.getFireList(search);
+				 
+				 if(fireList.size() < 1){
+					 	FireVO fivo = new FireVO("MY_PAGE", 0, "admin", "admin", 0, 0);
+						
+					 	fireList.add(fivo);
+				 }
+				 
+				 mv.addObject("fireList", fireList);
+				 // 여기까지
+		
+		
 		MypageLikeVO mylike = new MypageLikeVO();
 		mylike.setUserid(loginUser.getUserId());
 		ArrayList<MypageLikeVO> likeList = mypageService.mypageLikeList(mylike);
@@ -83,12 +121,14 @@ public class MypageController {
 	}
 	//마이페이지 사진 조회용
 	@RequestMapping("mypagePoto.b")
-	public ModelAndView mypagePoto(@SessionAttribute MemberVO loginUser,ModelAndView mv){
-		//페이징 처리 필요
+	public ModelAndView mypagePoto(@SessionAttribute MemberVO loginUser,ModelAndView mv, @RequestParam(value="userid", required=false)String userid,MemberVO m){
+		m.setUserId(userid);
+		MemberVO memberUser = mypageService.memberCheck(m);
 		ArrayList<MypageVO> mylist = null;
 		 mylist = mypageService.selectMypage(loginUser.getUserId());
 		 
 		mv.addObject("mylist" , mylist);
+		mv.addObject("memberUser" , memberUser);
 		
 		mv.setViewName("mypage/mypagePoto");
 		
@@ -97,7 +137,6 @@ public class MypageController {
 	//다른 사람의 마이페이지로 갔을 경우
 	@RequestMapping("mypage2.b")
 	public ModelAndView mypage2(@SessionAttribute MemberVO loginUser,@RequestParam(value="userid", required=false)String userid, ModelAndView mv, MemberVO m, MypageVO my){
-		System.out.println(userid);
 		ArrayList<MypageVO> mylist = null;
 		ArrayList<MypageCommentVO> mycolist = null;
 		 MypageLikeVO mylike = new MypageLikeVO();
@@ -118,7 +157,29 @@ public class MypageController {
 		 mycolist = mypageService.selectMypageComment(userid);
 		 
 		 m.setUserId(userid);
+
 		}
+		// 원석 부분
+		 FireVO search = new FireVO();
+		 
+		 search.setClassify("MY_PAGE");
+		 search.setFireById(loginUser.getUserId());
+		 if(userid == null){
+		 search.setFireId(masterId);
+		 }else{
+			 search.setFireId(userid);
+		 }
+		 ArrayList<FireVO> fireList = mypageService.getFireList(search);
+		 
+		 if(fireList.size() < 1){
+			 	FireVO fivo = new FireVO("MY_PAGE", 0, "admin", "admin", 0, 0);
+				
+			 	fireList.add(fivo);
+		 }
+		 
+		 mv.addObject("fireList", fireList);
+		 // 여기까지
+
 		mylike.setUserid(loginUser.getUserId());
 		likeList = mypageService.mypageLikeList(mylike);
 		 MemberVO memberUser = mypageService.memberCheck(m);
@@ -172,6 +233,9 @@ public class MypageController {
 		if(file.isEmpty() == false){
 			String userid = loginUser.getUserId();
 			try {
+				
+				System.out.println("111111");
+				System.out.println(file);
 				String filePath = fileUtils.fileInfo(userid, file);
 				mypage.setFilepath(filePath);
 			} catch (Exception e) {
@@ -231,14 +295,14 @@ public class MypageController {
 			String userid = loginUser.getUserId();
 			try {
 				String filePath = fileUtils.fileInfo(userid, file);
-				System.out.println(filePath);
-				System.out.println("1111");
+				
 				
 				mypageComment.setFilepath(filePath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}else{
+			
 			mypageComment.setFilepath(filepath);
 		}
 		
@@ -367,18 +431,69 @@ public class MypageController {
 			return result;
 		}
 		
-		
+		//게시물 상세 보기 페이지
 		@RequestMapping("contentsMain.b")
 		public ModelAndView contentsMain(@SessionAttribute MemberVO loginUser,
+				@RequestParam(value="writeno", required=false)int writeno,
+				@RequestParam(value="classify", required=false)String classify,
 				@RequestParam(value="userid", required=false)String userid,
-				ModelAndView mv, MemberVO m, MypageVO my){
+				ModelAndView mv, MypageVO my, GroupWriteVO gv, ChannelArticleVO cv, MemberVO m){
+			System.out.println(classify);
+				if(classify.contains("MY_PAGE")){
+					my.setClassify(classify);
+					my.setWriteno(writeno);
+					MypageVO mypage = mypageService.contentsMain(my);
+					ArrayList<MypageCommentVO> mycolist = null;
+					 mycolist = mypageService.contentsMainComment(writeno);
+					 
+					 m.setUserId(userid);
+					 MemberVO memberUser = mypageService.memberCheck(m);
+					 
+					 mv.addObject("mycolist" , mycolist);
+					 mv.addObject("mypage" , mypage);
+					 mv.addObject("memberUser" , memberUser);
+					mv.addObject("loginUser" , loginUser);
+				}else if(classify.contains("GROUP_MAIN")){
+					gv.setClassify(classify);
+					gv.setWriteNo(writeno);
+					//GroupWriteVO group= groupService.contentsMain(gv);
+				}else if(classify.contains("CHANNEL_ARTICLE")){
+					cv.setClassify(classify);
+					cv.setChan_article_no(writeno);
+					//ChannelArticleVO channel = channelservice.contentsMain(cv);
+				}else{
+					
+				}
+			
+			
+			
+			
+			
+			mv.setViewName("mypage/contentsMain");
+			return mv;
 			
 			
 			
 		}
+		
+		// 댓글 -----------------------------------------------------------------------
+		@RequestMapping("selectMypageCommentList.b")
+		public @ResponseBody ArrayList<MypageCommentVO> selectMypageCommentList(int writeNo) {
 			
-	
-	
+			ArrayList<MypageCommentVO> commentList = mypageService.selectMypageCommentList(writeNo);
+			
+			return commentList;
+		}
+		
+		@RequestMapping("insertMypageComment.b")
+		public @ResponseBody ArrayList<MypageCommentVO> insertMypageComment(MypageCommentVO vo) {
+
+			mypageService.insertMypageComment(vo);
+			
+			return selectMypageCommentList(vo.getContentno());
+		}
+		
+		
 	}
 	
 

@@ -102,4 +102,22 @@
 	
 	</update>
 	
+	<update id="updateQna" parameterType="QnaContent">
+	UPDATE QNA SET TITLE = #{title, jdbcType=VARCHAR}, CONTENT = #{content, jdbcType=VARCHAR},
+	FILEPATH = #{filepath, jdbcType=VARCHAR}, WRITE_DATE = SYSDATE
+	WHERE QNA_NO = #{qnaNo}
+	
+	</update>
+	
+	<delete id="deleteCom" parameterType="map">
+	DELETE QNA_COMMENT WHERE COMMENT_NO = #{comNo} AND QNA_NO = #{qnaNo}
+	
+	</delete>
+	
+	<delete id="deleteQna" parameterType="int">
+	DELETE QNA WHERE QNA_NO = #{qnaNo}
+	</delete>
+	
+	
+	
 </mapper>

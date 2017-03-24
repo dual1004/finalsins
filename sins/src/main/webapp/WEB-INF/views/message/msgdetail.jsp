@@ -14,17 +14,37 @@
 <script type="text/javascript" src="/sins/resources/js/message/messagedatail.js"></script>
 <script src="http://vjs.zencdn.net/c/video.js"></script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/newsfeed-common.css" />
+<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
+<style type="text/css">
+
+	#msgsenddiv {
+	text-align : center;
+	}
+
+@media screen and (max-width:500px) {
+	
+	
+	.content {
+		padding : 5px;
+		float: none;
+		width: auto;
+		margin: auto 5px 10px 10px;
+	}
+	
+}
+
+</style>
 </head>
   <body>
   		<div id="header">
       	<div id="overlay_t"></div> 
       	<div id="t-l"></div>
-      	<div id="top"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
+      	<div id="top"></div>
        	<div id="t-r"></div>
       </div>
     <div id="container">
       <div id="left" class="box">
-         <h2>메시지함</h2><br>
+         <br/> <h2>&nbsp;&nbsp;&nbsp;메시지함</h2><br>
         <ul>
         	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
         	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
@@ -34,12 +54,12 @@
           	
         </ul>
       </div>
-      <div id="content" class="box">
+      <div id="content">
+      <div class="content">
         <div id="msgsenddiv">
         	<h2>메시지 자세히보기</h2><br>
         	 <c:if test="${loginUser.userId eq msgone.receivie_id}">
-        	 <input type="button" value="답장" onclick="reference()"/>
-        	 <input type="button" value="삭제" onclick="recivedel()"/>
+        	
         	 <form name="message_no">
         	 <input type="hidden" name="check_no" value="${msgone.message_no}">
    	 		</form>
@@ -53,7 +73,7 @@
         		<input type="hidden" id="send_id" name="send_id" value="${loginUser.userId}">
         		
 				<label>보낸 사람:</label><label>${msgone.send_id }</label><br/>
-        		<textarea rows="10" cols="70" readonly="readonly" name="content">${msgone.content }</textarea><br/>
+        		<textarea rows="10" cols="50" readonly="readonly" name="content" style="resize:none;">${msgone.content }</textarea><br/>
         		
         		<c:if test="${not empty msgone.filepath}">
         		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
@@ -73,21 +93,54 @@
         		<c:if test="${empty msgone.filepath}">
         		첨부파일 없음
         		</c:if>
+        		<br/>
+        		
+        		 <input type="button" value="답장" onclick="reference()"/>
+        		 <input type="button" value="삭제" onclick="recivedel()"/>
+        		 <br/>
+        		 
+        </div>
         </div>
       </div>
       <div id="right" class="box">
-        <h2>RIGHT</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
-      </div>
+    		<%@include file="/WEB-INF/views/friend/friendView.jsp" %> </div>
     </div>
      <div id="footer">
         <c:import url="../common/footer.jsp" charEncoding="UTF-8" />
       </div>
-    <div id="spot1"></div>
-    <div id="spot2"></div>
+    <div id="spot1">
+		<ul>	
+			<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
+        	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
+          	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
+          	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
+          	<li><a class = "atag" href="msgspamuserlist.j">스팸 유저</a></li>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	    </ul>
+	</div>
+	<div id="spot2">
+		<ul>
+		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+		<li><a href="javascript:message();">메세지 보기</a></li>
+		<li><a href="javascript:alertover()">알림 보기</a></li>
+		<li><a href="javascript:logout()">로그 아웃</a></li>
+	</ul>
+	<hr style="width:100px; margin:auto;">
+	<br/>
+	<h4 align="center">친구 목록</h4><br>
+	<hr style="width:100px; margin:auto;">
+	<div id='friend'></div>
+	
+	</div>
+	
+	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
   </body>
 </html>

@@ -10,15 +10,17 @@ public class FriendVO implements java.io.Serializable{
 	private int count;
 	
 	
+	
 	public FriendVO() {
 		
 	}
 	
-	public FriendVO(String userId, String userName, String userProfile) {
+	public FriendVO(String userId, String userName, String userProfile, int count) {
 		
 		this.userId = userId;
 		this.userName = userName;
 		this.userProfile = userProfile;
+		this.count=count;
 	}
 	
 	

@@ -17,6 +17,30 @@ public class ChannelCommentVO implements java.io.Serializable {
 	private String user_id;
 	private String classify;
 	private int report;
+	private String content;
+	private int comment_no;
+	public ChannelCommentVO() {
+		super();
+	}
+	public ChannelCommentVO(int channel_no, String chan_article_content, Date comment_date, int rev, int ref,
+			String chan_article_filepath, String delete_yn, String user_id_bak, int chan_article_no, String user_id,
+			String classify, int report, String content, int comment_no) {
+		super();
+		this.channel_no = channel_no;
+		this.chan_article_content = chan_article_content;
+		this.comment_date = comment_date;
+		this.rev = rev;
+		this.ref = ref;
+		this.chan_article_filepath = chan_article_filepath;
+		this.delete_yn = delete_yn;
+		this.user_id_bak = user_id_bak;
+		this.chan_article_no = chan_article_no;
+		this.user_id = user_id;
+		this.classify = classify;
+		this.report = report;
+		this.content = content;
+		this.comment_no = comment_no;
+	}
 	public int getChannel_no() {
 		return channel_no;
 	}
@@ -89,22 +113,17 @@ public class ChannelCommentVO implements java.io.Serializable {
 	public void setReport(int report) {
 		this.report = report;
 	}
-	public ChannelCommentVO(int channel_no, String chan_article_content, Date comment_date, int rev, int ref,
-			String chan_article_filepath, String delete_yn, String user_id_bak, int chan_article_no, String user_id,
-			String classify, int report) {
-		super();
-		this.channel_no = channel_no;
-		this.chan_article_content = chan_article_content;
-		this.comment_date = comment_date;
-		this.rev = rev;
-		this.ref = ref;
-		this.chan_article_filepath = chan_article_filepath;
-		this.delete_yn = delete_yn;
-		this.user_id_bak = user_id_bak;
-		this.chan_article_no = chan_article_no;
-		this.user_id = user_id;
-		this.classify = classify;
-		this.report = report;
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public int getComment_no() {
+		return comment_no;
+	}
+	public void setComment_no(int comment_no) {
+		this.comment_no = comment_no;
 	}
 	@Override
 	public String toString() {
@@ -112,7 +131,7 @@ public class ChannelCommentVO implements java.io.Serializable {
 				+ ", comment_date=" + comment_date + ", rev=" + rev + ", ref=" + ref + ", chan_article_filepath="
 				+ chan_article_filepath + ", delete_yn=" + delete_yn + ", user_id_bak=" + user_id_bak
 				+ ", chan_article_no=" + chan_article_no + ", user_id=" + user_id + ", classify=" + classify
-				+ ", report=" + report + "]";
+				+ ", report=" + report + ", content=" + content + ", comment_no=" + comment_no + "]";
 	}
 	
 	

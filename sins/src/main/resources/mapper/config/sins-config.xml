@@ -42,6 +42,8 @@
       <typeAlias alias="SMemberVO" type="com.seven.sins.search.vo.SearchMemberVO"/>
       <typeAlias alias="SChannelVO" type="com.seven.sins.search.vo.SearchChannelVO"/>
       <typeAlias alias="SGroupVO" type="com.seven.sins.search.vo.SearchGroupVO"/>
+      
+      <typeAlias alias="FireVO" type="com.seven.sins.fire.vo.FireVO"/>
 	</typeAliases>
 	
 

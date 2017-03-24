@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script type="text/javascript">
 var idCheck=0;
 var idCopyCheck=0;
@@ -74,7 +75,7 @@ var checkNum;
 				$.ajax({
 					url : 'idCheck.m',
 					type : "post",
-					data : {"userid" : id},
+					data : {"userId" : id},
 		            success : function(data){
 						if(data.length == 1){
 							idCopyCheck = 0;
@@ -270,7 +271,7 @@ var checkNum;
 	}
 	function getLogin(){
 		// userid 쿠키에서 id 값을 가져온다.
-		var cook = document.cookie + ";";
+	/* 	var cook = document.cookie + ";";
 		var idx = cook.indexOf("=")+1;
 		var index;
 		var val;
@@ -283,6 +284,22 @@ var checkNum;
 			val = cook.substring(idx, index);
 			
 			document.login.userid.value = val;
+			document.login.idSaveCheck.checked = true;
+		} */
+		var cook = document.cookie + ";";
+		var idx = cook.indexOf("=")+1;
+		var index;
+		var val;
+		console.log(cook);
+		if(cook.length <= 25) {
+			document.login.userid.value = "";
+		 	document.login.idSaveCheck.checked = false;
+		}
+		else {
+			index = cook.length-1;
+			val = cook.substring(30, index);
+			console.log(val);
+			document.login.userId.value = val;
 			document.login.idSaveCheck.checked = true;
 		}
 		
@@ -307,11 +324,11 @@ var checkNum;
 							<td colspan="2">
 								<table id="LT" style="cellpadding: 0; cellspacing: 0; height: 100px">
 									<tr style="height: 50px;">
-										<td><input id="tdd1" type="text" class="box" id="userid" name="userid" Autofocus tabindex="1"/></td>
+										<td><input id="tdd1" type="text" class="box" id="userid" name="userId" Autofocus tabindex="1"/></td>
 										<td rowspan="2">&nbsp;<input type="submit" value="로그인" id="loginbtn" tabindex="3"/></td>
 									</tr>
 									<tr style="height: 50px;">
-										<td><input id="tdd2" type="password" class="box" name="userpwd" tabindex="2"/></td>
+										<td><input id="tdd2" type="password" class="box" name="userPwd" tabindex="2"/></td>
 										<td></td>
 									</tr>
 									<tr><td><input type="checkbox" name="idSaveCheck" id="idSaveCheck"/><label style="font-size : 10pt">아이디 저장</label></td></tr>

@@ -9,13 +9,25 @@ $(function(){
 		sendAlert();	
 	}
 	/*onalert();*/
+	$('#aldi').slideUp(0);
 	
 })
+function alertslriderdown(message) {
+	$('#aldi').text(message);
+	$('#aldi').slideDown(2000);
+	setTimeout("alertsliderup()",5000);
+	
+}
+function alertsliderup() {
+	$('#aldi').slideUp(2000);
+}
 function onalert() {
 	websocket.onmessage = function(evnet) {
 		alert = JSON.parse(event.data);
 		if(alert.type == "alert"){
-			child.alertslriderdown(alert.classify);
+			console.log('메시지받음');	
+			/*child.alertslriderdown(alert.classify);*/
+			alertslriderdown(alert.classify);
 		}
 	}
 }
@@ -24,14 +36,14 @@ function sendAlert() {
 		user_id : $('#userid').val(),
 		type : "login"
 	}
-	console.log('보내기');
 	websocket.send(JSON.stringify(user));
 }
-function alertto(userid, classify, con_no) {
+function alertto(userid, classify,send_id) {
+	console.log('알러트 메시지보냄');
 	var alvo = {
 		user_id : userid,
 		classify : classify,
-		content_no : con_no,
+		send_id : send_id,
 		type : "alert"
 	}
 	websocket.send(JSON.stringify(alvo));

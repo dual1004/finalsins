@@ -21,7 +21,7 @@ public interface FriendService {
 
 	void rejectFriend(String userId, String reqId);
 
-	ArrayList<MemberVO> friendFind(Map<String, String> query);
+	ArrayList<MemberVO> friendFind(Map<String, String> query, int page, int count);
 
 	ArrayList<FriendVO> getRecommend(String userId);
 

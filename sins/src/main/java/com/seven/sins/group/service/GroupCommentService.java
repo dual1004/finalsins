@@ -19,4 +19,15 @@ public interface GroupCommentService {
 	
 	// 게시글에 달린 댓글 갯수.
 	public int countGroupComment(int writeNo);
+
+	// 답글 리스트.
+	public ArrayList<GroupCommentVO> selectGroupCommentList2(GroupCommentVO vo);
+	
+	// 답글 쓰기.
+	public int insertGroupComment2(GroupCommentVO vo);
+	
+	// 답글 수정.
+	
+	// 답글 삭제.
+	
 }

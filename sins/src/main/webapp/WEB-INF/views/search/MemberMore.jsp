@@ -93,7 +93,7 @@ border-width:0px; border-bottom-width:2px; height:1px; border-style:groove;
 cursor:pointer;
 }
 .curs:hover{
-cursor:hand;
+
 text-decoration:underline;
 
 }
@@ -104,6 +104,10 @@ border:0;
 color:#9581BF;
 }
 
+.tabtd{
+cursor:pointer;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -111,12 +115,20 @@ color:#9581BF;
 page=1;
 
 
-$(document).on("mouseenter",".tabtd",function(){
-	$(this).css("cursor", "hand");
-});
-
-$(document).on("mouseleave",".tabtd",function(){
-	$(this).css("cursor", "pointer");
+$(function(){
+	$("#content").scroll( function() {
+		  var elem = $("#content");
+		 
+		  if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+		    {
+			 
+		        setTimeout(function(){
+		        	appender();	
+		        },300);
+		        
+		    }
+		});
+	
 });
 
 
@@ -149,8 +161,8 @@ $(document).on("click", ".addbtn", function(){
 
 
 
-	
-	$(document).scroll(function() {
+	//전체창
+	/* $(document).scroll(function() {
 		
 		var maxHeight = $(document).height();
 		var currentScroll = $(window).scrollTop() + $(window).height();
@@ -163,8 +175,10 @@ $(document).on("click", ".addbtn", function(){
 		}
 		
 		setTimeout(1000);
-		});
-		
+		}); */
+	
+	
+	
 	
 
 

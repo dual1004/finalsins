@@ -16,26 +16,24 @@
   		<div id="header">
       	<div id="overlay_t"></div> 
       	<div id="t-l"></div>
-      	<div id="top"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
+      	<div id="top"></div>
        	<div id="t-r"></div>
       </div>
     <div id="container">
       <div id="left" class="box">
-         <h2>메시지함</h2><br>
+        <br/> <h2>&nbsp;&nbsp;&nbsp;메시지함</h2><br>
         <ul>
-        	<li><h4>받은 메세지</h4></li>
+        	<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
         	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
           	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
           	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
           	<li><a class = "atag" href="msgspamuserlist.j">스팸 유저</a></li>
         </ul>
       </div>
-      <div id="content" class="box">
+      <div id="content">
+      <div class="content">
         <div id="listdiv">
         	<h2>받은 메세지함</h2><br>
-        	<form name = "userform">
-        		<input type="hidden" name="userid" id="userid"/>
-        	</form>
         	<form name = "detailform">
         		<input type="hidden" id="msgno" name="msgno"/>
         		<input type="hidden" name="recive" value="true"/>
@@ -57,16 +55,16 @@
 		    	</select>
 		    	<input type="search" id="seach" name="seach" value="${seach}"/>
         		<input type="submit" value="찾기"/>
-	        	<div id="page">${currentPage } / ${maxPage } page</div>
+	        	<div id="pages">${currentPage } / ${maxPage } page</div>
         	</form>
         	</div> 
      	
-	        <table id="listtable" align="center">
+	        <table id="listtable">
 	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">보낸사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}','${profile}')" onclick="userpage('${msg.send_id}')">${msg.user_name }</a></td>
-		        	<td class="content">
+		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}','${profile}')" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
+		        	<td class="contents">
 		        	<a href="#" onclick="msgdetail(${msg.message_no})">${msg.content}</a>
 		        
 		        	</td>
@@ -115,14 +113,9 @@
         
         
       </div>
-      <div id="right" class="box">
-        <h2>RIGHT</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
       </div>
+      <div id="right" class="box">
+    		<%@include file="/WEB-INF/views/friend/friendView.jsp" %> </div>
     </div>
     <div id="mouseover" style="position:absolute; display:none;">
     	<img alt="" id="proimg" src="" style="width: 50px; height: 50px; border: 1px solid black;">
@@ -133,8 +126,40 @@
      <div id="footer">
         <c:import url="../common/footer.jsp" charEncoding="UTF-8" />
       </div>
-    <div id="spot1"></div>
-    <div id="spot2"></div>
+    <div id="spot1">
+		<ul>	
+			<li><a class = "atag" href="msgreadlist.j">받은 메세지</a></li>
+        	<li><a class = "atag" href="msgbeforewrite.j">메시지 쓰기</a></li>
+          	<li><a class = "atag" href="msgsendlist.j">보낸 메시지</a></li>
+          	<li><a class = "atag" href="msgspamlist.j">스팸 보관함</a></li>
+          	<li><a class = "atag" href="msgspamuserlist.j">스팸 유저</a></li>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	    </ul>
+	</div>
+	<div id="spot2">
+		<ul>
+		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+		<li><a href="javascript:message();">메세지 보기</a></li>
+		<li><a href="javascript:alertover()">알림 보기</a></li>
+		<li><a href="javascript:logout()">로그 아웃</a></li>
+	</ul>
+	<hr style="width:100px; margin:auto;">
+	<br/>
+	<h4 align="center">친구 목록</h4><br>
+	<hr style="width:100px; margin:auto;">
+	<div id='friend'></div>
+	
+	</div>
+	
+	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
     
   </body>
 </html>

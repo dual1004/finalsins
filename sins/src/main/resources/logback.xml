@@ -25,19 +25,21 @@
         </encoder>
     </appender>
  
-    <logger name="org.springframework" level="info"/>
+    <logger name="org.springframework" level="info">
+      <appender-ref ref="console"/>
+    </logger>
   		  
     
     <logger name="sinsLog" level="info">
-    	<appender-ref ref="console"/>
+    	
          <appender-ref ref="FILE"/>
     </logger>
     
           
-      <root level="info">
+ <!--      <root level="info">
            <appender-ref ref="console"/>
           
-      </root>
+      </root> -->
      
         
 </configuration>

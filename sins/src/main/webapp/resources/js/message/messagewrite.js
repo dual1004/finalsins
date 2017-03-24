@@ -2,6 +2,45 @@
  * 
  */
 
+$( document ).ready(function() { 
+    
+	
+	
+	$("#t-l").click(function(){ 
+		$("#spot1, #overlay_t").show(300);
+	}); 
+ 	$("#overlay_t").click(function(e){ 
+     	e.preventDefault(); 
+     	$("#spot1, #spot2, #overlay_t").hide(300); 
+	});
+ 	$("#t-r").click(function(){ 
+ 		$("#spot2, #overlay_t").show(300);
+ 	}); 
+ 	
+ 	var noticeMenuStatus = 0;
+ 	$(".notice").hide();
+ 	
+ 	$("#notice1, #notice2").click(function(){
+ 		if(noticeMenuStatus == 0){
+ 			noticeMenuStatus = 1;
+ 			$(".notice").slideDown("slow");
+ 		}
+ 		else {
+ 			noticeMenuStatus = 0;
+ 			$(".notice").slideUp("slow");
+ 		}
+ 		
+ 	});
+ 	
+ 	
+ 	setTimeout(function(){
+ 		$('#friend').html(friendTag);
+ 		
+ 	},500);
+ 	
+ 	
+});
+
 function fileCheck(file){
 	if (file != null){
 	// 사이즈체크
@@ -59,37 +98,7 @@ $( function() {
 });
 });
 function subsub(file) {
-	// ajax로 존재하는 유저인지 검색 후 서브밋
-	/*var ccc = 0;
-	var cnt = 0;
-	var flag = false;
-	var reciveid = $('#reciveid').val().split(",");
-	$.ajax({
-		url : "allmemberid.j",
-		type : "get",
-		success : function(data) {
-			var allmemberid = data;
-			for(var i = 0 ; i < allmemberid.length ; i++){
-				for(var j = 0 ; j < reciveid.length ; j ++){
-					if(allmemberid[i] == reciveid[j]){
-						cnt++;
-					}
-				}
-			}
-			if(cnt == reciveid.length){
-				ccc++;
-			}
-			
-		}
-			
-	});
-	 if(ccc == 1 && fileCheck(file)){
-		 flag = true;
-	 }else{
-		 flag = false;
-	 }
-	 console.log(flag);*/
-	parent.alertto($('#reciveid').val(), "M@SSAGE");
+	parent.alertto($('#reciveid').val(), "MASSAGE", $('#send_id').val());
 	var flag = false;
 	console.log(fileCheck(file));
 	if(fileCheck(file) && chkallmem()){
@@ -98,6 +107,7 @@ function subsub(file) {
 	 return flag;
 	 
 }
+
 function chkallmem() {
 	var cnt = 0;
 	var flag = false;

@@ -92,9 +92,12 @@ border-width:0px; border-bottom-width:2px; height:1px; border-style:groove;
 cursor:pointer;
 }
 .curs:hover{
-cursor:hand;
+
 text-decoration:underline;
 
+}
+.tabtd{
+cursor:pointer;
 }
 
 </style>
@@ -104,33 +107,25 @@ text-decoration:underline;
 page=1;
 
 
-$(document).on("mouseenter",".tabtd",function(){
-	$(this).css("cursor", "hand");
-});
 
-$(document).on("mouseleave",".tabtd",function(){
-	$(this).css("cursor", "pointer");
-});
-
-
-
-
-
-	
-	$(document).scroll(function() {
-		
-		var maxHeight = $(document).height();
-		var currentScroll = $(window).scrollTop() + $(window).height();
-	
-		
-		
-		if (maxHeight <= currentScroll) {
-			setTimeout(500);
-			appender();
-		}
-		
-		setTimeout(1000);
+$(function(){
+	$("#content").scroll( function() {
+		  var elem = $("#content");
+		 
+		  if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+		    {
+			 
+		        setTimeout(function(){
+		        	appender();	
+		        },300);
+		        
+		    }
 		});
+	
+});
+
+
+	
 		
 	
 

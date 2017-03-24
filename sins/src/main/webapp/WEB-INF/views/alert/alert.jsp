@@ -25,10 +25,19 @@ html, body{
 	margin: 0;
 	pause: 0;
 }
+#aldi{
+	width: 200px;
+	height: 150px;
+	background: blue;
+	position: absolute;
+	top : 10%;
+	left : 88%;
+}
 </style>
 <body>
+<div id="aldi"></div>
 <input type="hidden" id="userid" value="${loginUser.userId}"/>
-<iframe id="iframe" src="/sins/alink.do?path=common/newsfeed">
+<iframe id="iframe" src="/sins/newsfeed.b">
 </iframe>
 </body>
 </html>

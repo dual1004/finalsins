@@ -52,8 +52,8 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	@Override
-	public ArrayList<MemberVO> friendFind(Map<String, String> query) {
-		return friendDao.friendFind(query);
+	public ArrayList<MemberVO> friendFind(Map<String, String> query, int page, int count) {
+		return friendDao.friendFind(query, page, count);
 	}
 
 	@Override

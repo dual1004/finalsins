@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/notice/noticeDetail.css" />
+	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script>
 	$(function(){
 		if($("p").height() <= 500){

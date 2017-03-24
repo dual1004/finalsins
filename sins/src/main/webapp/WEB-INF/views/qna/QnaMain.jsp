@@ -15,6 +15,7 @@
 	href="/sins/resources/css/common/newsfeed-common.css" />
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qnaMain.css" />
+	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 	
 		
 <style>

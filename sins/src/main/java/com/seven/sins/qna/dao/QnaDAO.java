@@ -88,4 +88,24 @@ public class QnaDAO {
 		return (List<QnaContent>) sqlSession.selectList(NAMESPACE+"searchList", map, rowbounds);
 	}
 
+	public void deleteCom(int qnaNo, int comNo) {
+		
+		Map<String, Integer> map=new HashMap<String, Integer>();
+		
+		map.put("qnaNo", qnaNo);
+		map.put("comNo", comNo);
+		
+		sqlSession.delete(NAMESPACE+"deleteCom", map);
+		
+	}
+
+	public void deleteQna(int qnaNo) {
+
+		sqlSession.delete(NAMESPACE+"deleteQna", qnaNo);
+	}
+
+	public int updateQna(QnaContent qna) {
+		return sqlSession.update(NAMESPACE+"updateQna", qna);
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -73,9 +74,11 @@ public class FriendDAO {
 
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<MemberVO> friendFind(Map<String, String> query) {
+	public ArrayList<MemberVO> friendFind(Map<String, String> query, int page, int count) {
 		
-		return (ArrayList<MemberVO>) sqlSession.selectList(NAMESPACE+"friendFind", query);
+		RowBounds rowBounds= new RowBounds(page*5, count);
+		
+		return (ArrayList<MemberVO>) sqlSession.selectList(NAMESPACE+"friendFind", query, rowBounds);
 	}
 
 

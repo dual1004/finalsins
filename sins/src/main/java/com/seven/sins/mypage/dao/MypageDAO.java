@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.seven.sins.fire.vo.FireVO;
+import com.seven.sins.group.vo.GroupCommentVO;
 import com.seven.sins.member.vo.MemberVO;
 import com.seven.sins.mypage.vo.MypageCommentVO;
 import com.seven.sins.mypage.vo.MypageLikeVO;
@@ -104,6 +106,30 @@ public class MypageDAO {
 	public MypageVO MypageSelectLike(MypageVO myvo) {
 		// TODO Auto-generated method stub
 		return (MypageVO) sqlSession.selectOne(NAMESPACE + "MypageSelectLike", myvo);
+	}
+
+	public MypageVO contentsMain(MypageVO my) {
+		// TODO Auto-generated method stub
+		return (MypageVO) sqlSession.selectOne(NAMESPACE + "contentsMain", my);
+	}
+
+	public ArrayList<MypageCommentVO> contentsMainComment(int writeNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList<MypageCommentVO>)sqlSession.selectList("mypage.contentsMainComment", writeNo);
+	}
+
+	public ArrayList<MypageCommentVO> selectMypageCommentList(int writeNo) {
+		return (ArrayList<MypageCommentVO>)sqlSession.selectList(NAMESPACE + "selectMypageCommentList", writeNo);
+	}
+
+	public int insertMypageComment(MypageCommentVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NAMESPACE + "insertMypageComment", vo);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<FireVO> getFireList(FireVO search) {
+		return (ArrayList<FireVO>)sqlSession.selectList("Fire.getfireList", search);
 	}
 	
 

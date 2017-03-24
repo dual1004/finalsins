@@ -83,11 +83,21 @@ public class GroupController {
 
 	// 그룹 생성.
 	@RequestMapping("insertGroup.y")
-	public String insertGroup(/*@RequestParam(value="" required=false) */GroupVO vo) {
+	public String insertGroup(GroupVO vo) {
+		vo.setFilepath("@");
+		System.out.println(vo);
 		groupService.insertGroup(vo);
 		
 		return "forward:/selectGroupList.y";
 	}
+	
+	/*// 그룹 수정
+	@RequestMapping("updateGroup.y")
+	public String updateGroup(GroupVO vo) {
+		groupService.updateGroup(vo);
+		
+		return "forward:/
+	}*/
 
 	// 그룹 멤버--------------------------------------------------------------------
 	// 그룹에 가입된 멤버 상세히 보여줌.
@@ -154,7 +164,6 @@ public class GroupController {
 	@RequestMapping("updateGroupWrite.y")
 	public String updateGroupWrite(GroupWriteVO vo) {
 		groupWriteService.updateGroupWrite(vo);
-		System.out.println(vo);
 		
 		return "forward:/selectGroup.y?groupNo=" + vo.getGroupNo();
 	}
@@ -191,8 +200,31 @@ public class GroupController {
 	
 	@RequestMapping("insertGroupComment.y")
 	public @ResponseBody ArrayList<GroupCommentVO> insertGroupComment(GroupCommentVO vo) {
-
 		groupCommentService.insertGroupComment(vo);
+		
+		return selectGroupCommentList(vo.getWriteNo());
+	}
+	
+	@RequestMapping("deleteGroupComment.y")
+	public @ResponseBody ArrayList<GroupCommentVO> deleteGroupComment(GroupCommentVO vo) {
+		groupCommentService.deleteGroupComment(vo);
+		ArrayList<GroupCommentVO> list = groupCommentService.selectGroupCommentList(vo.getWriteNo());
+		
+		return list;
+	}
+	
+	// 답글 -----------------------------------------------------------------------------
+	@RequestMapping("selectGroupCommentList2.y")
+	public @ResponseBody ArrayList<GroupCommentVO> selectGroupCommentList2(GroupCommentVO vo) {
+		ArrayList<GroupCommentVO> list = groupCommentService.selectGroupCommentList2(vo);
+		
+		return list;
+	}
+	
+	@RequestMapping("insertGroupComment2.y")
+	public @ResponseBody ArrayList<GroupCommentVO> insertGroupComment2(GroupCommentVO vo) {
+		System.out.println(vo);
+		groupCommentService.insertGroupComment2(vo);
 		
 		return selectGroupCommentList(vo.getWriteNo());
 	}

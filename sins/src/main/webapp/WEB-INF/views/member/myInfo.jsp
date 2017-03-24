@@ -15,6 +15,7 @@
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
 
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/member/myInfo.css" />
+ <link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
     
 <script type="text/javascript">
 var userId = $("#userId").val();
@@ -33,6 +34,35 @@ var checkBirth = 0;
 var checkAddress = 0;
 
 	$( document ).ready(function() { 
+		
+		$("#t-l").click(function(){ 
+				$("#spot1, #overlay_t").show(300);
+		}); 
+		$("#overlay_t").click(function(e){ 
+		   e.preventDefault(); 
+		   $("#spot1, #spot2, #overlay_t").hide(300); 
+		});
+		$("#t-r").click(function(){ 
+		 	$("#spot2, #overlay_t").show(300);
+		 }); 
+		 	
+		 var noticeMenuStatus = 0;
+		 $(".notice").hide();
+		 	
+		 $("#notice1, #notice2").click(function(){
+		 	if(noticeMenuStatus == 0){
+		 		noticeMenuStatus = 1;
+		 		$(".notice").slideDown("slow");
+		 	}
+		 	else {
+		 		noticeMenuStatus = 0;
+		 		$(".notice").slideUp("slow");
+		 	}
+		 		
+		 });
+		 
+		 
+		
 		$("#cencle").hide();
 		$("#cencle").prop("disabled", "disabled");
 		$(".pwdchange").hide();
@@ -333,6 +363,11 @@ var checkAddress = 0;
 			$('#spot2, #overlay_t').hide(); 
 		});
 		
+		setTimeout(function(){
+	 		$('#friend').html(friendTag);
+	 		
+	 	},500);
+		
 	});
 	
 	//비밀번호 수정완료버튼 클릭시 onsubmit이벤트 처리 함수
@@ -391,26 +426,26 @@ var checkAddress = 0;
 	<div id="header">
 		<div id="overlay_t"></div> 
 		<div id="t-l"></div>
-		<div id="top"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
+		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
 	<div id="container">
 		<div id="left" class="box">
-			<h2>LEFT</h2>
 			<ul>
-			<li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
-			<li><a href="alink.do?path=channelListView/channelList">채널</a></li>
+			<li><a href="mypage.b">MyPage</a></li>
+			<li><a href="selectChannelList.l">채널</a></li>
 			<li><a href="selectGroupList.y">그룹</a></li>
-			<li><h4>뉴스피드</h4></li>
+			<li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
 			<li><a href="selectQna.n">고객센터</a></li>
 			</ul>
 		</div>
-		<div id="content" class="box">
-			
+		<div id="content">
+			<div class="content">
 			<div id="myInfodiv">
+				<div id="tftd"><h1 id="title">내 정보</h1></div>
+				<br/>
 				<table	id="myInfoTable">
-					<tr><td colspan="3" id="tftd"><h1 id="title">내 정보</h1></td></tr>
-					<tr><td class="ftd"><label>아이디</label></td><td class="std"><input type="text" id="userId" name="userId" size="25" value="${loginUser.userId}" maxlength="25" class="t" readonly/></td><td><input type="button" id="memberDeletebtn" value="회원탈퇴" /></td></tr>
+					<tr><td id="ftd" class="ftd"><label>아이디</label></td><td id="std" class="std"><input type="text" id="userId" name="userId" size="25" value="${loginUser.userId}" maxlength="25" class="t" readonly/></td><td id="ttd"><input type="button" id="memberDeletebtn" value="회원탈퇴" /></td></tr>
 					<form action="deleteMember.k">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
 						<tr id="memberdelete"><td class="ftd"><label>회원탈퇴</label></td><td class="std"><label id="deletecheck">정말로 탈퇴 하시겠습니까?</label><br/><input type="submit" id="deletesubmit" class="deletebtn" value="확인"/><input type="button" id="memberDeleteCenclebtn" class="deletebtn" value="취소"></td><td></td></tr>
@@ -418,7 +453,7 @@ var checkAddress = 0;
 					<tr><td class="ftd"><label>비밀번호</label></td><td class="std"><input type="password" id="userPwd" size="25" maxlength="25" class="t" name="userPwd" value="${loginUser.userPwd}" readonly/></td><td><input type="button" value="수정하기" id="pwdchangebtn"><input type="button" value="수정취소" id="pwdchangecanclebtn" /></td></tr>
 					<form action="changePwd.k" method="post" onsubmit="return pwdCheck()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
-						<tr class="pwdchange"><td class="ftd"><label>비밀번호 바꾸기</label></td><td class="std"><input type="password" id="pwdChange" size="25" maxlength="25" class="t" name="userPwd" placeholder="암호(특문,영문,숫자 조합 8~25자)" /></td><td><input type="submit" value="수정완료" id="pwdmodifybtn"/></td></tr>
+						<tr class="pwdchange"><td class="ftd"><label>비밀번호 바꾸기</label></td><td class="std"><input type="password" id="pwdChange" size="25" maxlength="25" class="t" name="userPwd" placeholder="(특영숫자조합8~25자)" /></td><td><input type="submit" value="수정완료" id="pwdmodifybtn"/></td></tr>
 						<tr class="pwdchange"><td class="ftd"><label>비밀번호 확인</label></td><td class="std"><input type="password" id="pwdCheck" size="25" maxlength="25" class="t" placeholder="암호 확인"/></td><td></td></tr>
 					</form>
 					<tr><td class="ftd"><label>이름</label></td><td colspan="2" class="std"><input type="text" size="25" maxlength="25" class="t" id="userName" name="userName" value="${loginUser.userName}" readonly/></td></tr>
@@ -427,7 +462,7 @@ var checkAddress = 0;
 						<tr><td class="ftd"><label>생일</label></td><td class="std"><input type="text" size="25" maxlength="25" class="t" value="등록되지 않은 정보입니다." readonly /></td><td><input type="button" class="birthChangebtn" value="수정하기" /><input type="button" id="birthCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<c:if test="${not empty loginUser.birth}">
-						<tr><td class="ftd"><label>생일</label></td><td class="std"><input type="text" size="25" maxlength="25" class="t" value="${loginUser.birth}" readonly /><input type="button" value="삭제" id="birthDeletebtn" /></td><td><input type="button" class="birthChangebtn" value="수정하기" /><input type="button" id="birthCenclebtn" value="수정취소" /></td></tr>
+						<tr><td class="ftd"><label>생일</label></td><td class="std"><input type="text" size="25" maxlength="25" class="t" value="${loginUser.birth}" readonly /><input type="button" value="삭제" id="birthDeletebtn" class="del"/></td><td><input type="button" class="birthChangebtn" value="수정하기" /><input type="button" id="birthCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<form action="changeBirth.k" onsubmit="return birthCheck()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
@@ -442,7 +477,7 @@ var checkAddress = 0;
 						<tr><td class="ftd"><label>주소</label></td><td class="std"><input type="text" id="address" size="25" class="t" maxlength="25" name="address"  value="등록되지 않은 정보입니다." readonly/></td><td><input type="button" id="addressChangebtn" value="수정하기" /><input type="button" id="addressCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<c:if test="${not empty loginUser.address}">
-						<tr><td class="ftd"><label>주소</label></td><td class="std"><input type="text" id="address" size="25" class="t" maxlength="25" name="address"  value="${loginUser.address}" readonly/><input type="button" value="삭제" id="addressDeleteBtn"/></td><td><input type="button" id="addressChangebtn" value="수정하기" /><input type="button" id="addressCenclebtn" value="수정취소" /></td></tr>
+						<tr><td class="ftd"><label>주소</label></td><td class="std"><input type="text" id="address" size="25" class="t" maxlength="25" name="address"  value="${loginUser.address}" readonly/><input type="button" value="삭제" id="addressDeleteBtn" class="del"/></td><td><input type="button" id="addressChangebtn" value="수정하기" /><input type="button" id="addressCenclebtn" value="수정취소" /></td></tr>
 					</c:if>
 					<form action="changeAddress.k" onsubmit="return checkAddress()">
 						<input type="hidden" name="userId" value="${loginUser.userId}" />
@@ -466,7 +501,7 @@ var checkAddress = 0;
 					</form>
 					<tr><td class="ftd" id="fftd"><label>가입날짜</label></td><td colspan="2" class="std" id="fstd"><input type="text" size="25" maxlength="25" class="t" name="enrollDate" value="${loginUser.enrollDate}" readonly /></td></tr>
 				</table>
-				
+				</div>
 			</div>
 		</div>
 		<div id="right" class="box">
@@ -476,7 +511,33 @@ var checkAddress = 0;
 	<div id="footer">
 		<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
 	</div>
-	<div id="spot1"></div>
-	<div id="spot2"></div>
+	<div id="spot1">
+		<ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	    </ul>
+	</div>
+	<div id="spot2">
+		<ul>
+		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+		<li><a href="javascript:message();">메세지 보기</a></li>
+		<li><a href="javascript:alertover()">알림 보기</a></li>
+		<li><a href="javascript:logout()">로그 아웃</a></li>
+	</ul>
+	<hr style="width:100px; margin:auto;">
+	<br/>
+	<h4 align="center">친구 목록</h4><br>
+	<hr style="width:100px; margin:auto;">
+	<div id='friend'></div>
+	</div>
+	
+	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
 </body>
 </html>

@@ -48,7 +48,7 @@
 	        	<input type="hidden" id="user_id" name="user_id"/>
 	        	<input type="hidden" id="classify" name="classify"/>
 	        	<input type="hidden" id="content_no" name="content_no"/>
-	        	<input type="hidden" id="sendid" name="userid"/>
+	        	<input type="hidden" id="userid" name="userid"/>
 	        </form>
 	        <div id="contentDiv" class="box">
 				<hr>

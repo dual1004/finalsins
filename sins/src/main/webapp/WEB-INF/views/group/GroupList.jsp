@@ -9,104 +9,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/common/newsfeed-common.css" />
+	href="/sins/resources/css/group/groupList.css" />
+	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#t-l').click(function() {
-			$('#spot1, #overlay_t').show();
-		});
-		$('#overlay_t').click(function(e) {
-			e.preventDefault();
-			$('#spot1, #overlay_t').hide();
-		});
-		$('#t-r').click(function() {
-			$('#spot2, #overlay_t').show();
-		});
-		$('#overlay_t').click(function(e) {
-			e.preventDefault();
-			$('#spot2, #overlay_t').hide();
-		});
+$( document ).ready(function() { 
+    
+	$("#t-l").click(function(){ 
+		$("#spot1, #overlay_t").show(300);
+	}); 
+ 	$("#overlay_t").click(function(e){ 
+     	e.preventDefault(); 
+     	$("#spot1, #spot2, #overlay_t").hide(300); 
 	});
+ 	$("#t-r").click(function(){ 
+ 		$("#spot2, #overlay_t").show(300);
+ 	}); 
+ 	
+ 	var noticeMenuStatus = 0;
+ 	$(".notice").hide();
+ 	
+ 	$("#notice1, #notice2").click(function(){
+ 		if(noticeMenuStatus == 0){
+ 			noticeMenuStatus = 1;
+ 			$(".notice").slideDown("slow");
+ 		}
+ 		else {
+ 			noticeMenuStatus = 0;
+ 			$(".notice").slideUp("slow");
+ 		}
+ 		
+ 	});
+ 	
+ 	setTimeout(function(){
+ 		$('#friend').html(friendTag);
+ 		
+ 	},500);
+});
+
+
 	
 	$(function(){
-		$(".groupPageBtn").click(function(){
-			var groupNo = $(this).next().val();
+		$(".groupList").click(function(){
+			var groupNo = $(this).children().first().val();
 			var url = "selectGroup.y?groupNo="+groupNo;		
 			$(location).prop('href', url);
 		});
 	});
 	
 </script>
-<style>
-	.groupList{
-		position: relative;
-		float: left;
-		width: 47%;
-		height: 20%;
-		margin: 1%;
-		border: 1px solid blue;
-	}
-	
-	.groupName{
-		display: inline-block;
-		border: 1px solid;
-		background: lightblue;
-		margin-left: 5px;
-		margin-top: 5px;
-	}
-	
-	.memberCount {
-		position: absolute;
-		display: inline-block;
-		margin-bottom: 5px;
-		margin-right: 5px;
-		right: 0;
-		bottom: 0;
-		font-size: 12px;
-	}
-	
-	.category {
-		position: absolute;
-		display: inline-block;
-		margin-bottom: 5px;
-		margin-left: 5px;
-		left: 0;
-		bottom: 0;
-		font-size: 13px;
-	}
-	
-	#content {
-		position: relative;
-	}
-	
-	#createTable {
-		width: 150px;
-		height: 400px;
-		border-collapse: collapse;
-	}
-	
-</style>
 </head>
 <body>
 	<div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
-		<div id="top">
-			<c:import url="../common/top.jsp" charEncoding="UTF-8" />
-		</div>
+		<div id="top"></div>
 		<div id="t-r"></div>
 	</div>
 	<div id="container">
 		<div id="left" class="box">
-			<h2>LEFT</h2>
 			<ul>
-				 <li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
-				 <li><a href="alink.do?path=channel/channelList">채널</a></li>
-				 <li><a href="selectGroupList.y">그룹</a></li>
-				 <li><h4>뉴스피드</h4></li>
-				 <li><a href="selectQna.n">고객센터</a></li>
-			</ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	         
+	    </ul>
 		</div>
 		<div id="content" class="box">
 			<h2 id="pageName">그룹리스트</h2>
@@ -114,11 +86,9 @@
 				<div class="groupList">
 					<input type="hidden" class="groupNo" value="${item.groupNo}"/>
 					<label class="groupName">${item.groupName}</label>
+					<div id="cover">
 					<div class="memberCount">${item.memberCount} 명</div>
 					<div class="category">${item.category1}</div>
-					<div class="groupBtnContainer">
-						<input type="button" class="groupPageBtn" value="그룹페이지로"/>
-						<input type="hidden" class="groupNo" value="${item.groupNo}"/>
 					</div>
 				</div>
 				
@@ -126,16 +96,17 @@
 		</div>
 		<div id="right" class="box">
 			<br/>
-        	<div id="center"><h3>그룹 개설</h3></div>
+        	<div id="center">
+        	<h3>그룹 개설</h3>
 			<form id="createGroup" action="insertGroup.y" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="userId" value="${loginUser.userId}"/>
             	<table id="createTable">
             		
-            		<tr><td><input type="text" id="groupName" name="groupName" size="18" 
+            		<tr><td><input type="text" id="groupName" name="groupName" size="25" 
             					maxlength="11" required placeholder="그룹 이름"></td></tr>
             		
-            		<tr><td><textarea id="groupInfo" rows="5" cols="30" 
-            					name="groupInfo" placeholder="그룹 정보 입력"></textarea></td></tr>
+            		<tr><td><textarea id="groupInfo" rows="5" cols="25" 
+            					name="groupInfo" placeholder="그룹 정보 입력" style="resize:none"></textarea></td></tr>
             		
             		<tr><td><label>대표 이미지</label>
             				<input type="file" id="filepath" name="filepath"></td></tr>
@@ -155,14 +126,39 @@
             		<tr><td><button type="submit" id="makeGroup" class="create">그룹 생성</button></td></tr>
             	
             	</table>
-            	<input type="hidden" name="keyword" value=""/>
 			</form>
+			</div>
 		</div>
 	</div>
 	<div id="footer">
 		<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
 	</div>
-	<div id="spot1"></div>
-	<div id="spot2"></div>
+	<div id="spot1">
+		<ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li id="notice2">고객센터</li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          
+	        
+	    </ul>
+	</div>
+	<div id="spot2">
+		<ul>
+		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
+		<li><a href="javascript:message();">메세지 보기</a></li>
+		<li><a href="javascript:alertover()">알림 보기</a></li>
+		<li><a href="javascript:logout()">로그 아웃</a></li>
+	</ul>
+	<hr style="width:100px; margin:auto;">
+	<br/>
+	<%@include file="/WEB-INF/views/friend/friendView.jsp" %> 
+	
+	</div>
+	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
 </body>
 </html>

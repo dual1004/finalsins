@@ -17,6 +17,7 @@ public class ChannelArticleVO implements java.io.Serializable {
 	private int report;
 	private String user_id;
 	private int like_amount;
+	private int comment_no;
 	public int getChannel_no() {
 		return channel_no;
 	}
@@ -99,10 +100,16 @@ public class ChannelArticleVO implements java.io.Serializable {
 	public ChannelArticleVO() {
 		super();
 	}
+	public int getComment_no() {
+		return comment_no;
+	}
+	public void setComment_no(int comment_no) {
+		this.comment_no = comment_no;
+	}
 	public ChannelArticleVO(int channel_no, String channel_user_id, String delete_yn, int chan_article_no,
 			String chan_article_content, Date chan_article_write_date, String chan_article_filepath,
-			String chan_article_like, String user_id_bak, String classify, int report, String user_id,
-			int like_amount) {
+			String chan_article_like, String user_id_bak, String classify, int report, String user_id, int like_amount,
+			int comment_no) {
 		super();
 		this.channel_no = channel_no;
 		this.channel_user_id = channel_user_id;
@@ -117,6 +124,7 @@ public class ChannelArticleVO implements java.io.Serializable {
 		this.report = report;
 		this.user_id = user_id;
 		this.like_amount = like_amount;
+		this.comment_no = comment_no;
 	}
 	@Override
 	public String toString() {
@@ -125,7 +133,8 @@ public class ChannelArticleVO implements java.io.Serializable {
 				+ ", chan_article_write_date=" + chan_article_write_date + ", chan_article_filepath="
 				+ chan_article_filepath + ", chan_article_like=" + chan_article_like + ", user_id_bak=" + user_id_bak
 				+ ", classify=" + classify + ", report=" + report + ", user_id=" + user_id + ", like_amount="
-				+ like_amount + "]";
+				+ like_amount + ", comment_no=" + comment_no + "]";
 	}
+	
 	
 }

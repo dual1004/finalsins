@@ -43,4 +43,24 @@ public class GroupCommentServiceImpl implements GroupCommentService {
 		int result = groupCommentDAO.countGroupComment(writeNo);
 		return result;
 	}
+
+	
+	
+	
+	
+	
+	@Override
+	public ArrayList<GroupCommentVO> selectGroupCommentList2(GroupCommentVO vo) {
+		ArrayList<GroupCommentVO> list = groupCommentDAO.selectGroupCommentList2(vo);
+		
+		return list;
+	}
+	
+	@Override
+	public int insertGroupComment2(GroupCommentVO vo) {
+		int result = groupCommentDAO.insertGroupComment2(vo);
+		return result;
+	}
+
+	
 }

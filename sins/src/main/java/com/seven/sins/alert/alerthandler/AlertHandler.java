@@ -32,10 +32,8 @@ public class AlertHandler {
 	public void alertOnMessage(String message) throws IOException{
 		System.out.println("서비스로직");
 		AlertVO alertvo = convert(message);
-		System.out.println(message);
-		System.out.println(alertvo.getType());
 		if(alertvo.getType().equals("alert")){
-			if(alluser.containsValue(user)){
+			if(alluser.containsValue(user) && !(alertvo.getSend_id().equals(alluser.get(alertvo.getUser_id()) ))){
 				if(alluser.containsKey(alertvo.getUser_id())){
 					alluser.get(alertvo.getUser_id()).getBasicRemote().sendText(JSONConverter(alertvo,"alert"));
 				}
@@ -43,8 +41,10 @@ public class AlertHandler {
 				//로그인이 안된 상대에게 메시지 부분
 			}
 		}else{
+			System.out.println(alertvo.getUser_id());
 			alluser.put(alertvo.getUser_id(), user);
 		}
+		System.out.println(alluser.size());
 	}
 	
 	private AlertVO convert(String message) {
@@ -56,6 +56,16 @@ public class AlertHandler {
 	@OnClose
 	public void alsertOnClose(Session session) throws Exception{
 		System.out.println("나가기");
+		Set key = alluser.keySet();
+		Iterator iter = key.iterator();
+		while(iter.hasNext()){
+			String i = (String) iter.next();
+			System.out.println(i);
+			if(alluser.containsKey(i)){
+				alluser.remove(i);
+			}
+		}
+		
 	}
 	
 	public String JSONConverter(AlertVO alertvo,String type) {
