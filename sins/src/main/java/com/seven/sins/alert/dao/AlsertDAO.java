@@ -30,4 +30,10 @@ public class AlsertDAO {
 	public int alertDelete(AlertVO alvo) {
 		return (int)sqlSession.delete(NAMESPACE + "alertdelete", alvo);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<AlertVO> alertListAjaxTop(String userId) {
+		RowBounds rowbownd = new RowBounds(0,5);
+		return (List<AlertVO>)sqlSession.selectList(NAMESPACE + "startlist", userId, rowbownd);
+	}
 }

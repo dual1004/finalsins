@@ -111,6 +111,25 @@
 	border: 1px solid black;
 	cursor: pointer;
 }
+#alertdiv{
+	width: 200px;
+	height: 150px;
+	background: red;
+	position: absolute;
+	top : 10%;
+	left : 88%;
+}
+#alertlist{
+	position : relative;
+	border : 1px solid black;;
+	top : 100%;
+	left : 50%;
+	width: 150px;
+	height: 200px;
+	background: white;
+	display: none;
+	text-align: center;
+}
 
 @media screen and (max-width:900px) {
 	#serchbar {

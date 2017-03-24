@@ -6,6 +6,11 @@ $(function() {
 		$('#msglist').hide();
 		$('#msglist').text("");
 	})
+	$('#alertlist').mouseleave(function() {
+		$('#alertlist').hide();
+		$('#alertlist').text("");
+	})
+	
 	$(document).on("mouseenter",".msglistajax",function(){
 		
 		$(this).css("background","red");
@@ -15,7 +20,17 @@ $(function() {
 		$(this).css("background","white");
 	})
 	parent.onalert();
+	$('#alertdiv').slideUp(0);
 })
+function alertslriderdown(message) {
+	$('#alertdiv').text(message);
+	$('#alertdiv').slideDown(2000);
+	setTimeout("alertsliderup()",5000);
+	
+}
+function alertsliderup() {
+	$('#alertdiv').slideUp(2000)
+}
 function message() {
 		location.href="msgreadlist.j";
 	}
@@ -31,7 +46,11 @@ function message() {
 	function logout(){
 		location.href="logout.k";
 	}
+	function removealertlist() {
+		$('#alertlist').hide();
+	}
 	function msgover() {
+		$('#alertlist').hide();
 		$('#msglist').text("");
 		var msgdiv = $('#msglist');
 		$.ajax({
@@ -54,11 +73,34 @@ function message() {
 		})
 		
 	}
+	
+function alert() {
+	location.href="alertlist.j";
+}
+
 function removemsglist() {
 	$('#msglist').hide();
 }
 function alertover() {
 	$('#msglist').hide();
+	console.log("여기여기");
+	var aldiv = $('#alertlist');
+	aldiv.text("");
+	$.ajax({
+		url : "alertlistajaxtop.j",
+		success : function(list) {
+			for(var i = 0  ; i < list.length; i++){
+			var x = 
+				"<div class='msglistajax'"+"onclick='alert("+
+				")'>" +
+				"<img class='msgajaximg' src="+"${pageContext.request.contextPath}/resources/file/"+
+				list[i].send_id+"/"+list[i].filepath+">"+
+				list[i].classify+"</div>";
+			aldiv.append(x);
+			aldiv.show();
+			}
+		}
+	})
 	
 }
 function msgdetail(msgno) {

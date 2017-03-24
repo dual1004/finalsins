@@ -60,5 +60,12 @@ public class AlertController {
 		mv.setViewName("forward:mypage2.b?userid="+userid);
 		return mv;
 	}
+	//알람 탑
+	@RequestMapping("alertlistajaxtop.j")
+	@ResponseBody
+	public List<AlertVO> alertListAjaxTop(@SessionAttribute MemberVO loginUser){
+		List<AlertVO> list =alertservice.alertListAjaxTop(loginUser.getUserId()); 
+		return list;
+	}
 	
 }

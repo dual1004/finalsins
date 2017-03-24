@@ -23,12 +23,14 @@
 <div id="mylayout">
 	<div id="blacnk" onmouseover="removemsglist()"></div>
 	<div id="message" onmouseover="msgover()" onclick="message()"></div>
-	<div id="allet" onmouseover="alertover()"></div>
-	<div id="logout" onclick="logout()"></div>
+	<div id="allet" onmouseover="alertover()" onclick="alert()"></div>
+	<div id="logout" onmouseover="removealertlist()" onclick="logout()"></div>
 	<div id="my" onclick="goMyInfo()"><p id="m">내 정보보기</p></div>
 	<div id="msglist"></div>
-	
-	
+	<div id="alertlist"></div>
+</div>
+<div id="alertdiv">
+
 </div>
 </body>
 </html>

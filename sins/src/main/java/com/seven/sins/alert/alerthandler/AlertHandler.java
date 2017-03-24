@@ -33,10 +33,14 @@ public class AlertHandler {
 		System.out.println("서비스로직");
 		AlertVO alertvo = convert(message);
 		System.out.println(message);
-		System.out.println(alertvo.getUser_id());
-		if(alluser.containsValue(user)){
-			if(alluser.containsKey(alertvo.getUser_id())){
-				alluser.get(alertvo.getUser_id()).getBasicRemote().sendText(JSONConverter(alertvo,"alert"));
+		System.out.println(alertvo.getType());
+		if(alertvo.getType().equals("alert")){
+			if(alluser.containsValue(user)){
+				if(alluser.containsKey(alertvo.getUser_id())){
+					alluser.get(alertvo.getUser_id()).getBasicRemote().sendText(JSONConverter(alertvo,"alert"));
+				}
+			}else{
+				//로그인이 안된 상대에게 메시지 부분
 			}
 		}else{
 			alluser.put(alertvo.getUser_id(), user);

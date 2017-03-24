@@ -12,4 +12,6 @@ public interface AlsertServceinter {
 
 	int alertDelete(AlertVO alvo);
 
+	List<AlertVO> alertListAjaxTop(String userId);
+
 }

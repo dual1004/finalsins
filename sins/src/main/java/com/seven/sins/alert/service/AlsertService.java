@@ -29,4 +29,9 @@ public class AlsertService implements AlsertServceinter{
 		return alertDAO.alertDelete(alvo);
 	}
 
+	@Override
+	public List<AlertVO> alertListAjaxTop(String userId) {
+		return alertDAO.alertListAjaxTop(userId);
+	}
+
 }

@@ -8,21 +8,21 @@ $(function(){
 	websocket.onopen = function(event) {
 		sendAlert();	
 	}
-	onalert();
+	/*onalert();*/
 	
 })
 function onalert() {
 	websocket.onmessage = function(evnet) {
 		alert = JSON.parse(event.data);
 		if(alert.type == "alert"){
-			var alert = "<div id='alert'>"+alert.classify+"에서 새로운 아림이 있습니다."+"</div>"
-			setInterval()
+			child.alertslriderdown(alert.classify);
 		}
 	}
 }
 function sendAlert() {
 	var user ={
-		user_id : $('#userid').val()
+		user_id : $('#userid').val(),
+		type : "login"
 	}
 	console.log('보내기');
 	websocket.send(JSON.stringify(user));
