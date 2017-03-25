@@ -58,12 +58,12 @@
 	        	<div id="pages">${currentPage } / ${maxPage } page</div>
         	</form>
         	</div> 
-     	
+			     	
 	        <table id="listtable">
 	        	<tr><th id="chkth"><input type="checkbox" id="msgallchk"></th><th id="userth">보낸사람</th><th id="contentth">내용</th><th id="dateth">보낸날자</th><th id="fileth">첨부파일</th><th id="readth">수신여부</th></tr>
 	        	<c:forEach var="msg" items="${msglist }">
 	        		<tr><td><input type="checkbox" class="msgchkbox" name="msg_no" value="${msg.message_no}"></td>
-		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}','${profile}')" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
+		        	<td><a href="#" class="atagname" onmouseover="view('${msg.send_id}','${msg.profile}')" onclick="userpage(${msg.send_id})">${msg.user_name }</a></td>
 		        	<td class="contents">
 		        	<a href="#" onclick="msgdetail(${msg.message_no})">${msg.content}</a>
 		        

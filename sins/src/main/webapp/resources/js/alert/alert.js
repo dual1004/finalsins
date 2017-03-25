@@ -3,7 +3,7 @@
  */
 
 $(function(){
-	var wsuri = "ws://192.168.20.89:9999/sins/alert-ws";
+	var wsuri = "ws://localhost:9999/sins/alert-ws";
 	websocket = new WebSocket(wsuri);
 	websocket.onopen = function(event) {
 		sendAlert();	

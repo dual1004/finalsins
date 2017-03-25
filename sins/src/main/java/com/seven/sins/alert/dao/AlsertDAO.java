@@ -17,8 +17,11 @@ public class AlsertDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
 	@SuppressWarnings("unchecked")
 	public List<AlertVO> getAlertList(String userId, int start, int limit) {
+		System.out.println(start);
+		System.out.println(limit);
 		RowBounds rowbownd = new RowBounds(start,limit); 
 		return (List<AlertVO>)sqlSession.selectList(NAMESPACE+"startlist", userId, rowbownd);
 	}

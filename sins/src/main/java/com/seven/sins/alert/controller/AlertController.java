@@ -46,9 +46,13 @@ public class AlertController {
 	@ResponseBody
 	public List<AlertVO> alertListAjax(@SessionAttribute MemberVO loginUser, @RequestParam int limit){
 		int start = limit+1;
-		limit += 5;
+		limit = start + 5;
 		System.out.println(start+"," + limit);
 		List<AlertVO> list = alertservice.getAlertList(loginUser.getUserId(), start, limit);
+		System.out.println(list.size());
+		for(int i = 0 ; i<list.size();i++){
+			System.out.println(list.get(i).getSend_id());
+		}
 		return list;
 	}
 	
@@ -64,7 +68,7 @@ public class AlertController {
 	@RequestMapping("alertlistajaxtop.j")
 	@ResponseBody
 	public List<AlertVO> alertListAjaxTop(@SessionAttribute MemberVO loginUser){
-		List<AlertVO> list =alertservice.alertListAjaxTop(loginUser.getUserId()); 
+		List<AlertVO> list =alertservice.alertListAjaxTop(loginUser.getUserId());
 		return list;
 	}
 	

@@ -63,7 +63,6 @@ public class MessageController {
 			totalListCount = messageservice.getSeachListCount(listvo);
 			msglist = messageservice.getMsgSeachList(listvo, currentPage, limit);
 		}
-			
 		
 		//Map<String, MessageVO> msgmap = messageservice.getMsgMap(loginUser.getUserId(), currentPage, limit);
 		int maxPage = (int) ((double) totalListCount / limit + 0.9);

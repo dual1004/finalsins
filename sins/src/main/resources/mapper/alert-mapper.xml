@@ -15,7 +15,7 @@
 	
 	<select id="startlist" parameterType="string" resultMap="alertmap">
 		select * from alert 
-		where user_id = #{userid}
+		where user_id = #{userId}
 		order by insert_date DESC
 	</select>
 	

@@ -31,21 +31,19 @@ $( document ).ready(function() {
  		}
  		
  	});
+ 	$("#content").scroll( function() {
+       var elem = $("#content");
+       console.log('안드러옴?');
+        if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+          {
+              setTimeout(function(){
+            	  appendalert();  
+              },300);
+              
+          }
+ 	 });
 });
-$(function(){
-	   $("#content").scroll( function() {
-	        var elem = $("#content");
-	       
-	        if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
-	          {
-	              setTimeout(function(){
-	            	  appendalert();  
-	              },300);
-	              
-	          }
-	      });
-	   
-	});
+
 
 function visit(userid,user_id,classify,content_no) {
 	$('#user_id').val(user_id);
@@ -69,19 +67,20 @@ function appendalert() {
 			data : {"limit" : limit},
 			success : function(data) {
 				for(var i =0;i<data.length;i++){
-					var tag = "<tr><td class='alertid' style='width:20%'><img class='curs' src="+
+					var tag = "<tr" + "onclick='visit('"+
+						data[i].send_id+"','"+data[i].user_id+"','"+data[i].classify+"','"+data[i].coment_no+"')"+
+						"><td class='alertid' style='width:20%'><img class='curs' src="+
 					"${pageContext.request.contextPath}/resources/file/"+
 					data[i].send_id+"/"+data[i].filepath+
 					"' style='width: 80px; height: 90px;' /></td>"+
-					"<td class='content style='width:40%; text-align:left;'><label class='curs'>"+
+					"<td class='content' style='text-align:left;'><label class='curs'>"+
 					data[i].classify+"</label><br><label class='grayc'>"+
 					"</label></td>";
 					$("#alertTable > tbody:last").append(tag);
+					$('#limit').val(Number(limit)+6);
 					
 				}
 		}
 		})
-		$('#count').val(count);
-		$('#limit').val(limit);
 	}
 }

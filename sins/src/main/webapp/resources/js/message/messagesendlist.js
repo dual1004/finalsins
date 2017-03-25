@@ -71,7 +71,8 @@ function view(id,path) {
 	 x = event.clientX;
     y = event.clientY; 
     var propath = $('#propath').val()+id+"/"+path;
-    $('#proimg').src = propath;
+    console.log(propath);
+    $('#proimg').prop("src",propath);
     var di = $('#movtext');	
     di.text(id);
     var mouseover = $('#mouseover');

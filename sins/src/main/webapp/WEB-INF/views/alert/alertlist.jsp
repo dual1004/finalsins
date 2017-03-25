@@ -59,7 +59,7 @@
 			<tr class="sendtr" onclick="visit('${alert.send_id}','${alert.user_id }','${alert.classify }'
 			,${alert.content_no })">
 				<td class='alertid' style='width:20%'><img class='curs' src="${pageContext.request.contextPath}/resources/file/${alert.send_id}/${alert.filepath }" style='width: 80px; height: 80px;' /></td>
-				<td class='content' style='width:40%; text-align:left;'><label class='curs'>${alert.classify }</label><br><label class="grayc">
+				<td class='content' style='text-align:left;'><label class='curs'>${alert.classify }</label><br><label class="grayc">
 				</label>
 			</tr>
 			</c:forEach> 

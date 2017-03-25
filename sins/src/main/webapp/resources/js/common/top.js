@@ -53,11 +53,7 @@ function message() {
 					var x = 
 					"<div class='msglistajax'"+"onclick='msgdetail("+
 					list[i].message_no+")'>" +
-					"<img class='msgajaximg' src="+list[i].profil+">"+
-					/*"<a class='ataglist' href='msgdetail.j?msgno="
-					+list[i].message_no+
-					"&recive="
-					+list[i].receivie_id+"'>"+*/
+					"<img class='msgajaximg' src='/sins/resources/file/"+list[i].send_id+"/"+list[i].profile+"'>"+
 					list[i].content+"</div>";
 					msgdiv.append(x);
 					msgdiv.show();
@@ -81,10 +77,9 @@ function alertover() {
 		success : function(list) {
 			for(var i = 0  ; i < list.length; i++){
 			var x = 
-				"<div class='msglistajax'"+"onclick='alert("+
+				"<div class='msglistajax'"+"onclick='alert1("+
 				")'>" +
-				"<img class='msgajaximg' src="+"${pageContext.request.contextPath}/resources/file/"+
-				list[i].send_id+"/"+list[i].filepath+">"+
+				"<img class='msgajaximg' src='/sins/resources/file/"+list[i].send_id+"/"+list[i].filepath+"'>"+
 				list[i].classify+"</div>";
 			aldiv.append(x);
 			aldiv.show();
