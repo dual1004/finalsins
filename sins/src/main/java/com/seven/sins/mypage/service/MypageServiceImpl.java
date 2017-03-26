@@ -60,7 +60,7 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public int mypageDelete(MypageVO mypageComment) {
-		System.out.println("서비스");
+
 		return mypageDAO.mypageDelete(mypageComment);
 	}
 

@@ -112,8 +112,8 @@ color:#9581BF;
 			 <c:forEach var="member" items="${friendList }">
 			
 			<tr>
-			<td class="friendTds" onclick="location.href='mypage2.b?userId=${member.userId}'" style='width:20%; padding-left:20px;'><img class="nameLink" src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
-			<td class="friendTds" style='width:80%;'><label class="nameLink" onclick="location.href='mypage2.b?userId=${member.userId}'" > ${member.userName }</label>
+			<td class="friendTds" onclick="location.href='mypage2.b?userid=${member.userId}'" style='width:20%; padding-left:20px;'><img class="nameLink" src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
+			<td class="friendTds" style='width:80%;'><label class="nameLink" onclick="location.href='mypage2.b?userid=${member.userId}'" > ${member.userName }</label>
 			
 			
 			</td>

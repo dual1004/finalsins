@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,11 @@
 	window.onpopstate = function(event) { 
 		history.go(1); 
 	}
+	
+	function index1(){
+		parent.locat();
+		window.close();
+	}
 </script>
 
 </head>
@@ -20,8 +26,15 @@
 <div id="main">
 	<hr/>
 	<br/>
+	<c:set var="admin" value="admin"/>
 	<h2>정상적으로 로그아웃처리 되었습니다.</h2>
-	<a href="alink.do?path=../../index">시작페이지로 가기</a>
+	<c:if test="${user eq admin}">
+	어드민
+		<a href="http://localhost:9999/sins">시작페이지로 가기</a>
+	</c:if>
+	<c:if test="${user ne admin }">
+	<a href="#" onclick="index1()">시작페이지로 가기</a>
+	</c:if>
 	<br/>
 	<br/>
 	<br/>

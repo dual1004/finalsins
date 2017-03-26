@@ -97,7 +97,7 @@ public class MemberController {
 						}
 					}
 					mo.addAttribute("allMember", member);
-					url="alert/alert1";
+					url="admin/adminPage";
 				}
 				else{
 					String sar[] = loginUser.getBanTime().split(" ");
@@ -308,10 +308,13 @@ public class MemberController {
 	
 	// 로그아웃용 컨트롤러
 	@RequestMapping("logout.k")
-	public String logout(HttpSession session){
+	public ModelAndView logout(HttpSession session, ModelAndView mv){
+		MemberVO user = (MemberVO) session.getAttribute("loginUser");
+		mv.setViewName("member/logoutSuccess");
+		mv.addObject("user",user.getUserId());
 		session.invalidate();
 		
-		return "member/logoutSuccess";
+		return mv;
 	}
 	
 	// 주소 수정중 도 정보 가져오기

@@ -119,9 +119,9 @@ function loadRequest(userId, option){
 			
 					
 					
-					tag+= "<tr><td style='cursor:pointer; padding-left:5%;text-align:left;width:15%;font-size:9pt;border-width:0px; border-bottom-width:2px; height:1px; border-style:groove;' onclick=location.href='mypage2.b?userId="+result.resList[i].userId+"'>"+ 
+					tag+= "<tr><td style='cursor:pointer; padding-left:5%;text-align:left;width:15%;font-size:9pt;border-width:0px; border-bottom-width:2px; height:1px; border-style:groove;' onclick=location.href='mypage2.b?userid="+result.resList[i].userId+"'>"+ 
 					"<img src='" +"/sins/resources/file/"+result.resList[i].userId+"/"+result.resList[i].userProfile+"' style='width: 40px; height: 40px;' /></td>"+ 
-						"<td style='padding-left:5%; border-width:0px; border-bottom-width:2px; height:1px; border-style:groove; color:#9581BF; text-align:left;width:35%;font-size:9pt;'><label style='cursor:pointer;' onclick=location.href='mypage2.b?userId="+result.resList[i].userId+"'>"+result.resList[i].userName +"</td>"+
+						"<td style='padding-left:5%; border-width:0px; border-bottom-width:2px; height:1px; border-style:groove; color:#9581BF; text-align:left;width:35%;font-size:9pt;'><label style='cursor:pointer;' onclick=location.href='mypage2.b?userid="+result.resList[i].userId+"'>"+result.resList[i].userName +"</td>"+
 						"<td style='padding-left:5%; border-width:0px; border-bottom-width:2px; height:1px; border-style:groove; text-align:left;width:35%;font-size:9pt;'><button id = 'accept' value='"+result.resList[i].userId+"' style='font-size:9pt; background:#9581BF; color:white;'>수락</button>"+
 						"<button id='reject' value='"+result.resList[i].userId+"' style='font-size:9pt; background:white; color:#9581BF;'>거절</button></td></tr>";
 				

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -381,7 +381,7 @@ $(function(){
 						}
 						if(classI == 'MY_PAGE'){
 						if(check == 0){
-							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="/sins/resources/file/'+list.commentList[i].userid+'/'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
 							if(list.commentList[i].userid == userId){
 							commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
 							}else{
@@ -390,7 +390,7 @@ $(function(){
 							}
 						}
 						else {
-							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="/sins/resources/file/'+list.commentList[i].userid+'/'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
 							if(list.commentList[i].userid == userId){
 							commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
 							}else{
@@ -400,7 +400,7 @@ $(function(){
 						}
 						}if(classI == 'CHANNEL_ARTICLE'){
 							if(check == 0){
-								commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
+								commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="/sins/resources/file/'+list.commentList[i].user_id+'/'+list.commentList[i].chan_article_filepath+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
 								if(list.commentList[i].userid == userId){
 								commentlist.append('<div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].chan_article_no + '"/></div>');
 								}else{
@@ -409,7 +409,7 @@ $(function(){
 								}
 							}
 							else {
-								commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
+								commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="/sins/resources/file/'+list.commentList[i].user_id+'/'+list.commentList[i].chan_article_filepath+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
 								if(list.commentList[i].userid == userId){
 								commentlist.append('<div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].chan_article_no + '"/></div>');
 								}else{
@@ -419,7 +419,7 @@ $(function(){
 							}
 							}if(classI == 'GROUP_MAIN'){
 								if(check == 0){
-									commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userProfile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
+									commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="/sins/resources/file/'+list.commentList[i].userId+'/'+list.commentList[i].photopath+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
 									if(list.commentList[i].userId == userId){
 									commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentNo + '"/></div>');
 									}else{
@@ -428,7 +428,7 @@ $(function(){
 									}
 								}
 								else {
-									commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userProfile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
+									commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="/sins/resources/file/'+list.commentList[i].userId+'/'+list.commentList[i].photopath+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
 									if(list.commentList[i].userId == userId){
 									commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentNo + '"/></div>');
 									}else{
@@ -627,19 +627,7 @@ function deleteWrite(writeno) {
       });
  }
  
- //댓글 삭제용
-function deleteWrite(writeno) {
-    mask();
-     
-    //삭제윈도우를 띄운다.
-      $(".deleteWindow2").show();
-    
-      $("#deleteBtn2").click(function() {
-    	  location.href = "mypageCommentDelete.b?writeno=" + writeno + "&pageid=" + '${memberUser.userId }';
-    	  
-    	  
-      });
- }
+
  
  // main화면에서 수정버튼 클릭 시 작동.
  function updateWritePage(writeno, content, filepath) {
@@ -713,7 +701,7 @@ function deleteWrite(writeno) {
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
 	          
-	          <li><a href="brodcasting.j">채팅</a></li>
+	          
 	        </ul>
       	</div>
 		<div id="content">

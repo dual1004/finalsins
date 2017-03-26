@@ -535,7 +535,7 @@ $(function() {
 													<c:if test="${article.chan_article_no eq comment.chan_article_no}">
 														<li>${comment.user_id } : ${comment.content }
 														<input type="button" value="삭제" class="commentdel"/>
-														<input type="button" value="신고" class="commentFire" />
+														
 														<!-- 원석부분 -->
 														<c:if test="${comment.user_id ne loginUser.userId }">
 															<c:set var="tc" value="0"/>

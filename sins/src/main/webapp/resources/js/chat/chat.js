@@ -4,7 +4,7 @@
 
 $(function() {
 	var userid = $('#userid').val();
-	var wsuri = "ws://192.168.20.89:9999/sins/test-ws";
+	var wsuri = "ws://localhost:9999/sins/test-ws";
 	websocket = new WebSocket(wsuri);
 	websocket.onopen = function(event) {
 		sendText();	

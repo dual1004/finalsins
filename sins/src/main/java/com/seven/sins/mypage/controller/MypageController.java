@@ -240,13 +240,10 @@ public class MypageController {
 	public ModelAndView mypageInsert(@SessionAttribute MemberVO loginUser, HttpServletRequest request, ModelAndView mv,
 			MypageVO mypage, @RequestParam(value = "txtContent") String txtContent,
 			@RequestParam(value = "pageid") String pageid, @RequestParam("file") MultipartFile file) {
-		System.out.println(mypage);
 		if (file.isEmpty() == false) {
 			String userid = loginUser.getUserId();
 			try {
 
-				System.out.println("111111");
-				System.out.println(file);
 				String filePath = fileUtils.fileInfo(userid, file);
 				mypage.setFilepath(filePath);
 			} catch (Exception e) {
@@ -281,10 +278,7 @@ public class MypageController {
 		mypageComment.setUserid(loginUser.getUserId());
 		mypageComment.setBackupid(pageid);
 		mypageComment.setContentno(writeno);
-		System.out.println(pageid);
-		System.out.println(pageid);
-		System.out.println(pageid);
-		System.out.println(pageid);
+
 		int result = mypageService.mypageComment(mypageComment);
 		if (result > 0) {
 			masterId = pageid;
@@ -470,20 +464,21 @@ public class MypageController {
 			MypageVO mypageComment, @RequestParam(value = "writeno", required = false) String writeno,
 			@RequestParam(value = "pageid") String pageid) {
 		int writeno2 = Integer.parseInt(writeno);
-		System.out.println("111222");
 		mypageComment.setUserid(loginUser.getUserId());
 		mypageComment.setWriteno(writeno2);
-
+		System.out.println(writeno);
+		System.out.println(loginUser.getUserId());
 		int result = mypageService.mypageDelete(mypageComment);
 		if (result > 0) {
 			masterId = pageid;
 			mv.setViewName("forward:mypage2.b");
 		} else {
-			mv.setViewName("에러페이지");
+			mv.setViewName("common/commerror");
 		}
 
 		return mv;
 	}
+	
 
 	// 댓글 삭제
 	@RequestMapping("mypageCommentDelete.b")

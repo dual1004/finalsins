@@ -101,10 +101,6 @@
 		margin-bottom: 10px;
 	}
 	
-	.memberTable {
-		display: inline-block;
-	}
-	
 	.memberbtn {
 		float: right;
 		margin: 5px;
@@ -116,7 +112,11 @@
 		margin: 5px;
 	}
 	
-	* {border: 1px solid;}
+	.userprofile {
+		width: 40px;
+		height: 40px;
+	}
+	
 </style>
 </head>
 <body>
@@ -152,7 +152,7 @@
 								<c:if test="${item.groupAccept == 'N'}">
 									<table>
 										<tr>
-											<td>사진</td>
+											<td><img class="userprofile" src="${item.userProfile}"/></td>
 											<td>${item.userName}</td>
 											<td><input type="button" class="agreeBtn" onclick="resultMember('${item.userId}', 'agree');" value="수락"/></td>
 											<td><input type="button" class="disagreeBtn" onclick="resultMember('${item.userId}', 'disagree');" value="거절"/></td>
@@ -170,19 +170,10 @@
 						<c:if test="${item.grade <= 1}">
 							<table class="memberTable">
 								<tr>
-									<td>사진</td>
+									<td><img class="userprofile" src="${item.userProfile}"/></td>
 									<td>${item.userName}</td>
 								</tr>
 							</table>
-							<input type="button" class="memberbtn deleteMember" value="삭제"/>
-							<input type="button" class="memberbtn updateMember" value="수정"/>
-							<c:if test="${item.grade == 0 && item.userId != loginUser.userId}">	
-								<select class="memberbtn" name="grade">
-									<option value="0">운영진</option>
-									<option value="1">댓글운영진</option>
-									<option value="2">회원</option>
-								</select>
-							</c:if>
 						</c:if>
 					</c:forEach>
 			</div>
@@ -194,7 +185,7 @@
 						<c:if test="${item.grade == 2 && item.groupAccept == 'Y'}">
 							<table class="">
 								<tr>
-									<td>사진</td>
+									<td><img class="userprofile" src="${item.userProfile}"/></td>
 									<td>${item.userName}</td>
 								</tr>
 							</table>

@@ -35,6 +35,11 @@ html, body{
 	left : 88%;
 }
 </style>
+<script type="text/javascript">
+function locat(){
+	location.href="http://localhost:9999/sins/";
+}
+</script>
 <body>
 <div id="aldi"></div>
 <input type="hidden" id="userid" value="${loginUser.userId}"/>

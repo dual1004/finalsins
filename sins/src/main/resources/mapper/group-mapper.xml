@@ -173,7 +173,7 @@
 	</resultMap>
 	
 	<select id="selectGroupCommentList" parameterType="GroupCommentVO" resultType="GroupCommentVO" resultMap="resultGroupComment">
-		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, PHOTO_PATH
+		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, USER_PROFILE "PHOTO_PATH"
 		FROM GROUP_COMMENT 
 		JOIN MEMBER USING(USER_ID)
 		WHERE DELETE_YN = 'N' AND WRITE_NO = #{writeNo} AND LEV = 0

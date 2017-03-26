@@ -381,7 +381,25 @@
         	+"<input type='button' class='commentSubmit2' value='답글쓰기'/></div>" 
         	+ "<div class='commentListContainer2'></div></div>'";			
 			
+        	var ref = $(this).parent().siblings(".hdcommentNo").val();
+        	
 			$(this).parent().parent().append(tag);
+			
+			$.ajax({
+				url : 'selectGroupCommentList2.y'
+				,data : { 'ref' : ref }
+				,dataType : 'json'
+				,success : function(list){
+					
+					console.log(list);
+					
+					$(".commentListContainer2").children().remove();
+					
+					$(".commentTextarea2").val("");
+
+					tag2(list);
+				}
+			})
 		});
         
         
@@ -963,7 +981,7 @@
 					<c:if test="${item.groupAccept == 'Y'}">
 						<div class="groupMember">
 							<div class="profilePhoto memberdiv">
-								사진
+								<img class="userprofile" src="${item.userProfile}"/>
 							</div>
 							<div class="memberInfo memberdiv">
 								${item.userName}
