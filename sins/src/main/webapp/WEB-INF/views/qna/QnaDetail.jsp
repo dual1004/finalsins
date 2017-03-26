@@ -7,16 +7,37 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Q&A</title>
+<title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 
-<script src="/sins/resources/js/qna/qna.js"></script>
+
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/common/newsfeed-common.css" />
+	href="/sins/resources/css/qna/qna-common.css" />
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qnaDetail.css" />
-	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
+	
+<style>
+	#comTable{
+		margin-left: 50px; width:100%;
+	}
+	
+	#comTable > td{
+		text-align:left;
+	}
+	#content{
+	width: 650px;
+	}
+	#container {
+	width:1050px;
+	}
+	#adjustBtn{
+	position:relative; left:450px; width:50px; background:white;
+	}
+	#delBtn{
+	position:relative; left:450px; width:50px; background:white;
+	}
+</style>
 <script>
 
 
@@ -44,29 +65,26 @@
 
 							var tag = "";
 
-							tag += "<br/><table style='margin-left: 50px;'>";
+							
 
 							for (var i = 0; i < result.comList.length; i++) {
-
-								tag += "<tr><td>" + result.comList[i].userId
-										+ "</td><td>"
-										+ result.comList[i].content + "</td>";
-
-								/* tag+="<td>";
 								
-									if( ${loginUser} == result.comList[i].userId){
-									tag+="<a href='comDelete.n?qNo="+result.comList[i].qnaNo+"&comNo="+result.comList[i].commentNo+">삭제하기</a>";
-											
-									tag+="</td></tr>";
 								
-									
-									} */
+								tag += "<tr><td style='width:15%;'>" + result.comList[i].userId
+										+ "</td><td style='width:60%;'>"
+										+ result.comList[i].content + "</td>"
+										+ "<td style='width:25%;'>"
+										+ "<button id='deleteBtn' value='"+result.comList[i].commentNo+"'>삭제 하기</button>"
+										+ "</td></tr>"
+										
+										
+								
 
 							}
 
-							tag += "</table>";
+							
 
-							$("#comLocation").html(tag);
+							$("#comTable > tbody").html(tag);
 
 							$("#comment").val("");
 
@@ -85,6 +103,64 @@
 		location.href="alink.do?path=qna/QnaWrite";
 		
 	}
+	
+	
+	$(document).on("click", "#deleteBtn", function(){
+		var comNo=$(this).val();
+		var qnaNo='${qna.qnaNo}';
+		$.ajax({
+
+			url : 'deleteCom.n?comNo='+comNo+'&qnaNo='+qnaNo,
+					
+
+			dataType : 'json',
+
+			contentType : 'application/json; charset=utf-8',
+
+			success : function(result) {
+				alert("삭제되었습니다");
+				
+				var tag = "";
+
+				
+
+				for (var i = 0; i < result.comList.length; i++) {
+					
+					
+					tag += "<tr><td style='width:15%;'>" + result.comList[i].userId
+							+ "</td><td style='width:60%;'>"
+							+ result.comList[i].content + "</td>"
+							+ "<td style='width:25%;'>"
+							+ "<button id='deleteBtn' value='"+result.comList[i].commentNo+"'>삭제 하기</button>"
+							+ "</td></tr>"
+							
+							
+					
+
+				}
+
+				
+
+				$("#comTable > tbody").html(tag);
+
+				$("#comment").val("");
+
+			}
+		
+		});
+	});
+	
+	
+	
+	function deleteQna(){
+		if (confirm("정말 삭제하시겠습니까??") == true){  
+
+			location.href='deleteQna.n?qnaNo=${qna.qnaNo}';
+		}
+			
+	}
+	
+	
 </script>
 </head>
 <body>
@@ -97,12 +173,20 @@
 	</div>
 	<div id="container">
 		<div id="left" class="box">
-			<h2>left</h2>
-			<br>
-			<ul>
-
-			</ul>
-		</div>
+        	<h2>LEFT</h2>
+	        <ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
+	          <li id="notice"><label class="notice1" style='cursor:pointer;'>고객센터</label></li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><h4>└QNA</h4></li>
+	          
+	          <li><a href="brodcasting.j">채팅</a></li>
+	        </ul>
+      	</div>
 		<div id="content" class="box">
 			<strong class="titleFont"><a href="selectQna.n" class="atag">Q&A</a></strong><br>
 			<br>
@@ -128,7 +212,7 @@
 				<br>
 				<table>
 					<tr>
-						<td style='padding:30px; '><a href="#"><img src="${qna.userProfile }" style='width:70px;height:70px;'></a></td>
+						<td style='padding:30px; '><a href="mypage2.b?userid=${qna.userId }"><img src="${pageContext.request.contextPath}/resources/file/${qna.userId}/${qna.userProfile }" style='width:70px;height:70px;'></a></td>
 						<td style='padding:10px;'>${qna.content }</td>
 					</tr>
 					
@@ -138,7 +222,14 @@
 					
 				</table>
 				<br>
-				<hr />
+				
+				<c:if test="${qna.userId eq loginUser.userId }">
+				<button id='adjustBtn' onclick="location.href='adjustQna.n?qnaNo=${qna.qnaNo}'">수정</button>
+				
+				<button id='delBtn' onclick="deleteQna();">삭제</button>
+				</c:if>
+				<br>
+				<hr/>
 
 				<strong>답변</strong> <br>
 
@@ -150,30 +241,34 @@
 					</c:if>
 
 
-					<table style='margin-left: 50px;'>
+					<table id="comTable" >
 
-
+					<tbody>
 
 						<c:forEach var="comment" items="${commentList}">
 
+							
 							<tr>
-								<td>${comment.userId }</td>
-								<td>${comment.content }</td>
-								<td><c:if test="${loginUser.userId eq comment.userId }">
-										<a
-											href="comDelete.n?qNo=${qna.qNo }&comNo=${comment.commentNo}">삭제하기</a>
-									</c:if></td>
+								<td style='width:15%'><c:out value="${comment.userId} "/></td>
+								<td style='width:60%'>${comment.content }</td>
+								<td style='width:25%'>
+									<button id='deleteBtn' value='${comment.commentNo }'>삭제 하기</button>	
+										
+								</td>
 							</tr>
 
 
 						</c:forEach>
-
+					</tbody>
 					</table>
 
 				</div>
+				
+				
 				<hr />
 
 
+				<c:if test="${loginUser.userId eq 'admin' }">
 				<div id="comForm">
 					<label class="labels" style='font-size: 15px; margin: 30px;'><strong>답글</strong></label>
 					<textarea id="comment" rows="4" cols="50"
@@ -185,6 +280,7 @@
 
 
 				</div>
+				</c:if>
 				<hr />
 
 

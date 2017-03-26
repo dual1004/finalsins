@@ -40,8 +40,8 @@
 
 				for (var i = 0; i < result.friendList.length; i++) {
 
-					tag += "<tr><td class='clickTd' click=location.href='mypage2.b?userId="+result.friendList[i].userId+"'> <img src='${pageContext.request.contextPath}/resources/file/"+result.friendList[i].userId+"/"+result.friendList[i].userProfile+"' style='width:50px;height:50px;'>"+ 
-							"</td><td class='clickTd' onclick=location.href='mypage2.b?userId="+result.friendList[i].userId+"'>&nbsp;"+
+					tag += "<tr><td class='clickTd' click=location.href='mypage2.b?userid="+result.friendList[i].userId+"'> <img src='${pageContext.request.contextPath}/resources/file/"+result.friendList[i].userId+"/"+result.friendList[i].userProfile+"' style='width:50px;height:50px;'>"+ 
+							"</td><td class='clickTd' onclick=location.href='mypage2.b?userid="+result.friendList[i].userId+"'>&nbsp;"+
 							result.friendList[i].userName + "</td>";
 
 

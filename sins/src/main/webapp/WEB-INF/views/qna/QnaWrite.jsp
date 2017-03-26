@@ -5,15 +5,14 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Q&A</title>
+<title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 
-<script src="/sins/resources/js/qna/qna.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/common/newsfeed-common.css" />
-	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
+	href="/sins/resources/css/qna/qna-common.css" />
+
 
 
 </head>
@@ -79,12 +78,20 @@ function pasteHTML(filepath){
 	</div>
 	<div id="container" >
 		<div id="left" class="box">
-			<h2>left</h2>
-			<br>
-			<ul>
-
-			</ul>
-		</div>
+        	<h2>LEFT</h2>
+	        <ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
+	          <li id="notice"><label class="notice1" style='cursor:pointer;'>고객센터</label></li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><h4>└QNA</h4></li>
+	          
+	          <li><a href="brodcasting.j">채팅</a></li>
+	        </ul>
+      	</div>
 		<div id="content" class="box" >
 			<strong class="titleFont"><a href="selectQna.n" class="atag">Q&A</a> - 문의하기</strong><br><br>
 		
@@ -107,7 +114,7 @@ function pasteHTML(filepath){
 				</form>
 			
 			
-			<button id= "submitBtn" style='position:relative; float:left; left:470px; width:100px;'>작성</button>
+			<button id= "submitBtn" style='position:relative; float:left; left:470px; width:100px; background:white;'>작성</button>
 
 
 

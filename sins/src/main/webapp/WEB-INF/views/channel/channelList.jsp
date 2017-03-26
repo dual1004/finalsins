@@ -71,7 +71,7 @@ $( document ).ready(function() {
 	          <li><a href="alink.do?path=mypage/mypage">MyPage</a></li>
 	          <li><a href="selectChannelList.l">채널</a></li>
 	          <li><a href="selectGroupList.y">그룹</a></li>
-	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
 	          <li id="notice1">고객센터</li>
 	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
@@ -83,11 +83,10 @@ $( document ).ready(function() {
 			<h2 id="pageName">채널리스트</h2>
 			<c:forEach var="item" items="${channellist}">
 			<c:if test ="${item.delete_yn eq N}"> 
-				<div class="channelList" style="background-image:url('${pageContext.request.contextPath}/resources/file/${item.channel_user_id}/${item.channel_filepath}');background-size:230px 200px; "  >
+				<div class="channelList" style="background-image:url('/sins/resources/file/${item.channel_user_id}/${item.channel_filepath}');background-size:230px 200px; "  >
 					<input type="hidden" class="channelNo" value="${item.channel_no}" />
 					<label class="channelName">${item.channel_name}</label>
 					<div id="cover">
-					<div class="memberCount">${item.follow_count}명</div>
 					<div class="category">${item.category1}</div>
 					</div>
 					</div>
@@ -110,7 +109,7 @@ $( document ).ready(function() {
 							<input type="text" id="channel_name" name="channelName" size="18"
 								maxlength="11" required placeholder="채널 이름">
 							<button type="button" id="dupcheck" name="dupcheck"
-								onclick="checkTitle()">중복 확인</button>
+								onclick="checkTitle()"></button>
 							<br/><br/><hr/> <br/>
 						</div>
 						<div id="channel_info">
@@ -120,7 +119,7 @@ $( document ).ready(function() {
 						<br/><hr/> <br/>
 						<div id="channel_filepath">
 						<label>대표 이미지</label>
-							<input type="file" name="channelfilepath1" id="channel_filepath">
+							<input type="file" name="file" id="channel_filepath">
 						</div>
 						<br/><hr/> <br/>
 						<div id="category1">
@@ -134,7 +133,7 @@ $( document ).ready(function() {
 							</select>
 						</div>
 						<br/><hr/> <br/>
-
+						<input type="hidden" value="${loginUser.userId }" name="channel_user_id"/>
 						<textarea class="form-control" rows="5" cols="25"
 							id="channel_keyword" name="channelKeyword" placeholder="태그 설정"></textarea>
 					</div>

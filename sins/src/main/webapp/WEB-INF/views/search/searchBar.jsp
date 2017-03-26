@@ -117,7 +117,7 @@ $( function() {
 	    	  for(var i=0;i<result.mlist.length;i++){
 	    	 
 	    	 
-				tag+="<tr onclick=location.href='mypage2.b?userId="+result.mlist[i].userId+"' class='trs'><td style='width:20%;'>"+
+				tag+="<tr onclick=location.href='mypage2.b?userid="+result.mlist[i].userId+"' class='trs'><td style='width:20%;'>"+
 				"<img src='" +"${pageContext.request.contextPath}/resources/file/"+result.mlist[i].userId+"/"+result.mlist[i].userProfile+"' style='width: 50px; height: 50px;' />"+
 				"</td><td style='width:40%; text-align:left;'>"+result.mlist[i].userName+"</td><td style='width:40%; padding-left:10px;'>";
 				if(result.mlist[i].isFriend=='Y')

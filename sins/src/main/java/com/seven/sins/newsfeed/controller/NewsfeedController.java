@@ -94,13 +94,13 @@ public class NewsfeedController {
 		
 		
 
-	/*	if(likeList2 == null) { 
+		/*if(likeList2 == null) { 
 			GroupLikeVO dummylike = new GroupLikeVO();
 			dummylike.setWriteNo(0);
 			likeList2.add(dummylike);
-		}*/
+		}
 		
-		//mv.addObject("likeList", likeList2);
+		mv.addObject("likeList", likeList2);*/
 		
 		mv.addObject("news", news);
 		

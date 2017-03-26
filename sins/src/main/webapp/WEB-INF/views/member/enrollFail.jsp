@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원가입 실패</title>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/email.css" />
-<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 </head>
 <body>
 <div id="main">

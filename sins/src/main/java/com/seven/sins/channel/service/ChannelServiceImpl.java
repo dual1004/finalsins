@@ -26,7 +26,9 @@ public class ChannelServiceImpl implements ChannelService {
 
 	@Override
 	public int insertChannel(ChannelListVO c) {
+		
 		int result = channelDAO.insertChannel(c);
+		System.out.println("sevice");
 		return result;
 	}
 
@@ -74,6 +76,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 	@Override
 	public int channelCommentInsert(ChannelCommentVO vo) {
+		System.out.println("service");
 		return channelDAO.channelCommentInsert(vo);
 	}
 
@@ -83,20 +86,47 @@ public class ChannelServiceImpl implements ChannelService {
 	}
 
 	// 원석부분
-	@Override
-	public String getMasterId(ChannelVO vo) {
-		return channelDAO.getMasterId(vo);
-	}
+		@Override
+		public String getMasterId(ChannelVO vo) {
+			return channelDAO.getMasterId(vo);
+		}
 
-	@Override
-	public ArrayList<FireVO> getFireArticleList(FireVO channelPage) {
-		return channelDAO.getFireArticleList(channelPage);
-	}
-	// 여기까지 원석부분
+		@Override
+		public ArrayList<FireVO> getFireArticleList(FireVO channelPage) {
+			return channelDAO.getFireArticleList(channelPage);
+		}
+		
+
+		@Override
+		public ArrayList<FireVO> getFireCommentList(FireVO commentSearch) {
+			return channelDAO.getFireCommentList(commentSearch);
+		}
+		// 여기까지 원석부분
 
 	@Override
 	public int deleteChannelComment(ChannelCommentVO vo) {
 		return channelDAO.deleteChannelComment(vo);
+	}
+
+	@Override
+	public int getChannelNo(String setChannel_name) {
+		return channelDAO.getChannelNo(setChannel_name);
+	}
+
+	@Override
+	public int deleteChannel(ChannelListVO vo) {
+		return channelDAO.deleteChannel(vo);
+	}
+
+	@Override
+	public int deleteArticle(ChannelArticleVO vo) {
+		System.out.println("service");
+		return channelDAO.deleteArticle(vo);
+	}
+
+	@Override
+	public int articleUpdate(ChannelArticleVO vo) {
+		return channelDAO.articleUpdate(vo);
 	}
 
 }

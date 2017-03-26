@@ -1,64 +1,5 @@
 @CHARSET "UTF-8";
 
-a:link, a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-
-a:hover {
-	text-decoration: none;
-	color: #0080ff;
-}
-
-ul, li {
-	list-style: none;
-	margin: 0;
-	padding: 10px;
-}
-
-#noticeTable{
-	text-align : center;
-	margin-top :  20px;
-	width : auto;
-	table-layout: fixed;
-	
-}
-#noticeTable th{
-	background: #E7E4F9;
-	color : black;
-	font-weight : bold;
-	padding: 5px;
-}
-
-#noticeTable td{
-	padding: 5px;
-	border-bottom: 1px solid #E7E4F9;
-	font-size : 15px;
-}
-
-
-.noticeNo {
-	width : 68px;
-}
-.title {
-	width : 279px;
-}
-.admin {
-	width : 69px;
-}
-.writeDate {
-	width : 109px;
-}
-.readCount {
-	width : 69px;
-}
-#adminWriteBtn{
-	width : 600px;
-	text-align : right;
-	margin-bottom : 10px;
-}
-
-
 * {
 	margin: 0;
 	padding: 0;
@@ -69,6 +10,38 @@ ul, li {
 	box-shadow: 1px 1px 1px #888888;
 }
 
+#spot {
+	width: 100%;
+	height : 40px;
+	position: absolute;
+	top: 0;
+	z-index: 101;
+	float: left;
+}
+#spot3 {
+	width: 10%;
+	height : 40px;
+	position: realative;
+	top: 0;
+	z-index: 101;
+	float: left;
+}
+
+#spot4 {
+	width: 80%;
+	position: realative;
+	margin-top: 5px;
+	z-index: 101;
+	float: left;
+}
+#spot5 {
+	width: 10%;
+	height : 40px;
+	position: realative;
+	top: 10px;
+	z-index: 101;
+	float: left;
+}
 body {
 	width: 100%;
 	background-color: #E7E4F9;
@@ -88,16 +61,6 @@ body {
 	margin-bottom: 10px;
 	background-color: #9581BF;
 	text-align: center;
-}
-
-#spot3 {
-	margin-left : 20%;
-	width: 80%;
-	position: absolute;
-	top: 0;
-	margin : 5px 10%;
-	z-index: 101;
-	float: left;
 }
 
 #t-l {
@@ -162,8 +125,7 @@ body {
 	clear: both;
 	border: 1px solid #9581BF;
 	background-color: white;
-	position:fixed;
-	bottom : 0px;
+	position: absolute;
 }
 
 li {
@@ -231,7 +193,7 @@ a {
 
 #spot1 {
 	width: 200px;
-	min-height: 300px;
+	height: 300px;
 	background-color: white;
 	position: absolute;
 	left: 10px;
@@ -243,7 +205,7 @@ a {
 
 #spot2 {
 	width: 200px;
-	min-height: 300px;
+	height: 300px;
 	background-color: white;
 	position: absolute;
 	right: 10px;

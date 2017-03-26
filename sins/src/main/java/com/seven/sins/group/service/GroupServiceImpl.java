@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.seven.sins.fire.vo.FireVO;
 import com.seven.sins.group.dao.GroupDAO;
 import com.seven.sins.group.vo.GroupVO;
 
@@ -39,10 +40,15 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public int deleteGroup(GroupVO vo) {
-		int result = groupDAO.deleteGroup(vo);
+	public int deleteGroup(int groupNo) {
+		int result = groupDAO.deleteGroup(groupNo);
 		return result;
 	}
 	
+	// 원석 부분
+	@Override
+	public ArrayList<FireVO> getfireList(FireVO search) {
+		return groupDAO.getfireList(search);
+	}
 	
 }

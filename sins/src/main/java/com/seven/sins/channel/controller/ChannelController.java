@@ -2,15 +2,16 @@ package com.seven.sins.channel.controller;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.channel.service.ChannelService;
@@ -20,15 +21,17 @@ import com.seven.sins.channel.vo.ChannelLikeVO;
 import com.seven.sins.channel.vo.ChannelListVO;
 import com.seven.sins.channel.vo.ChannelVO;
 import com.seven.sins.fire.vo.FireVO;
-import com.seven.sins.group.vo.GroupCommentVO;
 import com.seven.sins.member.vo.MemberVO;
+import com.seven.sins.util.FileUtils;
 
 @Controller
 public class ChannelController {
 
 	@Autowired
 	private ChannelService channelservice;
-
+	
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
 	
 	//채널 게시물 리스트
 	@RequestMapping("selectChannelList.l")
@@ -41,21 +44,35 @@ public class ChannelController {
 	}
 	//채널 생성
 	@RequestMapping("insertChannel.l")
-	public String insertChannel(ChannelListVO c, HttpServletRequest request, HttpSession session) throws Exception {
+	public String insertChannel(ChannelListVO c, HttpServletRequest request, HttpSession session, @RequestParam("file") MultipartFile file) throws Exception {
+		if(file.isEmpty() == false){
+			String user_id = c.getChannel_user_id();
+			String channelFilepath = fileUtils.fileInfo(user_id, file);
+			c.setChannel_filepath(channelFilepath);
+			System.out.println("파일패스: "+c.getChannel_filepath());
+					
+		}
 		c.setChannel_name(request.getParameter("channelName"));
-		c.setChannel_filepath(request.getParameter("channelFilepath"));
+		
 		c.setChannel_info(request.getParameter("channelInfo"));
 		c.setCategory1(request.getParameter("category1"));
 		c.setChannel_keyword(request.getParameter("channelKeyword"));
 		MemberVO m = (MemberVO) session.getAttribute("loginUser");
 		c.setChannel_user_id(m.getUserId());
-
+		
+		
+		
 		int a = channelservice.insertChannel(c);
+		System.out.println("인서트 갔다온 후"+c.getChannel_filepath());
+		String channelName = request.getParameter("channelName");
+		int tmp = channelservice.getChannelNo(channelName);
+		System.out.println("실렉트 갔따온 후"+c.getChannel_filepath());
 
 		String result = "";
 
 		if (a > 0)
-			result = "forward:selectArticle.l";
+			result = "forward:/selectChannelPage.l?channel_no="+tmp;
+		
 		else
 			result = "common/error";
 
@@ -66,6 +83,7 @@ public class ChannelController {
 	//채널 디테일 페이지 보기
 	@RequestMapping("selectChannelPage.l")	
 	public ModelAndView selectChannelPage(ModelAndView mv, ChannelVO vo, ChannelArticleVO articleVo, ChannelListVO listVo, HttpSession session) {
+		System.out.println("123");
 		ChannelVO channelImageCalled = channelservice.selectchannelImageCalled(vo);
 		mv.addObject("channelImageCalled", channelImageCalled);
 
@@ -96,7 +114,6 @@ public class ChannelController {
 		mv.addObject("channelPage", channelPage);
 		mv.setViewName("channel/channelPage");
 		
-		
 		// 원석 부분
 				String masterId = channelservice.getMasterId(vo);
 
@@ -105,16 +122,35 @@ public class ChannelController {
 				search.setFireById(member.getUserId());
 				search.setFireId(masterId);
 				
+				System.out.println("search : " + search);
 				ArrayList<FireVO> fireArticleList = channelservice.getFireArticleList(search);
 				if(fireArticleList.size() < 1){
-					FireVO fivo = new FireVO("CHANNEL_ARTICLE", 0, "admin", "admin", 0, 0);
+					FireVO fivo = new FireVO("CHANNEL_ARTICLE", 0, "admin", "admin", 0, 0, 0);
+					
 					fireArticleList.add(fivo);
 				}
 				
 				mv.addObject("fireArticleList", fireArticleList);
 				mv.addObject("masterId", masterId);
+				
+				
+
+				FireVO commentSearch = new FireVO();
+				commentSearch.setClassify("CHANNEL_COMMENT");
+				commentSearch.setFireById(member.getUserId());
+				
+				ArrayList<FireVO> fireCommentList = channelservice.getFireCommentList(commentSearch);
+				for(int x=0;x<fireCommentList.size();x++){
+					System.out.println(fireCommentList.get(x));
+				}
+				if(fireCommentList.size() < 1){
+					FireVO fivo = new FireVO("CHANNEL_ARTICLE", 0, "admin", "admin", 0, 0, 0);
+					
+					fireCommentList.add(fivo);
+				}
+				
+				mv.addObject("fireCommentList", fireCommentList);
 				// 여기까지 원석부분
-		
 		
 		
 		return mv;
@@ -135,6 +171,25 @@ public class ChannelController {
 		channelservice.updateChannel(vo);
 		return "forward:/selectChannelPage.l?channel_no="+channel_no;
 	}
+	
+	//채널 삭제
+	@RequestMapping("deleteChannel.l")
+	public String deleteChannel(ChannelListVO vo){
+		channelservice.deleteChannel(vo);
+		return "forward:/selectChannelList.l";
+	}
+	//채널 게시물 삭제
+	@RequestMapping("deleteArticle.l")
+	public String deleteArticle(ChannelArticleVO vo){
+		channelservice.deleteArticle(vo);
+		return "forward:/selectChannelPage.l?channel_no="+vo.getChannel_no();
+	}
+	//채널 게시물 수정
+	@RequestMapping("articleUpdate.l")
+	public String articleUpdate(ChannelArticleVO vo){
+		channelservice.articleUpdate(vo);
+		return "forward:/selectChannelPage.l?channel_no="+vo.getChannel_no();
+	}
 
 	//댓글 등록
 	@RequestMapping("ajax.l")
@@ -142,15 +197,14 @@ public class ChannelController {
 		vo.setUser_id(user_id);
 		vo.setContent(content);
 		vo.setChan_article_no(chan_article_no);
-		System.out.println(vo);
-		String result = String.valueOf(channelservice.channelCommentInsert(vo));
-		return result;
+		System.out.println("댓글 등록 컨틀롤러1");
+		int result = channelservice.channelCommentInsert(vo);
+		System.out.println("댓글 등록 컨틀롤러");
+		return String.valueOf(result);
 	}
 	@RequestMapping("deleteChannelComment.l")
 	public @ResponseBody String deleteChannelComment(ChannelCommentVO vo){
-		System.out.println("1");
 		String result = String.valueOf(channelservice.deleteChannelComment(vo));
-		System.out.println("2");
 		return result;
 	}
 	

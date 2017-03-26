@@ -13,45 +13,25 @@
     <link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script type="text/javascript">
 $( document ).ready(function() { 
-		
-	$("#t-l").click(function(){ 
-			$("#spot1, #overlay_t").show(300);
-		}); 
-	 	$("#overlay_t").click(function(e){ 
-	     	e.preventDefault(); 
-	     	$("#spot1, #spot2, #overlay_t").hide(300); 
-		});
-	 	$("#t-r").click(function(){ 
-	 		$("#spot2, #overlay_t").show(300);
-	 	}); 
-	 	
-	 	var noticeMenuStatus = 0;
-	 	$(".notice").hide();
-	 	
-	 	$("#notice1, #notice2").click(function(){
-	 		if(noticeMenuStatus == 0){
-	 			noticeMenuStatus = 1;
-	 			$(".notice").slideDown("slow");
-	 		}
-	 		else {
-	 			noticeMenuStatus = 0;
-	 			$(".notice").slideUp("slow");
-	 		}
-	 		
-	 	});
-	 	
-	 	
-	 	setTimeout(function(){
-	 		$('#friend').html(friendTag);
-	 		
-	 	},500);
-	 
+    $('#t-l').click(function(){ 
+     	$('#spot1, #overlay_t').show(); 
+ 	}); 
+ 	$('#overlay_t').click(function(e){ 
+     	e.preventDefault(); 
+     	$('#spot1, #overlay_t').hide(); 
+	});
+ 	$('#t-r').click(function(){ 
+     	$('#spot2, #overlay_t').show(); 
+ 	}); 
+ 	$('#overlay_t').click(function(e){ 
+     	e.preventDefault(); 
+     	$('#spot2, #overlay_t').hide(); 
+	});
  	
  	//영구 정지 버튼 클릭시
  	$(document).on("click", ".stop", function(){
  		var th = $(this);
  		var userId = th.parent().prev().prev().children(".userId").text();
- 		console.log(userId);
  		$.ajax({
  			url : "banTimePlus.k?userId="+userId,
  			type : "post",
@@ -72,7 +52,6 @@ $( document ).ready(function() {
  	$(document).on("click", ".cancle", function(){
  		var th = $(this);
  		var userId = th.parent().prev().prev().children(".userId").text();
- 		console.log(userId);
  		$.ajax({
  			url : "banTimeMinus.k?userId="+userId,
  			type : "post",
@@ -93,7 +72,6 @@ $( document ).ready(function() {
  		var th = $(this);
  		var userId = th.parent().prev().prev().prev().children(".userId").text();
  		
- 		console.log(userId);
  		$.ajax({
  			url : "memberDelete.k?userId="+userId,
  			type : "post",
@@ -109,7 +87,29 @@ $( document ).ready(function() {
  	
 });
 </script>
-
+<style type="text/css">
+	.profile {
+		width : 50px;
+		height : 50px;
+	}
+	.idAndName{
+		width : 240px;
+	}
+	.time {
+		width : 117px;
+	}
+	.btn {
+		width : 60px;
+	}
+	.imgmy {
+		width : 50px;
+		height : 50px;
+	}
+	.userId {
+		margin-left : 10px;
+	}
+	
+</style>
 </head>
 <body>
 	<div id="header">
@@ -120,19 +120,15 @@ $( document ).ready(function() {
     </div>
    	<div id="container">
       	<div id="left" class="box">
-   
+        	<h2>LEFT</h2>
 	        <ul>
-	          <li><a href="#">회원 관리</a></li>
+	          <li><a href="alink.do?path=admin/adminPage">회원 관리</a></li>
 	          <li><a href="#">채널 관리</a></li>
 	          <li><a href="#">그룹 관리</a></li>
-	          <li><a href="#">신고 관리</a></li>
-	          
-	          <li id="notice2">고객센터</li>
-	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
-	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
-	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
+	          <li><a href="fireList.k">신고 관리</a></li>
 	          
 	          
+	          <li><a href="brodcasting.j">채팅</a></li>
 	        </ul>
       	</div>
 		<div id="content" class="box">
@@ -140,16 +136,7 @@ $( document ).ready(function() {
 	        	<c:forEach var="member" items="${allMember }">
 	        		<tr >
 	        			<td class="profile">
-	        				<c:if test="${not empty member.userProfile}">
-				        		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
-					   				<c:if test="${fn:split(member.userProfile,'.')[1] eq pic}">
-										<img src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile}" class="imgmy" />
-									</c:if>
-				        		</c:forTokens>
-				        	</c:if>
-				        	<c:if test="${ empty member.userProfile }">
-				        		<img src="/sins/resources/images/missingNO.jpg" class="imgmy" />
-				        	</c:if>
+				        	<img class="imgmy" src="/sins/resources/file/${member.userId }/${member.userProfile}" />
 	        			</td>
 	        			<td class="idAndName">
 	        				<label class="userId">${member.userId }</label>&nbsp;<label class="userName">${member.userName }</label>
@@ -176,38 +163,18 @@ $( document ).ready(function() {
 	        
 		</div>
     	<div id="right" class="box">
-      		<div id="adminList"> 관리자 리스트</div>
-      		<div id="adminAdd"> 관리자 추가하기</div>
+      		<%@include file="/WEB-INF/views/friend/friendView.jsp" %>
     	</div>
    	</div>
  	<div id="footer">
     	<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
   	</div>
-	<div id="spot1">
-		<ul>
-	          <li><a href="#">회원 관리</a></li>
-	          <li><a href="#">채널 관리</a></li>
-	          <li><a href="#">그룹 관리</a></li>
-	          <li><a href="#">신고 관리</a></li>
-	          
-	          <li id="notice2">고객센터</li>
-	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
-	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
-	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
-	         
-	    </ul>
+	<div id="spot1"></div>
+	<div id="spot2"></div>
+	<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
+	<div id="spot5"></div>
 	</div>
-	<div id="spot2">
-		<ul>
-		<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
-		<li><a href="javascript:message();">메세지 보기</a></li>
-		<li><a href="javascript:alertover()">알림 보기</a></li>
-		<li><a href="javascript:logout()">로그 아웃</a></li>
-	</ul>
-	
-	
-	</div>
-	<div id="spot3"><c:import url="../common/top.jsp" charEncoding="UTF-8" /></div>
-	
 </body>
 </html>

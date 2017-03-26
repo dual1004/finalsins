@@ -26,7 +26,6 @@
 		$("#submit").click(function(){
 			var id = $("#userId").val();
 			var pwd = $("#userPwd").val();
-			console.log(id +" "+pwd);
 			$.ajax({
 				url : 'userCheck.k?userId='+id + "&userPwd="+pwd,
 				type : "post",

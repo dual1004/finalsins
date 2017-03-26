@@ -96,14 +96,13 @@
 	cursor: pointer;
 }
 .msgajaximg{
-	width: 34px;
-	height: 34px;
+	width: 20%;
+	height: 100%;
 	float: left;;
 }
 .msglistajax{
 	width : 150px;
 	height: 35px;
-	border: 1px solid black;
 	
 }
 

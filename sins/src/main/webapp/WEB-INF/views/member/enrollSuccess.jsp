@@ -6,8 +6,8 @@
 <meta charset=UTF-8>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원가입 성공</title>
-<link rel="stylesheet" type="text/css" href="/sins/resources/css/email.css" />
-<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/sins/resources/css/common/index-common.css" />
+
 </head>
 <body>
 <div id="main">

@@ -221,4 +221,17 @@ public class FriendController {
 		return map;
 		
 	}
+	@RequestMapping("friendList.n")
+	public ModelAndView friendList(ModelAndView mv, @SessionAttribute("loginUser") MemberVO member){
+		
+		
+		
+		ArrayList<FriendVO> list= friendService.selectFriend(member.getUserId());
+
+		mv.addObject("friendList", list);
+		mv.setViewName("friend/friendList");
+		
+		
+		return mv;
+	}
 }

@@ -31,14 +31,14 @@
 		<!-- SELECT * FROM GROUP_LIST JOIN CATEGORY1 ON CATEGORY1 = CATEGORY1_NO WHERE DELETE_YN = 'N' -->
 	</select>
 	<select id="selectGroup" parameterType="int" resultType="GroupVO" resultMap="resultGroup">
-		SELECT GROUP_NO, GROUP_NAME, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
+		SELECT GROUP_NO, GROUP_NAME, GROUP_INFO, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
             L.CLASSIFY, L.USER_ID, L.DELETE_YN, CATEGORY_NAME, USER_NAME, COUNT(GROUP_NO) MEMBER_COUNT
 		FROM GROUP_LIST L
 		JOIN CATEGORY1 ON CATEGORY1 = CATEGORY_NAME
 		JOIN GROUP_MEMBER USING (GROUP_NO)
         JOIN MEMBER ON (L.USER_ID = MEMBER.USER_ID)
 		WHERE DELETE_YN = 'N' AND GROUP_NO = #{groupNo}
-		GROUP BY GROUP_NO, GROUP_NAME, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
+		GROUP BY GROUP_NO, GROUP_NAME, GROUP_INFO, KEYWORD, GROUP_LIKE, FILEPATH, CREATE_DATE, 
 		                L.CLASSIFY, L.USER_ID, L.DELETE_YN, CATEGORY_NAME, USER_NAME
 		ORDER BY MEMBER_COUNT DESC
 	</select>
@@ -52,13 +52,13 @@
 	</insert>	
 	<update id="updateGroup" parameterType="GroupVO">
 		UPDATE GROUP_LIST
-		SET GROUP_NAME = ${groupName}, KEYWORD=${keyword}, FILEPATH=${filepath} 
-		WHERE GROUP_NO = ${groupNo}
+		SET GROUP_NAME = #{groupName}, GROUP_INFO = #{groupInfo}, FILEPATH=#{filepath, jdbcType=VARCHAR} 
+		WHERE GROUP_NO = #{groupNo}
 	</update>	
-	<update id="deleteGroup" parameterType="GroupVO">
+	<update id="deleteGroup" parameterType="int">
 		UPDATE GROUP_LIST
 		SET GROUP_NAME = NULL, DELETE_YN = 'Y'
-		WHERE GROUP_NO = ${groupNo}
+		WHERE GROUP_NO = #{groupNo}
 	</update>
 	
 	<!-- GroupLike -->
@@ -87,6 +87,7 @@
 		<result property="content" column="CONTENT"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="userName" column="USER_NAME"/>
+		<result property="userProfile" column="USER_PROFILE"/>
 		<result property="filepath" column="FILEPATH"/>
 		<result property="writeLike" column="WRITE_LIKE"/>
 		<result property="writeDate" column="WRITE_DATE"/>
@@ -123,6 +124,7 @@
 		<id property="groupNo" column="GROUP_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="userName" column="USER_NAME"/>
+		<result property="userProfile" column="USER_PROFILE"/>
 		<result property="grade" column="GRADE"/>
 		<result property="classify" column="CLASSIFY"/>
 		<result property="groupAccept" column="GROUP_ACCEPT"/>
@@ -157,6 +159,7 @@
 		<id property="commentNo" column="COMMENT_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="userName" column="USER_NAME"/>
+		<result property="userProfile" column="USER_PROFILE"/>
 		<result property="content" column="CONTENT"/>
 		<result property="commentDate" column="COMMENT_DATE"/>
 		<result property="lev" column="LEV"/>
@@ -207,4 +210,16 @@
 		)
 	</insert>
 	
+	<!-- 원석 -->
+	<select id="groupWrite" parameterType="FireVO" resultMap="resultGroupWrite">
+      SELECT *
+      FROM GROUP_MAIN
+      WHERE WRITE_NO = #{fireNo}
+   </select>
+   
+   <select id="groupComment" parameterType="FireVO" resultMap="resultGroupComment">
+      SELECT COMMENT_NO, USER_ID, CONTENT, COMMENT_DATE, LEV, REF, PHOTO_PATH, WRITE_NO, CLASSIFY, DELETE_YN
+      FROM GROUP_COMMENT
+      WHERE COMMENT_NO = #{commentNo}
+   </select>
 </mapper>

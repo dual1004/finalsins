@@ -73,7 +73,7 @@
 				var noticeMenuStatus = 0;
 				$(".notice").hide();
 				 	
-				$("#notice").click(function(){
+				$("#notice1, #notice2").click(function(){
 				 if(noticeMenuStatus == 0){
 				 	noticeMenuStatus = 1;
 				 	$(".notice").slideDown("slow");
@@ -223,6 +223,112 @@ $(function(){
       			}
       		});
       	});
+      	 
+      	 
+     // 원석부분
+     	 $(document).on("click", ".doFire", function(){
+     		var th = $(this);
+     		
+     		var fireId = th.parent().next().children().val();
+     		var fireNo = th.parent().next().next().children().val();
+     		var classify = "MY_PAGE";
+     		
+     		$.ajax({
+     			url : "fireContent.k?fireId="+fireId + "&fireNo="+fireNo+"&classify="+classify,
+     			type : "post",
+     			success : function(date){
+     				if(date == 1){
+     					th.parent().html("<input type='button' class='fireCancel' value='신고취소'/>");
+     				}
+     			}
+     		})
+     		
+     	 });
+     	$(document).on("click", ".fireCancel", function(){
+     		var th = $(this);
+     		
+     		var fireId = th.parent().next().children().val();
+     		var fireNo = th.parent().next().next().children().val();
+     		var classify = "MY_PAGE";
+     		
+     		$.ajax({
+     			url : "cancelFireContent.k?fireId="+fireId + "&fireNo="+fireNo+"&classify="+classify,
+     			type : "post",
+     			success : function(date){
+     				if(date == 1){
+     					th.parent().html("<input type='button' class='doFire' value='신고'/>");
+     				}
+     			}
+     		})
+     		
+     	 });
+     	
+     	<% // TODO Auto-generated method stub %>
+     	$(document).on("click", ".doCommentFire", function(){
+     		var th = $(this);
+     		var commentNo = $(this).parent().prev().prev().prev().val();
+			var classify = "MYPAGE_COMMENT";
+			var fireId =  $(this).parent().prev().prev().val();
+			var fireNo = $(this).parent().prev().val();
+			var lev = 1;
+			var comment = $(this).prev().val();
+			console.log(commentNo);
+			console.log(classify);
+			console.log(fireId);
+			console.log(fireNo);
+			console.log(lev);
+			console.log(comment);
+			
+			$.ajax({
+				url : "fireComment.k",
+				type : "post",
+				data : {
+					"fireNo" : fireNo,					
+					"commentNo" : commentNo,
+					"classify" : classify,
+					"fireId" : fireId,
+					"lev" : lev
+				},
+				success : function(data){
+					th.parent().append('<input type="button" class="unCommentFire" value="신고취소"/>');
+					th.remove();
+				}
+			})
+     	});
+     	
+     	$(document).on("click", ".unCommentFire", function(){
+     		var th = $(this);
+     		var commentNo = $(this).parent().prev().prev().prev().val();
+			var classify = "MYPAGE_COMMENT";
+			var fireId =  $(this).parent().prev().prev().val();
+			var fireNo = $(this).parent().prev().val();
+			var lev = 1;
+			var comment = $(this).prev().val();
+			console.log(commentNo);
+			console.log(classify);
+			console.log(fireId);
+			console.log(fireNo);
+			console.log(lev);
+			console.log(comment);
+			
+			$.ajax({
+				url : "fireCommentCancel.k",
+				type : "post",
+				data : {
+					"fireNo" : fireNo,					
+					"commentNo" : commentNo,
+					"classify" : classify,
+					"fireId" : fireId,
+					"lev" : lev
+				},
+				success : function(data){
+					th.parent().append('<input type="button" class="doCommentFire" value="신고"/>');
+					th.remove();
+				}
+			})
+     	});
+     	
+     	 // 여기까지 원석부분
       	
       	 
         // 댓글 클릭 시, 댓글 리스트 보여주기
@@ -242,28 +348,99 @@ $(function(){
         	/* $(this).parent().parent().parent().parent().parent().next().toggle(); */
         	
         	var commentlist = $(this).parent().parent().parent().parent().parent().next().next().last();
+        	var classI = $(this).parent().next().next().children().val();
         	var writeNo = $(this).parent().next().children().val();
     		var userId = '${loginUser.userId}';
-		    		
+    		var classify = 0;
+    		if(classI == 'MY_PAGE'){
+    			classify = 0;
+    		}if(classI == 'GROUP_MAIN'){
+    			classify = 1;
+    		}if(classI == 'CHANNEL_ARTICLE'){
+    			classify = 2;
+    		}
+    		
     		$.ajax({
-				url : 'selectMypageCommentList.b?writeNo=' + writeNo
-				,dataType : 'json'
-				,contentType : 'application/json; charset=utf-8'
+				url : 'selectMypageCommentList.b?writeNo=' + writeNo + '&classify=' + classify
+				, type : "post"
 				,success : function(list) {
+					var comment = list.commentList;
+					var fire = list.fireCommentList;
 					
 					$("div").remove(".commentOne");
 					
 					$(".commentTextarea").val("");
 					
-					for(var i = 0; i < list.length; i ++) {
-						commentlist.append('<div class="commentOne"><img src="'+list[i].userprofile+'" style="width: 30px; height: 30px;"> '+list[i].username+' '+list[i].commentdate+'</div>');
+					for(var i = 0; i < list.commentList.length; i ++) {
+						var check = 0;	
+					
+						for(var j=0;j < list.fireCommentList.length; j++){	
+							if(list.commentList[i].commentno == list.fireCommentList[j].commentNo){
+								check = 1;
+							}					
+						}
+						if(classI == 'MY_PAGE'){
+						if(check == 0){
+							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list.commentList[i].userid == userId){
+							commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+							}
+						}
+						else {
+							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list.commentList[i].userid == userId){
+							commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+							}
+						}
+						}if(classI == 'CHANNEL_ARTICLE'){
+							if(check == 0){
+								commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
+								if(list.commentList[i].userid == userId){
+								commentlist.append('<div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].chan_article_no + '"/></div>');
+								}else{
+									<% // TODO Auto-generated method stub %>
+									commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].chan_article_no+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].user_id+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].chan_article_content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+								}
+							}
+							else {
+								commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
+								if(list.commentList[i].userid == userId){
+								commentlist.append('<div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].chan_article_no + '"/></div>');
+								}else{
+									<% // TODO Auto-generated method stub %>
+									commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].chan_article_no+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].user_id+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+								}
+							}
+							}if(classI == 'GROUP_MAIN'){
+								if(check == 0){
+									commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userProfile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
+									if(list.commentList[i].userId == userId){
+									commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentNo + '"/></div>');
+									}else{
+										<% // TODO Auto-generated method stub %>
+										commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentNo+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userId+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+									}
+								}
+								else {
+									commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userProfile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
+									if(list.commentList[i].userId == userId){
+									commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentNo + '"/></div>');
+									}else{
+										<% // TODO Auto-generated method stub %>
+										commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentNo+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userId+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+									}
+								}
+								}
 						
-						
-						
-						commentlist.append($('<div>', {class : 'commentOne', text : list[i].content}));	
 					}
 					
-					console.log(list);
+					
 				}
     		});
         });
@@ -272,27 +449,127 @@ $(function(){
         $(".commentSubmit").on("click", function(){
         	var commentForm = $(this).parent().parent().serialize();
 			var thisdiv = $(this).parent().parent().next();
-        	
+			var userId = '${loginUser.userId}';
+			var writeNo = $(this).siblings(".contentno").val();
+			var commentTextarea = $(this).siblings(".commentTextarea").val();
+			var classI = $(this).prev().val();
+			
+			
+			console.log(classI);
+			if(commentTextarea != ""){
         	$.ajax({
 				url : 'insertMypageComment.b'
 				,dataType : 'json'
 				,data : commentForm
 				,contentType : 'application/json; charset=utf-8'
-				,success : function(commentList) {
+				,success : function(list) {
+					var comment = list.commentList;
+					var fire = list.fireCommentList;
 					
-					thisdiv.children().remove();
+					$("div").remove(".commentOne");
 					
 					$(".commentTextarea").val("");
 					
-					for(var i = 0; i < commentList.length; i ++) {
-						thisdiv.append('<div class="commentOne"><img src="'+commentList[i].userprofile+'" style="width: 30px; height: 30px;"> '+commentList[i].username+' '+commentList[i].commentdate+'</div>');
-						//thisdiv.append($('<div>', {class : "commentOne", text : commentList[i].username+' '+commentList[i].commentdate}));
+					for(var i = 0; i < list.commentList.length; i ++) {
+						var check = 0;	
+					
+						for(var j=0;j < list.fireCommentList.length; j++){	
+							if(list.commentList[i].commentno == list.fireCommentList[j].commentNo){
+								check = 1;
+							}					
+						}
+						if(classI == 'MY_PAGE'){
+						if(check == 0){
+							thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list.commentList[i].userid == userId){
+								thisdiv.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								thisdiv.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+							}
+						}
+						else {
+							thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list.commentList[i].userid == userId){
+								thisdiv.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								thisdiv.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+							}
+						}
+						}if(classI == 'CHANNEL_ARTICLE'){
+							if(check == 0){
+								thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
+								if(list.commentList[i].userid == userId){
+									thisdiv.append('<div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].chan_article_no + '"/></div>');
+								}else{
+									<% // TODO Auto-generated method stub %>
+									thisdiv.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].chan_article_no+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].user_id+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].chan_article_content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+								}
+							}
+							else {
+								thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].user_id+'<td></tr><tr><td>'+list.commentList[i].comment_date+'</td></tr></table></h5></td></tr></table><br></div>');
+								if(list.commentList[i].userid == userId){
+									thisdiv.append('<div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].chan_article_no + '"/></div>');
+								}else{
+									<% // TODO Auto-generated method stub %>
+									thisdiv.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].chan_article_no+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].user_id+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].chan_article_content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+								}
+							}
+							}if(classI == 'GROUP_MAIN'){
+								if(check == 0){
+									thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userProfile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
+									if(list.commentList[i].userId == userId){
+										thisdiv.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentNo + '"/></div>');
+									}else{
+										<% // TODO Auto-generated method stub %>
+										thisdiv.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentNo+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userId+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+									}
+								}
+								else {
+									thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userProfile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].userName+'<td></tr><tr><td>'+list.commentList[i].commentDate+'</td></tr></table></h5></td></tr></table><br></div>');
+									if(list.commentList[i].userId == userId){
+										thisdiv.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentNo + '"/></div>');
+									}else{
+										<% // TODO Auto-generated method stub %>
+										thisdiv.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentNo+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userId+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+									}
+								}
+								}
 						
-						thisdiv.append($('<div>', {class : 'commentOne', text : commentList[i].content}));	
 					}
+					
+					
 				}
-			});
+	        })
+			}else
+			alert('댓글을 1글자 이상 입력해주세요');	
         });
+     // 댓글 삭제
+        $(document).on("click", ".delete2", function(){
+        	var thisClass = $(this).parent();
+        	var thisClass2 = $(this).parent().prev();
+        	var commentNo = $(this).siblings(".hdcommentNo").val();
+			var writeNo = $(this).siblings(".hdwriteNo").val();
+			var userId = '${loginUser.userId}';
+			console.log(commentNo+" "+writeNo);
+        	$.ajax({
+        		url : "deleteMypageComment.b?commentno=" + commentNo	 
+   				,dataType : 'json'
+   				,contentType : 'application/json; charset=utf-8'
+       			,success : function(list){
+					//$("div").remove(".commentOne");
+					thisClass.remove();
+					thisClass2.remove();
+					$(".commentTextarea").val("");
+					
+					tag(list, writeNo);
+       			}
+       		});
+        });
+        
+        
+        
         
         $(".menu-button").on("click", function(){
 			$(this).parent().siblings().children(".hbtn").toggle();
@@ -377,10 +654,50 @@ function deleteWrite(writeno) {
 </script>
 </head>
 <body>
+<div id="mask"></div>
+	<!-- 글삭제 -->
+	<div class="deleteWindow window">
+		<div id="deleteMessageArea">정말 삭제 하시겠습니까?</div>
+		<div id="deleteBtnArea">
+			<input type="button" id="deleteBtn" value="삭제" /> <input
+				type="button" class="cancelBtn" value="취소" />
+		</div>
+	</div>
+	<!-- 댓글삭제 -->
+	<div class="deleteWindow2 window">
+		<div id="deleteMessageArea">정말 삭제 하시겠습니까?</div>
+		<div id="deleteBtnArea">
+			<input type="button" id="deleteBtn2" value="삭제" /> <input
+				type="button" class="cancelBtn" value="취소" />
+		</div>
+	</div>
+	<!-- 글 수정 -->
+	<div class="updateWindow window">
+		<form action="mypageUpdate2.b" method="post"
+			enctype="multipart/form-data" accept-charset="UTF-8">
+			<div id="updateMessage">
+				<textarea id="updateContent" name="txtComment" cols="40" rows="1"></textarea>
+			</div>
+			<div id="updateBtnArea">
+				<input class="file" type="file" name="file" /> <input type="submit"
+					id="updateBtn" value="수정" /> <input type="button" class="cancelBtn"
+					value="취소" /> <input type="hidden" name="writeno" /> <input
+					type="hidden" value="${memberUser.userId }" name="pageid">
+				<input type="hidden" name="filepath" />
+
+			</div>
+		</form>
+	</div>
+	<!-- 댓글 수정 -->
+
+	<div class="window"></div>
+
+
+
 	<div id="header">
 		<div id="overlay_t"></div> 
 		<div id="t-l"></div>
-		<div id="top"></div>
+		<div id="top"><c:import url="top.jsp" charEncoding="UTF-8" /></div>
 		<div id="t-r"></div>
     </div>
    	<div id="container">
@@ -390,7 +707,7 @@ function deleteWrite(writeno) {
 	          <li><a href="mypage.b">MyPage</a></li>
 	          <li><a href="selectChannelList.l">채널</a></li>
 	          <li><a href="selectGroupList.y">그룹</a></li>
-	          <li><h4>뉴스피드</h4></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
 	          <li id="notice">고객센터</li>
 	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
@@ -400,7 +717,7 @@ function deleteWrite(writeno) {
 	        </ul>
       	</div>
 		<div id="content">
-			<div id="add">광고 및 맞춤 영역</div>
+			<div id="add"><img src="/sins/resources/images/11149_105_2.jpg" style="width:100%; height:100%;"></div>
 			<form id="mypageform2" enctype="multipart/form-data" method="post"
 				action="mypageInsert.b" accept-charset="UTF-8">
 				<div class="content2">
@@ -429,7 +746,7 @@ function deleteWrite(writeno) {
 								<td class="writerPhoto" rowspan="2"><c:if
 										test="${item.userprofile != null}">
 										<a href="mypage2.b?userid=${item.userid}">
-										<img src="${item.userprofile}"
+										<img src="/sins/resources/file/${item.userid }/${item.userprofile}"
 											style="width: 50px; height: 50px;">
 											</a>
 									</c:if> <c:if test="${item.userprofile eq null}">
@@ -439,7 +756,7 @@ function deleteWrite(writeno) {
 									</c:if></td>
 								<td class="writerName">
 								<a href="mypage2.b?userid=${item.userid}">
-								${item.username}
+								${item.username}   ${item.classify}
 								</a>
 								</td>
 							</tr>
@@ -519,6 +836,7 @@ function deleteWrite(writeno) {
 									<td><input type="button" class="comment" value="댓글" /></td>
 									<td><input type="hidden" class="writeNo"
 										value="${item.writeno}" /></td>
+										<td><input type="hidden" value="${item.classify }" name="classify"></td>
 									</tr>
 							</table>
 						</div>
@@ -526,10 +844,12 @@ function deleteWrite(writeno) {
 					<div class="score_textarea" >
 						<input type="hidden" value="${loginUser.userId}" name="userid">
 						<input type="hidden" value="${item.writeno }" name="contentno">
+						
 						<textarea id="txtComment" name="content" title="댓글 입력"
 							placeholder="댓글을 입력하세요!" cols="50" rows="1"class="commentTextarea"></textarea>
-
+                        <input type="hidden" value="${item.classify }" name="classfy">
 						<input type="button" class="commentSubmit" id="btnSave" value="입력">
+						
 					</div>
 				</form>
 				<div class="commentlist">

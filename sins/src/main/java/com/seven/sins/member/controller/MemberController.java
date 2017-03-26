@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +18,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.fire.service.FireService;
 import com.seven.sins.member.service.MemberService;
 import com.seven.sins.member.vo.MemberVO;
+import com.seven.sins.util.FileUtils;
 
 @Controller
 public class MemberController {
@@ -32,6 +37,9 @@ public class MemberController {
 	
 	@Autowired
 	private FireService fireService;
+	
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
 	
 	 // 로그인용 컨트롤러
 	@RequestMapping("loginCheck.k")
@@ -43,7 +51,6 @@ public class MemberController {
 			MemberVO loginUser = memberService.loginCheck(m);
 			
 			if(loginUser != null){
-				// 어드민일경우
 				if(loginUser.getUserId().equals("admin")){
 					session.setAttribute("loginUser", loginUser);
 					ArrayList<MemberVO> member = memberService.getAllMember();
@@ -72,14 +79,12 @@ public class MemberController {
 							cld2.setTime(d);
 							diff = ((cld2.getTimeInMillis()-cld.getTimeInMillis()) / 1000)/60;
 							
-							System.out.println(diff);
-							// 전체유저 벤타임 조회
+							// 밴타임 없고 아이디비번 맞고 어드민아니고
 							if(diff >= 0){
 								member.get(x).setBanTime("없음");
 							}
 							// 영구정지일 경우
 							else if(Math.abs(diff) > 31){
-								System.out.println("들어옴");
 								member.get(x).setBanTime("영정");
 							}
 							// 밴타임이 있을경우
@@ -92,7 +97,7 @@ public class MemberController {
 						}
 					}
 					mo.addAttribute("allMember", member);
-					url="admin/adminPage";
+					url="alert/alert1";
 				}
 				else{
 					String sar[] = loginUser.getBanTime().split(" ");
@@ -413,7 +418,6 @@ public class MemberController {
 	@RequestMapping("userCheck.k")
 	@ResponseBody
 	public String userCheck(MemberVO m){
-		System.out.println(m);
 		int res = memberService.userCheck(m);
 		
 		String result = String.valueOf(res);
@@ -454,5 +458,16 @@ public class MemberController {
 	public List<String> allMemberId(){
 		return memberService.allMemberId();
 	}
-	
+	// 프로필 사진 바꾸기 컨트롤러
+	@RequestMapping("changmyprofile.j")
+	public ModelAndView profileChange(@SessionAttribute MemberVO loginUser, @RequestParam("file") MultipartFile file, ModelAndView mv) throws Exception{
+		
+		if(!file.isEmpty()){
+			String filePath = fileUtils.fileInfo(loginUser.getUserId(), file);
+			loginUser.setUserProfile(filePath);
+			int result = memberService.profileChange(loginUser);
+		}
+		mv.setViewName("forward:mypage.b");
+		return mv;
+	}
 }

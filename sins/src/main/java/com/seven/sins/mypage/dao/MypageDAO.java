@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.seven.sins.channel.vo.ChannelCommentVO;
 import com.seven.sins.fire.vo.FireVO;
 import com.seven.sins.group.vo.GroupCommentVO;
 import com.seven.sins.member.vo.MemberVO;
@@ -130,6 +131,31 @@ public class MypageDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<FireVO> getFireList(FireVO search) {
 		return (ArrayList<FireVO>)sqlSession.selectList("Fire.getfireList", search);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<FireVO> fireCommentList(FireVO searchComment) {
+		return (ArrayList<FireVO>)sqlSession.selectList("Fire.getFireCommentList", searchComment);
+	}
+
+	public ArrayList<MypageCommentVO> getComment(MypageCommentVO vo) {
+		return (ArrayList<MypageCommentVO>)sqlSession.selectList(NAMESPACE + "selectMypageCommentList2");
+	}
+
+	public ArrayList<GroupCommentVO> selectGroupCommentList(int writeNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList<GroupCommentVO>)sqlSession.selectList("group.selectGroupCommentList", writeNo);
+	}
+
+
+	public ArrayList<ChannelCommentVO> selectChannelCommentList(ChannelCommentVO c) {
+		// TODO Auto-generated method stub
+		return (ArrayList<ChannelCommentVO>)sqlSession.selectList("Channel.channelCommentList", c);
+	}
+
+	public int mypagePotoUpdate(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NAMESPACE + "mypagePotoUpdate", mvo);
 	}
 	
 

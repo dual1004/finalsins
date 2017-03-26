@@ -10,7 +10,6 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/group/groupList.css" />
-	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 
 <script type="text/javascript">
 $( document ).ready(function() { 
@@ -72,7 +71,7 @@ $( document ).ready(function() {
 	          <li><a href="mypage.b">MyPage</a></li>
 	          <li><a href="selectChannelList.l">채널</a></li>
 	          <li><a href="selectGroupList.y">그룹</a></li>
-	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
 	          <li id="notice2">고객센터</li>
 	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
@@ -83,7 +82,7 @@ $( document ).ready(function() {
 		<div id="content" class="box">
 			<h2 id="pageName">그룹리스트</h2>
 			<c:forEach var="item" items="${list}">
-				<div class="groupList">
+				<div class="groupList" style="background-image: url('/sins/resources/file/${item.userId}/${item.filepath};background-size:230px 200px;repeat: none')">
 					<input type="hidden" class="groupNo" value="${item.groupNo}"/>
 					<label class="groupName">${item.groupName}</label>
 					<div id="cover">
@@ -109,7 +108,7 @@ $( document ).ready(function() {
             					name="groupInfo" placeholder="그룹 정보 입력" style="resize:none"></textarea></td></tr>
             		
             		<tr><td><label>대표 이미지</label>
-            				<input type="file" id="filepath" name="filepath"></td></tr>
+            				<input type="file" id="filepath" name="file"></td></tr>
 
             		<tr><td>
             				<label>카테고리</label><br/>
@@ -144,7 +143,7 @@ $( document ).ready(function() {
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
 	          
-	        
+	          <li><a href="brodcasting.j">채팅</a></li>
 	    </ul>
 	</div>
 	<div id="spot2">

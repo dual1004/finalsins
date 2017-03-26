@@ -1,17 +1,24 @@
 package com.seven.sins.notice.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seven.sins.notice.service.NoticeService;
 import com.seven.sins.notice.vo.NoticeVO;
 
+
 @Controller
 public class NoticeController {
+	
+	@Value("#{dir['dir.url']}")
+	private String dir;
 	
 	@Autowired
 	private NoticeService noticeService;
@@ -47,4 +54,86 @@ public class NoticeController {
 		
 		return mv;
 	}
+	
+
+	@RequestMapping("noticeDetail.k")
+	public ModelAndView noticeDetail(ModelAndView mv, @RequestParam("noticeNo") String no) {
+
+	
+			int nNo = Integer.parseInt(no);
+
+			noticeService.increaseCount(nNo);
+			NoticeVO notice = noticeService.getNotice(nNo);
+
+			mv.addObject("notice", notice);
+
+			mv.setViewName("notice/NoticeDetail");
+
+		
+
+		return mv;
+	}
+	
+	
+	@RequestMapping("noticeDelete.k")
+	public ModelAndView noticeDelete(ModelAndView mv, @RequestParam("noticeNo") int no){
+		
+		noticeService.noticeDelete(no);
+		
+		
+		mv.setViewName("forward:selectNotice.k");
+		
+		
+		return mv;
+	}
+	
+	
+	@RequestMapping("noticeModify.k")
+	public ModelAndView noticeModify(ModelAndView mv, @RequestParam("noticeNo") int no){
+		
+		
+		
+		
+		NoticeVO notice = noticeService.getNotice(no);
+
+		mv.addObject("notice", notice);
+
+		mv.setViewName("notice/NoticeModify");
+		
+		return mv;
+	}
+	
+	@RequestMapping("noticeUpdate.k")
+	public ModelAndView noticeUpdate(ModelAndView mv, NoticeVO notice, @RequestParam("noticeNo") int no,
+			@RequestParam("title") String title, @RequestParam("content") String content){
+		
+		
+		notice.setNoticeNo(no);
+		notice.setTitle(title);
+		notice.setContent(content);
+		
+		
+		
+		noticeService.noticeUpdate(notice);
+
+		
+
+		mv.setViewName("forward:selectNotice.k");
+		
+		return mv;
+	}
+	
+	@RequestMapping("noticeWrite.k")
+	public ModelAndView noticeWrite(ModelAndView mv, NoticeVO notice, @RequestParam("title") String title, 
+			@RequestParam("content") String content){
+		
+		notice.setTitle(title);
+		notice.setContent(content);
+		
+		noticeService.noticeWrite(notice);
+		
+		mv.setViewName("forward:selectNotice.k");
+		return mv;
+	}
+	
 }

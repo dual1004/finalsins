@@ -28,7 +28,8 @@ html, body{
 #aldi{
 	width: 200px;
 	height: 150px;
-	background: blue;
+	background: white;
+	border : 1px solid black;
 	position: absolute;
 	top : 10%;
 	left : 88%;

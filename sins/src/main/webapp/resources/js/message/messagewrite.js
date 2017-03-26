@@ -100,7 +100,7 @@ $( function() {
 function subsub(file) {
 	parent.alertto($('#reciveid').val(), "MASSAGE", $('#send_id').val());
 	var flag = false;
-	console.log(fileCheck(file));
+
 	if(fileCheck(file) && chkallmem()){
 		flag = true;
 	}

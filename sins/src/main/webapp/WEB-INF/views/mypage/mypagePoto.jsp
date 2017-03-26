@@ -11,7 +11,6 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://vjs.zencdn.net/c/video.js"></script>
     <link rel="stylesheet" type="text/css" href="/sins/resources/css/mypage/mypage-common.css" />
-    <link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
     
 <script type="text/javascript">
 $( document ).ready(function() { 
@@ -90,40 +89,33 @@ function check_form(){
 			<br/>
 			<h2>Mypage</h2>
 			<br/>
-			<c:if test="${memberUser.userProfile != null}">
-				<img src="${memberUser.userProfile}"
-					style="width: 160px; height: 160px;">
-			</c:if>
-			<c:if test="${memberUser.userProfile eq null}">
-				<img src="/sins/resources/images/missingNO.jpg"
-					style="width: 160px; height: 160px;">
-			</c:if>
+			<img src="${pageContext.request.contextPath}/resources/file/${loginUser.userId}/${loginUser.userProfile}"
+					style="width: 160px;">
 
 			<h3>${ memberUser.userName }님</h3>
 			<br> ${ memberUser.phone }<br>
 			<ul>
 				<li><a href="mypage.b">MyPage</a></li>
-				<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
-				<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
-				<li><a href="alink.do?path=member/myInfo">내정보 보기</a></li>
+				<li><a href="friendList.n">친구 목록 보기</a></li>
+				<li><h3>사진 보기</h3></li>
+				<c:if test="${memberUser.userId eq loginUser.userId}">
+				<li><a href="alink.do?path=member/myInfo">내 정보 보기</a></li>
+				</c:if>
 			</ul>
 
 		</div>
       <div id="content">
       <div class="content2">
         <h2>Photo</h2>
+        <br>
         <c:forEach var="item" items="${mylist}">
         <c:if test="${not empty item.filepath}">
         
         		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
    				<c:if test="${fn:split(item.filepath,'.')[1] eq pic}">
-   				<form name ="contentsMain" id="contentsMain" enctype="multipart/form-data" method="post" action="contentsMain.b" accept-charset="UTF-8">
+   				<a href="contentsMain.b?writeno=${item.writeno }&classify=${item.classify }&userid=${item.userid }">
 				<img src="${pageContext.request.contextPath}/resources/file/${item.userid}/${item.filepath}" class="imgmy" />
-				<input type="hidden" value="${item.writeno }" name="writeno">
-				<input type="hidden" value="${item.classify }" name="classify">
-				<input type="hidden" value="${item.userid }" name="userid">
-				<input type = "submit" value="자세히 보기">
-				</form>
+				</a>
 				</c:if>
         		</c:forTokens>
         		
@@ -143,7 +135,7 @@ function check_form(){
 		<ul>
 			<li><a href="mypage.b">MyPage</a></li>
 			<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
-			<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
+			<li><a href="mypagePoto.b">사진 보기</a></li>
 			<li><a href="selectChannelList.l">채널</a></li>
 			<li><a href="selectGroupList.y">그룹</a></li>
 			<li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
@@ -152,6 +144,7 @@ function check_form(){
 			<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 			<li class="notice"><a href="selectQna.n">└QNA</a></li>
 
+			<li><a href="brodcasting.j">채팅</a></li>
 		</ul>
 	</div>
 	<div id="spot2">

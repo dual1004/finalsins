@@ -86,12 +86,20 @@ function loading(){
 	</div>
 	<div id="container" >
 		<div id="left" class="box">
-			<h2>left</h2>
-			<br>
-			<ul>
-
-			</ul>
-		</div>
+        	<h2>LEFT</h2>
+	        <ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
+	          <li id="notice"><label class="notice1" style='cursor:pointer;'>고객센터</label></li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><h4>└QNA</h4></li>
+	          
+	          <li><a href="brodcasting.j">채팅</a></li>
+	        </ul>
+      	</div>
 		<div id="content" class="box" >
 			<strong class="titleFont"><a href="selectQna.n" class="atag">Q&A</a> - 문의하기</strong><br><br>
 		

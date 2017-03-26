@@ -7,7 +7,7 @@ $(function(){
 	websocket = new WebSocket(wsuri);
 	websocket.onopen = function(event) {
 		sendAlert();	
-	}
+	}		
 	/*onalert();*/
 	$('#aldi').slideUp(0);
 	
@@ -25,7 +25,6 @@ function onalert() {
 	websocket.onmessage = function(evnet) {
 		alert = JSON.parse(event.data);
 		if(alert.type == "alert"){
-			console.log('메시지받음');	
 			/*child.alertslriderdown(alert.classify);*/
 			alertslriderdown(alert.classify);
 		}
@@ -39,7 +38,6 @@ function sendAlert() {
 	websocket.send(JSON.stringify(user));
 }
 function alertto(userid, classify,send_id) {
-	console.log('알러트 메시지보냄');
 	var alvo = {
 		user_id : userid,
 		classify : classify,

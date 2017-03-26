@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script type="text/javascript">
 var idCheck=0;
 var idCopyCheck=0;
@@ -19,342 +18,336 @@ var phoneCheck=0;
 var checkNumCheck=0;
 var ch = 0;
 var checkNum;
-	$(document).ready(function() {
-		$("#m-fdiv2").hide();
-		$("#m-sdiv2").hide();
-		$("#m-fdiv3").hide();
-		$("#m-sdiv3").hide();
-		
-		$("#enroll").click(function() {
-			$("#m-fdiv").slideUp("slow");
-			$("#m-sdiv").slideUp("slow");
-			
-			$("#m-fdiv2").slideDown("slow");
-			$("#m-sdiv2").slideDown("slow");
-			
-			$("#email").focus();
-		});
-		
-		$("#findPwd").click(function() {
-			$("#m-fdiv").slideUp("slow");
-			$("#m-sdiv").slideUp("slow");
-			
-			$("#m-fdiv3").slideDown("slow");
-			$("#m-sdiv3").slideDown("slow");
-		});
-		
-		$("#returnLogin").click(function(){
-			$("#m-fdiv2").slideUp("slow");
-			$("#m-sdiv2").slideUp("slow");
-			
-			$("#m-fdiv").slideDown("slow");
-			$("#m-sdiv").slideDown("slow");
-			
-		});
-		
-		$("#returnlog1, #returnlog2").click(function(){
-			$("#m-fdiv3").slideUp("slow");
-			$("#m-sdiv3").slideUp("slow");
-			
-			$("#m-fdiv").slideDown("slow");
-			$("#m-sdiv").slideDown("slow");
-			
-		});
-		
-		$("#check").prop("readonly", "readonly");
-		$("#checkbtn").prop("disabled", "disabled");
+   $(document).ready(function() {
+      $("#m-fdiv2").hide();
+      $("#m-sdiv2").hide();
+      $("#m-fdiv3").hide();
+      $("#m-sdiv3").hide();
+      
+      $("#enroll").click(function() {
+         $("#m-fdiv").slideUp("slow");
+         $("#m-sdiv").slideUp("slow");
+         
+         $("#m-fdiv2").slideDown("slow");
+         $("#m-sdiv2").slideDown("slow");
+         
+         $("#email").focus();
+      });
+      
+      $("#findPwd").click(function() {
+         $("#m-fdiv").slideUp("slow");
+         $("#m-sdiv").slideUp("slow");
+         
+         $("#m-fdiv3").slideDown("slow");
+         $("#m-sdiv3").slideDown("slow");
+      });
+      
+      $("#returnLogin").click(function(){
+         $("#m-fdiv2").slideUp("slow");
+         $("#m-sdiv2").slideUp("slow");
+         
+         $("#m-fdiv").slideDown("slow");
+         $("#m-sdiv").slideDown("slow");
+         
+      });
+      
+      $("#returnlog1, #returnlog2").click(function(){
+         $("#m-fdiv3").slideUp("slow");
+         $("#m-sdiv3").slideUp("slow");
+         
+         $("#m-fdiv").slideDown("slow");
+         $("#m-sdiv").slideDown("slow");
+         
+      });
+      
+      $("#check").prop("readonly", "readonly");
+      $("#checkbtn").prop("disabled", "disabled");
 
-		$("#idCheck").click(function(){
-			
-			var id = $("#email").val();
-			var check = /^[a-zA-Z]{1}[A-Za-z0-9-_]{4,13}\@[a-zA-Z]{1,6}.(com|co.kr|net)$/;
-		
-			console.log(id);
-			
-			if(check.test(id)){
-				$.ajax({
-					url : 'idCheck.m',
-					type : "post",
-					data : {"userId" : id},
-		            success : function(data){
-						if(data.length == 1){
-							idCopyCheck = 0;
-							alert("아이디가 중복되었습니다.");
-							idCheck = 0;
-							$("#email").css("border", "2px solid red");
-							$("#email").focus();
-						}
-						else {
-							alert("인증메일이 발송되었습니다.");
-							checkNum = data;
-							console.log(checkNum);
-							idCheck = 1;
-							idCopyCheck = 1;
-							$("#email").css("border", "2px solid green");
-							$("#check").removeAttr("readonly");
-							$("#checkbtn").removeAttr("disabled");
-							$("#idCheck").prop("disabled", "disabled");
-							$("#check").focus();
-						}
-		            }
-				});
-				
-			}
-			else {
-				idCheck = 0;
-				idCopyCheck = 0;
-				$("#email").css("border", "2px solid red");
-				$("#email").focus();
-			}
-		});
-		
-		$("#checkbtn").click(function(){
-			var check = $("#check").val();
-			console.log(check);
-			if(check == checkNum){
-				$("#check").css("border", "2px solid green");
-				$("#email").prop("readonly", "readonly");
-				checkNumCheck=1;
-				$("#pwd").focus();
-			}
-			else{
-				$("#check").css("border", "2px solid red");
-				$("#check").focus();
-			}
-		});
-		
-		var pwd;
-		$("#pwd").blur(function(){
-			pwd = $("#pwd").val();
-			var check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-			
-			if(check.test(pwd)){
-				pwdCheck = 1;
-				$("#pwd").css("border", "2px solid green");
-			}
-			else{
-				pwdCheck = 0;
-				$("#pwd").css("border", "2px solid red");
-				
-			}
-		});
-		
-		$("#pwdc").blur(function(){
-			var pwdc = $("#pwdc").val();
-			
-			if(pwdc == pwd && pwdc != ""){
-				pwdcCheck = 1;
-				$("#pwdc").css("border", "2px solid green");
-			}
-			else {
-				pwdcCheck = 0;
-				$("#pwdc").css("border", "2px solid red");
-			}
-		});
-		
-		$("#name").blur(function(){
-			var check = /^[가-힣]{2,6}$/;
-			var name = $("#name").val();
-			
-			if(check.test(name)){
-				nameCheck = 1;
-				$("#name").css("border", "2px solid green");
-			}
-			else {
-				nameCheck = 0;
-				$("#name").css("border", "2px solid red");
-			}
-		});
-		
-		$("#phone").blur(function(){
-			var phone = $("#phone").val();
-			var check = /^01[0179]-\d{3,4}-\d{4}$/;
-			
-			if(check.test(phone)){
-				phoneCheck = 1;
-				
-				if(phoneCheck == 1){
-					$.ajax({
-						url : "phoneCheck.m?phone="+phone,
-						type : "post",
-			            success : function(data){
-							console.log(data);			            	
-							if(data == 1){
-								phoneCheck = 0;
-								$("#phone").css("border", "2px solid red");
-								alert("핸드폰 번호가 중복되었습니다.");
-							}
-							else {
-								phoneCheck = 1;
-								$("#phone").css("border", "2px solid green");
-								$("#phone").prop("readonly", "readonly");
-							}
-			            }
-					});
-				}
-				
-				else {
-					phoneCheck = 0;
-					$("#phone").css("border", "2px solid red");
-				}
-				
-			}
-		});
-		
-	
-	});
-	function chb(checkbox){
-		if(checkbox.checked == true){
-			ch = 1;
-		}
-		else{
-			ch = 0;
-		}
-	}
-	
-	function enroll(){
-		
-		if(idCheck == 1 && idCopyCheck == 1 && pwdCheck == 1 && pwdcCheck == 1 && phoneCheck == 1 && checkNumCheck == 1 && ch == 1){
-			return true;
-		}
-		else if(idCheck == 0){
-			$("#email").focus();				
-			return false;
-		}
-		else if(idCopyCheck == 0){
-			return false;
-		}
-		else if(pwdCheck == 0){
-			$("#pwd").focus();				
-			return false;
-		}
-		else if(pwdcCheck == 0){
-			$("#pwdc").focus();				
-			return false;
-		}
-		else if(phoneCheck == 0){
-			$("#phone").focus();				
-			return false;
-		}
-		else if(checkNumCheck == 0){
-			$("#check").focus();				
-			return false;
-		}
-		else if(ch == 0){
-			alert("이용약관을 확인해주세요.");
-			return false;
-		}
-	}
-	
-	function setsave(name, value, expiredays){
-		var today = new Date();
-		today.setDate( today.getDate() + expiredays );
-		document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + today.toGMTString() + ";"
-	}
-	
-	function saveLogin(id){
-		if(id != "")
-		{
-			 // userid 쿠키에 id 값을 7일간 저장
-			 setsave("userid", id, 7);
-		}else{
-			 // userid 쿠키 삭제
-			 setsave("userid", id, -1);
-		}
-	}
-	function loginCheck(){
-		if(login.idSaveCheck.checked) 
-			saveLogin(login.userid.value);
-		else 
-			saveLogin("");
-		return true;
-	}
-	function getLogin(){
-		// userid 쿠키에서 id 값을 가져온다.
-	/* 	var cook = document.cookie + ";";
-		var idx = cook.indexOf("=")+1;
-		var index;
-		var val;
-		if(cook.length <= 8) {
-			document.login.userid.value = "";
-		 	document.login.idSaveCheck.checked = false;
-		}
-		else {
-			index = cook.indexOf(";");
-			val = cook.substring(idx, index);
-			
-			document.login.userid.value = val;
-			document.login.idSaveCheck.checked = true;
-		} */
-		var cook = document.cookie + ";";
-		var idx = cook.indexOf("=")+1;
-		var index;
-		var val;
-		console.log(cook);
-		if(cook.length <= 25) {
-			document.login.userid.value = "";
-		 	document.login.idSaveCheck.checked = false;
-		}
-		else {
-			index = cook.length-1;
-			val = cook.substring(30, index);
-			console.log(val);
-			document.login.userId.value = val;
-			document.login.idSaveCheck.checked = true;
-		}
-		
-	}
+      $("#idCheck").click(function(){
+         
+         var id = $("#email").val();
+         var check = /^[a-zA-Z]{1}[A-Za-z0-9-_]{4,13}\@[a-zA-Z]{1,6}.(com|co.kr|net)$/;
+      
+         
+         if(check.test(id)){
+            $.ajax({
+               url : 'idCheck.m',
+               type : "post",
+               data : {"userId" : id},
+                  success : function(data){
+                  if(data.length == 1){
+                     idCopyCheck = 0;
+                     alert("아이디가 중복되었습니다.");
+                     idCheck = 0;
+                     $("#email").css("border", "2px solid red");
+                     $("#email").focus();
+                  }
+                  else {
+                     alert("인증메일이 발송되었습니다.");
+                     checkNum = data;
+                     idCheck = 1;
+                     idCopyCheck = 1;
+                     $("#email").css("border", "2px solid green");
+                     $("#check").removeAttr("readonly");
+                     $("#checkbtn").removeAttr("disabled");
+                     $("#idCheck").prop("disabled", "disabled");
+                     $("#check").focus();
+                  }
+                  }
+            });
+            
+         }
+         else {
+            idCheck = 0;
+            idCopyCheck = 0;
+            $("#email").css("border", "2px solid red");
+            $("#email").focus();
+         }
+      });
+      
+      $("#checkbtn").click(function(){
+         var check = $("#check").val();
+         if(check == checkNum){
+            $("#check").css("border", "2px solid green");
+            $("#email").prop("readonly", "readonly");
+            checkNumCheck=1;
+            $("#pwd").focus();
+         }
+         else{
+            $("#check").css("border", "2px solid red");
+            $("#check").focus();
+         }
+      });
+      
+      var pwd;
+      $("#pwd").blur(function(){
+         pwd = $("#pwd").val();
+         var check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+         
+         if(check.test(pwd)){
+            pwdCheck = 1;
+            $("#pwd").css("border", "2px solid green");
+         }
+         else{
+            pwdCheck = 0;
+            $("#pwd").css("border", "2px solid red");
+            
+         }
+      });
+      
+      $("#pwdc").blur(function(){
+         var pwdc = $("#pwdc").val();
+         
+         if(pwdc == pwd && pwdc != ""){
+            pwdcCheck = 1;
+            $("#pwdc").css("border", "2px solid green");
+         }
+         else {
+            pwdcCheck = 0;
+            $("#pwdc").css("border", "2px solid red");
+         }
+      });
+      
+      $("#name").blur(function(){
+         var check = /^[가-힣]{2,6}$/;
+         var name = $("#name").val();
+         
+         if(check.test(name)){
+            nameCheck = 1;
+            $("#name").css("border", "2px solid green");
+         }
+         else {
+            nameCheck = 0;
+            $("#name").css("border", "2px solid red");
+         }
+      });
+      
+      $("#phone").blur(function(){
+         var phone = $("#phone").val();
+         var check = /^01[0179]-\d{3,4}-\d{4}$/;
+         
+         if(check.test(콜)){
+            phoneCheck = 1;
+            
+            if(phoneCheck == 1){
+               $.ajax({
+                  url : "phoneCheck.m?phone="+phone,
+                  type : "post",
+                     success : function(data){
+                     if(data == 1){
+                        phoneCheck = 0;
+                        $("#phone").css("border", "2px solid red");
+                        alert("핸드폰 번호가 중복되었습니다.");
+                     }
+                     else {
+                        phoneCheck = 1;
+                        $("#phone").css("border", "2px solid green");
+                        $("#phone").prop("readonly", "readonly");
+                     }
+                     }
+               });
+            }
+            
+            else {
+               phoneCheck = 0;
+               $("#phone").css("border", "2px solid red");
+            }
+            
+         }
+      });
+      
+   
+   });
+   function chb(checkbox){
+      if(checkbox.checked == true){
+         ch = 1;
+      }
+      else{
+         ch = 0;
+      }
+   }
+   
+   function enroll(){
+      
+      if(idCheck == 1 && idCopyCheck == 1 && pwdCheck == 1 && pwdcCheck == 1 && phoneCheck == 1 && checkNumCheck == 1 && ch == 1){
+         return true;
+      }
+      else if(idCheck == 0){
+         $("#email").focus();            
+         return false;
+      }
+      else if(idCopyCheck == 0){
+         return false;
+      }
+      else if(pwdCheck == 0){
+         $("#pwd").focus();            
+         return false;
+      }
+      else if(pwdcCheck == 0){
+         $("#pwdc").focus();            
+         return false;
+      }
+      else if(phoneCheck == 0){
+         $("#phone").focus();            
+         return false;
+      }
+      else if(checkNumCheck == 0){
+         $("#check").focus();            
+         return false;
+      }
+      else if(ch == 0){
+         alert("이용약관을 확인해주세요.");
+         return false;
+      }
+   }
+   
+   function setsave(name, value, expiredays){
+      var today = new Date();
+      today.setDate( today.getDate() + expiredays );
+      document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + today.toGMTString() + ";"
+   }
+   
+   function saveLogin(id){
+      if(id != "")
+      {
+          // userid 쿠키에 id 값을 7일간 저장
+          setsave("userid", id, 7);
+      }else{
+          // userid 쿠키 삭제
+          setsave("userid", id, -1);
+      }
+   }
+   function loginCheck(){
+      if(login.idSaveCheck.checked) 
+         saveLogin(login.userId.value);
+      else 
+         saveLogin("");
+      return true;
+   }
+   function getLogin(){
+      // userid 쿠키에서 id 값을 가져온다.
+       var cook = document.cookie + ";";
+      var idx = cook.indexOf("=")+1;
+      var index;
+      var val;
+      if(cook.length <= 8) {
+         document.login.userId.value = "";
+          document.login.idSaveCheck.checked = false;
+      }
+      else {
+         index = cook.indexOf(";");
+         val = cook.substring(idx, index);
+         
+         document.login.userId.value = val;
+         document.login.idSaveCheck.checked = true;
+      } 
+      /* var cook = document.cookie + ";";
+      var idx = cook.indexOf("=")+1;
+      var index;
+      var val;
+      if(cook.length <= 8) {
+         document.login.userId.value = "";
+          document.login.idSaveCheck.checked = false;
+      }
+      else {
+         index = cook.length-1;
+         val = cook.substring(30, index);
+         document.login.userId.value = val;
+         document.login.idSaveCheck.checked = true;
+      }
+       */
+   }
 
 </script>
 <link rel="stylesheet" type="text/css" href="/sins/resources/css/common/index.css" />
 </head>
 <body onLoad="getLogin()">
-	<div id="container">
-		<div id="header"></div>
+   <div id="container">
+      <div id="header"></div>
 
-		<div id="mdiv">
-			<div id="m-fdiv">
-				<form action="loginCheck.k" method="post" name="login" onsubmit="return loginCheck();">
-					<table id="m-f-ltable" style="cellpadding: 0; cellspacing: 0">
-						<tr style="height: 100px;">
-							<td><h2>로그인</h2></td>
-						</tr>
+      <div id="mdiv">
+         <div id="m-fdiv">
+            <form action="loginCheck.k" method="post" name="login" onsubmit="return loginCheck();">
+               <table id="m-f-ltable" style="cellpadding: 0; cellspacing: 0">
+                  <tr style="height: 100px;">
+                     <td><h2>로그인</h2></td>
+                  </tr>
 
-						<tr style="height: 120px;">
-							<td colspan="2">
-								<table id="LT" style="cellpadding: 0; cellspacing: 0; height: 100px">
-									<tr style="height: 50px;">
-										<td><input id="tdd1" type="text" class="box" id="userid" name="userId" Autofocus tabindex="1"/></td>
-										<td rowspan="2">&nbsp;<input type="submit" value="로그인" id="loginbtn" tabindex="3"/></td>
-									</tr>
-									<tr style="height: 50px;">
-										<td><input id="tdd2" type="password" class="box" name="userPwd" tabindex="2"/></td>
-										<td></td>
-									</tr>
-									<tr><td><input type="checkbox" name="idSaveCheck" id="idSaveCheck"/><label style="font-size : 10pt">아이디 저장</label></td></tr>
-								</table>
-							</td>
-						</tr>
+                  <tr style="height: 120px;">
+                     <td colspan="2">
+                        <table id="LT" style="cellpadding: 0; cellspacing: 0; height: 100px">
+                           <tr style="height: 50px;">
+                              <td><input id="tdd1" type="text" class="box" id="userid" name="userId" Autofocus tabindex="1"/></td>
+                              <td rowspan="2">&nbsp;<input type="submit" value="로그인" id="loginbtn" tabindex="3"/></td>
+                           </tr>
+                           <tr style="height: 50px;">
+                              <td><input id="tdd2" type="password" class="box" name="userPwd" tabindex="2"/></td>
+                              <td></td>
+                           </tr>
+                           <tr><td><input type="checkbox" name="idSaveCheck" id="idSaveCheck"/><label style="font-size : 10pt">아이디 저장</label></td></tr>
+                        </table>
+                     </td>
+                  </tr>
 
-						<tr style="height: 100px;">
-							
-							<td><label id="enroll" style="border-right: 1px solid gray;" tabindex="4">회원가입
-									&nbsp; &nbsp;</label> &nbsp; &nbsp;
-									<label id="findPwd" tabindex="5">아이디/비밀번호 찾기</label></td>
-							
-						</tr>
-					</table>
-				</form>
-			</div>
-			<div id="m-sdiv"></div>
+                  <tr style="height: 100px;">
+                     
+                     <td><label id="enroll" style="border-right: 1px solid gray;" tabindex="4">회원가입
+                           &nbsp; &nbsp;</label> &nbsp; &nbsp;
+                           <label id="findPwd" tabindex="5">아이디/비밀번호 찾기</label></td>
+                     
+                  </tr>
+               </table>
+            </form>
+         </div>
+         <div id="m-sdiv"></div>
 
-			<div id="m-fdiv2">
-				<table id="m-f-ctable" style="cellpadding: 0; cellspacing: 0">
-					<tr>
-						<td><h2>이용약관</h2></td>
-					</tr>
-					<tr>
-						<td><textarea id="yakwan" readonly>제 1 조 ( 목적 )
+         <div id="m-fdiv2">
+            <table id="m-f-ctable" style="cellpadding: 0; cellspacing: 0">
+               <tr>
+                  <td><h2>이용약관</h2></td>
+               </tr>
+               <tr>
+                  <td><textarea id="yakwan" readonly>제 1 조 ( 목적 )
 이 약관은 SINS77(이하”회사”)가 운영하는 모든 웹사이트(이하 “웹사이트” 라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다) 를 이용함에 있어 이용조건 및 절차와 회원과 회사간의 권리 • 의무 및 책임사항, 절차 등 기본적인 사항을 규정함을 목적으로 합니다.
 ※「 PC 통신 등을 이용하는 전자거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다」
 제 2 조 ( 정의 )
@@ -414,15 +407,15 @@ var checkNum;
 제 9 조 (게시물의 관리)
 ① 이용자의 게시물이 관련 법에 위반되거나 회사 또는 웹사이트 및 회사의 제품을 비방하는 경우 회사는 그 게시물에 대하여 게시중단, 삭제 등의 조치를 취할 수 있습니다.
 ② 회사는 제1항 기재 조치 전 이용자에 대한 소명 및 시정의 기회를 부여하며, 조치를 취한 후에는 그 조치의 내용 등에 관하여 이용자에게 개별통지를 합니다.</textarea></td>
-					</tr>
-					<tr>
-						<td style="float:right">동의합니다 <input type="radio" id="ch" onclick="chb(this);" /> </td>
-					</tr>
-				</table>
-			</div>
+               </tr>
+               <tr>
+                  <td style="float:right">동의합니다 <input type="radio" id="ch" onclick="chb(this);" /> </td>
+               </tr>
+            </table>
+         </div>
 
-			<div id="m-sdiv2">
-			<form action="enroll.m" method="post" onsubmit="return enroll();">
+         <div id="m-sdiv2">
+         <form action="enroll.m" method="post" onsubmit="return enroll();">
                <table id="m-s-enrolltable">
                   <tr class="tr1"><td class="std" style="text-align : center"><h2>회원가입</h2></td></tr>
                   <tr class="tr1"><td class="std"><input type="email" size="25" maxlength="25" name="userId" id="email" tabindex="1" placeholder="아이디@이메일"/></td><td class="ttd"><input type="button" id="idCheck" value="중복확인" tabindex="2" /></td></tr>
@@ -439,32 +432,32 @@ var checkNum;
               </table>
             </form>
             </div>
-			
-			<div id="m-fdiv3">
-			<form action="findId.m" method="post">
-			<table id="idt">
-			<tr><td><h2>아이디 찾기</h2></td></tr>
-			<tr><td><input class="box" name="userName" placeholder="이  름" /></td></tr>
-			<tr><td><input class="box" name="phone" placeholder="전화번호" /></td></tr>
-			<tr><td><input type="submit" class="btn" value="아이디 찾기"/>&nbsp;&nbsp;<input type="button" class="btn" id="returnlog1" value="취소"/></td></tr>
-			</table>
-			</form>
-			</div>
-			
-			<div id="m-sdiv3">
-			<form action="findPwd.m" method="post">
-			<table id="pwdt">
-			<tr><td><h2>비밀번호 찾기</h2></td></tr>
-			<tr><td><input type="email" class="box" name="userid" placeholder="이메일형식 아이디" /></td></tr>
-			<tr><td><input type="submit" class="btn" value="비밀번호 찾기"/>&nbsp;&nbsp;<input type="button" class="btn" id="returnlog2" value="취소"/></td></tr>
-			</table>
-			</form>
-			</div>
-		</div>
+         
+         <div id="m-fdiv3">
+         <form action="findId.m" method="post">
+         <table id="idt">
+         <tr><td><h2>아이디 찾기</h2></td></tr>
+         <tr><td><input class="box" name="userName" placeholder="이  름" /></td></tr>
+         <tr><td><input class="box" name="phone" placeholder="전화번호" /></td></tr>
+         <tr><td><input type="submit" class="btn" value="아이디 찾기"/>&nbsp;&nbsp;<input type="button" class="btn" id="returnlog1" value="취소"/></td></tr>
+         </table>
+         </form>
+         </div>
+         
+         <div id="m-sdiv3">
+         <form action="findPwd.m" method="post">
+         <table id="pwdt">
+         <tr><td><h2>비밀번호 찾기</h2></td></tr>
+         <tr><td><input type="email" class="box" name="userid" placeholder="이메일형식 아이디" /></td></tr>
+         <tr><td><input type="submit" class="btn" value="비밀번호 찾기"/>&nbsp;&nbsp;<input type="button" class="btn" id="returnlog2" value="취소"/></td></tr>
+         </table>
+         </form>
+         </div>
+      </div>
 
-		<div id="footer"><p id="c">copyright ⓒ SINS77 Allright reserved.</p></div>
-	</div>
-	<div id="spot1"></div>
-	<div id="spot2"></div>
+      <div id="footer"><p id="c">copyright ⓒ SINS77 Allright reserved.</p></div>
+   </div>
+   <div id="spot1"></div>
+   <div id="spot2"></div>
 </body>
 </html>

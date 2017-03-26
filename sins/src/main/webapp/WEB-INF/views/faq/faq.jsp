@@ -65,7 +65,7 @@ $( document ).ready(function() {
  			nowIndex = index;
  		}
  		
- 		console.log(index);
+ 		
  	});
  	
 });

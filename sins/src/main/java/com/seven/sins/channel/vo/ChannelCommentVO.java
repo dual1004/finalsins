@@ -5,10 +5,9 @@ import java.sql.Date;
 @SuppressWarnings("serial")
 public class ChannelCommentVO implements java.io.Serializable {
 	
-	private int channel_no;
 	private String chan_article_content;
 	private Date comment_date;
-	private int rev;
+	private int lev;
 	private int ref;
 	private String chan_article_filepath;
 	private String delete_yn;
@@ -19,17 +18,18 @@ public class ChannelCommentVO implements java.io.Serializable {
 	private int report;
 	private String content;
 	private int comment_no;
+	private String backup_id;
+	
 	public ChannelCommentVO() {
 		super();
 	}
-	public ChannelCommentVO(int channel_no, String chan_article_content, Date comment_date, int rev, int ref,
+	public ChannelCommentVO(String chan_article_content, Date comment_date, int lev, int ref,
 			String chan_article_filepath, String delete_yn, String user_id_bak, int chan_article_no, String user_id,
-			String classify, int report, String content, int comment_no) {
+			String classify, int report, String content, int comment_no, String backup_id) {
 		super();
-		this.channel_no = channel_no;
 		this.chan_article_content = chan_article_content;
 		this.comment_date = comment_date;
-		this.rev = rev;
+		this.lev = lev;
 		this.ref = ref;
 		this.chan_article_filepath = chan_article_filepath;
 		this.delete_yn = delete_yn;
@@ -40,12 +40,7 @@ public class ChannelCommentVO implements java.io.Serializable {
 		this.report = report;
 		this.content = content;
 		this.comment_no = comment_no;
-	}
-	public int getChannel_no() {
-		return channel_no;
-	}
-	public void setChannel_no(int channel_no) {
-		this.channel_no = channel_no;
+		this.backup_id=backup_id;
 	}
 	public String getChan_article_content() {
 		return chan_article_content;
@@ -59,11 +54,11 @@ public class ChannelCommentVO implements java.io.Serializable {
 	public void setComment_date(Date comment_date) {
 		this.comment_date = comment_date;
 	}
-	public int getRev() {
-		return rev;
+	public int getlev() {
+		return lev;
 	}
-	public void setRev(int rev) {
-		this.rev = rev;
+	public void setlev(int lev) {
+		this.lev = lev;
 	}
 	public int getRef() {
 		return ref;
@@ -125,17 +120,19 @@ public class ChannelCommentVO implements java.io.Serializable {
 	public void setComment_no(int comment_no) {
 		this.comment_no = comment_no;
 	}
+	public String getBackup_id() {
+		return backup_id;
+	}
+	public void setBackup_id(String backup_id) {
+		this.backup_id = backup_id;
+	}
 	@Override
 	public String toString() {
-		return "ChannelCommentVO [channel_no=" + channel_no + ", chan_article_content=" + chan_article_content
-				+ ", comment_date=" + comment_date + ", rev=" + rev + ", ref=" + ref + ", chan_article_filepath="
-				+ chan_article_filepath + ", delete_yn=" + delete_yn + ", user_id_bak=" + user_id_bak
-				+ ", chan_article_no=" + chan_article_no + ", user_id=" + user_id + ", classify=" + classify
-				+ ", report=" + report + ", content=" + content + ", comment_no=" + comment_no + "]";
+		return "ChannelCommentVO [chan_article_content=" + chan_article_content + ", comment_date=" + comment_date
+				+ ", lev=" + lev + ", ref=" + ref + ", chan_article_filepath=" + chan_article_filepath + ", delete_yn="
+				+ delete_yn + ", user_id_bak=" + user_id_bak + ", chan_article_no=" + chan_article_no + ", user_id="
+				+ user_id + ", classify=" + classify + ", report=" + report + ", content=" + content + ", comment_no="
+				+ comment_no + "]";
 	}
 	
-	
-	
-	
-
 }

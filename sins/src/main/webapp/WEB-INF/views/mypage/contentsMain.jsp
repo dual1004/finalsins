@@ -13,7 +13,6 @@
 	href="/sins/resources/css/mypage/mypage-common.css" />
 	<script type="text/javascript" src='<c:url value='/resources/smarteditor/js/service/HuskyEZCreator.js'/>' charset="utf-8"></script>
 <script src="http://vjs.zencdn.net/c/video.js"></script>
-<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script type="text/javascript">
 	$(document).ready(
 			function() {
@@ -49,8 +48,7 @@
 
 				});
 
-			
-				$("#12").click(function() {
+				/* $("#12").click(function() {
 					var isHidden = $(".11").is(":hidden");
 					if (isHidden) {
 						$(".11").show(100);
@@ -60,42 +58,41 @@
 						$(".score_textarea").hide(100);
 					}
 
+				}); */
+				
+				$("#t-l").click(function(){ 
+						$("#spot1, #overlay_t").show();
+				}); 
+				$("#overlay_t").click(function(e){ 
+				    e.preventDefault(); 
+				    $("#spot1, #spot2, #overlay_t").hide(); 
 				});
-				
-			$("#t-l").click(function(){ 
-					$("#spot1, #overlay_t").show(300);
-			}); 
-			$("#overlay_t").click(function(e){ 
-			    e.preventDefault(); 
-			    $("#spot1, #spot2, #overlay_t").hide(300); 
-			});
-			$("#t-r").click(function(){ 
-			 	$("#spot2, #overlay_t").show(300);
-			}); 
-			 	
-			var noticeMenuStatus = 0;
-			$(".notice").hide();
-			 	
-			$("#notice").click(function(){
-			 if(noticeMenuStatus == 0){
-			 	noticeMenuStatus = 1;
-			 	$(".notice").slideDown("slow");
-			 }else {
-			 	noticeMenuStatus = 0;
-			 	$(".notice").slideUp("slow");
-			 }
-			 		
-			 });
-			 	
-			 	
-			 setTimeout(function(){
-			 $('#friend').html(friendTag);
-			 		
-			 },500);
-				
-			});
-</script>
-<script>
+				$("#t-r").click(function(){ 
+				 	$("#spot2, #overlay_t").show();
+				}); 
+				 	
+				var noticeMenuStatus = 0;
+				$(".notice").hide();
+				 	
+				$("#notice1, #notice2").click(function(){
+				 if(noticeMenuStatus == 0){
+				 	noticeMenuStatus = 1;
+				 	$(".notice").slideDown("slow");
+				 }else {
+				 	noticeMenuStatus = 0;
+				 	$(".notice").slideUp("slow");
+				 }
+				 		
+				 });
+				 	
+				 	
+				 setTimeout(function(){
+				 $('#friend').html(friendTag);
+				 		
+				 },500);
+				 	
+				 	
+				});
 
 $(function(){
 	// 화면 중앙에 배치.      
@@ -228,79 +225,256 @@ $(function(){
       		});
       	});
       	 
-     // 댓글 클릭 시, 댓글 리스트 보여주기
+      	 
+     // 원석부분
+     	 $(document).on("click", ".doFire", function(){
+     		var th = $(this);
+     		
+     		var fireId = th.parent().next().children().val();
+     		var fireNo = th.parent().next().next().children().val();
+     		var classify = "MY_PAGE";
+     		
+     		$.ajax({
+     			url : "fireContent.k?fireId="+fireId + "&fireNo="+fireNo+"&classify="+classify,
+     			type : "post",
+     			success : function(date){
+     				if(date == 1){
+     					th.parent().html("<input type='button' class='fireCancel' value='신고취소'/>");
+     				}
+     			}
+     		})
+     		
+     	 });
+     	$(document).on("click", ".fireCancel", function(){
+     		var th = $(this);
+     		
+     		var fireId = th.parent().next().children().val();
+     		var fireNo = th.parent().next().next().children().val();
+     		var classify = "MY_PAGE";
+     		
+     		$.ajax({
+     			url : "cancelFireContent.k?fireId="+fireId + "&fireNo="+fireNo+"&classify="+classify,
+     			type : "post",
+     			success : function(date){
+     				if(date == 1){
+     					th.parent().html("<input type='button' class='doFire' value='신고'/>");
+     				}
+     			}
+     		})
+     		
+     	 });
+     	
+     	<% // TODO Auto-generated method stub %>
+     	$(document).on("click", ".doCommentFire", function(){
+     		var th = $(this);
+     		var commentNo = $(this).parent().prev().prev().prev().val();
+			var classify = "MYPAGE_COMMENT";
+			var fireId =  $(this).parent().prev().prev().val();
+			var fireNo = $(this).parent().prev().val();
+			var lev = 1;
+			var comment = $(this).prev().val();
+			
+			
+			$.ajax({
+				url : "fireComment.k",
+				type : "post",
+				data : {
+					"fireNo" : fireNo,					
+					"commentNo" : commentNo,
+					"classify" : classify,
+					"fireId" : fireId,
+					"lev" : lev
+				},
+				success : function(data){
+					th.parent().append('<input type="button" class="unCommentFire" value="신고취소"/>');
+					th.remove();
+				}
+			})
+     	});
+     	
+     	$(document).on("click", ".unCommentFire", function(){
+     		var th = $(this);
+     		var commentNo = $(this).parent().prev().prev().prev().val();
+			var classify = "MYPAGE_COMMENT";
+			var fireId =  $(this).parent().prev().prev().val();
+			var fireNo = $(this).parent().prev().val();
+			var lev = 1;
+			var comment = $(this).prev().val();
+			
+			
+			$.ajax({
+				url : "fireCommentCancel.k",
+				type : "post",
+				data : {
+					"fireNo" : fireNo,					
+					"commentNo" : commentNo,
+					"classify" : classify,
+					"fireId" : fireId,
+					"lev" : lev
+				},
+				success : function(data){
+					th.parent().append('<input type="button" class="doCommentFire" value="신고"/>');
+					th.remove();
+				}
+			})
+     	});
+     	
+     	 // 여기까지 원석부분
+      	
+      	 
+        // 댓글 클릭 시, 댓글 리스트 보여주기
         $(".comment").on("click", function(){
         	
-        	
-        	/* var state = $(this).parent().parent().parent().parent().parent().next().css('display'); */
-        	var state = $(this).parent().parent().parent().parent().parent().parent().last().attr('id');
-        	alert(state); 
+        	var state = $(this).parent().parent().parent().parent().parent().next().css('display');
+        	/* var state = $(this).parent().parent().parent().parent().parent().next().attr('id'); */
+        	/* alert(state); */
         	 if(state == 'none') {
 				$(this).parent().parent().parent().parent().parent().next().show(300);
+				$(this).parent().parent().parent().parent().parent().next().next().show(300);
 			} else {
 				$(this).parent().parent().parent().parent().parent().next().hide(300);
+				$(this).parent().parent().parent().parent().parent().next().next().hide(300);
 			}
         	
-        	/* var writeNo = $(this).parent().next().val();
+        	/* $(this).parent().parent().parent().parent().parent().next().toggle(); */
+        	
+        	var commentlist = $(this).parent().parent().parent().parent().parent().next().next().last();
+        	var writeNo = $(this).parent().next().children().val();
     		var userId = '${loginUser.userId}';
-    		var thediv = $(this).parent().parent().parent().parent().next().children('.commentListContainer').text();
+    		var classify = 0;
     		$.ajax({
-				url : 'selectGroupCommentList.y?writeNo=' + writeNo
-				,dataType : 'json'
-				,contentType : 'application/json; charset=utf-8'
+				url : 'selectMypageCommentList.b?writeNo=' + writeNo + '&classify=' + classify
+				, type : "post"
 				,success : function(list) {
+					var comment = list.commentList;
+					var fire = list.fireCommentList;
 					
-					console.log(thediv);
-					console.log(list);
-					for(var i = 0; i < list.length; i ++) {
+					$("div").remove(".commentOne");
+					
+					$(".commentTextarea").val("");
+					
+					for(var i = 0; i < list.commentList.length; i ++) {
+						var check = 0;	
+					
+						for(var j=0;j < list.fireCommentList.length; j++){	
+							if(list.commentList[i].commentno == list.fireCommentList[j].commentNo){
+								check = 1;
+							}					
+						}
+						if(check == 0){
+							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list.commentList[i].userid == userId){
+							commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne"><label>'+list.commentList[i].content+'</label><br><input type="button" class="doCommentFire" value="신고"/></div>');
+							}
+						}
+						else {
+							commentlist.append('<div class="commentOne"><hr><table><tr><td><img src="'+list.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list.commentList[i].username+'<td></tr><tr><td>'+list.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list.commentList[i].userid == userId){
+							commentlist.append('<div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								commentlist.append('<input type="hidden" name="commentNo" value="'+list.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list.commentList[i].content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+							}
+						}
 						
-						/* thediv.append($('<div>', {html : list[i].userId}));
-						thediv.append($('<div>', {class : 'commentOne', text : list[i].content}));	
 					}
+					
+					
 				}
-    		}); */
+    		});
         });
         
         // 댓글에 글쓰기 했을 때
         $(".commentSubmit").on("click", function(){
-        	var commentForm = $(this).parent().serialize();
+        	var commentForm = $(this).parent().parent().serialize();
 			var thisdiv = $(this).parent().parent().next();
-        	
+			var userId = '${loginUser.userId}';
+			var writeNo = $(this).siblings(".contentno").val();
+			var commentTextarea = $(this).siblings(".commentTextarea").val();
+
+			if(commentTextarea != ""){
         	$.ajax({
-				url : 'insertGroupComment.y'
+				url : 'insertMypageComment.b'
 				,dataType : 'json'
 				,data : commentForm
 				,contentType : 'application/json; charset=utf-8'
-				,success : function(commentList) {
+				,success : function(list2) {
 					
-					for(var i = 0; i < commentList.length; i ++) {
-						thisdiv.append($('<div>', {html : commentList[i].userId}));
-						thisdiv.append($('<div>', {class : 'commentOne', text : commentList[i].content}));	
+					var comment = list2.commentList;
+					var fire = list2.fireCommentList;
+					
+					$("div").remove(".commentOne");
+					
+					$(".commentTextarea").val("");
+					
+					for(var i = 0; i < list2.commentList.length; i ++) {
+						var check = 0;	
+					
+						for(var j=0;j < list2.fireCommentList.length; j++){	
+							if(list2.commentList[i].commentno == list2.fireCommentList[j].commentNo){
+								check = 1;
+							}					
+						}
+						
+						if(check == 0){
+							thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list2.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list2.commentList[i].username+'<td></tr><tr><td>'+list2.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list2.commentList[i].userid == userId){
+								thisdiv.append('<div class="commentOne">'+list2.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list2.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								thisdiv.append('<input type="hidden" name="commentNo" value="'+list2.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list2.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list2.commentList[i].content+'<br><input type="button" class="doCommentFire" value="신고"/></div>');
+							}
+						}
+						else {
+							thisdiv.append('<div class="commentOne"><hr><table><tr><td><img src="'+list2.commentList[i].userprofile+'" style="width: 30px; height: 30px;"></td><td><h5><table><tr><td>'+list2.commentList[i].username+'<td></tr><tr><td>'+list2.commentList[i].commentdate+'</td></tr></table></h5></td></tr></table><br></div>');
+							if(list2.commentList[i].userid == userId){
+								thisdiv.append('<div class="commentOne">'+list2.commentList[i].content+'<br><input type="button" class="update2" value="수정"/><input type="button" class="delete2" value="삭제"/><input type="hidden" class="hdwriteNo" value="' + writeNo + '"/><input type="hidden" class="hdcommentNo" value="' + list2.commentList[i].commentno + '"/></div>');
+							}else{
+								<% // TODO Auto-generated method stub %>
+								thisdiv.append('<input type="hidden" name="commentNo" value="'+list2.commentList[i].commentno+'"/><input type="hidden" name="fireId" value="'+list2.commentList[i].userid+'"/><input type="hidden" name="fireNo" value="'+writeNo+'"/><div class="commentOne">'+list2.commentList[i].content+'<br><input type="button" class="unCommentFire" value="신고취소"/></div>');
+							}
+						}
+							
 					}
+					
 				}
-			});
+	        })
+			}else
+			alert('댓글을 1글자 이상 입력해주세요');	
+        });
+     // 댓글 삭제
+        $(document).on("click", ".delete2", function(){
+        	var thisClass = $(this).parent();
+        	var thisClass2 = $(this).parent().prev();
+        	var commentNo = $(this).siblings(".hdcommentNo").val();
+			var writeNo = $(this).siblings(".hdwriteNo").val();
+			var userId = '${loginUser.userId}';
+
+        	$.ajax({
+        		url : "deleteMypageComment.b?commentno=" + commentNo	 
+   				,dataType : 'json'
+   				,contentType : 'application/json; charset=utf-8'
+       			,success : function(list){
+					//$("div").remove(".commentOne");
+					thisClass.remove();
+					thisClass2.remove();
+					$(".commentTextarea").val("");
+					
+					tag(list, writeNo);
+       			}
+       		});
+        });
+        
+        
+        
+        
+        $(".menu-button").on("click", function(){
+			$(this).parent().siblings().children(".hbtn").toggle();
         });
       	 
-      	 
-      	
-	
-	var editor_object = [];
-	
-	nhn.husky.EZCreator.createInIFrame({
-		oAppRef: editor_object,
-		elPlaceHolder:"contents",
-		sSkinURI:"/sins/resources/smarteditor/SmartEditor2Skin.html",
-		 fCreator: "createSEditor2",
-		/* htParams:{
-			bUseToolbar:true,
-			bUseVerticalResizer:true,
-			bUseModeChanger:true,
-			
-		}
-	 */
-	  
-
-	});
 	$("#submitBtn").click(function(){
 
 		if($("#title").val().length>0){
@@ -329,8 +503,8 @@ function mask() {
      var maskWidth = $(window).width();  
 
      //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-     /* $(".window").center();
-     $("#mask").css({"width":maskWidth,"height":maskHeight});   */
+     /* $(".window").center(); */
+     /* $("#mask").css({"width":maskWidth,"height":maskHeight});   */
      
      //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
 
@@ -377,11 +551,143 @@ function deleteWrite(writeno) {
  }
  
  
- 
- 
 </script>
+<style type="text/css">
+/* 팝업 */
+#mask {
+	position: absolute;
+	z-index: 9000;
+	background-color: #000;
+	display: none;
+	left: 0;
+	top: 0;
+}
 
+/* 팝업으로 뜨는 윈도우 css  */
+.window {
+	display: none;
+	position: absolute;
+	width: 30%;
+	height: 20%;
+	background-color: #FFF;
+	z-index: 10000;
+}
 
+/* 게시글 목록  */
+.writeList {
+	width: 100%;
+	margin-top: 10px;
+	margin-right: 10px;
+	border: 1px solid;
+}
+
+.writeList .writerInfo {
+	width: 100%;
+}
+
+.writeList .writerPhoto {
+	width: 15%;
+}
+
+.writeList .writerName {
+	font-size: 15px;
+}
+
+.writeList .writeDate {
+	font-size: 12px;
+}
+
+.contentContainer {
+	padding: 5%;
+}
+
+.buttonContainer {
+	background: #ededed;
+}
+
+.content2 {
+	width: 560px;
+	padding: 20px;
+	background-color: #E7E4F9;
+}
+
+@media screen and (max-width:500px) {
+	.content2, .t1, .t2, .t3 {
+		overflow: hidden;
+		float: none;
+		width: auto;
+		margin: auto;
+	}
+}
+
+.pro {
+	width: 30px;
+	height: 30px;
+}
+
+.t1 {
+	width: 100px;
+}
+
+.t2 {
+	width: 500px;
+}
+
+.t3 {
+	width: 500px;
+	border-collapse: collapse;
+	borer: 1px solid black;
+	text-align: center;
+}
+
+/* 댓글 */
+.score_textarea {
+	position: relative;
+	float: right;
+	width: 500px;
+	border-left: 1px solid #dedede;
+	padding-right: 118px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.score_textarea textarea {
+	width: 350px;
+	height: 50px;
+	border: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	font-size: 18px;
+	color: #666
+}
+
+.score_textarea .btn_entry {
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: block;
+	width: 60px;
+	height: 50px;
+	background: #231f20;
+	font-size: 18px;
+	font-weight: bold;
+	color: #cdc197;
+	text-align: center;
+	line-height: 50px;
+	border: 0;
+	border-radius: 15px 15px 15px 15px;
+	outline: none;
+} /*1113*/
+.score_etc {
+	position: absolute;
+	right: 0;
+	top: -12px;
+	font-size: 13px;
+	color: #666
+}
+</style>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시글 상세</title>
@@ -428,14 +734,15 @@ function deleteWrite(writeno) {
     <div id="header">
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
-		<div id="top"></div>
+		<div id="top">
+			<c:import url="../common/top.jsp" charEncoding="UTF-8" />
+		</div>
 		<div id="t-r"></div>
 	</div>
 	
 	<div id="container">
-	
       	<div id="left" class="box">
-        	
+        	<h2>LEFT</h2>
 	        <ul>
 	          <li><a href="mypage.b">MyPage</a></li>
 	          <li><a href="alink.do?path=channelListView/channelList">채널</a></li>
@@ -445,219 +752,152 @@ function deleteWrite(writeno) {
 	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
-	          
+
 	        </ul>
       	</div>
-		<div id="content">
-	        <div class="content">
-	        
-	        <%-- <form id="mypageform" action="mypage2.b">
-						<input type="hidden" name="userid" value="${memberUser.userId }" />
-						<table class="t1">
+		<!-- 게시글 부분 -->
+			
+				<div id="content">
+				<div class="writeList">
+						<table class="writerInfo">
+							<tr class="writerInfoTr">
+
+								<td class="writerPhoto" rowspan="2"><c:if
+										test="${mypage.userprofile != null}">
+										<a href="mypage2.b?userid=${mypage.userid}">
+										<img src="${mypage.userprofile}"
+											style="width: 50px; height: 50px;">
+											</a>
+									</c:if> <c:if test="${mypage.userprofile eq null}">
+									<a href="mypage2.b?userid=${mypage.userid}">
+										<img src="/sins/resources/images/missingNO.jpg"
+											style="width: 50px; height: 50px;"></a>
+									</c:if></td>
+								<td class="writerName">
+								<a href="mypage2.b?userid=${mypage.userid}">
+								${mypage.username}
+								</a>
+								</td>
+							</tr>
 							<tr>
-								<td><input type="submit"><img
-									src="${mypage.userprofile }" class="pro"></td>
-								<td><input type="submit">
-									<h5>${mypage.username }</h5></td>
+								<td class="writeDate">${mypage.writedate}</td>
 							</tr>
 						</table>
-					</form> --%>
-						<div class="writeList">
-							<div>
-								<table class="writerInfo">
-									<tr class="writerInfoTr">
-									
-										<td class="writerPhoto" rowspan="2">
-										<c:if test="${mypage.userprofile != null}">
-				<img src="${mypage.userprofile}" style="width: 30px; height: 30px;">
-				</c:if>
-				<c:if test="${mypage.userprofile eq null}">
-				<img src="/sins/resources/images/missingNO.jpg" style="width: 30px; height: 30px;">
-				</c:if></td>
-										<td class="writerName">${mypage.username}</td>
-									</tr>
-									<tr>
-										<td class="writeDate">${mypage.writedate}</td>
-									</tr>
-								</table>
-								<div class="contentContainer">
-									${mypage.content}
-									<br>
-									<c:if test="${not empty mypage.filepath}">
-        		<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
-   				<c:if test="${fn:split(mypage.filepath,'.')[1] eq pic}">
-				<center><img src="${pageContext.request.contextPath}/resources/file/${mypage.userid}/${mypage.filepath}" style="width: 200px; " /></center>
-				</c:if>
-        		</c:forTokens>
-        		
-   				<c:if test="${fn:split(mypage.filepath,'.')[1] eq 'mp4'}">
-   				<center>
-				<video width="480" height="360" controls>
-  				<source src="${pageContext.request.contextPath}/resources/file/${mypage.userid}/${mypage.filepath}" type="video/mp4">
-  				</video>
-  				</center>
-				</c:if>
-        		</c:if>
-								</div>
-								<div class="buttonContainer">
-									<table>
-									<tr><td>
-										<c:if test="${not empty mypage.filepath}">
-        		<a href="download.p?userId=${item.userid}&fileName=${item.filepath}">${fn:split(item.filepath,'=')[1]}</a>
-        		                        </c:if>
-        		                        <c:if test="${empty mypage.filepath}">
+						<div class="contentContainer">
+							${mypage.content} <br>
+							<c:if test="${not empty mypage.filepath}">
+								<c:forTokens var="pic" items="jpg,jpeg,bmp,png,gif" delims=",">
+									<c:if test="${fn:split(mypage.filepath,'.')[1] eq pic}">
+										<center>
+											<img
+												src="${pageContext.request.contextPath}/resources/file/${mypage.userid}/${mypage.filepath}"
+												style="width: 200px;" />
+										</center>
+									</c:if>
+								</c:forTokens>
+
+								<c:if test="${fn:split(mypage.filepath,'.')[1] eq 'mp4'}">
+									<center>
+										<video width="480" height="360" controls>
+											<source
+												src="${pageContext.request.contextPath}/resources/file/${mypage.userid}/${mypage.filepath}"
+												type="video/mp4">
+										</video>
+									</center>
+								</c:if>
+							</c:if>
+						</div>
+						<div class="buttonContainer">
+							<table>
+								<tr>
+									<td><c:if test="${not empty mypage.filepath}">
+											<a
+												href="download.p?userId=${mypage.userid}&fileName=${mypage.filepath}">${fn:split(mypage.filepath,'=')[1]}</a>
+										</c:if> <c:if test="${empty mypage.filepath}">
         		                                                첨부파일 없음
-        		                        </c:if>
-									</td></tr>
-										<tr>
-											
-											<c:set var="check" value="0"/>
-											<c:forEach var="like" items="${likeList}">
-											<c:if test="${like.writeNo == item.writeno && check == 0}">
-												<c:set var="check" value="1"/>
+        		                        </c:if></td>
+								</tr>
+								<tr>
+
+									<c:set var="check" value="0" />
+									<c:forEach var="like" items="${likeList}">
+										<c:if test="${like.writeNo == item.writeno && check == 0}">
+											<c:set var="check" value="1" />
+										</c:if>
+									</c:forEach>
+									<input type="hidden" class="mylike" value="${mypage.writelike}" />
+									<c:if test="${check == 1}">
+										<td><input type="hidden" class="mylike"
+											value="${mypage.writelike}" /> ${mypage.writelike}명이 좋아합니다. <input
+											type="button" class="unlike" value="좋아요 취소" /> <input
+											type="hidden" class="writeNo" value="${mypage.writeno}" /></td>
+									</c:if>
+									<input type="hidden" class="mylike" value="${mypage.writelike}" />
+									<c:if test="${check == 0}">
+										<td><input type="hidden" class="mylike"
+											value="${mypage.writelike}" /> ${mypage.writelike}명이 좋아합니다. <input
+											type="button" class="like" value="좋아요" /> <input
+											type="hidden" class="writeNo" value="${mypage.writeno}" /></td>
+									</c:if>
+									<input type="hidden" class="writeNo" value="${mypage.writeno}" />
+									<c:if test="${mypage.userid == loginUser.userId}">
+										<td><input type="button" class="update"
+											onclick="updateWritePage(${mypage.writeno}, '${mypage.content}', '${mypage.filepath}');"
+											value="수정" /></td>
+										<td><input type="button" class="deleteWrite"
+											onclick="deleteWrite(${mypage.writeno});" value="삭제" /></td>
+									</c:if>
+									<!-- 원석부분 -->
+									<c:if test="${mypage.userid ne loginUser.userId}" >
+										<c:set var="ff" value="0"/>
+										<c:forEach var="fire" items="${fireList }">
+											<c:if test="${mypage.writeno eq  fire.fireNo}">
+												<c:set var="ff" value="1"/>
 											</c:if>
 										</c:forEach>
-											<input type="hidden" class="mylike" value="${mypage.writelike}"/>
-										<c:if test="${check == 1}">
-											<td>
-											<input type="hidden" class="mylike" value="${mypage.writelike}"/>
-											${mypage.writelike}명이 좋아합니다.
-											<input type="button" class="unlike" value="좋아요 취소"/>
-											<input type="hidden" class="writeNo" value="${mypage.writeno}"/>
-											</td>
-										</c:if>	
-										<input type="hidden" class="mylike" value="${mypage.writelike}"/>
-										<c:if test="${check == 0}">
-											<td>
-											<input type="hidden" class="mylike" value="${mypage.writelike}"/>
-											${mypage.writelike}명이 좋아합니다.
-											<input type="button" class="like" value="좋아요"/>
-											<input type="hidden" class="writeNo" value="${mypage.writeno}"/>
-											</td>
+										<c:if test="${ff eq  0}">
+											<td><input type="button" class="doFire" value="신고" /></td>
+											
 										</c:if>
-										<input type="hidden" class="writeNo" value="${mypage.writeno}"/>
-											<c:if test="${mypage.userid == loginUser.userId}">
-												<td><input type="button" class="update" 
-													onclick="updateWritePage(${mypage.writeno}, '${mypage.content}', '${mypage.filepath}');"value="수정"/></td>
-												<td><input type="button" class="deleteWrite" 
-													onclick="deleteWrite(${mypage.writeno});"value="삭제"/></td>
-											</c:if>
-											<c:if test="${mypage.userid != loginUser.userId}">
-											<td><input type="button" class="report" 
-												onclick="reportWrite('${mypage.userid}', ${mypage.writeno});" value="신고"/></td>
+										<c:if test="${ff eq  1}">
+											<td><input type="button" class="fireCancel" value="신고취소" /></td>
 										</c:if>
-										<td><input type="button" class="comment" value="댓글"/></td>
-										<td><input type="hidden" class="writeNo" value="${mypage.writeno}"/></td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</div>
-						
-						
-						<c:forEach var="item2" items="${mycolist}">
-						<c:if test="${item2.contentno eq mypage.writeno }">
-
-							<div class="11">
-								<table class="t1">
-									<tr>
-										<td><c:if test="${item2.userprofile != null}">
-				<img src="${item2.userprofile}" style="width: 30px; height: 30px;">
-				</c:if>
-				<c:if test="${item2.userprofile eq null}">
-				<img src="/sins/resources/images/missingNO.jpg" style="width: 30px; height: 30px;">
-				</c:if></td>
-										<td><div style="width: 50px;">
-												<h5>${item2.username}</h5>
-											</div></td>
-										<td>
-											<table class="t2">
-												<tr>
-													<td>
-														<form action="mypageCommentUpdate.b">
-														<textarea name="txtComment">${item2.content }</textarea>
-															 <input
-																type="hidden" name="writeno" value="${item2.commentno}">
-															<input type="hidden" value="${memberUser.userId }"
-																name="pageid">
-																<input type="submit" value="수정">
-														</form>
-														<form action="mypageCommentDelete.b">
-															<input type="button" class="deleteWrite2" 
-													onclick="deleteWrite(${item2.commentno});"value="삭제"/>
-															<input type="hidden" name="writeno"
-																value="${item2.commentno}"> <input type="hidden"
-																value="${memberUser.userId }" name="pageid">
-														</form>
-													</td>
-												</tr>
-											</table>
-										</td>
+										<td><input type="hidden" name="fireId" value="${memberUser.userId }" /></td>
+										<td><input type="hidden" name="firNo" value="${mypage.writeno }" /></td>
+									</c:if>
+									<!-- 여기까지 원석부분 -->
+									<td><input type="button" class="comment" value="댓글" /></td>
+									<td><input type="hidden" class="writeNo"
+										value="${mypage.writeno}" /></td>
 									</tr>
-								</table>
-                                
-							</div>
-
-						</c:if>
-					</c:forEach>
-					<form id="mypageform3" action="mypageComment.b">
-						<div class="score_textarea">
-							<input type="hidden" value="${memberUser.userId }" name="pageid">
-							<input type="hidden" value="${mypage.writeno }" name="writeno">
-							<textarea id="txtComment" name="txtComment" title="댓글 입력"
-								placeholder="댓글을 입력하세요!" cols="23" rows="9"
-								style="outline: none;" onclick="docheck()"
-								onkeyup="javascript:doleft();"></textarea>
-
-							<input type="submit" class="btn_entry Lang-LBL0000"
-								href="javascript:void(0)" id="btnSave" value="입력">
+							</table>
 						</div>
-					</form>
+				<form id="mypageform3"action="" class="commentForm" method="post" enctype="multipart/form-data">
+					<div class="score_textarea" >
+						<input type="hidden" value="${loginUser.userId}" name="userid">
+						<input type="hidden" value="${mypage.writeno }" name="contentno" class="contentno">
+						<textarea id="txtComment" name="content" title="댓글 입력"
+							placeholder="댓글을 입력하세요!" cols="50" rows="1"class="commentTextarea"></textarea>
+
+						<input type="button" class="commentSubmit" id="btnSave" value="입력">
+					</div>
+				</form>
+				<div class="commentlist">
+				
+				</div>
+				</div>
+			
 	        
-	        </div>
 		</div>
+		
     	<div id="right" class="box">
       		<%@include file="/WEB-INF/views/friend/friendView.jsp" %>
     	</div>
-    	
    	</div>
  	<div id="footer">
 		<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
 	</div>
-  	<div id="spot1">
-		<ul>
-			<li><a href="mypage.b">MyPage</a></li>
-			<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
-			<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
-			<li><a href="selectChannelList.l">채널</a></li>
-			<li><a href="selectGroupList.y">그룹</a></li>
-			<li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
-			<li id="notice2">고객센터</li>
-			<li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
-			<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
-			<li class="notice"><a href="selectQna.n">└QNA</a></li>
-
-			
-		</ul>
-	</div>
-	<div id="spot2">
-		<ul>
-			<li><a href="javascript:goMyInfo()">내 정보보기</a></li>
-			<li><a href="javascript:message();">메세지 보기</a></li>
-			<li><a href="javascript:alertover()">알림 보기</a></li>
-			<li><a href="javascript:logout()">로그 아웃</a></li>
-		</ul>
-		<hr style="width: 100px; margin: auto;">
-		<br />
-		<h4 align="center">친구 목록</h4>
-		<br>
-		<hr style="width: 100px; margin: auto;">
-		<div id='friend'></div>
-
-	</div>
-
-	<div id="spot3">
-		<c:import url="../common/top.jsp" charEncoding="UTF-8" />
-	</div>
+  	<div id="spot1"></div>
+	<div id="spot2"></div>
 </body>
 </html>

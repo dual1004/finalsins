@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.seven.sins.channel.vo.ChannelCommentVO;
 import com.seven.sins.fire.vo.FireVO;
 import com.seven.sins.group.vo.GroupCommentVO;
 import com.seven.sins.member.vo.MemberVO;
@@ -137,6 +138,35 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<FireVO> getFireList(FireVO search) {
 		return mypageDAO.getFireList(search);
+	}
+
+	@Override
+	public ArrayList<FireVO> fireCommentList(FireVO searchComment) {
+		return mypageDAO.fireCommentList(searchComment);
+	}
+
+	@Override
+	public ArrayList<MypageCommentVO> getComment(MypageCommentVO vo) {
+		return mypageDAO.getComment(vo);
+	}
+
+	@Override
+	public ArrayList<GroupCommentVO> selectGroupCommentList(int writeNo) {
+		ArrayList<GroupCommentVO> list = mypageDAO.selectGroupCommentList(writeNo);
+		return list;
+	}
+
+
+	@Override
+	public ArrayList<ChannelCommentVO> selectChannelCommentList(ChannelCommentVO c) {
+		ArrayList<ChannelCommentVO> list = mypageDAO.selectChannelCommentList(c);
+		return list;
+	}
+
+	@Override
+	public int mypagePotoUpdate(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return mypageDAO.mypagePotoUpdate(mvo);
 	}
 	
 	

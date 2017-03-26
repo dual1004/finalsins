@@ -159,8 +159,8 @@ function fAppender(){
 				for(var i=0; i<result.flist.length; i++){
 				 
 					var tag="<tr>"+
-					"<td class='resultTds' onclick=location.href='mypage2.b?userId="+result.flist[i].userId+"' style='width:20%; padding-left:20px;'><img class='nameLink' src='${pageContext.request.contextPath}/resources/file/"+result.flist[i].userId+"/"+result.flist[i].userProfile+"' style='width: 80px; height: 80px;' /></td>"+
-					"<td class='resultTds' style='width:50%;'><label class='nameLink' onclick=location.href='mypage2.b?userId="+result.flist[i].userId+"' > "+result.flist[i].userName+"</label><br>"+
+					"<td class='resultTds' onclick=location.href='mypage2.b?userid="+result.flist[i].userId+"' style='width:20%; padding-left:20px;'><img class='nameLink' src='${pageContext.request.contextPath}/resources/file/"+result.flist[i].userId+"/"+result.flist[i].userProfile+"' style='width: 80px; height: 80px;' /></td>"+
+					"<td class='resultTds' style='width:50%;'><label class='nameLink' onclick=location.href='mypage2.b?userid="+result.flist[i].userId+"' > "+result.flist[i].userName+"</label><br>"+
 					"<label class='font8ptGray'>"+result.flist[i].address+
 					"거주</label></td>"+
 					"<td  class='resultTds' style='width:30%;'><button class= 'addBtn' value='"+result.flist[i].userId+"'>친구 요청</button></td></tr>";
@@ -210,8 +210,8 @@ function fAppender(){
 			 <c:forEach var="member" items="${resultList }">
 			
 			<tr>
-			<td class="resultTds" onclick="location.href='mypage2.b?userId=${member.userId}'" style='width:20%; padding-left:20px;'><img class="nameLink" src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
-			<td class="resultTds" style='width:50%;'><label class="nameLink" onclick="location.href='mypage2.b?userId=${member.userId}'" > ${member.userName }</label><br>
+			<td class="resultTds" onclick="location.href='mypage2.b?userid=${member.userId}'" style='width:20%; padding-left:20px;'><img class="nameLink" src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
+			<td class="resultTds" style='width:50%;'><label class="nameLink" onclick="location.href='mypage2.b?userid=${member.userId}'" > ${member.userName }</label><br>
 			<label class="font8ptGray">
 			${member.address } 거주
 			</label>

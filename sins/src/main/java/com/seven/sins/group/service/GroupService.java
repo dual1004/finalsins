@@ -2,6 +2,7 @@ package com.seven.sins.group.service;
 
 import java.util.*;
 
+import com.seven.sins.fire.vo.FireVO;
 import com.seven.sins.group.vo.*;
 
 public interface GroupService {
@@ -19,7 +20,10 @@ public interface GroupService {
 	public int updateGroup(GroupVO vo);
 	
 	// 그룹 삭제.
-	public int deleteGroup(GroupVO vo);
+	public int deleteGroup(int groupNo);
+	
+	// 신고.
+	public ArrayList<FireVO> getfireList(FireVO search);
 	
 	
 	

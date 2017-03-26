@@ -154,6 +154,44 @@
 		WHERE USER_ID = #{userId}
 	</delete>
 	
+	<select id="getUserProfileC" parameterType="ChannelArticleVO" resultMap="ResultMember" >
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{user_id_bak}
+	</select>
 	
-
+	<select id="getUserProfileG" parameterType="GroupWriteVO" resultMap="ResultMember" >
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getUserProfileM" parameterType="MypageVO" resultMap="ResultMember" >
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userid}
+	</select>
+	
+	<select id="getUserProfileCC" parameterType="ChannelCommentVO" resultMap="ResultMember" >
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="getUserProfileGC" parameterType="GroupCommentVO" resultMap="ResultMember" >
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getUserProfileMC" parameterType="MypageCommentVO" resultMap="ResultMember" >
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userid}
+	</select>
+	<update id="propathchange" parameterType="MemberVO">
+		update MEMBER set 
+		USER_PROFILE = #{userProfile}
+		where user_id = #{userId}
+	</update>
 </mapper>

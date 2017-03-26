@@ -101,6 +101,13 @@
 		SET CONTENT = #{content}, FILEPATH = #{filepath}
 		WHERE WRITE_NO = #{writeno} AND USER_ID = #{userid}
 	</update>
+	<!-- 프로필사진 수정 -->
+	<update id="mypagePotoUpdate" parameterType="MemberVO">
+	    UPDATE MEMBER
+		SET USER_PROFILE = #{userProfile}
+		WHERE USER_ID = #{userId}
+	</update>
+	
 	<!-- 댓글 수정 -->
 	<update id="mypageCommentUpdate" parameterType="MypageCommentVO">
 	    UPDATE MYPAGE_COMMENT
@@ -168,12 +175,34 @@
 		where CONTENT_NO = #{writeNo}
 		ORDER BY COMMENT_NO DESC
 	</select>
+	
+	<select id="selectMypageCommentList2" parameterType="MypageCommentVO" resultType="MypageCommentVO" resultMap="resultMypageComment">
+		SELECT COMMENT_NO, USER_ID, USER_NAME, CONTENT, COMMENT_DATE, PHOTO_PATH, USER_PROFILE
+		FROM MYPAGE_COMMENT 
+		JOIN MEMBER USING(USER_ID)
+		where COMMENT_NO = #{commentno}
+		ORDER BY COMMENT_NO DESC
+	</select>
+	
+	
 	<!-- 댓글 입력 -->
 	<insert id="insertMypageComment" parameterType="MypageCommentVO">
 		INSERT INTO MYPAGE_COMMENT VALUES (BU_SEQ_MYPAGE_COMMENT.nextval,#{userid, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},sysdate, 0,0,#{photopath, jdbcType=VARCHAR},#{userid, jdbcType=VARCHAR},#{contentno},'MYPAGE_COMMENT', 0) 
 	</insert>
 	
-	
+	<!-- 원석 부분  -->
+	<select id="getMyPage" parameterType="FireVO" resultMap="resultMypage">
+      SELECT *
+      FROM MY_PAGE
+      WHERE WRITE_NO = #{fireNo}
+   </select>
+    
+    <select id="getMyPageComment" parameterType="FireVO" resultMap="resultMypageComment">
+      SELECT *
+      FROM MYPAGE_COMMENT
+      WHERE COMMENT_NO = #{commentNo}
+   </select>
+	<!-- 원석 부분 여기까지 -->
 	
 	<!-- 임시 -->
 	<select id = "keywordCount" parameterType="map" resultType="int">

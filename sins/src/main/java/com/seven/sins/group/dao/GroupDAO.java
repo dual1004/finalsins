@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.seven.sins.fire.vo.FireVO;
 import com.seven.sins.group.vo.GroupVO;
 
 @Repository("groupDAO")
@@ -40,14 +41,18 @@ public class GroupDAO {
 
 	// 그룹 수정 (그룹 이름, 그룹 정보, 대표 사진)
 	public int updateGroup(GroupVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("updateGroup", vo);
 	}
 
 	// 그룹 삭제 (실제로 삭제되지 않고, deleteYN 을 'Y' 값으로 변경)
-	public int deleteGroup(GroupVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteGroup(int groupNo) {
+		return sqlSession.update("deleteGroup", groupNo);
+	}
+
+	// 원석부분
+	@SuppressWarnings("unchecked")
+	public ArrayList<FireVO> getfireList(FireVO search) {
+		return (ArrayList<FireVO>)sqlSession.selectList("Fire.getfireList", search);
 	}
 
 }

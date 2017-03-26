@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/sins/resources/css/mypage/mypage-common.css" />
-    <link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
     
 <script type="text/javascript">
 $( document ).ready(function() { 
@@ -80,8 +79,8 @@ $( document ).ready(function() {
 			<br> ${ memberUser.phone }<br>
 			<ul>
 				<li><a href="mypage.b">MyPage</a></li>
-				<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
-				<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
+				<li><a href="friendList.n">친구 목록 보기</a></li>
+				<li><a href="mypagePoto.b">사진 보기</a></li>
 				<li><a href="alink.do?path=member/myInfo">내정보 보기</a></li>
 			</ul>
 
@@ -135,7 +134,7 @@ $( document ).ready(function() {
 		<ul>
 			<li><a href="mypage.b">MyPage</a></li>
 			<li><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></li>
-			<li><a href="mypagePoto.b?userid=${ memberUser.userId }">사진 보기</a></li>
+			<li><a href="mypagePoto.b">사진 보기</a></li>
 			<li><a href="selectChannelList.l">채널</a></li>
 			<li><a href="selectGroupList.y">그룹</a></li>
 			<li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
@@ -144,7 +143,7 @@ $( document ).ready(function() {
 			<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 			<li class="notice"><a href="selectQna.n">└QNA</a></li>
 
-			
+			<li><a href="brodcasting.j">채팅</a></li>
 		</ul>
 	</div>
 	<div id="spot2">

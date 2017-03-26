@@ -11,7 +11,6 @@
 
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/notice/noticeDetail.css" />
-	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 <script>
 	$(function(){
 		if($("p").height() <= 500){
@@ -23,6 +22,12 @@
 	function writeForm(){
 		location.href="alink.do?path=qna/QnaWrite";
 	}
+	
+	function deleteFn(noticeNo){
+		if(confirm("삭제하시겠습니까?")==true)
+			location.href="noticeDelete.k?noticeNo="+noticeNo;
+	}
+	
 </script>
 <style type="text/css">
 #noticeDetailTable{
@@ -57,9 +62,16 @@
 }
 #ttd {
 	font-size : 10pt;
-	background-color : lightgray;
+	background-color : #E7E4F9;
 	text-align : left;
 	
+}
+
+.bbtn{
+position:relative;
+float:right;
+width:50px;
+margin-right:20px;
 }
 </style>
 </head>
@@ -68,7 +80,6 @@
 		<div id="overlay_t"></div>
 		<div id="t-l"></div>
 		<div id="top">
-			<c:import url="../common/top.jsp" charEncoding="UTF-8" />
 		</div>
 		<div id="t-r"></div>
 	</div>
@@ -95,7 +106,8 @@
 				<br />
 				<c:if test="${loginUser.userId eq 'admin'}">
 					<div id="adminModifyBtn">
-						<button>수정하기</button>
+						<button id="delete" class='bbtn' onclick="deleteFn('${notice.noticeNo}');">삭제</button>
+				<button id="bbbbbbtn" class='bbtn' onclick="location.href='noticeModify.k?noticeNo=${notice.noticeNo}'">수정</button>
 					</div>
 				</c:if>
 				<table id="noticeDetailTable" style='text-align: center;'>
@@ -117,6 +129,8 @@
 				
 				<br>
 				<hr />
+				
+				
 
 			</div>
 		</div>
@@ -131,5 +145,11 @@
 	</div> 
 	<div id="spot1"></div>
 	<div id="spot2"></div>
+	<div id="spot">
+	<div id="spot3"></div>
+	<div id="spot4"><%@include
+			file="/WEB-INF/views/common/top.jsp"%></div>
+	<div id="spot5"></div>
+	</div>
 </body>
 </html>

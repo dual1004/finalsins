@@ -38,7 +38,7 @@ public class GroupMemberDAO {
 		return 0;
 	}
 
-	// 가입 거절(운영진) or 그룹 탈퇴(멤버 본인), 그룹 탈퇴는 미완성------------------------
+	// 가입 거절(운영진) or 그룹 탈퇴(멤버 본인) or 회원 탈퇴(운영진)
 	public int deleteGroupMember(GroupMemberVO vo) {
 		return sqlSession.delete(NAMESPACE + "deleteGroupMember", vo);
 	}

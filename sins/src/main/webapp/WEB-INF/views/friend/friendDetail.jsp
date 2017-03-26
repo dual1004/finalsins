@@ -175,7 +175,7 @@ function accept(userId, option){
 		
 				
 				
-				tag+= "<a class='no_underline' href='mypage2.b?userId="+result.resList[i].userId+"'>"+ 
+				tag+= "<a class='no_underline' href='mypage2.b?userid="+result.resList[i].userId+"'>"+ 
 				"<img src='" +"${pageContext.request.contextPath}/resources/file/"+result.resList[i].userId+"/"+result.resList[i].userProfile+"' style='width: 80px; height: 80px;' />&nbsp"+ 
 					result.resList[i].userName +"</a>"+
 					
@@ -237,7 +237,7 @@ function cancelReq(userId, option){
 				for(var i =0; i<result.reqList.length; i++){
 				
 	
-					tag+="<a class='no_underline' href='mypage2.b?userId="+result.reqList[i].userId+"'>"+
+					tag+="<a class='no_underline' href='mypage2.b?userid="+result.reqList[i].userId+"'>"+
 					"<img src='"+ "${pageContext.request.contextPath}/resources/file/"+result.reqList[i].userId+"/"+result.reqList[i].userProfile+"' style='width: 80px; height: 80px;' />"+
 						result.reqList[i].userName +"</a>"+
 	
@@ -294,7 +294,7 @@ function recommend(userId){
 				for(var i =0; i<result.recList.length; i++){
 				
 	
-					tag+= "<a class='no_underline' href='mypage2.b?userId="+result.recList[i].userId+"'>"+ 
+					tag+= "<a class='no_underline' href='mypage2.b?userid="+result.recList[i].userId+"'>"+ 
 					"<img src='" +"${pageContext.request.contextPath}/resources/file/"+result.recList[i].userId+"/"+result.recList[i].userProfile+"' style='width: 80px; height: 80px;' />&nbsp"+ 
 						result.recList[i].userName +"</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
 						"<label class='font8ptGray'>함께 아는 친구 "+result.recList[i].count+"명</label>"+

@@ -29,6 +29,8 @@ public interface ChannelService {
 	public ArrayList<ChannelLikeVO> selectLikeList(ChannelArticleVO articleVo);
 
 	public int updateChannel(ChannelListVO listVo);
+	
+	public int deleteChannel(ChannelListVO vo);
 
 	public int channelCommentInsert(ChannelCommentVO vo);
 
@@ -36,10 +38,18 @@ public interface ChannelService {
 
 	// 원석부분
 	public String getMasterId(ChannelVO vo);
-
 	public ArrayList<FireVO> getFireArticleList(FireVO channelPage);
+	public ArrayList<FireVO> getFireCommentList(FireVO commentSearch);
 	// 여기까지 원석부분
 
 	public int deleteChannelComment(ChannelCommentVO vo);
+
+	public int getChannelNo(String setChannel_name);
+
+	public int deleteArticle(ChannelArticleVO vo);
+
+	public int articleUpdate(ChannelArticleVO vo);
+
+
 
 }

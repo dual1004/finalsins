@@ -284,14 +284,13 @@ var checkAddress = 0;
 		
 		$(document).on("change","#partition", function(){
 			var par = $("#partition").val();
-			console.log(par);
 			if(par === '0'){
 				checkAddress = 0;
 			}
 			else {
 				checkAddress = 1;
 			}
-			console.log(checkAddress);
+
 		});
 		
 		// 주소 수정 취소 클릭시
@@ -402,7 +401,7 @@ var checkAddress = 0;
         <h3>${ loginUser.userName } 님</h3><br>
         ${ loginUser.phone }<br>
         <h4><a href="mypage.b">MyPage</a></h4>
-        <h4><a href="alink.do?path=mypage/mypageFriend">친구 목록 보기</a></h4>
+        <h4><a href="friendList.n">친구 목록 보기</a></h4>
         <h4><a href="mypagePoto.b">사진 보기</a></h4>
         <h4><a href="mypageDetail.b">정보 보기</a></h4>
         </center>

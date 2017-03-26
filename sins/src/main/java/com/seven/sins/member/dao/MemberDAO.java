@@ -117,4 +117,8 @@ public class MemberDAO {
 	public int memberDelete(MemberVO vo) {
 		return sqlSession.delete(NAMESPACE+"memberDelete", vo);
 	}
+
+	public int profileChange(MemberVO loginUser) {
+		return sqlSession.delete(NAMESPACE +"propathchange", loginUser);
+	}
 }

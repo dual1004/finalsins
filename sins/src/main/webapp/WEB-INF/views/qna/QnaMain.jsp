@@ -6,16 +6,15 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Q&A</title>
+<title>SINS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 
 
 <link rel="stylesheet" type="text/css"
-	href="/sins/resources/css/common/newsfeed-common.css" />
+	href="/sins/resources/css/qna/qna-common.css" />
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/qna/qnaMain.css" />
-	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 	
 		
 <style>
@@ -23,26 +22,42 @@
 		font-size:10pt;
 	
 	}
+	
+	.titleLabel{
+	font-size:10pt;
+	cursor:pointer;
+	
+	}
+	.titleLabel:hover{
+	
+	text-decoration:underline;
+	}
+	
 	.idLabel{
 		color:blue;
 		font-size:10pt;
+		cursor:pointer;
 		
-		
+	}
+	.idLabel:hover{
+	cursor:hand;
+	text-decoration:underline;
+	color:red;
 	}
 	
-	.idLabel:hover{
-		text-decoration:under_line;
-		color:red;
-		
-	}
+
 	
 	.atag{
 	text-decoration:none;
 	color:black;
+	
+	
 	}
+	
 
 .titleFont {
 		font-size: 30px;
+		
 	}
 	.ths{
 	font-size:10pt;
@@ -101,12 +116,20 @@ $(document).ready(function(){
 	</div>
 	<div id="container">
 		<div id="left" class="box">
-			<h2>left</h2>
-			<br> 
-			<ul>
-
-			</ul>
-		</div>
+        	<h2>LEFT</h2>
+	        <ul>
+	          <li><a href="mypage.b">MyPage</a></li>
+	          <li><a href="selectChannelList.l">채널</a></li>
+	          <li><a href="selectGroupList.y">그룹</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
+	          <li id="notice"><label class="notice1" style='cursor:pointer;'>고객센터</label></li>
+	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
+	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
+	          <li class="notice"><h4>└QNA</h4></li>
+	          
+	          <li><a href="brodcasting.j">채팅</a></li>
+	        </ul>
+      	</div>
 		<div id="content" class="box">
 
 			<strong class="titleFont">Q&A</strong><br><br>
@@ -127,9 +150,9 @@ $(document).ready(function(){
 						<tr>
 							<td class='tds'><label style='font-size:8pt;'>${qna.qnaNo }</label></td>
 							<td class='tds'><a class="atag"
-								href="detailQna.n?no=${qna.qnaNo }"><label class="font9pt">${qna.title }</label></a></td>
+								href="detailQna.n?no=${qna.qnaNo }"><label class="titleLabel">${qna.title }</label></a></td>
 							<td class='tds'><a class="atag"
-								style='text-decoration: none;' href='#'><label class="idLabel">
+								style='text-decoration: none;' href='#'><label class="idLabel" onclick="location.href='mypage2.b?userid=${qna.userId}'">
 								
 								
 								 <c:set var="sym" value="${fn:indexOf(qna.userId, '@') }"/>
@@ -153,7 +176,7 @@ $(document).ready(function(){
 				<hr />
 
 			</div>
-			<button class="buttons" onclick="writeForm()">질문하기</button>
+			<button class="buttons" style='background:white' onclick="writeForm()">질문하기</button>
 
 			<br>
 			<br>
@@ -234,7 +257,7 @@ $(document).ready(function(){
 	
 	<input id = "key" value="${keyword }" />
 	
-	<button onclick="search()">검색</button>
+	<button style='background:white; width:50px;' onclick="search()">검색</button>
 	</div>
 	
 </div>

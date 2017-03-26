@@ -138,4 +138,9 @@ public class MemberServiceImpl implements MemberService{
 	public int memberDelete(MemberVO vo) {
 		return memberDAO.memberDelete(vo);
 	}
+
+	@Override
+	public int profileChange(MemberVO loginUser) {
+		return memberDAO.profileChange(loginUser);
+	}
 }

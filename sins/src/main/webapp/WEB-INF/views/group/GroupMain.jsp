@@ -59,11 +59,6 @@
 		div.style.transition= "0.8s";
 	}
 
-	
-	
-	
-	
-	
 	// 내꺼
 	$(function(){
 		
@@ -101,7 +96,7 @@
 			location.href = "requestGroupMember.y?groupNo=" + groupNo + "&userId=" + userId;
         });
         
-        // 좋아요 -> 취소
+        // 좋아요 -> 취소 ------------------------------------------------------------------------
         $(document).on("click",".like", function(){
       		
     		var writeNo = $(this).parent().next().val();
@@ -114,8 +109,12 @@
     			,dataType : 'json'
     			,contentType : 'application/json; charset=utf-8'
     			,success : function(result) {
-    				
-    				parent.html('<input type="button" class="unlike" value="취소${check}"/>');				
+					var count = parent.siblings(".countLike").children(".countplus");
+					
+					count.html(count.html() * 1 + 1);
+					count.parent().children(".countplus2").html(" 명이 좋아합니다.");
+
+					parent.html('<input type="button" class="unlike" value="좋아요 취소"/>');
     			}
     		}); 
         });
@@ -133,19 +132,27 @@
     			,dataType : 'json'
     			,contentType : 'application/json; charset=utf-8'
     			,success : function(result) {
-    				parent.html('<input type="button" class="like" value="좋아요${check}"/>');		
+    				var count = parent.siblings(".countLike").children(".countplus");
+					count.html(count.html() * 1 - 1);
+					
+					var countval = count.html();
+					
+					if (countval == 0) {
+						count.parent().children(".countContent").html("");
+					}
+    				
+    				parent.html('<input type="button" class="like" value="좋아요"/>');		
     			}
     		});
 		});
         
-		 // 신고
+		 // 신고 ---------------------------------------------------------------
 		$(document).on("click", ".report", function(){
        		var th = $(this);
        		var fireNo = th.parent().next().children().val();
        		var fireId = th.parent().next().next().children().val();
        		
-       		console.log(fireNo +" "+ fireId);
-       		
+       		       		
        		$.ajax({
        			url : "fireContent.k",
        			type : "post",
@@ -155,7 +162,7 @@
        				"classify" : "GROUP_MAIN"
        			},
        			success : function(data){
-       				th.parent().html("<input type='button' class='unReport hbtn' value='신고취소'/>");
+       				th.parent().html("<input type='button' class='unReport hbtn' value='신고 취소'/>");
        			}
        		})
        	});
@@ -165,7 +172,6 @@
        		var fireNo = th.parent().next().children().val();
        		var fireId = th.parent().next().next().children().val();
        		
-       		console.log(fireNo +" "+ fireId);
        		
        		$.ajax({
        			url : "cancelFireContent.k",
@@ -181,10 +187,62 @@
        		})
        	});
         
-	// 신고 끝 --------------------------
+    	
+    	// 원석 부분 댓글 신고
+        $(document).on("click", ".report2", function(){
+           var th = $(this);
+           var commentNo = th.parent().next().val();
+           var fireNo = th.parent().next().next().val();
+           var fireId = th.parent().next().next().next().val();
+           var lev = 1;
+           var classify = "GROUP_COMMENT";
+           
+           $.ajax({
+              url : "fireComment.k",
+              type : "post",
+              data : {
+                 "commentNo" : commentNo,
+                 "fireNo" : fireNo,
+                 "fireId" : fireId,
+                 "lev" : lev,
+                 "classify" : classify
+              },
+              success : function(date){
+                 th.parent().append("<input type='button' class='unreport2' value='신고 취소'/>");
+                 th.remove();
+              }
+           })
+        });
+        
+        $(document).on("click", ".unreport2", function(){
+           var th = $(this);
+           var commentNo = th.parent().next().val();
+           var fireNo = th.parent().next().next().val();
+           var fireId = th.parent().next().next().next().val();
+           var lev = 1;
+           var classify = "GROUP_COMMENT";
+           
+           $.ajax({
+              url : "fireCommentCancel.k",
+              type : "post",
+              data : {
+                 "commentNo" : commentNo,
+                 "fireNo" : fireNo,
+                 "fireId" : fireId,
+                 "lev" : lev,
+                 "classify" : classify
+              },
+              success : function(date){
+                 th.parent().append("<input type='button' class='report2' value='신고'/>");
+                 th.remove();
+              }
+           })
+        });
+
+		// 신고 끝 --------------------------
         
         
-        // 댓글 클릭 시, 댓글 리스트 보여주기
+        // 댓글 클릭 시, 댓글 리스트 보여주기 -------------------------------------------------------
         $(".comment").on("click", function(){
         	
         	 var state = $(this).parent().parent().parent().parent().parent().next().css('display');
@@ -203,13 +261,16 @@
 				url : 'selectGroupCommentList.y?writeNo=' + writeNo
 				,dataType : 'json'
 				,contentType : 'application/json; charset=utf-8'
-				,success : function(list) {
+				,success : function(map) {
+					
+					var list = map.list;
+					var firelist = map.firelist;
 					
 					$("div").remove(".commentOne");
 					
 					$(".commentTextarea").val("");
 					
-					tag(list, writeNo);
+					tag(list, firelist, writeNo);
 					
 				}
     		});
@@ -225,13 +286,16 @@
 				,dataType : 'json'
 				,data : commentForm
 				,contentType : 'application/json; charset=utf-8'
-				,success : function(list) {
+				,success : function(map) {
+					
+					var list = map.list;
+					var firelist = map.firelist;
 					
 					$("div").remove(".commentOne");
 					
 					$(".commentTextarea").val("");
 					
-					tag(list, writeNo);						
+					tag(list, firelist, writeNo);					
 				}
 			});
         });
@@ -246,12 +310,16 @@
         		url : "deleteGroupComment.y?commentNo=" + commentNo + "&writeNo=" + writeNo	 
    				,dataType : 'json'
    				,contentType : 'application/json; charset=utf-8'
-       			,success : function(list){
+       			,success : function(map){
+       				
+       				var list = map.list;
+					var firelist = map.firelist;
+       				
 					$("div").remove(".commentOne");
 					
 					$(".commentTextarea").val("");
 					
-					tag(list, writeNo);
+					tag(list, firelist, writeNo);
        			}
        		});
         });
@@ -260,7 +328,7 @@
         // 댓글 수정
         
          // ajax, 댓글 뿌려주는 메소드
-        function tag(list, writeNo) {
+        function tag(list, firelist, writeNo) {
         	
         	var userId = '${loginUser.userId}';
         	
@@ -268,7 +336,7 @@
 			
 			for(var i = 0; i < list.length; i++) {
 				
-				tag += "<div class='commentOne'><label class='commentlabel'>" + '사진' + "</label><table><tr><td>" + list[i].userName 
+				tag += "<div class='commentOne'><label class='commentlabel'>" + '<img class="userprofile2" src="' + list[i].userProfile + '"/></label><table><tr><td>' + list[i].userName 
 						+ "</td><td>" + list[i].content + "</td></tr></table><div>" 
 						+ "<input type='button' class='comment2' value='답글'/>";
 				
@@ -277,17 +345,32 @@
 					tag += "<input type='button' class='update2' value='수정'/><input type='button' class='delete2' value='삭제'/>";
 				
 				} else {
-				
-					tag += "<input type='button' class='report2' value='신고'/>";
-				
+					
+					var checkfire = 0;
+					
+					for(var j = 0; j < firelist.length; j++) {
+						
+						if(list[i].commentNo == firelist[j].commentNo) {
+							checkfire = 1;
+						}
+						
+					}
+					
+					if(checkfire == 0)
+						tag += "<input type='button' class='report2' value='신고'/>";
+					else 
+						tag += "<input type='button' class='unreport2' value='신고 취소'/>";
 				}
+				
 				tag += "</div><input type='hidden' class='hdcommentNo' value='" + list[i].commentNo 
-				+ "'/><input type='hidden' class='hdwriteNo' value='" + writeNo + "'/></div>";
+	            + "'/><input type='hidden' class='hdwriteNo' value='" + writeNo + "'/>" 
+	            + "<input type='hidden' name='userId' value='"+ list[i].userId +"'/> </div>";
 				
 			}
 			
 			$(".commentListContainer").append(tag);	
         }
+        // 댓글 끝 ------------------------------------------------------------------
         
         // 댓댓글 시작----------------------------------------------------------------
 		$(document).on("click", ".comment2", function(){
@@ -309,8 +392,7 @@
         	var userId = '${loginUser.userId}';
 			var content = $(this).siblings('.commentTextarea2').val();
 			
-			console.log(ref + " " + userId + " " + content + " " + writeNo);
-			
+						
 			$.ajax({
 				url : 'insertGroupComment2.y'
 				,data : {
@@ -322,6 +404,8 @@
 				,dataType : 'json'
 				,success : function(list) {
 					
+					$(".commentListContainer2").children().remove();
+					
 					$(".commentTextarea2").val("");
 
 					tag2(list);
@@ -332,12 +416,22 @@
         
         function tag2(list) {
         	var tag = "";
+        	var userId = '${loginUser.userId}';
         	
-        	console.log(list);
-        	
+
         	for(var i = 0; i < list.length; i++) {
-        		tag += "<div class=commentTwo><label class='commentlabel2'>" + '사진' + "</label><table><tr><td>" + list[i].userName 
+        		tag += "<div class=commentTwo><label class='commentlabel2'>" + '<img class="userprofile3" src="' + list[i].userProfile + '"/></label><table><tr><td>' + list[i].userName 
         		+ "</td><td>" + list[i].content + "</td></tr></table></div>";
+        		
+        		if(list[i].userId == userId) {
+    				
+					tag += "<input type='button' class='update3' value='수정'/><input type='button' class='delete3' value='삭제'/>";
+				
+				} else {
+				
+					tag += "<input type='button' class='report3' value='신고'/>";
+				
+				}        		
         		
       	 	}
 
@@ -478,6 +572,21 @@
 		height : 150px;
 		background-color : white;
 		margin-bottom : 20px;
+	}
+	
+	.userprofile {
+		width: 50px;
+		height: 50px;
+	}
+
+	.userprofile2 {
+		width: 40px;
+		height: 40px;
+	}
+	
+	.userprofile3 {
+		width: 30px;
+		height: 30px;	
 	}
 
 	/* 그룹 멤버 리스트  */
@@ -797,17 +906,19 @@
 </div>
 <div id="container">
 	<div id="left" class="box">
+	<br/>
+	<img src="${pageContext.request.contextPath}/resources/file/${loginUser.userId}/${loginUser.userProfile}"
+					style="width: 120px;">
 			<ul>
 	          <li><a href="mypage.b">MyPage</a></li>
 	          <li><a href="selectChannelList.l">채널</a></li>
 	          <li><a href="selectGroupList.y">그룹</a></li>
-	          <li><a href="alink.do?path=common/newsfeed">뉴스피드</a></li>
+	          <li><a href="newsfeed.b">뉴스피드</a></li>
 	          <li id="notice2">고객센터</li>
 	          <li class="notice"><a href="selectNotice.k"> └공지사항</a></li>
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
 	          
-	          <li><a href="brodcasting.j">채팅</a></li>
 	    </ul>
 		</div>
 	<div id="content" style="position:relative;">
@@ -819,21 +930,26 @@
 							<c:if test="${group.userId eq loginUser.userId}">
 								<button onclick="fnclick();">그룹 수정/삭제</button>
 							</c:if>
+							 <!-- 병걸 수정 -->
+							<img alt="" src="'/sins/resources/file"+${group.userId }+"/"+${group.filepath }+"'>"							 
+							
+					
+					
 						</div>
 					</div>
 					<div class="back">
 						<div id="signalImageArea">
 							<form id="backForm" action="updateGroup.y" method="post">
-								<input type="hidden" id="groupNo" name="groupNo" value="${groupe.groupNo}" /> 
+								<input type="hidden" id="groupNo" name="groupNo" value="${group.groupNo}" /> 
 								<input type="text" id="groupName" placeholder="그룹 이름 입력" name="groupName" />
 								<br /> 
 								<input type="text" id="groupInfo" placeholder="그룹 정보 입력" name="groupInfo" /> 
 								<br /> 
-								<input type="file" id="filepath" name="filepath" /> 
+								<input type="file" id="filepath" name="filepath" />
 								<br />
 								<br /> 
 								<input type="button" value="수정취소" onclick="fnReclick();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="button" value="채널삭제" onclick="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="button" value="채널삭제" onclick="location.href='deleteGroup.y?groupNo=${group.groupNo}'" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="submit" value="수정완료" />
 							</form>
 						</div>
@@ -881,7 +997,7 @@
 						<div>
 							<table class="writerInfo">
 								<tr class="writerInfoTr">
-									<td class="writerPhoto" rowspan="2">사진</td>
+									<td class="writerPhoto" rowspan="2"><img class="userprofile" src="${item.userProfile}"/></td>
 									<td class="writerName">${item.userName}</td>
 								</tr>
 								<tr>
@@ -911,7 +1027,8 @@
 										</c:if>
 											<input type="hidden" class="writeNo" value="${item.writeNo}"/>
 										
-											<td class="countLike">${count}</td>
+											<td class="countLike">&nbsp;&nbsp;<label class="countplus countContent"><c:if test="${count > 0}">${count}</c:if></label>
+																				<label class="countplus2 countContent"><c:if test="${count > 0}"> 명이 좋아합니다.</c:if></label></td>
 									</tr>
 								</table>
 								
@@ -926,7 +1043,7 @@
 										<c:if test="${item.userId != loginUser.userId}">
 											<c:set var="fireCheck" value="0"/>
 											<c:forEach var="fire" items="${fireContentList}">
-												<c:if test="${item.writeNo eq fire.fireNo }">
+												<c:if test="${item.writeNo eq fire.fireNo}">
 													<c:set var="fireCheck" value="1"/>
 												</c:if>												
 											</c:forEach>
@@ -977,9 +1094,9 @@
 		</c:choose>
 	</div>
 	<div id="right" class="box">
-    		<%-- <%@include file="/WEB-INF/views/friend/friendView.jsp" %> </div> --%>
-    		<c:import url="/WEB-INF/views/chat/chat.jsp"></c:import>
-   	</div>
+    		<c:import url="/WEB-INF/views/chat/chat.jsp"></c:import> 
+    </div>
+</div>
  	<div id="footer">
     	<c:import url="../common/footer.jsp" charEncoding="UTF-8" />
   	</div>

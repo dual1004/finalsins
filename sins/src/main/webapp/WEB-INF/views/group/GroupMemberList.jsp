@@ -10,7 +10,6 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="/sins/resources/css/common/newsfeed-common.css" />
-	<link rel="shortcut icon" href="/sins/resources/images/favicon.ico">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -57,9 +56,6 @@
 	function resultMember(userId, result){
 		var groupNo = ${group.groupNo};
 		var url;
-		console.log(userId);
-		console.log(groupNo);
-		console.log(result);
 		
 		if(result == 'agree')
 		 	url = "agreeGroupMember.y?userId=" + userId + "&groupNo=" + groupNo;
@@ -69,6 +65,13 @@
 		location.href = url;
 	};
 	
+	function deleteGroupMember() {
+		var groupNo = ${group.groupNo};
+		var userId = "${loginUser.userId}";
+		var url = 'deleteGroupMember.y?groupNo=' + groupNo + "&userId=" + userId;
+		
+		location.href = url;
+	}
 	
 </script>
 <style>
@@ -91,12 +94,29 @@
 		background-color: white;
 		margin-bottom: 10px;
 	}
+	
 	#memberContainer {
 		width: 100%;
 		background-color: white;
 		margin-bottom: 10px;
 	}
 	
+	.memberTable {
+		display: inline-block;
+	}
+	
+	.memberbtn {
+		float: right;
+		margin: 5px;
+	}
+	
+	/* ---------------------------------------------------- */
+	#groupexit {
+		float: right;
+		margin: 5px;
+	}
+	
+	* {border: 1px solid;}
 </style>
 </head>
 <body>
@@ -118,54 +138,78 @@
 	          	<li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          	<li class="notice"><a href="selectQna.n">└QNA</a></li>
 	          
+	          <li><a href="brodcasting.j">채팅</a></li>
 			</ul>
 		</div>
 		<div id="content">
-			<h2 id="pageName">그룹 멤버</h2>
+			<h2 id="pageName">그룹 멤버<input type="button" id="groupexit" value="그룹 탈퇴" onclick="deleteGroupMember();"/></h2>
+				
 				<c:if test="${member.grade <= 1}">
 					<div id="requestContainer">
 						<h4>가입 요청한 회원</h4>
-						<table>
+						
 							<c:forEach var="item" items="${list}">
 								<c:if test="${item.groupAccept == 'N'}">
-									<tr>
-										<td>사진</td>
-										<td>${item.userName}</td>
-										<td><input type="button" class="agreeBtn" onclick="resultMember('${item.userId}', 'agree');" value="수락"/></td>
-										<td><input type="button" class="disagreeBtn" onclick="resultMember('${item.userId}', 'disagree');" value="거절"/></td>
-									</tr>
+									<table>
+										<tr>
+											<td>사진</td>
+											<td>${item.userName}</td>
+											<td><input type="button" class="agreeBtn" onclick="resultMember('${item.userId}', 'agree');" value="수락"/></td>
+											<td><input type="button" class="disagreeBtn" onclick="resultMember('${item.userId}', 'disagree');" value="거절"/></td>
+										</tr>
+									</table>
 								</c:if>
 							</c:forEach>
-						</table>
+						
 					</div>
 				</c:if>
 			
 			<div id="adminContainer">
 				<h4>운영진</h4>
-				<table>
 					<c:forEach var="item" items="${list}">
 						<c:if test="${item.grade <= 1}">
-							<tr>
-								<td>사진</td>
-								<td>${item.userName}</td>
-							</tr>
+							<table class="memberTable">
+								<tr>
+									<td>사진</td>
+									<td>${item.userName}</td>
+								</tr>
+							</table>
+							<input type="button" class="memberbtn deleteMember" value="삭제"/>
+							<input type="button" class="memberbtn updateMember" value="수정"/>
+							<c:if test="${item.grade == 0 && item.userId != loginUser.userId}">	
+								<select class="memberbtn" name="grade">
+									<option value="0">운영진</option>
+									<option value="1">댓글운영진</option>
+									<option value="2">회원</option>
+								</select>
+							</c:if>
 						</c:if>
 					</c:forEach>
-				</table>
 			</div>
 			
 			<div id="memberContainer">
 				<h4>회원</h4>
-				<table>
+				
 					<c:forEach var="item" items="${list}">
 						<c:if test="${item.grade == 2 && item.groupAccept == 'Y'}">
-							<tr>
-								<td>사진</td>
-								<td>${item.userName}</td>
-							</tr>
+							<table class="">
+								<tr>
+									<td>사진</td>
+									<td>${item.userName}</td>
+								</tr>
+							</table>
+							<input type="button" class="memberbtn deleteMember" value="삭제"/>
+							<input type="button" class="memberbtn updateMember" value="수정"/>
+							<c:if test="${item.grade == 0}">	
+								<select class="memberbtn" name="grade">
+									<option value="0">운영진</option>
+									<option value="1">댓글운영진</option>
+									<option value="2">회원</option>
+								</select>
+							</c:if>
 						</c:if>
 					</c:forEach>
-				</table>
+				
 			</div>
 		</div>
 		<div id="right" class="box">
@@ -187,7 +231,7 @@
 	          <li class="notice"><a href="alink.do?path=faq/faq">└FAQ</a></li>
 	          <li class="notice"><a href="selectQna.n">└QNA</a></li>
 	          
-	     
+	          <li><a href="brodcasting.j">채팅</a></li>
 	    </ul>
 	</div>
 	<div id="spot2">

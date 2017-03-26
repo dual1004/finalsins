@@ -22,6 +22,7 @@ public class ChannelDAO {
 	private static final String NAMESPACE = "Channel.";
 
 	public int insertChannel(ChannelListVO c) {
+		System.out.println("dao");
 		return sqlSession.insert(NAMESPACE + "insertChannel", c);
 	}
 
@@ -44,7 +45,6 @@ public class ChannelDAO {
 	}
 
 	public int insertChannelArticle(ChannelArticleVO vo) {
-		System.out.println("3");
 		return sqlSession.insert(NAMESPACE + "insertChannelArticle", vo);
 	}
 
@@ -64,8 +64,12 @@ public class ChannelDAO {
 	public int updateChannel(ChannelListVO listVo) {
 		return sqlSession.update(NAMESPACE + "updateChannel", listVo);
 	}
+	public int deleteChannel(ChannelListVO vo) {
+		return sqlSession.update(NAMESPACE+"deleteChannel", vo);
+	}
 
 	public int channelCommentInsert(ChannelCommentVO vo) {
+		System.out.println(vo);
 		return sqlSession.insert(NAMESPACE + "channelCommentInsert", vo);
 	}
 
@@ -75,18 +79,36 @@ public class ChannelDAO {
 	}
 
 	// 원석 부분
-	public String getMasterId(ChannelVO vo) {
-		return (String) sqlSession.selectOne(NAMESPACE + "getMasterId", vo);
-	}
+		public String getMasterId(ChannelVO vo) {
+			return (String)sqlSession.selectOne(NAMESPACE+"getMasterId", vo);
+		}
+		
+		@SuppressWarnings("unchecked")
+		public ArrayList<FireVO> getFireArticleList(FireVO channelPage) {
+			return (ArrayList<FireVO>)sqlSession.selectList("Fire.getFireArticleList", channelPage);
+		}
 
-	@SuppressWarnings("unchecked")
-	public ArrayList<FireVO> getFireArticleList(FireVO channelPage) {
-		return (ArrayList<FireVO>) sqlSession.selectList("Fire.getFireArticleList", channelPage);
-	}
-	// 여기까지 원석부분
-
+		@SuppressWarnings("unchecked")
+		public ArrayList<FireVO> getFireCommentList(FireVO commentSearch) {
+			return (ArrayList<FireVO>)sqlSession.selectList("Fire.getFireCommentList", commentSearch);
+		}
+		// 여기까지 원석부분
 	public int deleteChannelComment(ChannelCommentVO vo) {
 		return sqlSession.delete(NAMESPACE+"deleteChannelComment", vo);
 	}
+
+	public int getChannelNo(String setChannel_name) {
+		return (int) sqlSession.selectOne(NAMESPACE+"getChannelNo", setChannel_name);
+	}
+
+	public int deleteArticle(ChannelArticleVO vo) {
+		System.out.println("dao");
+		return sqlSession.delete(NAMESPACE+"deleteArticle", vo);
+	}
+
+	public int articleUpdate(ChannelArticleVO vo) {
+		return sqlSession.update(NAMESPACE+"articleUpdate", vo);
+	}
+
 
 }

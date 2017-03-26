@@ -13,7 +13,7 @@ $(function() {
 	
 	$(document).on("mouseenter",".msglistajax",function(){
 		
-		$(this).css("background","red");
+		$(this).css("background","#E7E4F9");
 	})
 	
 	$(document).on("mouseleave",".msglistajax", function() {
@@ -33,7 +33,7 @@ function message() {
 	}
 	
 	function goMyInfo() {
-		location.href="alink.do?path=member/myInfo";
+		location.href="alink.do?path=member/myInfoCheck";
 	}
 	
 	function logout(){
@@ -69,7 +69,6 @@ function alert1() {
 
 function alertover() {
 	$('#msglist').hide();
-	console.log("여기여기");
 	var aldiv = $('#alertlist');
 	aldiv.text("");
 	$.ajax({

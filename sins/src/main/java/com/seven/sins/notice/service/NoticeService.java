@@ -10,4 +10,15 @@ public interface NoticeService {
 
 	List<NoticeVO> selectNotice(int currentPage, int listLimit);
 
+	void increaseCount(int nNo);
+
+	NoticeVO getNotice(int nNo);
+
+	void noticeDelete(int no);
+
+	void noticeUpdate(NoticeVO notice);
+
+	void noticeWrite(NoticeVO notice);
+
+
 }

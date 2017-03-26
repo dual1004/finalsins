@@ -46,7 +46,7 @@ public class AlertController {
 	@ResponseBody
 	public List<AlertVO> alertListAjax(@SessionAttribute MemberVO loginUser, @RequestParam int limit){
 		int start = limit+1;
-		limit = start + 5;
+		
 		System.out.println(start+"," + limit);
 		List<AlertVO> list = alertservice.getAlertList(loginUser.getUserId(), start, limit);
 		System.out.println(list.size());

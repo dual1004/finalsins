@@ -29,5 +29,12 @@
 .buttons{
 position:relative;
 float:left; 
+background:white;
+}
 
+#deleteBtn{
+	background:white;
+	outline:0;
+	border:0;
+	color:blue;
 }

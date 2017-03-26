@@ -8,16 +8,18 @@ public class FireVO implements java.io.Serializable{
 	private String fireId;
 	private int lev;
 	private int commentNo;
+	private int co;
 	
 	public FireVO() {}
 	
-	public FireVO(String classify, int fireNo, String fireById, String fireId, int lev, int commentNo) {
+	public FireVO(String classify, int fireNo, String fireById, String fireId, int lev, int commentNo, int co) {
 		this.classify = classify;
 		this.fireNo = fireNo;
 		this.fireById = fireById;
 		this.fireId = fireId;
 		this.lev = lev;
 		this.commentNo = commentNo;
+		this.co = co;
 	}
 	
 	public String getClassify() {
@@ -57,11 +59,20 @@ public class FireVO implements java.io.Serializable{
 		this.commentNo = commentNo;
 	}
 	
+	public int getCo() {
+		return co;
+	}
+
+	public void setCo(int co) {
+		this.co = co;
+	}
+
 	@Override
 	public String toString() {
 		return "FireVO [classify=" + classify + ", fireNo=" + fireNo + ", fireById=" + fireById + ", fireId=" + fireId
-				+ ", lev=" + lev + ", commentNo=" + commentNo + "]";
+				+ ", lev=" + lev + ", commentNo=" + commentNo + ", co=" + co +"]";
 	}
+
 	
 	
 	

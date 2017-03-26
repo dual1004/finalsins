@@ -8,6 +8,7 @@ public class GroupCommentVO implements java.io.Serializable {
 	private int commentNo;
 	private String userId;
 	private String userName;
+	private String userProfile;
 	private String content;
 	private Date commentDate;
 	private int lev;
@@ -22,12 +23,14 @@ public class GroupCommentVO implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupCommentVO(int commentNo, String userId, String userName, String content, Date commentDate, int lev,
-			int ref, String photopath, int writeNo, String classify, int report, String deleteYN) {
+	public GroupCommentVO(int commentNo, String userId, String userName, String userProfile, String content,
+			Date commentDate, int lev, int ref, String photopath, int writeNo, String classify, int report,
+			String deleteYN) {
 		super();
 		this.commentNo = commentNo;
 		this.userId = userId;
 		this.userName = userName;
+		this.userProfile = userProfile;
 		this.content = content;
 		this.commentDate = commentDate;
 		this.lev = lev;
@@ -61,6 +64,14 @@ public class GroupCommentVO implements java.io.Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	public String getContent() {
@@ -137,9 +148,9 @@ public class GroupCommentVO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "GroupCommentVO [commentNo=" + commentNo + ", userId=" + userId + ", userName=" + userName + ", content="
-				+ content + ", commentDate=" + commentDate + ", lev=" + lev + ", ref=" + ref + ", photopath="
-				+ photopath + ", writeNo=" + writeNo + ", classify=" + classify + ", report=" + report + ", deleteYN="
-				+ deleteYN + "]";
+		return "GroupCommentVO [commentNo=" + commentNo + ", userId=" + userId + ", userName=" + userName
+				+ ", userProfile=" + userProfile + ", content=" + content + ", commentDate=" + commentDate + ", lev="
+				+ lev + ", ref=" + ref + ", photopath=" + photopath + ", writeNo=" + writeNo + ", classify=" + classify
+				+ ", report=" + report + ", deleteYN=" + deleteYN + "]";
 	}
 }

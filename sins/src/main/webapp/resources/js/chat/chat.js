@@ -68,6 +68,5 @@ function writeToScreen(message) {
     text.appendChild(pre);
 }
 function exitchat() {
-	console.log('나가기');
 	websocket.close();
 }

@@ -33,7 +33,7 @@ $( document ).ready(function() {
  	});
  	$("#content").scroll( function() {
        var elem = $("#content");
-       console.log('안드러옴?');
+
         if ( elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
           {
               setTimeout(function(){
@@ -50,7 +50,7 @@ function visit(userid,user_id,classify,content_no) {
 	$('#classify').val(classify);
 	$('#content_no').val(content_no);
 	$('#userid').val(userid);
-	console.log(userid);
+
 	var form = document.alertdelet;
 	 form. action =  'alertdelet.j';
 	 form.method = "post";
@@ -60,14 +60,15 @@ function visit(userid,user_id,classify,content_no) {
 function appendalert() {
 	var count = $('#count').val();
 	var limit = $('#limit').val();
-	if(limit < count){
+	
+	alert("마지막");
 		$.ajax({
 			url : "alertlistajax.j",
 			type : "post",
 			data : {"limit" : limit},
 			success : function(data) {
 				for(var i =0;i<data.length;i++){
-					var tag = "<tr" + "onclick='visit('"+
+					var tag = "<tr class='sendtr'" + "onclick='visit('"+
 						data[i].send_id+"','"+data[i].user_id+"','"+data[i].classify+"','"+data[i].coment_no+"')"+
 						"><td class='alertid' style='width:20%'><img class='curs' src="+
 					"${pageContext.request.contextPath}/resources/file/"+
@@ -75,12 +76,12 @@ function appendalert() {
 					"' style='width: 80px; height: 90px;' /></td>"+
 					"<td class='content' style='text-align:left;'><label class='curs'>"+
 					data[i].classify+"</label><br><label class='grayc'>"+
-					"</label></td>";
+					"</label></td><tr>";
 					$("#alertTable > tbody:last").append(tag);
-					$('#limit').val(Number(limit)+6);
+					$('#limit').val(Number(limit));
 					
 				}
 		}
-		})
-	}
+		});
+	
 }

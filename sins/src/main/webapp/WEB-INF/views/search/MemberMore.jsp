@@ -201,10 +201,10 @@ $(document).on("click", ".addbtn", function(){
 				for(var i=0; i<result.mlist.length; i++){
 				 
 					var tag="<tr><td class='memberTd' style='width:20%' onclick="+
-					"location.href='mypage2.b?userId="+result.mlist[i].userId+"'> <img class='curs' src='"+
+					"location.href='mypage2.b?userid="+result.mlist[i].userId+"'> <img class='curs' src='"+
 					"${pageContext.request.contextPath}/resources/file/"+result.mlist[i].userId+"/"+result.mlist[i].userProfile+"' style='width: 80px; height: 80px;' /></td>"+
 					"<td class='memberTd' style='width:40%; text-align:left;'>"+
-					"<label onclick=location.href='mypage2.b?userId="+result.mlist[i].userId+"' class='curs'>"+
+					"<label onclick=location.href='mypage2.b?userid="+result.mlist[i].userId+"' class='curs'>"+
 					result.mlist[i].userName+"</label><br><label class='grayc'>";
 					
 					if( result.mlist[i].isFriend == 'Y')
@@ -270,8 +270,8 @@ $(document).on("click", ".addbtn", function(){
 			
 				
 				<tr>
-				<td class='memberTd' style='width:20%' onclick="location.href='mypage2.b?userId=${member.userId}'"><img class='curs' src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
-				<td class='memberTd' style='width:40%; text-align:left;'><label class='curs' onclick="location.href='mypage2.b?userId=${member.userId}'">${member.userName }</label><br><label class="grayc">
+				<td class='memberTd' style='width:20%' onclick="location.href='mypage2.b?userid=${member.userId}'"><img class='curs' src="${pageContext.request.contextPath}/resources/file/${member.userId}/${member.userProfile }" style='width: 80px; height: 80px;' /></td>
+				<td class='memberTd' style='width:40%; text-align:left;'><label class='curs' onclick="location.href='mypage2.b?userid=${member.userId}'">${member.userName }</label><br><label class="grayc">
 				<c:if test="${member.isFriend eq 'Y'}">
 				이미 친구입니다
 				</c:if>

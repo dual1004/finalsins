@@ -31,5 +31,6 @@ public interface MemberService {
 	int banTimePlus(MemberVO vo);
 	int banTimeMinus(MemberVO vo);
 	int memberDelete(MemberVO vo);
+	int profileChange(MemberVO loginUser);
 	
 }

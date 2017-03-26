@@ -10,6 +10,7 @@ public class GroupWriteVO implements java.io.Serializable {
 	private String content;
 	private String userId;
 	private String userName;
+	private String userProfile;
 	private String filepath;
 	private int writeLike;
 	private Date writeDate;
@@ -24,15 +25,16 @@ public class GroupWriteVO implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupWriteVO(int groupNo, int writeNo, String content, String userId, String userName, String filepath,
-			int writeLike, Date writeDate, int groupNoBak, String groupNameBak, String userIdBak, String classify,
-			int report, String deleteYN) {
+	public GroupWriteVO(int groupNo, int writeNo, String content, String userId, String userName, String userProfile,
+			String filepath, int writeLike, Date writeDate, int groupNoBak, String groupNameBak, String userIdBak,
+			String classify, int report, String deleteYN) {
 		super();
 		this.groupNo = groupNo;
 		this.writeNo = writeNo;
 		this.content = content;
 		this.userId = userId;
 		this.userName = userName;
+		this.userProfile = userProfile;
 		this.filepath = filepath;
 		this.writeLike = writeLike;
 		this.writeDate = writeDate;
@@ -82,6 +84,14 @@ public class GroupWriteVO implements java.io.Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	public String getFilepath() {
@@ -159,9 +169,9 @@ public class GroupWriteVO implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "GroupWriteVO [groupNo=" + groupNo + ", writeNo=" + writeNo + ", content=" + content + ", userId="
-				+ userId + ", userName=" + userName + ", filepath=" + filepath + ", writeLike=" + writeLike
-				+ ", writeDate=" + writeDate + ", groupNoBak=" + groupNoBak + ", groupNameBak=" + groupNameBak
-				+ ", userIdBak=" + userIdBak + ", classify=" + classify + ", report=" + report + ", deleteYN="
-				+ deleteYN + "]";
+				+ userId + ", userName=" + userName + ", userProfile=" + userProfile + ", filepath=" + filepath
+				+ ", writeLike=" + writeLike + ", writeDate=" + writeDate + ", groupNoBak=" + groupNoBak
+				+ ", groupNameBak=" + groupNameBak + ", userIdBak=" + userIdBak + ", classify=" + classify + ", report="
+				+ report + ", deleteYN=" + deleteYN + "]";
 	}
 }
